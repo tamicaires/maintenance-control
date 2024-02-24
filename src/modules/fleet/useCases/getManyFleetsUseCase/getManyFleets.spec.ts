@@ -14,7 +14,7 @@ describe('Get Many Fleets', () => {
   it('Should be able to get many Fleets', async () => {
 
     const fleets = [... new Array(10)].map(() => makeFleet({}));
-                                                                                            
+                                                                               
     fleetRepositoryInMemory.fleets = fleets;
 
     const result = await getManyFleets.execute({});
@@ -23,4 +23,4 @@ describe('Get Many Fleets', () => {
 
     expect(result).toEqual(fleets);
   });
-})
+});

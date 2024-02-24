@@ -17,12 +17,11 @@ model User {
   password    String
   role        Role    @default(USER)
 
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @default(now()) @map("updated_at")
+  createdAt   DateTime  @map("created_at")
+  updatedAt   DateTime  @map("updated_at")
 
   @@map("users")
   notes        Note[]
-
 }
 
 enum Role {
@@ -37,8 +36,9 @@ model Note {
   user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId        String
 
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @default(now()) @map("updated_at")
+  createdAt   DateTime  @map("created_at")
+  updatedAt   DateTime  @map("updated_at")
+  @@map("notes")
 }
 
 model Fleet {
@@ -49,14 +49,13 @@ model Fleet {
   second_trailer_plate  String
   third_trailer_plate   String
   km                    String
-  status                Status    @default(ATIVO) 
+  status                Status   @default(ATIVO) 
   carrier               Carrier  @relation(fields: [carrierId], references: [id])
   carrierId             String   @map("carrier_id") 
 
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @default(now()) @map("updated_at")
+  createdAt   DateTime  @map("created_at")
+  updatedAt   DateTime  @map("updated_at")
   @@map("fleets")
-  
 }
 
 model Carrier {
@@ -66,8 +65,8 @@ model Carrier {
   managerPhone          String
   status                Status  @default(ATIVO)
 
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @default(now()) @map("updated_at")
+  createdAt   DateTime  @map("created_at")
+  updatedAt   DateTime  @map("updated_at")
 
   @@map("carries") 
   fleets                Fleet[]   
@@ -76,4 +75,25 @@ model Carrier {
 enum Status {
   ATIVO
   INATIVO
+}
+
+model Employee {
+  id          String    @id
+  name        String    @unique
+  jobId       String    @map("job_id")
+  status      Status    @default(ATIVO)
+  jobTitle    Job       @relation(fields: [jobTitleId], references: [id]) 
+  jobTitleId  String
+
+  createdAt   DateTime  @map("created_at")
+  updatedAt   DateTime  @map("updated_at")
+  @@map("employees")
+}
+
+model Job {
+  id          String  @id
+  jobTitle    String  @unique @map("job_title")
+
+  @@map("job_title")
+  employees     Employee[]
 }
