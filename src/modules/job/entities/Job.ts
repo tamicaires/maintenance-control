@@ -1,5 +1,4 @@
 import { randomUUID } from "crypto";
-import { Replace } from "src/utils/replace"
 
 interface JobProps{
   jobTitle: string
@@ -9,11 +8,12 @@ export class Job {
   private props: JobProps
   private _id: string
 
-  constructor(props: Replace<JobProps, { createdAt?: Date, updatedAt?: Date}>, id?: string){
+  constructor(props: JobProps, id?: string){
     this.props = {
       ...props,
-    }
-    this._id = id || randomUUID()
+    };
+
+    this._id = id || randomUUID();
   };
 
   get id(): string { 

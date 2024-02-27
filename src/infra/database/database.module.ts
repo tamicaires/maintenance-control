@@ -8,6 +8,8 @@ import { NoteRepository } from "src/modules/note/repositories/noteRepository";
 import { PrismaNoteRepository } from "./prisma/repositories/PrismaNoteRepository";
 import { CarrierRepository } from "src/modules/carrier/repositories/CarrierRepository";
 import { PrismaCarrierRepository } from "./prisma/repositories/PrismaCarrierRepository";
+import { JobRepository } from "src/modules/job/repositories/jobRepository";
+import { PrismaJobRepository } from "./prisma/repositories/PrismaJobRepository";
 
 @Module({
   providers: [
@@ -28,9 +30,18 @@ import { PrismaCarrierRepository } from "./prisma/repositories/PrismaCarrierRepo
       provide: FleetRepository,
       useClass: PrismaFleetRepository
     },
+    {
+      provide: JobRepository,
+      useClass: PrismaJobRepository
+    },
   ],
-  exports: [UserRepository, NoteRepository, CarrierRepository, FleetRepository]
-  
+  exports: [
+    UserRepository, 
+    NoteRepository, 
+    CarrierRepository, 
+    FleetRepository,
+    JobRepository
+  ]  
 })
 
 export class DatabaseModule {}

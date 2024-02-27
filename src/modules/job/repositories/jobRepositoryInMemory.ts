@@ -17,15 +17,6 @@ export class JobRepositoryInMemory implements JobRepository {
     return job;
   };
 
-  async save(job: Job): Promise<void> {
-    const jobIndex = this.jobs.findIndex(
-      currentJob => {
-        currentJob.id === job.id
-    });
-
-    if(jobIndex >= 0) this.jobs[jobIndex] = job; 
-  };
-
   async delete(id: string): Promise<void> {
     this.jobs = this.jobs.filter(note => note.id !== id);
   };
