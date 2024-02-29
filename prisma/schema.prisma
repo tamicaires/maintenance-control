@@ -78,11 +78,11 @@ enum Status {
 }
 
 model Employee {
-  id          String    @id
-  name        String    @unique
-  jobId       String    @map("job_id")
-  status      Status    @default(ATIVO)
-  jobTitle    Job       @relation(fields: [jobTitleId], references: [id]) 
+  id          String      @id
+  name        String      @unique
+  workShift   String  
+  status      Status      @default(ATIVO)
+  jobTitle    Job         @relation(fields: [jobTitleId], references: [id]) 
   jobTitleId  String
 
   createdAt   DateTime  @map("created_at")
