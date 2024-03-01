@@ -8,6 +8,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { NoteModule } from './infra/http/modules/note/note.module';
 import { CarrierModule } from './infra/http/modules/carrier/carrier.module';
 import { JobModule } from './infra/http/modules/job/job.module';
+import { EmployeeModule } from './infra/http/modules/employee/employee.module';
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import { JobModule } from './infra/http/modules/job/job.module';
     NoteModule,
     CarrierModule,
     FleetModule,
-    JobModule
+    JobModule,
+    EmployeeModule
   ],
   controllers: [],
   providers: [

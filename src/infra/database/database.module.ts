@@ -10,6 +10,8 @@ import { CarrierRepository } from "src/modules/carrier/repositories/CarrierRepos
 import { PrismaCarrierRepository } from "./prisma/repositories/PrismaCarrierRepository";
 import { JobRepository } from "src/modules/job/repositories/jobRepository";
 import { PrismaJobRepository } from "./prisma/repositories/PrismaJobRepository";
+import { EmployeeRepository } from "src/modules/employee/repositories/EmployeeRepository";
+import { PrismaEmployeeRepository } from "./prisma/repositories/PrismaEmployeeRepository";
 
 @Module({
   providers: [
@@ -34,13 +36,18 @@ import { PrismaJobRepository } from "./prisma/repositories/PrismaJobRepository";
       provide: JobRepository,
       useClass: PrismaJobRepository
     },
+    {
+      provide: EmployeeRepository,
+      useClass: PrismaEmployeeRepository
+    },
   ],
   exports: [
     UserRepository, 
     NoteRepository, 
     CarrierRepository, 
     FleetRepository,
-    JobRepository
+    JobRepository,
+    EmployeeRepository
   ]  
 })
 

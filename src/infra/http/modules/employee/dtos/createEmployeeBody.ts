@@ -14,7 +14,7 @@ export class CreateEmployeeBody {
 
   @IsNotEmptyCustom()
   @IsStringCustom()
-  jobId: string;
+  jobTitleId: string;
 
   @IsNotEmptyCustom()
   @IsStringCustom()

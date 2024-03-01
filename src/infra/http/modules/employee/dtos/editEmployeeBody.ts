@@ -14,7 +14,7 @@ export class EditEmployeeBody {
 
   @IsOptional()
   @IsStringCustom()
-  jobId: string;
+  jobTitleId: string;
 
   @IsOptional()
   @IsStringCustom()

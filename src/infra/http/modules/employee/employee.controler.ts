@@ -29,12 +29,12 @@ export class EmployeeController {
 
   @Post()
   async create(@Body() createEmployeeBody: CreateEmployeeBody){
-    const { name, workShift, jobId, status } = createEmployeeBody;
+    const { name, workShift, jobTitleId, status } = createEmployeeBody;
 
     const employee = await this.createEmployee.execute({
       name,
       workShift,
-      jobId,
+      jobTitleId,
       status
     });
 
@@ -46,13 +46,13 @@ export class EmployeeController {
     @Param('id') employeeId: string, 
     @Body() editEmployeeBody: EditEmployeeBody
   ){
-    const { name, workShift, jobId, status } = editEmployeeBody;
+    const { name, workShift, jobTitleId, status } = editEmployeeBody;
 
     await this.editEmployee.execute({
       employeeId,
       name,
       workShift,
-      jobId,
+      jobTitleId,
       status
     });
   };

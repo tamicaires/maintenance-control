@@ -5,7 +5,7 @@ export class EmployeeViewModel {
     id,
     name,
     workShift,
-    jobId,
+    jobTitleId,
     status,
     createdAt,
     updatedAt
@@ -14,7 +14,7 @@ export class EmployeeViewModel {
       id,
       name,
       workShift,
-      jobId,
+      jobTitleId,
       status,
       createdAt,
       updatedAt

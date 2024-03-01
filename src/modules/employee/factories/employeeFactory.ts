@@ -8,7 +8,7 @@ export const makeEmployee = ({ id, ...override }: Override) => {
   return new Employee({
     name: 'Elves Caires',
     workShift: 'Manhã',
-    jobId: '12355',
+    jobTitleId: '12355',
     status: EmployeeStatus.ATIVO,
     ...override
   },
