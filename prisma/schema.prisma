@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -56,6 +53,7 @@ model Fleet {
   createdAt   DateTime  @map("created_at")
   updatedAt   DateTime  @map("updated_at")
   @@map("fleets")
+  work_orders           WorkOrder[]
 }
 
 model Carrier {
@@ -88,12 +86,78 @@ model Employee {
   createdAt   DateTime  @map("created_at")
   updatedAt   DateTime  @map("updated_at")
   @@map("employees")
+  serviceAssignments    ServiceAssignment[]
 }
 
 model Job {
   id          String  @id
   jobTitle    String  @unique @map("job_title")
 
-  @@map("job_title")
+  @@map("job_titles")
   employees     Employee[]
+}
+
+model Service {
+  id            String  @id
+  serviceName   String  @unique @map("service_name")
+  status        Status
+
+  @@map("services")
+  serviceAssignmets    ServiceAssignment[]
+}
+
+model WorkOrder {
+  id                    String     @id
+  severityLevel         String     @map("severity_level")
+  entryQueue            DateTime   @map("entry_queue")
+  entryMaintenance      DateTime?  @map("entry_maintenance")
+  exitMaintenance       DateTime?  @map("exit_maintenance")
+  status                StatusMaintenance
+  fleet                 Fleet      @relation(fields: [fleetId], references: [id])
+  fleetId               String
+  typeOfMaintenance     TypeOfMaintenance
+  box                   Box
+
+  createdAt             DateTime  @map("created_at")
+  updatedAt             DateTime  @map("updated_at")
+  @@map("work_orders")
+  serviceAssignments    ServiceAssignment[]
+}
+
+model ServiceAssignment {
+  id              String     @id
+  workOrder       WorkOrder  @relation(fields: [workOrderId], references: [id])
+  workOrderId     String     @map("word_order_id")
+  service         Service    @relation(fields: [serviceId], references: [id])
+  serviceId       String  
+  employee        Employee   @relation(fields: [employeeId], references: [id])
+  employeeId      String     @map("employee_id")
+
+  createdAt       DateTime   @map("created_at")
+  updatedAt       DateTime   @map("updated_at")
+  @@map("service_assignments")
+}
+
+enum StatusMaintenance {
+  QUEUE
+  MAINTENANCE
+  WAITING_PARTS
+  FINISH
+}
+
+enum TypeOfMaintenance {
+  PREDITIVA
+  PREVENTIVA
+  CORRETIVA
+}
+
+enum Box {
+  ONE
+  TWO
+  THREE
+  FOUR
+  FIVE
+  SIX
+  SEVEN
+  EIGHT
 }
