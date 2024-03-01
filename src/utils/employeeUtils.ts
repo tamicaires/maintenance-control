@@ -10,8 +10,8 @@ export function updateEmployeeProperties(employee: Employee, data: Partial<Emplo
     employee.workShift = data.workShift
   };
 
-  if(data.jobId !== undefined) {
-    employee.jobId = data.jobId 
+  if(data.jobTitleId !== undefined) {
+    employee.jobTitleId = data.jobTitleId 
   };
 
   if(data.status !== undefined) {

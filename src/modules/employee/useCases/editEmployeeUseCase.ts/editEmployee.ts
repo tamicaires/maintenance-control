@@ -7,7 +7,7 @@ import { updateEmployeeProperties } from "src/utils/employeeUtils";
 interface EditEmployeeRequest {
   employeeId: string;
   name?: string;
-  jobId?: string;
+  jobTitleId?: string;
   workShift?: string;
   status?: EmployeeStatus;
 };

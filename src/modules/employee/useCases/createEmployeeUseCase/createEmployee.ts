@@ -5,7 +5,7 @@ import { EmployeeRepository } from "../../repositories/EmployeeRepository";
 
 interface CreateEmployeeRequest{
   name: string;
-  jobId: string;
+  jobTitleId: string;
   workShift: string
   status: EmployeeStatus
 }
@@ -14,11 +14,11 @@ interface CreateEmployeeRequest{
 export class CreateEmployee {
   constructor(private employeeRepository: EmployeeRepository){}
 
-  async execute({ jobId, name, workShift, status }: CreateEmployeeRequest){
+  async execute({ jobTitleId, name, workShift, status }: CreateEmployeeRequest){
     const employee = new Employee({
       name,
       workShift,
-      jobId,
+      jobTitleId,
       status
     });
 

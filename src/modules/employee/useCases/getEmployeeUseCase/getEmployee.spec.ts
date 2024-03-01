@@ -1,4 +1,3 @@
-import { getegid } from "process";
 import { makeEmployee } from "../../factories/employeeFactory";
 import { EmployeeRepositoryInMemory } from "../../repositories/EmployeeRepositoryInMemory";
 import { GetEmployee } from "./getEmployee";

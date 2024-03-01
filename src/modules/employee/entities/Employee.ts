@@ -5,7 +5,7 @@ import { randomUUID } from "crypto";
 interface EmployeeSchema {
   name: string;
   workShift: string;
-  jobId: string;
+  jobTitleId: string;
   status: EmployeeStatus;
   createdAt: Date;
   updatedAt: Date; 
@@ -45,12 +45,12 @@ export class Employee {
     this.props.workShift = workShift;
   };
 
-  get jobId(): string {
-    return this.props.jobId;
+  get jobTitleId(): string {
+    return this.props.jobTitleId;
   };
 
-  set jobId(jobId: string) {
-    this.props.jobId = jobId;
+  set jobTitleId(jobTitleId: string) {
+    this.props.jobTitleId = jobTitleId;
   };
 
   get status(): EmployeeStatus {

@@ -18,7 +18,7 @@ describe('Create Employee', () => {
 
     const employee = await createEmployee.execute({
       name: "Marcos",
-      jobId:'jobId',
+      jobTitleId:'jobId',
       workShift: 'Manhã',
       status: EmployeeStatus.ATIVO,
     });
