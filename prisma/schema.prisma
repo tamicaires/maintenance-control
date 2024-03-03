@@ -118,14 +118,14 @@ enum ServiceCategory {
 model WorkOrder {
   id                    String     @id
   severityLevel         String     @map("severity_level")
-  entryQueue            DateTime   @map("entry_queue")
+  entryQueue            DateTime?  @map("entry_queue")
   entryMaintenance      DateTime?  @map("entry_maintenance")
   exitMaintenance       DateTime?  @map("exit_maintenance")
-  status                StatusMaintenance
+  status                MaintenanceStatus
   fleet                 Fleet      @relation(fields: [fleetId], references: [id])
   fleetId               String
   typeOfMaintenance     TypeOfMaintenance
-  box                   Box
+  box                   Box?
 
   createdAt             DateTime  @map("created_at")
   updatedAt             DateTime  @map("updated_at")
@@ -147,7 +147,7 @@ model ServiceAssignment {
   @@map("service_assignments")
 }
 
-enum StatusMaintenance {
+enum MaintenanceStatus {
   QUEUE
   MAINTENANCE
   WAITING_PARTS
@@ -155,9 +155,9 @@ enum StatusMaintenance {
 }
 
 enum TypeOfMaintenance {
-  PREDITIVA
-  PREVENTIVA
-  CORRETIVA
+  PREDICTIVE
+  PREVENTIVE
+  CORRECTIVE
 }
 
 enum Box {

@@ -1,0 +1,5 @@
+export enum TypeOfMaintenance {
+  PREDICTIVE = 'PREDICTIVE',
+  PREVENTIVE = 'PREVENTIVE',
+  CORRECTIVE = 'CORRECTIVE'
+};
