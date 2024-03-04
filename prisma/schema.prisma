@@ -107,12 +107,12 @@ model Service {
 }
 
 enum ServiceCategory {
-  Structure
-  Electrical
-  Pneumatic
-  Brakes
-  Welding
-  TireRepair
+  STRUCTURE
+  ELETRICAL
+  PNEUMATIC
+  BRAKES
+  WELDING
+  TIRE_REPAIR
 }
 
 model WorkOrder {

@@ -11,7 +11,7 @@ export const makeWorkOrder = ({id, ...override}: Override) => {
       severityLevel: 'high',
       entryQueue: new Date(),
       entryMaintenance: new Date(),
-      status: MaintenanceStatus.Queue,
+      status: MaintenanceStatus.QUEUE,
       box: Box.FIVE,
       typeOfMaintenance: TypeOfMaintenance.CORRECTIVE,
       ...override

@@ -1,10 +1,10 @@
 export enum Box {
-  ONE,
-  TWO,
-  THREE,
-  FOUR,
-  FIVE,
-  SIX,
-  SEVEN,
-  EIGHT,
+  ONE = 'ONE',
+  TWO = 'TWO',
+  THREE = 'THREE',
+  FOUR = 'FOUR',
+  FIVE = 'FIVE',
+  SIX = 'SIX',
+  SEVEN = 'SEVEN',
+  EIGHT = 'EIGHT'
 };

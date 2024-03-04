@@ -12,6 +12,10 @@ import { JobRepository } from "src/modules/job/repositories/jobRepository";
 import { PrismaJobRepository } from "./prisma/repositories/PrismaJobRepository";
 import { EmployeeRepository } from "src/modules/employee/repositories/EmployeeRepository";
 import { PrismaEmployeeRepository } from "./prisma/repositories/PrismaEmployeeRepository";
+import { ServiceRepository } from "src/modules/service/repositories/serviceRepository";
+import { PrismaServiceRepository } from "./prisma/repositories/PrismaServiceRepository";
+import { WorkOrderRepository } from "src/modules/workOrder/repositories/workOrderRepository";
+import { PrismaWorkOrderRepository } from "./prisma/repositories/PrismaWorkOrderRepository";
 
 @Module({
   providers: [
@@ -40,6 +44,14 @@ import { PrismaEmployeeRepository } from "./prisma/repositories/PrismaEmployeeRe
       provide: EmployeeRepository,
       useClass: PrismaEmployeeRepository
     },
+    {
+      provide: ServiceRepository,
+      useClass: PrismaServiceRepository
+    },
+    {
+      provide: WorkOrderRepository,
+      useClass: PrismaWorkOrderRepository
+    },
   ],
   exports: [
     UserRepository, 
@@ -47,7 +59,9 @@ import { PrismaEmployeeRepository } from "./prisma/repositories/PrismaEmployeeRe
     CarrierRepository, 
     FleetRepository,
     JobRepository,
-    EmployeeRepository
+    EmployeeRepository,
+    ServiceRepository,
+    WorkOrderRepository
   ]  
 })
 

@@ -1,6 +1,6 @@
 export enum MaintenanceStatus {
-  Queue = 'Queue',
-  Maintenance = 'Maintenance',
-  WaitingParts = 'WaitingParts',
-  Finished = 'Finished'
+  QUEUE = 'QUEUE',
+  MAINTENANCE = 'MAINTENANCE',
+  WAITING_PARTS = 'WAITING_PARTS',
+  FINISH = 'FINISH'
 };

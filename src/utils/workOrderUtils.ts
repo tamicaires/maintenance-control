@@ -1,3 +1,4 @@
+import { UpdateWorkOrderBody } from "src/infra/http/modules/workOrder/dtos/updateWorkOrderBody";
 import { WorkOrder } from "src/modules/workOrder/entities/WorkOrder";
 
 export const updateWorkOrderProperties = (workOrder: WorkOrder, data: Partial<WorkOrder>) => {
@@ -64,3 +65,31 @@ export const validateMaintenanceDates = ({
   return validateEntryDates(entryQueue, entryMaintenance) 
     && validateExitDate(entryMaintenance, exitMaintenance);
 };
+
+export const mapUpdateWorkOrderData = (
+  workOrderId: string, 
+  workOrderData: UpdateWorkOrderBody
+  ) => {
+    const { 
+      severityLevel, 
+      entryQueue,
+      entryMaintenance,
+      exitMaintenance,
+      fleetId,
+      box,
+      status,
+      typeOfMaintenance 
+    } = workOrderData;
+
+    return {
+      workOrderId,
+      severityLevel, 
+      entryQueue,
+      entryMaintenance,
+      exitMaintenance,
+      fleetId,
+      box,
+      status,
+      typeOfMaintenance
+    };
+  };

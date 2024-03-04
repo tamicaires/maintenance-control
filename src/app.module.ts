@@ -9,6 +9,8 @@ import { NoteModule } from './infra/http/modules/note/note.module';
 import { CarrierModule } from './infra/http/modules/carrier/carrier.module';
 import { JobModule } from './infra/http/modules/job/job.module';
 import { EmployeeModule } from './infra/http/modules/employee/employee.module';
+import { ServiceModule } from './infra/http/modules/service/service.module';
+import { WorkOrderModule } from './infra/http/modules/workOrder/workOrder.module';
 
 @Module({
   imports: [
@@ -19,7 +21,9 @@ import { EmployeeModule } from './infra/http/modules/employee/employee.module';
     CarrierModule,
     FleetModule,
     JobModule,
-    EmployeeModule
+    EmployeeModule,
+    ServiceModule,
+    WorkOrderModule
   ],
   controllers: [],
   providers: [
