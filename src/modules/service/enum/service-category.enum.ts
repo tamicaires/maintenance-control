@@ -1,8 +1,15 @@
 export enum ServiceCategory {
-  Structure = 'Structure',
-  Electrical = 'Electrical',
-  Pneumatic = 'Pneumatic',
-  Brakes = 'Brakes',
-  Welding = 'Welding',
-  TireRepair = 'TireRepair'
+  STRUCTURE = 'STRUCTURE',
+  ELETRICAL = 'ELETRICAL',
+  PNEUMATIC = 'PNEUMATIC',
+  BRAKES = 'BRAKES',
+  WELDING = 'WELDING',
+  TIRE_REPAIR = 'TIRE_REPAIR'
 };
+
+
+  
+  
+  
+  
+  
