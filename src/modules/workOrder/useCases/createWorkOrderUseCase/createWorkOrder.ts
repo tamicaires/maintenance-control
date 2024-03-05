@@ -12,6 +12,7 @@ interface CreateWorkOrderRequest {
   exitMaintenance?: Date | null;
   status: MaintenanceStatus;
   fleetId: string;
+  userId: string;
   typeOfMaintenance: TypeOfMaintenance;
   box?: Box | null;
 };

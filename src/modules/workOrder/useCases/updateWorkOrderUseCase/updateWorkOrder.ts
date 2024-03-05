@@ -15,6 +15,7 @@ interface UpdateWorkOrderRequest {
   exitMaintenance?: Date;
   status?: MaintenanceStatus;
   fleetId?: string;
+  userId: string;
   typeOfMaintenance?: TypeOfMaintenance;
   box?: Box;
 };

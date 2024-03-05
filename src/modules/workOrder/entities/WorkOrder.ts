@@ -11,6 +11,7 @@ interface WorkOrderSchema {
   exitMaintenance: Date | null;
   status: MaintenanceStatus;
   fleetId: string;
+  userId: string;
   typeOfMaintenance: TypeOfMaintenance;
   box: Box | null;
   createdAt: Date;
@@ -86,6 +87,14 @@ export class WorkOrder {
 
   set status(status: MaintenanceStatus) {
     this.props.status = status;
+  };
+
+  get userId(): string {
+    return this.props.userId;
+  };
+
+  set userId(userId: string) {
+    this.props.userId = userId;
   };
 
   get fleetId(): string {

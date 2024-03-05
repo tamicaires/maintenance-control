@@ -1,3 +1,4 @@
+import { CreateWorkOrderBody } from "src/infra/http/modules/workOrder/dtos/createWorkOrderBody";
 import { UpdateWorkOrderBody } from "src/infra/http/modules/workOrder/dtos/updateWorkOrderBody";
 import { WorkOrder } from "src/modules/workOrder/entities/WorkOrder";
 
@@ -21,6 +22,10 @@ export const updateWorkOrderProperties = (workOrder: WorkOrder, data: Partial<Wo
 
   if(data.fleetId !== undefined){
     workOrder.fleetId = data.fleetId;
+  };
+
+  if(data.userId !== undefined){
+    workOrder.userId = data.userId;
   };
 
   if(data.status !== undefined){
@@ -66,8 +71,37 @@ export const validateMaintenanceDates = ({
     && validateExitDate(entryMaintenance, exitMaintenance);
 };
 
+export const mapCreateWorkOrderData = (
+  userId: string,
+  workOrderData: CreateWorkOrderBody
+  ) => {
+    const { 
+      severityLevel, 
+      entryQueue,
+      entryMaintenance,
+      exitMaintenance,
+      fleetId,
+      box,
+      status,
+      typeOfMaintenance 
+    } = workOrderData;
+
+    return {
+      severityLevel, 
+      entryQueue,
+      entryMaintenance,
+      exitMaintenance,
+      fleetId,
+      userId,
+      box,
+      status,
+      typeOfMaintenance
+    };
+  };
+
 export const mapUpdateWorkOrderData = (
-  workOrderId: string, 
+  workOrderId: string,
+  userId: string,
   workOrderData: UpdateWorkOrderBody
   ) => {
     const { 
@@ -88,6 +122,7 @@ export const mapUpdateWorkOrderData = (
       entryMaintenance,
       exitMaintenance,
       fleetId,
+      userId,
       box,
       status,
       typeOfMaintenance

@@ -10,12 +10,11 @@ export class PrismaWorkOrderRepository implements WorkOrderRepository {
 
   async create(workOrder: WorkOrder): Promise<void> {
     const workOrderRaw = PrismaWorkOrderMapper.toPrisma(workOrder);
-
+ 
     await this.prisma.workOrder.create({
       data: workOrderRaw
     });
   };
-
 
   async findById(id: string): Promise<WorkOrder | null> {
     const workOrderRaw = await this.prisma.workOrder.findUnique({ 

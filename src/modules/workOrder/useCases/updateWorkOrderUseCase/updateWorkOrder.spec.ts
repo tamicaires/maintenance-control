@@ -1,3 +1,4 @@
+import { makeUser } from "src/modules/user/factories/userFactory";
 import { InvalidDateException } from "../../exceptions/invalidDatesException";
 import { WorkOrderNotFoundException } from "../../exceptions/workOrderNotFoundException";
 import { makeWorkOrder } from "../../factories/workOrderFactory";
@@ -14,6 +15,7 @@ describe('Update Work Order', () => {
   });
 
   it('Should be able to update work order', async () => {
+    const user = makeUser({});
     const workOrder = makeWorkOrder({ });
 
     workOrderRepositoryInMemory.workOrders = [workOrder];
@@ -21,6 +23,7 @@ describe('Update Work Order', () => {
     const severityLevelChanged = 'low';
 
     const result = await updateWorkOrder.execute({
+      userId: user.id,
       workOrderId: workOrder.id,
       severityLevel: severityLevelChanged
     });
@@ -29,16 +32,19 @@ describe('Update Work Order', () => {
   });
 
   it('Should be able to throw error when not find work order', async () =>{
+    const user = makeUser({});
 
     expect(async () => {
       await updateWorkOrder.execute({
-        workOrderId: 'fakeId'
+        workOrderId: 'fakeId',
+        userId: user.id
       })
     }).rejects.toThrow(WorkOrderNotFoundException);
   });
 
 
   it('Should be able to throw error whren validate entries date dont work', async () => {
+    const user = makeUser({});
     const workOrder = makeWorkOrder({});
 
     workOrderRepositoryInMemory.workOrders = [workOrder];
@@ -49,6 +55,7 @@ describe('Update Work Order', () => {
 
     expect(async () => {
       await updateWorkOrder.execute({
+        userId: user.id,
         workOrderId: workOrder.id,
         entryQueue: entryQueueChanged,
         entryMaintenance: entryMaintenanceChanged
@@ -58,6 +65,7 @@ describe('Update Work Order', () => {
 
   
   it('Should be able to validate exit date orders', async () => {
+    const user = makeUser({});
     const workOrder = makeWorkOrder({});
 
     workOrderRepositoryInMemory.workOrders = [workOrder];
@@ -67,6 +75,7 @@ describe('Update Work Order', () => {
 
     expect(async () => {
       await updateWorkOrder.execute({
+        userId: user.id,
         workOrderId: workOrder.id,
         entryQueue: undefined,
         entryMaintenance: entryMaintenanceChanged,

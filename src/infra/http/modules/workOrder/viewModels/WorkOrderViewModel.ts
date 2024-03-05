@@ -8,6 +8,7 @@ export class WorkOrderViewModel {
     entryMaintenance,
     exitMaintenance,
     fleetId,
+    userId,
     typeOfMaintenance,
     status,
     box
@@ -19,6 +20,7 @@ export class WorkOrderViewModel {
       entryMaintenance,
       exitMaintenance,
       fleetId,
+      userId,
       typeOfMaintenance,
       status,
       box

@@ -27,9 +27,10 @@ export class CreateWorkOrderBody {
   @IsNotEmptyCustom()
   status: MaintenanceStatus;
 
+  @IsStringCustom()
   @IsNotEmptyCustom()
   fleetId: string;
-
+  
   @IsStringCustom()
   @IsNotEmptyCustom()
   typeOfMaintenance: TypeOfMaintenance;
