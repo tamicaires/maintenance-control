@@ -16,6 +16,8 @@ import { ServiceRepository } from "src/modules/service/repositories/serviceRepos
 import { PrismaServiceRepository } from "./prisma/repositories/PrismaServiceRepository";
 import { WorkOrderRepository } from "src/modules/workOrder/repositories/workOrderRepository";
 import { PrismaWorkOrderRepository } from "./prisma/repositories/PrismaWorkOrderRepository";
+import { ServiceAssignmentRepository } from "src/modules/serviceAssignment/repositories/serviceAssignmentRepository";
+import { PrismaServiceAssignmentsRepository } from "./prisma/repositories/PrismaServiceAssignmentsRepository";
 
 @Module({
   providers: [
@@ -52,6 +54,10 @@ import { PrismaWorkOrderRepository } from "./prisma/repositories/PrismaWorkOrder
       provide: WorkOrderRepository,
       useClass: PrismaWorkOrderRepository
     },
+    {
+      provide: ServiceAssignmentRepository,
+      useClass: PrismaServiceAssignmentsRepository
+    },
   ],
   exports: [
     UserRepository, 
@@ -61,7 +67,8 @@ import { PrismaWorkOrderRepository } from "./prisma/repositories/PrismaWorkOrder
     JobRepository,
     EmployeeRepository,
     ServiceRepository,
-    WorkOrderRepository
+    WorkOrderRepository,
+    ServiceAssignmentRepository
   ]  
 })
 

@@ -11,6 +11,7 @@ import { JobModule } from './infra/http/modules/job/job.module';
 import { EmployeeModule } from './infra/http/modules/employee/employee.module';
 import { ServiceModule } from './infra/http/modules/service/service.module';
 import { WorkOrderModule } from './infra/http/modules/workOrder/workOrder.module';
+import { ServiceAssignmentModule } from './infra/http/modules/serviceAssignment/serviceAssignment.module';
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import { WorkOrderModule } from './infra/http/modules/workOrder/workOrder.module
     JobModule,
     EmployeeModule,
     ServiceModule,
-    WorkOrderModule
+    WorkOrderModule,
+    ServiceAssignmentModule
   ],
   controllers: [],
   providers: [
