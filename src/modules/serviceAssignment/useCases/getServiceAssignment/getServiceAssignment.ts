@@ -1,3 +1,4 @@
+import { Injectable } from "@nestjs/common";
 import { ServiceAssignmentNotFoundException } from "../../exceptions/serviceAssignmentNotFoundException";
 import { ServiceAssignmentRepository } from "../../repositories/serviceAssignmentRepository";
 
@@ -5,6 +6,7 @@ interface GetServiceAssignmentRequest {
   serviceAssignmentId: string;
 };
 
+@Injectable()
 export class GetServiceAssignment {
   constructor(private serviceAssignmentRepository: ServiceAssignmentRepository){}
 

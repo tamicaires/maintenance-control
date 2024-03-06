@@ -1,7 +1,7 @@
 import { ServiceAssignmentNotFoundException } from "../../exceptions/serviceAssignmentNotFoundException";
 import { makeServiceAssignment } from "../../factories/serviceAssignmentFactory";
 import { ServiceAssignmentRepositoryInMemory } from "../../repositories/serviceAssignmentRepositoryInMemory";
-import { DeleteServiceAssignment } from "./deleteServiceAssigment";
+import { DeleteServiceAssignment } from "./deleteServiceAssignment";
 
 let serviceAssignmentRepositoryInMemory: ServiceAssignmentRepositoryInMemory;
 let deleteServiceAssignment: DeleteServiceAssignment;

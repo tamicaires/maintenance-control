@@ -1,6 +1,7 @@
 import { mapUpdateServiceAssignment } from "src/utils/serviceAssignmentUtils";
 import { ServiceAssignmentNotFoundException } from "../../exceptions/serviceAssignmentNotFoundException";
 import { ServiceAssignmentRepository } from "../../repositories/serviceAssignmentRepository";
+import { Injectable } from "@nestjs/common";
 
 interface UpdateServiceAssignmentRequest {
   serviceAssignmentId: string;
@@ -9,6 +10,7 @@ interface UpdateServiceAssignmentRequest {
   employeeId?: string;
 };
 
+@Injectable()
 export class UpdateServiceAssignment {
   constructor(private serviceAssignmentRepository: ServiceAssignmentRepository){}
 

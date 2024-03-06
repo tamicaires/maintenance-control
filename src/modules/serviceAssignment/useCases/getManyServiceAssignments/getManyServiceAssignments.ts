@@ -1,3 +1,4 @@
+import { Injectable } from "@nestjs/common";
 import { ServiceAssignmentRepository } from "../../repositories/serviceAssignmentRepository";
 
 interface GetManyServiceAssignmentsRequest {
@@ -5,6 +6,7 @@ interface GetManyServiceAssignmentsRequest {
   perPage?: string;
 };
 
+@Injectable()
 export class GetManyServiceAssignments {
   constructor(private serviceAssignmentRepository: ServiceAssignmentRepository){};
 
