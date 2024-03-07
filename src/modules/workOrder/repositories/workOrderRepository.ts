@@ -9,4 +9,6 @@ export abstract class WorkOrderRepository {
     page: number,
     perPage: number
   ): Promise<WorkOrder[]>;
+  abstract getWorkOrderServices(id: string): Promise<any>
 };
+

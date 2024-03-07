@@ -2,7 +2,7 @@ import { WorkOrder } from "../entities/WorkOrder";
 import { WorkOrderRepository } from "./workOrderRepository";
 
 export class WorkOrderRepositoryInMemory implements WorkOrderRepository{
-  
+    
   public workOrders: WorkOrder[] = [];
   
   async create(workOrder: WorkOrder): Promise<void> {
@@ -33,4 +33,8 @@ export class WorkOrderRepositoryInMemory implements WorkOrderRepository{
   async findMany(page: number, perPage: number): Promise<WorkOrder[]> {
     return this.workOrders.slice((page - 1) * perPage, page * perPage)
   };
+
+  getWorkOrderServices(id: string): Promise<WorkOrder[]> {
+    throw new Error("Method not implemented.");
+  }
 };

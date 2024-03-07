@@ -7,7 +7,7 @@ import {
   Post, 
   Put, 
   Query,
- Request 
+  Request 
 } from "@nestjs/common";
 import { CreateWorkOrder } from "src/modules/workOrder/useCases/createWorkOrderUseCase/createWorkOrder";
 import { CreateWorkOrderBody } from "./dtos/createWorkOrderBody";
@@ -15,10 +15,11 @@ import { UpdateWorkOrderBody } from "./dtos/updateWorkOrderBody";
 import { UpdateWorkOrder } from "src/modules/workOrder/useCases/updateWorkOrderUseCase/updateWorkOrder";
 import { mapCreateWorkOrderData, mapUpdateWorkOrderData } from "src/utils/workOrderUtils";
 import { DeleteWorkOrder } from "src/modules/workOrder/useCases/deleteWorkOrderUseCase/deleteWorkOrder";
-import { GetWorkOrder } from "src/modules/workOrder/useCases/getWorkOrderUseCase/getWorkOrder";
 import { WorkOrderViewModel } from "./viewModels/workOrderViewModel";
 import { GetManyWorkOrders } from "src/modules/workOrder/useCases/getManyWorkOrdersUseCase/getManyWorkOrders";
 import { AuthenticatedRequestModel } from "../auth/models/authenticateRequestModel";
+import { GetWorkOrderServices } from "src/modules/workOrder/useCases/getWorkOrderWithServicesUseCase/getWorkOrderWithServices";
+
 
 
 @Controller('work-orders')
@@ -27,8 +28,8 @@ export class WorkOrderController {
     private createWorkOrder: CreateWorkOrder,
     private updateWorkOrder: UpdateWorkOrder,
     private deleteWorkOrder: DeleteWorkOrder,
-    private getWorkOrder: GetWorkOrder,
-    private getManyWorkOrder: GetManyWorkOrders
+    private getManyWorkOrder: GetManyWorkOrders,
+    private getWorkOrderServices: GetWorkOrderServices
   ){}
 
   @Post()
@@ -74,10 +75,12 @@ export class WorkOrderController {
   };
 
   @Get(':id')
-  async getOne(@Param('id') workOrderId: string){
-    const workOrder = await this.getWorkOrder.execute({ workOrderId });
+  async getOneWithServices(@Param('id') workOrderId: string){
+    const workOrderServices = await this.getWorkOrderServices.execute({
+      workOrderId
+    });
     
-    return WorkOrderViewModel.toHttp(workOrder);
+    return workOrderServices;
   };
 
   @Get()

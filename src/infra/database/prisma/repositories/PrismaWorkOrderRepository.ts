@@ -7,7 +7,7 @@ import { PrismaWorkOrderMapper } from "../mappers/PrismaWorkOrderMapper";
 @Injectable()
 export class PrismaWorkOrderRepository implements WorkOrderRepository {
   constructor(private prisma: PrismaService){}
-
+  
   async create(workOrder: WorkOrder): Promise<void> {
     const workOrderRaw = PrismaWorkOrderMapper.toPrisma(workOrder);
  
@@ -49,4 +49,20 @@ export class PrismaWorkOrderRepository implements WorkOrderRepository {
 
     return workOrders.map(PrismaWorkOrderMapper.toDomain)
   };
+  
+  async getWorkOrderServices(id: string): Promise<any>  {
+    const workOrderServices = await this.prisma.workOrder.findMany({
+      where: { id },
+      include: { 
+        serviceAssignments: {
+          select: {
+            service: true
+            }
+          }
+        } 
+      });
+
+    return workOrderServices;
+  };
 };
+

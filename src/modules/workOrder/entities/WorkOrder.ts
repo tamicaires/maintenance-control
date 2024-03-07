@@ -3,6 +3,7 @@ import { Box } from "../enum/box.enum";
 import { MaintenanceStatus } from "../enum/maitenance-status.enum";
 import { TypeOfMaintenance } from "../enum/type-of-maintenance.enum";
 import { randomUUID } from "crypto";
+import { Service } from "src/modules/service/entities/Service";
 
 interface WorkOrderSchema {
   severityLevel: string;
@@ -21,17 +22,20 @@ interface WorkOrderSchema {
 export class WorkOrder {
   private props: WorkOrderSchema;
   private _id: string;
+  private _service?: Service;
 
-  constructor(props: Replace<
+  constructor(
+    props: Replace<
     WorkOrderSchema, {
-    entryQueue?: Date | null,
-    entryMaintenance?: Date | null,
-    exitMaintenance?: Date | null,
-    box?: Box | null,  
-    createdAt?: Date, 
-    updatedAt?: Date
-  }>, 
-    id?: string
+      entryQueue?: Date | null,
+      entryMaintenance?: Date | null,
+      exitMaintenance?: Date | null,
+      box?: Box | null,  
+      createdAt?: Date, 
+      updatedAt?: Date
+    }>, 
+    id?: string,
+    service?: Service
     ){
       this.props = {
         ...props,
@@ -42,8 +46,11 @@ export class WorkOrder {
         createdAt: props.createdAt || new Date(),
         updatedAt: new Date()
       };
+
       this._id = id || randomUUID();
-    }
+
+      this._service = service;
+    } 
 
   get id(): string {
     return this._id;
@@ -87,6 +94,14 @@ export class WorkOrder {
 
   set status(status: MaintenanceStatus) {
     this.props.status = status;
+  };
+
+  get service(): Service | undefined {
+    return this._service;
+  };
+
+  set service(service: Service | undefined) {
+    this._service = service;
   };
 
   get userId(): string {
