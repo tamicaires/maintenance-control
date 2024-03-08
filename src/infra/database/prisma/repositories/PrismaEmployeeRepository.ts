@@ -43,7 +43,7 @@ export class PrismaEmployeeRepository implements EmployeeRepository {
 
   async getMany(page: number, perPage: number): Promise<Employee[]> {
     const employees = await this.prisma.employee.findMany({
-      take: page,
+      take: perPage,
       skip: (page -1) * perPage
     });
 
