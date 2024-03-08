@@ -1,52 +1,47 @@
-# :truck: Sistema de Controle de Frotas
+# 🔧 **Sistema de Controle de Ordem de Serviços**
 
-Bem-vindo ao repositório do nosso projeto de Sistema de Controle de Frotas! Este projeto é construído usando NestJS, TypeScript, Node.js, Prisma ORM e segue os princípios da Arquitetura Limpa e os princípios de design SOLID.
+Bem-vindo ao repositório do nosso projeto de Sistema de Controle de Ordem de Serviços! Este sistema é desenvolvido com base em NestJS, TypeScript, Node.js, Prisma ORM e segue os princípios da Arquitetura Limpa e os princípios de design SOLID.
 
-## Sumário
+## **Sumário**
 
-- [Introdução](#introdução)
-- [Recursos](#recursos)
-- [Autenticação e Autorização](#autenticação-e-autorização)
-- [Funcionalidades](#funcionalidades)
-- [Tecnologias Utilizadas](#tecnologias-utilizadas)
-- [Começando](#começando)
-- [Contribuindo](#contribuindo)
-- [Licença](#licença)
+- Introdução
+- Recursos
+- Funcionalidades
+- Tecnologias Utilizadas
+- Começando
+- Contribuindo
+- Licença
 
-## Introdução
+## **Introdução**
 
-Nosso Sistema de Controle de Frotas foi projetado para fornecer uma solução abrangente para controlar frotas, transportadoras e anotações de usuários de forma eficiente. Ele incorpora tecnologias modernas e princípios de design de software para garantir escalabilidade, manutenibilidade e confiabilidade.
+Nosso Sistema de Controle de Ordem de Serviços foi projetado para oferecer uma solução completa para gerenciar ordens de serviços de forma eficiente. Incorporamos tecnologias modernas e princípios de design de software para garantir escalabilidade, manutenibilidade e confiabilidade.
 
-## Recursos
+## **Recursos**
 
 - Autenticação usando tokens JWT
 - Autorização baseada em funções
-- Operações de criação, recuperação, atualização e exclusão (CRUD) para transportadoras e frotas
-- Gerenciamento de anotações de usuários com acesso restrito com base no criador
+- Gerenciamento de ordens de serviços com status e categorias específicas
+- Associação de serviços e funcionários a ordens de serviços
 - Suporte à paginação para operações findMany
 - Testes unitários utilizando Jest
 
-## Autenticação e Autorização
+## **Funcionalidades**
 
-Implementamos autenticação baseada em tokens JWT para acesso do usuário ao sistema. Os usuários são atribuídos funções (como admin ou usuário), e a autorização baseada em funções restringe o acesso a determinadas funcionalidades. Por exemplo, apenas usuários com a função admin podem realizar operações de criação, edição e exclusão em transportadoras e frotas, enquanto usuários com a função usuário têm acesso somente leitura.
+- **Gerenciamento de Ordens de Serviços:** Os usuários podem criar, visualizar, atualizar e fechar ordens de serviços com diferentes níveis de gravidade e status.
+- **Associação de Serviços e Funcionários:** Os usuários podem associar serviços específicos e funcionários responsáveis a cada ordem de serviço.
+- **Controle de Acesso Baseado em Funções:** Usuários administradores têm acesso total às funcionalidades de controle de ordens de serviços, enquanto usuários regulares possuem acesso restrito.
 
-## Funcionalidades
+## **Tecnologias Utilizadas**
 
-- **Controle de Transportadoras e Frotas**: Os usuários podem realizar operações CRUD em transportadoras e frotas, incluindo criação, leitura, atualização e exclusão de registros.
-- **Anotações de Usuários**: Os usuários podem criar anotações e só podem visualizar as anotações que criaram.
-- **Controle de Acesso Baseado em Funções**: Usuários admin têm acesso total às funcionalidades de controle de transportadoras e frotas, enquanto usuários regulares têm acesso restrito.
+- **NestJS:** Um framework Node.js progressivo para construir aplicativos eficientes, confiáveis e escaláveis no lado do servidor.
+- **TypeScript:** Um superset tipado do JavaScript que compila para JavaScript simples.
+- **Node.js:** Um ambiente de execução JavaScript construído no motor JavaScript V8 do Chrome.
+- **Prisma ORM:** Um moderno toolkit de banco de dados para TypeScript e Node.js.
+- **Arquitetura Limpa e Princípios SOLID:** Princípios de design para construir arquiteturas de software escaláveis e manuteníveis.
 
-## Tecnologias Utilizadas
+## **Começando**
 
-- **NestJS**: Um framework Node.js progressivo para construir aplicativos eficientes, confiáveis e escaláveis no lado do servidor.
-- **TypeScript**: Um superset tipado do JavaScript que compila para JavaScript simples.
-- **Node.js**: Um ambiente de execução JavaScript construído no motor JavaScript V8 do Chrome.
-- **Prisma ORM**: Um moderno toolkit de banco de dados para TypeScript e Node.js.
-- **Arquitetura Limpa e Princípios SOLID**: Princípios de design para construir arquiteturas de software escaláveis e manuteníveis.
-
-## Começando
-
-Para começar com nosso Sistema de Controle de Frotas:
+Para começar com nosso Sistema de Controle de Ordem de Serviços:
 
 1. Clone este repositório.
 2. Instale as dependências usando `npm install`.
@@ -54,12 +49,13 @@ Para começar com nosso Sistema de Controle de Frotas:
 4. Execute os testes unitários usando `npm test`.
 5. Execute o aplicativo usando `npm start`.
 
-## Contribuindo
+## **Contribuindo**
 
-Aceitamos contribuições da comunidade para melhorar e aprimorar nosso Sistema de Controle de Frotas. Para contribuir, por favor faça um fork deste repositório, faça suas alterações e envie um pull request descrevendo as alterações propostas.
+Aceitamos contribuições da comunidade para melhorar e aprimorar nosso Sistema de Controle de Ordem de Serviços. Para contribuir, por favor faça um fork deste repositório, faça suas alterações e envie um pull request descrevendo as alterações propostas.
 
-## Licença
+## **Licença**
 
-Este projeto está licenciado sob a [Licença MIT](LICENSE).
+Este projeto está licenciado sob a Licença MIT.
 
-Obrigado por considerar nosso projeto de Sistema de Controle de Frotas. Esperamos que ele forneça insights valiosos sobre nosso uso de NestJS, TypeScript, Jest e princípios de Arquitetura Limpa em aplicativos do mundo real. Se você tiver alguma dúvida ou comentário, sinta-se à vontade para entrar em contato conosco.
+Obrigado por considerar nosso projeto de Sistema de Controle de Ordem de Serviços. Esperamos que ele forneça uma solução valiosa para gerenciamento de ordens de serviços em diversos contextos. Se você tiver alguma dúvida ou comentário, sinta-se à vontade para entrar em contato conosco.
+
