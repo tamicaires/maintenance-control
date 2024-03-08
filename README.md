@@ -46,8 +46,8 @@ Para começar com nosso Sistema de Controle de Ordem de Serviços:
 1. Clone este repositório.
 2. Instale as dependências usando `npm install`.
 3. Configure suas configurações de banco de dados e variáveis de ambiente.
-4. Execute os testes unitários usando `npm test`.
-5. Execute o aplicativo usando `npm start`.
+4. Execute os testes unitários usando `npm run test:watch`.
+5. Execute o aplicativo usando `npm run start:dev`.
 
 ## **Contribuindo**
 
