@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { WorkOrderRepository } from "../../repositories/workOrderRepository";
 import { WorkOrder } from "../../entities/WorkOrder";
+import { WorkOrderNotFoundException } from "../../exceptions/workOrderNotFoundException";
 
 interface GetWorkOrderServicesRequest {
   workOrderId: string;
@@ -14,6 +15,8 @@ export class GetWorkOrderServices {
 
     const workOrderServices = await this.workOrderRepository.getWorkOrderServices(workOrderId);
 
+    if(!workOrderServices) throw new WorkOrderNotFoundException();
+    
     const services: WorkOrder[] = [];
 
     workOrderServices.map(workOrder => {
