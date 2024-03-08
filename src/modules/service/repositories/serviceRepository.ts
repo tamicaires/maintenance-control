@@ -5,6 +5,7 @@ export abstract class ServiceRepository {
   abstract findById(id: string): Promise<Service | null>;
   abstract delete(id: string): Promise<void>;
   abstract save(service: Service): Promise<void>;
+  abstract findOne(serviceName: string): Promise<Service | null>;
   abstract findMany(
     filter: string,
     page: number,

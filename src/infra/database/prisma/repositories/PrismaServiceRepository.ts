@@ -7,7 +7,7 @@ import { Injectable } from "@nestjs/common";
 @Injectable()
 export class PrismaServiceRepository implements ServiceRepository {
   constructor(private prisma: PrismaService){}
-
+  
   async create(service: Service): Promise<void> {
     const serviceRaw = PrismaServiceMapper.toPrisma(service);
 
@@ -51,5 +51,15 @@ export class PrismaServiceRepository implements ServiceRepository {
     });
 
     return services.map(PrismaServiceMapper.toDomain)
+  };
+
+  async findOne(serviceName: string): Promise<Service | null> {
+    const service = await this.prisma.service.findUnique({
+      where: { serviceName: serviceName }
+    });
+
+    if(!service) return null;
+
+    return PrismaServiceMapper.toDomain(service);
   };
 };

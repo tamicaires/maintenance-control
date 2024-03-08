@@ -2,7 +2,7 @@ import { Service } from "../entities/Service";
 import { ServiceRepository } from "./serviceRepository";
 
 export class ServiceRepositoryInMemory implements ServiceRepository {
-    
+      
   public services: Service [] = []
 
   async create(service: Service): Promise<void> {
@@ -31,5 +31,13 @@ export class ServiceRepositoryInMemory implements ServiceRepository {
     return this.services
       .filter(service => service.serviceName.includes(filter))
       .slice((page - 1) * perPage, page * perPage);
+  };
+
+  async findOne(serviceName: string): Promise<Service | null> {
+    const job = this.services.find(service => service.serviceName === serviceName);
+
+    if(!job) return null;
+
+    return job;
   };
 };
