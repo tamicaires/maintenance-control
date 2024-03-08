@@ -7,7 +7,7 @@ import { PrismaJobMapper } from "../mappers/PrismaJobMapper";
 @Injectable()
 export class PrismaJobRepository implements JobRepository {
   constructor(private prisma: PrismaService) {}
-
+  
   async create(job: Job): Promise<void> {
     const jobRaw = PrismaJobMapper.toPrisma(job);
 
@@ -37,5 +37,15 @@ export class PrismaJobRepository implements JobRepository {
     });
 
     return jobs?.map(PrismaJobMapper.toDomain)
+  };
+
+  async findOne(jobTitle: string): Promise<Job | null> {
+    const job = await this.prisma.job.findUnique({
+      where: { jobTitle }
+    });
+
+    if(!job) return null;
+
+    return PrismaJobMapper.toDomain(job);
   };
 };

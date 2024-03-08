@@ -2,7 +2,7 @@ import { Job } from "../entities/Job";
 import { JobRepository } from "./jobRepository";
 
 export class JobRepositoryInMemory implements JobRepository {
-        
+          
   public jobs: Job[] = [];
 
   async create(job: Job): Promise<void> {
@@ -23,5 +23,13 @@ export class JobRepositoryInMemory implements JobRepository {
 
   async findMany(page: number, perPage: number): Promise<Job[]> {
     return this.jobs.slice((page -1) * perPage, page * perPage);
+  };
+
+  async findOne(jobTitle: string): Promise<Job | null> {
+    const job = this.jobs.find(job => job.jobTitle === jobTitle);
+
+    if(!job) return null;
+
+    return job;
   };
 };

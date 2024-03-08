@@ -1,3 +1,5 @@
+import { JobWithSameNameException } from "../../exceptions/JobWithSameNameException";
+import { makeJob } from "../../factories/jobFactory";
 import { JobRepositoryInMemory } from "../../repositories/jobRepositoryInMemory";
 import { CreateJob } from "./createJob";
 
@@ -19,5 +21,17 @@ describe('Create Job', () => {
     });
 
     expect(jobRepositoryInMemory.jobs).toEqual([job])
+  });
+
+  it('Should be able to throw error when job title already exists', async () => {
+    const job = makeJob({
+      jobTitle: 'Mecânico'
+    });
+
+    jobRepositoryInMemory.jobs = [job];
+
+    expect(async () => {
+      await createJob.execute({ jobTitle: "Mecânico"});
+    }).rejects.toThrow(JobWithSameNameException);
   });
 });
