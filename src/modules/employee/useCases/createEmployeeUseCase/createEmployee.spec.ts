@@ -1,4 +1,6 @@
 import { EmployeeStatus } from "../../enum/employee-status.enum";
+import { EmployeeWithSameNameException } from "../../exceptions/EmployeeWithSameNameException";
+import { makeEmployee } from "../../factories/employeeFactory";
 import { EmployeeRepositoryInMemory } from "../../repositories/EmployeeRepositoryInMemory";
 import { CreateEmployee } from "./createEmployee";
 
@@ -24,5 +26,18 @@ describe('Create Employee', () => {
     });
 
     expect(employeeRepositoryInMemory.employees).toEqual([employee]);
+  });
+
+  it('Should be able to throw error when employee already exist', () => {
+    const employee = makeEmployee({
+      name: 'Tamires'
+    });
+
+    employeeRepositoryInMemory.employees = [employee];
+
+    expect(async () => {
+      await createEmployee.execute(employee);
+    }).rejects.toThrow(EmployeeWithSameNameException);
+
   });
 });

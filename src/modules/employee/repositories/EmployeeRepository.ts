@@ -5,8 +5,9 @@ export abstract class EmployeeRepository {
   abstract findById(id: string): Promise<Employee | null>;
   abstract save(employee: Employee): Promise<void>;
   abstract delete(id: string): Promise<void>;
+  abstract findOne(employeeName: string): Promise<Employee | null>;
   abstract getMany(
     page: number,
     perPage: number
-  ): Promise<Employee[]>
+  ): Promise<Employee[]>;
 }; 

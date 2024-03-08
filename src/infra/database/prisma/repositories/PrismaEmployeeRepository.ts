@@ -7,7 +7,7 @@ import { Injectable } from "@nestjs/common";
 @Injectable()
 export class PrismaEmployeeRepository implements EmployeeRepository {
   constructor(private prisma: PrismaService){}
-
+  
   async create(employee: Employee): Promise<void> {
     const employeeRaw = PrismaEmployeeMapper.toPrisma(employee);
     
@@ -48,5 +48,15 @@ export class PrismaEmployeeRepository implements EmployeeRepository {
     });
 
     return employees.map(PrismaEmployeeMapper.toDomain )
+  };
+  
+  async findOne(employeeName: string): Promise<Employee | null> {
+    const employeeRaw = await this.prisma.employee.findUnique({
+      where: { name: employeeName }  
+    });
+
+    if(!employeeRaw) return null;
+
+    return PrismaEmployeeMapper.toDomain(employeeRaw);
   };
 };

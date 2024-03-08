@@ -3,7 +3,7 @@ import { EmployeeRepository } from "./EmployeeRepository";
 
 
 export class EmployeeRepositoryInMemory implements EmployeeRepository {
-   
+     
   public employees: Employee[] = [];
 
   async create(employee: Employee): Promise<void> {
@@ -30,5 +30,13 @@ export class EmployeeRepositoryInMemory implements EmployeeRepository {
 
   async getMany(page: number, perPage: number): Promise<Employee[]> {
     return this.employees.slice((page - 1) * perPage, page * perPage)
+  };
+
+  async findOne(employeeName: string): Promise<Employee | null> {
+    const employee = this.employees.find(employee => employee.name === employeeName);
+
+    if(!employee) return null;
+
+    return employee;
   };
 };
