@@ -3,7 +3,7 @@ import { EmployeeRepository } from "./EmployeeRepository";
 
 
 export class EmployeeRepositoryInMemory implements EmployeeRepository {
-     
+       
   public employees: Employee[] = [];
 
   async create(employee: Employee): Promise<void> {
@@ -38,5 +38,9 @@ export class EmployeeRepositoryInMemory implements EmployeeRepository {
     if(!employee) return null;
 
     return employee;
+  };
+
+  async getEmployeeServices(id: string): Promise<any> {
+    throw new Error("Method not implemented.");
   };
 };

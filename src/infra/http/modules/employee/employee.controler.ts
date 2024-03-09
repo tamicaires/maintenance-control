@@ -9,13 +9,14 @@ import {
   Query 
 } from "@nestjs/common";
 import { CreateEmployeeBody } from "./dtos/createEmployeeBody";
-import { CreateEmployee } from "src/modules/employee/useCases/createEmployeeUseCase/createEmployee";
-import { EditEmployeeBody } from "./dtos/editEmployeeBody";
-import { EditEmployee } from "src/modules/employee/useCases/editEmployeeUseCase.ts/editEmployee";
-import { DeleteEmployee } from "src/modules/employee/useCases/deleteEmployeeUseCase/deleteEmployee";
-import { GetEmployee } from "src/modules/employee/useCases/getEmployeeUseCase/getEmployee";
 import { EmployeeViewModel } from "./viewModels/EmployeeViewModel";
-import { GetManyEmployees } from "src/modules/employee/useCases/getManyEmployeesUseCase/getManyEmployees";
+import { CreateEmployee } from "src/modules/employee/useCases/createEmployee/createEmployee";
+import { EditEmployee } from "src/modules/employee/useCases/editEmployee/editEmployee";
+import { DeleteEmployee } from "src/modules/employee/useCases/deleteEmployee/deleteEmployee";
+import { GetEmployee } from "src/modules/employee/useCases/getEmployee/getEmployee";
+import { GetManyEmployees } from "src/modules/employee/useCases/getManyEmployees/getManyEmployees";
+import { EditEmployeeBody } from "./dtos/editEmployeeBody";
+import { GetEmployeeServices } from "src/modules/employee/useCases/getEmployeeServices/getEmployeeServices";
 
 @Controller('employees')
 export class EmployeeController {
@@ -24,6 +25,7 @@ export class EmployeeController {
     private editEmployee: EditEmployee,
     private deleteEmployee: DeleteEmployee,
     private getEmployee: GetEmployee,
+    private getEmployeeServices: GetEmployeeServices,
     private getManyEmployees: GetManyEmployees
   ){}
 
@@ -71,6 +73,15 @@ export class EmployeeController {
     });
 
     return EmployeeViewModel.toHttp(employee);
+  };
+
+  @Get('/services/:id')
+  async getOneWithServices(@Param('id') employeeId: string){
+    const employeeServices = await this.getEmployeeServices.execute({
+      employeeId
+    });
+
+    return employeeServices;
   };
 
   @Get()
