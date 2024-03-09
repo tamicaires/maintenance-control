@@ -9,13 +9,13 @@ import {
   Query 
 } from "@nestjs/common";
 import { CreateServiceBody } from "./dtos/createServiceBody";
-import { CreateService } from "src/modules/service/useCases/createServiceUseCase/createService";
+import { CreateService } from "src/modules/service/useCases/createService/createService";
 import { UpdateServiceBody } from "./dtos/updateServiceBody";
-import { UpdateService } from "src/modules/service/useCases/updateServiceUseCase/updateService";
-import { DeleteService } from "src/modules/service/useCases/deleteServiceUseCase/deleteService";
-import { GetService } from "src/modules/service/useCases/getServiceUseCase/getService";
+import { UpdateService } from "src/modules/service/useCases/updateService/updateService";
+import { DeleteService } from "src/modules/service/useCases/deleteService/deleteService";
+import { GetService } from "src/modules/service/useCases/getService/getService";
 import { ServiceViewModel } from "./viewModels/ServiceViewModel";
-import { GetManyServices } from "src/modules/service/useCases/getManyServicesUseCase/getManyServices";
+import { GetManyServices } from "src/modules/service/useCases/getManyServices/getManyServices";
 
 @Controller('services')
 export class ServiceController {

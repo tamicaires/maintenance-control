@@ -1,7 +1,7 @@
 import { MiddlewareConsumer, Module } from "@nestjs/common";
 import { AuthControler } from "./auth.controller";
 import { LocalStrategy } from "src/modules/auth/strategies/local.strategy";
-import { ValidateUserUseCase } from "src/modules/auth/useCases/validateUserUseCase/validateUserUseCase";
+import { ValidateUserUseCase } from "src/modules/auth/useCases/validateUser/validateUserUseCase";
 import { UserModule } from "../user/user.module";
 import { DatabaseModule } from "src/infra/database/database.module";
 import { signInDTOValidateMiddleware } from "./middleware/signInDTOValidate.middleware";

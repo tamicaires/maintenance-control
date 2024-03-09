@@ -1,13 +1,13 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query, Request } from "@nestjs/common";
-import { CreateNote } from "src/modules/note/useCases/createNoteUseCase/createNote";
+import { CreateNote } from "src/modules/note/useCases/createNote/createNote";
 import { AuthenticatedRequestModel } from "../auth/models/authenticateRequestModel";
 import { CreateNoteBody } from "./dtos/createNoteBody";
 import { NoteViewModel } from "./viewModels/NoteViewModel";
-import { EditNote } from "src/modules/note/useCases/editNoteUseCase/editNote";
+import { EditNote } from "src/modules/note/useCases/editNote/editNote";
 import { EditNoteBody } from "./dtos/editNoteBody";
-import { DeleteNote } from "src/modules/note/useCases/deleteNoteUseCase/deleteNote";
-import { GetNote } from "src/modules/note/useCases/getNoteUseCase/getNote";
-import { GetManyNotes } from "src/modules/note/useCases/getManyNoteUseCase/getManyNotes";
+import { DeleteNote } from "src/modules/note/useCases/deleteNote/deleteNote";
+import { GetNote } from "src/modules/note/useCases/getNote/getNote";
+import { GetManyNotes } from "src/modules/note/useCases/getManyNote/getManyNotes";
 
 @Controller('notes')
 export class NoteController {

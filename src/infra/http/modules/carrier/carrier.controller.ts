@@ -1,12 +1,12 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } from "@nestjs/common";
-import { CreateCarrier } from "src/modules/carrier/useCases/createCarrierUseCase/createCarrier";
+import { CreateCarrier } from "src/modules/carrier/useCases/createCarrier/createCarrier";
 import { CreateCarrierBody } from "./dtos/createCarrierBody";
 import { CarrierViewModel } from "./viewModels/CarrierViewModel";
-import { EditCarrier } from "src/modules/carrier/useCases/editCarrierUseCase/editCarrier";
+import { EditCarrier } from "src/modules/carrier/useCases/editCarrier/editCarrier";
 import { EditCarrierBody } from "./dtos/editCarrierBody";
-import { DeleteCarrier } from "src/modules/carrier/useCases/deleteCarrierUseCase/deleteCarrier";
-import { GetCarrier } from "src/modules/carrier/useCases/getCarrierUseCase/getCarrier";
-import { GetManyCarriers } from "src/modules/carrier/useCases/getAllCarrriersUseCase/getManyCarriers";
+import { DeleteCarrier } from "src/modules/carrier/useCases/deleteCarrier/deleteCarrier";
+import { GetCarrier } from "src/modules/carrier/useCases/getCarrier/getCarrier";
+import { GetManyCarriers } from "src/modules/carrier/useCases/getAllCarrriers/getManyCarriers";
 import { AuthorizationGuard } from "../auth/guards/authorization.guard";
 import { Role } from "../auth/decorators/roles.decorator";
 

@@ -1,13 +1,13 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } from "@nestjs/common";
 import { CreateFleetBody } from "./dtos/createFleetBody";
-import { CreateFleet } from "src/modules/fleet/useCases/createFleetUseCase/createFleet";
-import { EditFleet } from "src/modules/fleet/useCases/editFleetUseCase/editFleet";
+import { CreateFleet } from "src/modules/fleet/useCases/createFleet/createFleet";
+import { EditFleet } from "src/modules/fleet/useCases/editFleet/editFleet";
 import { EditFleetBody } from "./dtos/editFleetBody";
 import { mapEditFleetData } from "src/utils/fleetUtils";
 import { DeleteFleet } from "src/modules/fleet/useCases/deleteFleet/deleteFleet";
-import { GetFleet } from "src/modules/fleet/useCases/getFleetUseCase/getFleet";
+import { GetFleet } from "src/modules/fleet/useCases/getFleet/getFleet";
 import { FleetViewModel } from "./viewModel/FleetViewModel";
-import { GetManyFleets } from "src/modules/fleet/useCases/getManyFleetsUseCase/getManyFleets";
+import { GetManyFleets } from "src/modules/fleet/useCases/getManyFleets/getManyFleets";
 import { AuthorizationGuard } from "../auth/guards/authorization.guard";
 import { Role } from "../auth/decorators/roles.decorator";
 

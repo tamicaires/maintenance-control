@@ -9,16 +9,16 @@ import {
   Query,
   Request 
 } from "@nestjs/common";
-import { CreateWorkOrder } from "src/modules/workOrder/useCases/createWorkOrderUseCase/createWorkOrder";
+import { CreateWorkOrder } from "src/modules/workOrder/useCases/createWorkOrder/createWorkOrder";
 import { CreateWorkOrderBody } from "./dtos/createWorkOrderBody";
 import { UpdateWorkOrderBody } from "./dtos/updateWorkOrderBody";
-import { UpdateWorkOrder } from "src/modules/workOrder/useCases/updateWorkOrderUseCase/updateWorkOrder";
+import { UpdateWorkOrder } from "src/modules/workOrder/useCases/updateWorkOrder/updateWorkOrder";
 import { mapCreateWorkOrderData, mapUpdateWorkOrderData } from "src/utils/workOrderUtils";
-import { DeleteWorkOrder } from "src/modules/workOrder/useCases/deleteWorkOrderUseCase/deleteWorkOrder";
+import { DeleteWorkOrder } from "src/modules/workOrder/useCases/deleteWorkOrder/deleteWorkOrder";
 import { WorkOrderViewModel } from "./viewModels/workOrderViewModel";
-import { GetManyWorkOrders } from "src/modules/workOrder/useCases/getManyWorkOrdersUseCase/getManyWorkOrders";
+import { GetManyWorkOrders } from "src/modules/workOrder/useCases/getManyWorkOrders/getManyWorkOrders";
 import { AuthenticatedRequestModel } from "../auth/models/authenticateRequestModel";
-import { GetWorkOrderServices } from "src/modules/workOrder/useCases/getWorkOrderWithServicesUseCase/getWorkOrderWithServices";
+import { GetWorkOrderServices } from "src/modules/workOrder/useCases/getWorkOrderWithServices/getWorkOrderWithServices";
 
 
 
