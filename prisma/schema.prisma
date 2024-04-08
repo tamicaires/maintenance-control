@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["relationJoins"]
 }
 
 datasource db {
@@ -20,7 +21,7 @@ model User {
   @@map("users")
   notes        Note[]
   workOrder    WorkOrder[]
-}
+} 
 
 enum Role {
   USER
@@ -43,9 +44,9 @@ model Fleet {
   id                    String  @id
   fleetNumber           String  
   plate                 String
-  first_trailer_plate   String
-  second_trailer_plate  String
-  third_trailer_plate   String
+  firstTrailerPlate     String  @map("first_trailer_plate")
+  secondTrailerPlate    String  @map("second_trailer_plate")
+  thirdTrailerPlate     String  @map("third_trailer_plate")
   km                    String
   status                Status   @default(ATIVO) 
   carrier               Carrier  @relation(fields: [carrierId], references: [id])
@@ -81,7 +82,7 @@ model Employee {
   name        String      @unique
   workShift   String  
   status      Status      @default(ATIVO)
-  jobTitle    Job         @relation(fields: [jobTitleId], references: [id]) 
+  job         Job         @relation(fields: [jobTitleId], references: [id]) 
   jobTitleId  String
 
   createdAt   DateTime  @map("created_at")

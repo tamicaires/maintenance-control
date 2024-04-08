@@ -5,9 +5,9 @@ import { Replace } from 'src/utils/replace';
 interface FleetSchema {
   fleetNumber: string;
   plate: string;
-  first_trailer_plate: string;
-  second_trailer_plate: string;
-  third_trailer_plate: string;
+  firstTrailerPlate: string;
+  secondTrailerPlate: string;
+  thirdTrailerPlate: string;
   km: string;
   carrierId: string;
   status: FleetStatus;
@@ -48,28 +48,28 @@ export class Fleet {
     this.props.plate = plate;
   }
 
-  get first_trailer_plate(): string {
-    return this.props.first_trailer_plate;
+  get firstTrailerPlate(): string {
+    return this.props.firstTrailerPlate;
   }
 
-  set first_trailer_plate(first_trailer_plate: string) {
-    this.props.first_trailer_plate = first_trailer_plate;
+  set firstTrailerPlate(firstTrailerPlate: string) {
+    this.props.firstTrailerPlate = firstTrailerPlate;
   }
 
-  get second_trailer_plate(): string {
-    return this.props.second_trailer_plate;
+  get secondTrailerPlate(): string {
+    return this.props.secondTrailerPlate;
   }
 
-  set second_trailer_plate(second_trailer_plate: string) {
-    this.props.second_trailer_plate = second_trailer_plate;
+  set secondTrailerPlate(secondTrailerPlate: string) {
+    this.props.secondTrailerPlate = secondTrailerPlate;
   }
 
-  get third_trailer_plate(): string {
-    return this.props.first_trailer_plate;
+  get thirdTrailerPlate(): string {
+    return this.props.thirdTrailerPlate;
   }
 
-  set third_trailer_plate(first_trailer_plate: string) {
-    this.props.first_trailer_plate = first_trailer_plate;
+  set thirdTrailerPlate(thirdTrailerPlate: string) {
+    this.props.thirdTrailerPlate = thirdTrailerPlate;
   }
 
   get km(): string {

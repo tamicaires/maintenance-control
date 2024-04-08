@@ -8,14 +8,14 @@ export function updateFleetProperties(fleet: Fleet, data: Partial<Fleet>) {
   if (data.plate !== undefined) {
     fleet.plate = data.plate;
   }
-  if (data.first_trailer_plate !== undefined) {
-    fleet.first_trailer_plate = data.first_trailer_plate;
+  if (data.firstTrailerPlate !== undefined) {
+    fleet.firstTrailerPlate = data.firstTrailerPlate;
   }
-  if (data.second_trailer_plate !== undefined) {
-    fleet.second_trailer_plate = data.second_trailer_plate;
+  if (data.secondTrailerPlate !== undefined) {
+    fleet.secondTrailerPlate = data.secondTrailerPlate;
   }
-  if (data.third_trailer_plate !== undefined) {
-    fleet.third_trailer_plate = data.third_trailer_plate;
+  if (data.thirdTrailerPlate !== undefined) {
+    fleet.thirdTrailerPlate = data.thirdTrailerPlate;
   }
   if (data.km !== undefined) {
     fleet.km = data.km;
@@ -29,9 +29,9 @@ export function mapEditFleetData(body: EditFleetBody, fleetId: string){
   const { 
     fleetNumber, 
     plate, 
-    first_trailer_plate, 
-    second_trailer_plate, 
-    third_trailer_plate, 
+    firstTrailerPlate, 
+    secondTrailerPlate, 
+    thirdTrailerPlate, 
     km, 
     status
   } = body;
@@ -40,9 +40,9 @@ export function mapEditFleetData(body: EditFleetBody, fleetId: string){
     fleetId,
     fleetNumber, 
     plate, 
-    first_trailer_plate, 
-    second_trailer_plate, 
-    third_trailer_plate, 
+    firstTrailerPlate, 
+    secondTrailerPlate, 
+    thirdTrailerPlate, 
     km, 
     status
   };

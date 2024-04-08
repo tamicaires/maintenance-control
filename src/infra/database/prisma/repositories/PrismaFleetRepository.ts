@@ -40,10 +40,17 @@ export class PrismaFleetRepository implements FleetRepository {
     });
   };
 
-  async findMany(page: number, perPage: number): Promise<Fleet[]> {
+  async findMany(page: number, perPage: number): Promise<any> {
     const fleets = await this.prisma.fleet.findMany({
       take: perPage,
-      skip: (page - 1) * perPage
+      skip: (page - 1) * perPage,
+      include: {
+        carrier: {
+          select: {
+            carrierName: true
+          }
+        }
+      }
     });
 
     return fleets.map(PrismaFleetMapper.toDomain);

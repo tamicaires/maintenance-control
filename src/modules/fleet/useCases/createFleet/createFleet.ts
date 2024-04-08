@@ -6,9 +6,9 @@ import { FleetStatus } from '../../enum/fleet-status.enum';
 interface CreateFleetRequest {
   fleetNumber: string;
   plate: string;
-  first_trailer_plate: string;
-  second_trailer_plate: string;
-  third_trailer_plate: string;
+  firstTrailerPlate: string;
+  secondTrailerPlate: string;
+  thirdTrailerPlate: string;
   km: string;
   carrierId: string;
   status: FleetStatus;
@@ -22,9 +22,9 @@ export class CreateFleet {
     const fleet = new Fleet({
       fleetNumber: data.fleetNumber,
       plate: data.plate,
-      first_trailer_plate: data.first_trailer_plate,
-      second_trailer_plate: data.second_trailer_plate,
-      third_trailer_plate: data.third_trailer_plate,
+      firstTrailerPlate: data.firstTrailerPlate,
+      secondTrailerPlate: data.secondTrailerPlate,
+      thirdTrailerPlate: data.thirdTrailerPlate,
       km: data.km,
       carrierId: data.carrierId,
       status: data.status

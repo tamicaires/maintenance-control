@@ -27,9 +27,9 @@ describe('Edit Fleet', () => {
       fleetId: fleet.id,
       fleetNumber: fleetNumberChanged,
       plate: 'PTB445SD',
-      first_trailer_plate: 'PTB445SD',
-      second_trailer_plate: 'PTB445SD',
-      third_trailer_plate: 'PTB445SD',
+      firstTrailerPlate: 'PTB445SD',
+      secondTrailerPlate: 'PTB445SD',
+      thirdTrailerPlate: 'PTB445SD',
       km: '54525',
       status: FleetStatus.ATIVO
     });
@@ -45,9 +45,9 @@ describe('Edit Fleet', () => {
         fleetId: 'fakeId',
         fleetNumber: '22548',
         plate: 'PTB445SD',
-        first_trailer_plate: 'PTB445SD',
-        second_trailer_plate: 'PTB445SD',
-        third_trailer_plate: 'PTB445SD', 
+        firstTrailerPlate: 'PTB445SD',
+        secondTrailerPlate: 'PTB445SD',
+        thirdTrailerPlate: 'PTB445SD', 
         km: '54525',
         status: FleetStatus.ATIVO
       });

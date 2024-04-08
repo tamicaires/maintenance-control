@@ -14,15 +14,15 @@ export class EditFleetBody{
 
   @IsStringCustom()
   @IsOptional()
-  first_trailer_plate: string;
+  firstTrailerPlate: string;
 
   @IsStringCustom()
   @IsOptional()
-  second_trailer_plate: string;
+  secondTrailerPlate: string;
 
   @IsStringCustom()
   @IsOptional()
-  third_trailer_plate: string;
+  thirdTrailerPlate: string;
 
   @IsStringCustom()
   @IsOptional()

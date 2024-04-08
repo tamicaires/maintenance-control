@@ -16,15 +16,15 @@ export class CreateFleetBody {
 
   @IsStringCustom()
   @IsNotEmptyCustom()
-  first_trailer_plate: string;
+  firstTrailerPlate: string;
 
   @IsStringCustom()
   @IsNotEmptyCustom()
-  second_trailer_plate: string;
+  secondTrailerPlate: string;
 
   @IsStringCustom()
   @IsNotEmptyCustom()
-  third_trailer_plate: string;
+  thirdTrailerPlate: string;
 
   @IsStringCustom()
   @IsNotEmptyCustom()

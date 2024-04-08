@@ -10,5 +10,5 @@ export abstract class EmployeeRepository {
   abstract getMany(
     page: number,
     perPage: number
-  ): Promise<Employee[]>;
+  ): Promise<any>;
 }; 

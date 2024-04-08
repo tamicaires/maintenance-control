@@ -8,9 +8,9 @@ export const makeFleet = ({id, ...override}: Override) => {
   return new Fleet({
     fleetNumber: '22541',
       plate: 'OBC5F2C',
-      first_trailer_plate: 'OBC5F2C',
-      second_trailer_plate: 'OBC5F2C',
-      third_trailer_plate: 'OBC5F2C',
+      firstTrailerPlate: 'OBC5F2C',
+      secondTrailerPlate: 'OBC5F2C',
+      thirdTrailerPlate: 'OBC5F2C',
       km: '352.2',
       carrierId: '1223645',
       status: FleetStatus.ATIVO,
