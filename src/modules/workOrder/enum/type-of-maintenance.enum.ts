@@ -1,5 +1,5 @@
 export enum TypeOfMaintenance {
-  PREDICTIVE = 'PREDICTIVE',
-  PREVENTIVE = 'PREVENTIVE',
-  CORRECTIVE = 'CORRECTIVE'
+  Preditiva = 'Preditiva',
+  Preventiva = 'Preventiva',
+  Corretiva = 'Corretiva'
 };

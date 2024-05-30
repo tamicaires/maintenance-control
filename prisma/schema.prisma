@@ -109,20 +109,27 @@ model Service {
 }
 
 enum ServiceCategory {
-  STRUCTURE
-  ELETRICAL
-  PNEUMATIC
-  BRAKES
-  WELDING
-  TIRE_REPAIR
+  Estrutura
+  Eletrica @map("Elétrica")
+  Pneumatica @map("Pneumática")
+  Freios
+  Soldagem
+  Borracharia
 }
 
 model WorkOrder {
   id                    String     @id
+  displayId             String?    @unique  @map("display_id")
   severityLevel         String     @map("severity_level")
   entryQueue            DateTime?  @map("entry_queue")
   entryMaintenance      DateTime?  @map("entry_maintenance")
   exitMaintenance       DateTime?  @map("exit_maintenance")
+  startWaitingParts     DateTime?  @map("start_waiting_parts")
+  endWaitingParts       DateTime?  @map("end_waiting_parts")
+  queueDuration         Int?       @map("queue_duration")
+  maintenanceDuration   Int?       @map("maintenance_duration") 
+  waitingPartsDuration  Int?       @map("waiting_parts_duration") 
+  exitSupervisor        String?    @map("exit_supervisor")
   status                MaintenanceStatus
   fleet                 Fleet      @relation(fields: [fleetId], references: [id])
   fleetId               String
@@ -130,9 +137,11 @@ model WorkOrder {
   userId                String     
   typeOfMaintenance     TypeOfMaintenance
   box                   Box?
+  createdBy             String?     @map("created_by")
+  updatedBy             String?    @map("updated_by")
 
-  createdAt             DateTime  @map("created_at")
-  updatedAt             DateTime  @map("updated_at")
+  createdAt             DateTime   @map("created_at")
+  updatedAt             DateTime   @map("updated_at")
   @@map("work_orders")
   serviceAssignments    ServiceAssignment[]
 }
@@ -152,25 +161,25 @@ model ServiceAssignment {
 }
 
 enum MaintenanceStatus {
-  QUEUE
-  MAINTENANCE
-  WAITING_PARTS
-  FINISH
+  Fila
+  Manutencao 
+  AguardandoPeca
+  Finalizada
 }
 
 enum TypeOfMaintenance {
-  PREDICTIVE
-  PREVENTIVE
-  CORRECTIVE
+  Preditiva
+  Preventiva
+  Corretiva
 }
 
 enum Box {
-  ONE
-  TWO
-  THREE
-  FOUR
-  FIVE
-  SIX
-  SEVEN
-  EIGHT
+  Um @map("1")
+  Dois @map("2")
+  Tres @map("3")
+  Quatro @map("4")
+  Cinco @map("5")
+  Seis @map("6")
+  Sete @map("7")
+  Oito @map("8")
 }

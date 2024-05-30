@@ -36,10 +36,11 @@ export class WorkOrderController {
   async create(
     @Request() request: AuthenticatedRequestModel,
     @Body() createWorkOrderBody: CreateWorkOrderBody){
-    const currentUser = request.user.id;
-
+    const currentUser = request.user;
+    console.log(createWorkOrderBody)
     const workOrderData = mapCreateWorkOrderData(
-      currentUser,
+      currentUser.id,
+      currentUser.name,
       createWorkOrderBody
     );
 
@@ -47,7 +48,7 @@ export class WorkOrderController {
       workOrderData
     );
     
-    return workOrder;
+    return WorkOrderViewModel.toHttp(workOrder);
   };
 
   @Put(':id')
@@ -56,17 +57,18 @@ export class WorkOrderController {
     @Param('id') workOrderId: string,
     @Body() updateWorkOrderBody: UpdateWorkOrderBody
   ){
-    const currentUser = request.user.id;
+    const currentUser = request.user;
 
     const workOrderData = mapUpdateWorkOrderData(
       workOrderId,
-      currentUser,
+      currentUser.id,
+      currentUser.name,
       updateWorkOrderBody
     );
-
+      console.log('controler', workOrderData)
     const workOrder = await this.updateWorkOrder.execute(workOrderData);
 
-    return workOrder;
+    return WorkOrderViewModel.toHttp(workOrder);
   };
 
   @Delete(':id')

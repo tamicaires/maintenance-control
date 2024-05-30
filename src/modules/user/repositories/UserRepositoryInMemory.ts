@@ -2,6 +2,9 @@ import { User } from "../entities/User";
 import { UserRepository } from "./UserRepository";
 
 export class UserRepositoryInMemory implements UserRepository {
+  findById(id: string): Promise<User | null> {
+    throw new Error("Method not implemented.");
+  }
   
   public users : User[] = [];
 

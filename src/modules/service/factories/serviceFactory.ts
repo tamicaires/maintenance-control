@@ -6,7 +6,7 @@ type Override = Partial<Service>
 export const makeService = ({ id, ...override }: Override) => {
   return new Service({
     serviceName: 'Troca de Lona',
-    serviceCategory: ServiceCategory.PNEUMATIC,
+    serviceCategory: ServiceCategory.Pneumatica,
     ...override
   }, id
   );

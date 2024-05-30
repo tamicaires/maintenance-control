@@ -1,4 +1,4 @@
-import { IsOptional } from "class-validator";
+import { IsDateString, IsOptional } from "class-validator";
 import { IsDateCustom } from "src/infra/http/classValidator/decorators/IsDateCustom";
 import { IsNotEmptyCustom } from "src/infra/http/classValidator/decorators/IsNotEmptyCustom";
 import { IsStringCustom } from "src/infra/http/classValidator/decorators/IsStringCustom";
@@ -11,11 +11,11 @@ export class CreateWorkOrderBody {
   @IsNotEmptyCustom()
   severityLevel: string;
 
-  @IsDateCustom()
+  @IsDateString()
   @IsOptional()
   entryQueue: Date;
 
-  @IsDateCustom()
+  @IsDateString()
   @IsOptional()
   entryMaintenance: Date;
 

@@ -5,16 +5,16 @@ CREATE TYPE "Role" AS ENUM ('USER', 'ADMIN');
 CREATE TYPE "Status" AS ENUM ('ATIVO', 'INATIVO');
 
 -- CreateEnum
-CREATE TYPE "ServiceCategory" AS ENUM ('STRUCTURE', 'ELETRICAL', 'PNEUMATIC', 'BRAKES', 'WELDING', 'TIRE_REPAIR');
+CREATE TYPE "ServiceCategory" AS ENUM ('Estrutura', 'Elétrica', 'Pneumática', 'Freios', 'Soldagem', 'Borracharia');
 
 -- CreateEnum
-CREATE TYPE "MaintenanceStatus" AS ENUM ('QUEUE', 'MAINTENANCE', 'WAITING_PARTS', 'FINISH');
+CREATE TYPE "MaintenanceStatus" AS ENUM ('Em fila', 'Em manutenção', 'Aguardando peça', 'Finalizado');
 
 -- CreateEnum
-CREATE TYPE "TypeOfMaintenance" AS ENUM ('PREDICTIVE', 'PREVENTIVE', 'CORRECTIVE');
+CREATE TYPE "TypeOfMaintenance" AS ENUM ('Preditiva', 'Preventiva', 'Corretiva');
 
 -- CreateEnum
-CREATE TYPE "Box" AS ENUM ('ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT');
+CREATE TYPE "Box" AS ENUM ('1', '2', '3', '4', '5', '6', '7', '8');
 
 -- CreateTable
 CREATE TABLE "users" (
@@ -104,14 +104,23 @@ CREATE TABLE "services" (
 -- CreateTable
 CREATE TABLE "work_orders" (
     "id" TEXT NOT NULL,
-    "severity_level" TEXT,
+    "severity_level" TEXT NOT NULL,
     "entry_queue" TIMESTAMP(3),
     "entry_maintenance" TIMESTAMP(3),
     "exit_maintenance" TIMESTAMP(3),
+    "start_waiting_parts" TIMESTAMP(3),
+    "end_waiting_parts" TIMESTAMP(3),
+    "queue_duration" INTEGER,
+    "maintenance_duration" INTEGER,
+    "waiting_parts_duration" INTEGER,
+    "exit_supervisor" TEXT NOT NULL,
     "status" "MaintenanceStatus" NOT NULL,
     "fleetId" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
     "typeOfMaintenance" "TypeOfMaintenance" NOT NULL,
     "box" "Box",
+    "created_by" TEXT NOT NULL,
+    "updated_by" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -156,6 +165,9 @@ ALTER TABLE "employees" ADD CONSTRAINT "employees_jobTitleId_fkey" FOREIGN KEY (
 
 -- AddForeignKey
 ALTER TABLE "work_orders" ADD CONSTRAINT "work_orders_fleetId_fkey" FOREIGN KEY ("fleetId") REFERENCES "fleets"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "work_orders" ADD CONSTRAINT "work_orders_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "service_assignments" ADD CONSTRAINT "service_assignments_word_order_id_fkey" FOREIGN KEY ("word_order_id") REFERENCES "work_orders"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

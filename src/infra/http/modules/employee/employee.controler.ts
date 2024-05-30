@@ -72,7 +72,7 @@ export class EmployeeController {
       employeeId
     });
 
-    return EmployeeViewModel.toHttp(employee);
+    return employee;
   };
 
   @Get('/services/:id')

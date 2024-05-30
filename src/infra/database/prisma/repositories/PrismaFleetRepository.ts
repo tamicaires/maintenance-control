@@ -16,14 +16,21 @@ export class PrismaFleetRepository implements FleetRepository {
     });
   };
 
-  async findById(id: string): Promise<Fleet | null> {
+  async findById(id: string): Promise<any> {
     const fleetRaw = await this.prisma.fleet.findUnique({ 
-      where: { id }
+      where: { id },
+      include: {
+        carrier: {
+          select: {
+            carrierName: true
+          }
+        }
+      }
     });
 
     if(!fleetRaw) return null;
-
-    return PrismaFleetMapper.toDomain(fleetRaw);
+    console.log('fleetRaw', fleetRaw)
+    return fleetRaw;
   };
 
   async delete(id: string): Promise<void> {
@@ -53,7 +60,7 @@ export class PrismaFleetRepository implements FleetRepository {
       }
     });
 
-    return fleets.map(PrismaFleetMapper.toDomain);
+    return fleets;
   }
 
   

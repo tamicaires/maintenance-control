@@ -51,7 +51,8 @@ export class FleetController {
   @Get(':id')
   async getCarrier(@Param('id') fleetId: string){
     const fleet = await this.getFleetUseCase.execute({ fleetId });
-    return FleetViewModel.toHttp(fleet);
+    console.log(fleet)
+    return FleetViewModel.toHttp(fleet)
   };
 
   @Get()

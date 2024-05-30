@@ -4,7 +4,7 @@ import { TypeOfMaintenance } from "../../enum/type-of-maintenance.enum";
 import { Box } from "../../enum/box.enum";
 import { WorkOrderRepository } from "../../repositories/workOrderRepository";
 import { WorkOrderNotFoundException } from "../../exceptions/workOrderNotFoundException";
-import { updateWorkOrderProperties, validateMaintenanceDates,  } from "src/utils/workOrderUtils";
+import { updateWorkOrderProperties, validateMaintenanceDates, } from "src/utils/workOrderUtils";
 import { InvalidDateException } from "../../exceptions/invalidDatesException";
 
 interface UpdateWorkOrderRequest {
@@ -13,28 +13,31 @@ interface UpdateWorkOrderRequest {
   entryQueue?: Date;
   entryMaintenance?: Date;
   exitMaintenance?: Date;
+  startWaitingParts?: Date;
+  endWaitingParts?: Date;
+  exitSupervisor?: string;
   status?: MaintenanceStatus;
   fleetId?: string;
   userId: string;
   typeOfMaintenance?: TypeOfMaintenance;
   box?: Box;
-};
+}
 
 @Injectable()
 export class UpdateWorkOrder {
-  constructor(private workOrderRepository: WorkOrderRepository){}
+  constructor(private workOrderRepository: WorkOrderRepository) { }
 
-  async execute(data: UpdateWorkOrderRequest){
+  async execute(data: UpdateWorkOrderRequest) {
     const workOrder = await this.workOrderRepository.findById(data.workOrderId);
 
-    if(!workOrder) throw new WorkOrderNotFoundException();
+    if (!workOrder) throw new WorkOrderNotFoundException();
 
     updateWorkOrderProperties(workOrder, data);
 
-    if(!validateMaintenanceDates(workOrder)) throw new InvalidDateException();
+    if (!validateMaintenanceDates(workOrder)) throw new InvalidDateException();
 
     await this.workOrderRepository.save(workOrder);
 
-    return workOrder; 
+    return workOrder;
   };
 };

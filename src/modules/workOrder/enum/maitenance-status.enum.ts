@@ -1,6 +1,8 @@
 export enum MaintenanceStatus {
-  QUEUE = 'QUEUE',
-  MAINTENANCE = 'MAINTENANCE',
-  WAITING_PARTS = 'WAITING_PARTS',
-  FINISH = 'FINISH'
+  Fila = 'Fila',
+  Manutencao = 'Manutencao',
+  AguardandoPeca = 'AguardandoPeca',
+  Finalizada = 'Finalizada'
 };
+
+

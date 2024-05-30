@@ -10,7 +10,7 @@ export class PrismaWorkOrderRepository implements WorkOrderRepository {
   
   async create(workOrder: WorkOrder): Promise<void> {
     const workOrderRaw = PrismaWorkOrderMapper.toPrisma(workOrder);
- 
+
     await this.prisma.workOrder.create({
       data: workOrderRaw
     });
@@ -28,7 +28,7 @@ export class PrismaWorkOrderRepository implements WorkOrderRepository {
 
   async save(workOrder: WorkOrder): Promise<void> {
     const workOrderRaw = PrismaWorkOrderMapper.toPrisma(workOrder);
-
+    console.log('update', workOrderRaw)
     await this.prisma.workOrder.update({
       data: workOrderRaw,
       where: { id: workOrderRaw.id }

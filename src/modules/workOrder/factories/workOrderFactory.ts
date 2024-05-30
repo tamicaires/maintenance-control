@@ -11,13 +11,14 @@ export const makeWorkOrder = ({id, ...override}: Override) => {
 
   return new WorkOrder({
     userId: user.id,
+    displayId: 'CO001',
     fleetId: '123456',
     severityLevel: 'high',
     entryQueue: new Date(),
     entryMaintenance: new Date(),
-    status: MaintenanceStatus.QUEUE,
-    box: Box.FIVE,
-    typeOfMaintenance: TypeOfMaintenance.CORRECTIVE,
+    status: MaintenanceStatus.AguardandoPeca,
+    box: Box.Cinco,
+    typeOfMaintenance: TypeOfMaintenance.Corretiva,
     ...override
   }, 
   id

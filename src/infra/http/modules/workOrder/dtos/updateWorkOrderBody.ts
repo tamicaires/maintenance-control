@@ -21,6 +21,14 @@ export class UpdateWorkOrderBody{
   @IsOptional()
   exitMaintenance: Date;
 
+  @IsDateString()
+  @IsOptional()
+  startWaitingParts: Date;
+
+  @IsDateString()
+  @IsOptional()
+  endWaitingParts: Date;
+
   @IsStringCustom()
   @IsOptional()
   status: MaintenanceStatus;
@@ -36,4 +44,8 @@ export class UpdateWorkOrderBody{
   @IsStringCustom()
   @IsOptional()
   box: Box;
+ 
+  @IsStringCustom()
+  @IsOptional()
+  exitSupervisor: string;
 };

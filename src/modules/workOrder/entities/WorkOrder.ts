@@ -3,18 +3,26 @@ import { Box } from "../enum/box.enum";
 import { MaintenanceStatus } from "../enum/maitenance-status.enum";
 import { TypeOfMaintenance } from "../enum/type-of-maintenance.enum";
 import { randomUUID } from "crypto";
-import { Service } from "src/modules/service/entities/Service";
 
 interface WorkOrderSchema {
+  displayId: string | null;
   severityLevel: string;
   entryQueue: Date | null;
   entryMaintenance: Date | null;
   exitMaintenance: Date | null;
+  startWaitingParts: Date | null;
+  endWaitingParts: Date | null;
+  queueDuration: number | null;
+  maintenanceDuration: number | null;
+  waitingPartsDuration: number | null;
+  exitSupervisor: string | null
   status: MaintenanceStatus;
   fleetId: string;
   userId: string;
   typeOfMaintenance: TypeOfMaintenance;
   box: Box | null;
+  createdBy: string | null;
+  updatedBy: string | null;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -22,38 +30,56 @@ interface WorkOrderSchema {
 export class WorkOrder {
   private props: WorkOrderSchema;
   private _id: string;
-  private _service?: Service;
 
   constructor(
     props: Replace<
-    WorkOrderSchema, {
-      entryQueue?: Date | null,
-      entryMaintenance?: Date | null,
-      exitMaintenance?: Date | null,
-      box?: Box | null,  
-      createdAt?: Date, 
-      updatedAt?: Date
-    }>, 
+      WorkOrderSchema, {
+        displayId: string | null,
+        entryQueue?: Date | null,
+        entryMaintenance?: Date | null,
+        exitMaintenance?: Date | null,
+        startWaitingParts?: Date | null,
+        endWaitingParts?: Date | null,
+        queueDuration?: number | null,
+        maintenanceDuration?: number | null,
+        waitingPartsDuration?: number | null,
+        exitSupervisor?: string | null,
+        box?: Box | null,
+        createdBy?: string | null,
+        updatedBy?: string | null,
+        createdAt?: Date,
+        updatedAt?: Date
+      }>,
     id?: string,
-    service?: Service
-    ){
-      this.props = {
-        ...props,
-        entryQueue: props.entryQueue ?? null,
-        entryMaintenance: props.entryMaintenance ?? null,
-        exitMaintenance: props.exitMaintenance ?? null,
-        box: props.box ?? null,
-        createdAt: props.createdAt || new Date(),
-        updatedAt: new Date()
-      };
+  ) {
+    this.props = {
+      ...props,
+      displayId: props.displayId ?? null,
+      entryQueue: props.entryQueue ?? null,
+      entryMaintenance: props.entryMaintenance ?? null,
+      exitMaintenance: props.exitMaintenance ?? null,
+      startWaitingParts: props.startWaitingParts ?? null,
+      endWaitingParts: props.endWaitingParts ?? null,
+      queueDuration: props.queueDuration ?? null,
+      maintenanceDuration: props.maintenanceDuration ?? null,
+      waitingPartsDuration: props.waitingPartsDuration ?? null,
+      exitSupervisor: props.exitSupervisor ?? null,
+      box: props.box ?? null,
+      createdBy: props.createdBy ?? null,
+      updatedBy: props.updatedBy ?? null,
+      createdAt: props.createdAt || new Date(),
+      updatedAt: new Date()
+    };
 
-      this._id = id || randomUUID();
-
-      this._service = service;
-    } 
+    this._id = id || randomUUID();
+  }
 
   get id(): string {
     return this._id;
+  };
+
+  get displayId(): string | null {
+    return this.props.displayId;
   };
 
   get severityLevel(): string {
@@ -88,20 +114,60 @@ export class WorkOrder {
     this.props.exitMaintenance = exitMaintenance;
   };
 
+  get startWaitingParts(): Date | null {
+    return this.props.startWaitingParts;
+  };
+
+  set startWaitingParts(startWaitingParts: Date | null) {
+    this.props.startWaitingParts = startWaitingParts;
+  };
+
+  get endWaitingParts(): Date | null {
+    return this.props.endWaitingParts;
+  };
+
+  set endWaitingParts(endWaitingParts: Date | null) {
+    this.props.endWaitingParts = endWaitingParts;
+  };
+
+  get queueDuration(): number | null {
+    return this.props.queueDuration;
+  };
+
+  set queueDuration(queueDuration: number | null) {
+    this.props.queueDuration = queueDuration;
+  };
+
+  get maintenanceDuration(): number | null {
+    return this.props.maintenanceDuration;
+  };
+
+  set maintenanceDuration(maintenanceDuration: number | null) {
+    this.props.maintenanceDuration = maintenanceDuration;
+  };
+
+  get waitingPartsDuration(): number | null {
+    return this.props.waitingPartsDuration;
+  };
+
+  set waitingPartsDuration(waitingPartsDuration: number | null) {
+    this.props.waitingPartsDuration = waitingPartsDuration;
+  };
+
+  get exitSupervisor(): string | null {
+    return this.props.exitSupervisor;
+  };
+
+  set exitSupervisor(exitSupervisor: string | null) {
+    this.props.exitSupervisor = exitSupervisor;
+  };
+
   get status(): MaintenanceStatus {
     return this.props.status;
   };
 
   set status(status: MaintenanceStatus) {
     this.props.status = status;
-  };
-
-  get service(): Service | undefined {
-    return this._service;
-  };
-
-  set service(service: Service | undefined) {
-    this._service = service;
   };
 
   get userId(): string {
@@ -128,12 +194,24 @@ export class WorkOrder {
     this.props.typeOfMaintenance = typeOfMaintenance;
   };
 
-  get box(): Box | null{
+  get box(): Box | null {
     return this.props.box;
   };
 
   set box(box: Box | null) {
     this.props.box = box;
+  };
+
+  get createdBy(): string | null {
+    return this.props.createdBy;
+  };
+
+  get updatedBy(): string | null {
+    return this.props.updatedBy;
+  };
+
+  set updatedBy(updatedBy: string | null) {
+    this.props.updatedBy = updatedBy
   };
 
   get createdAt(): Date {
@@ -144,7 +222,7 @@ export class WorkOrder {
     return this.props.updatedAt;
   };
 
-  set updatedAt(updatedAt : Date) {
+  set updatedAt(updatedAt: Date) {
     this.props.updatedAt = updatedAt
   };
 

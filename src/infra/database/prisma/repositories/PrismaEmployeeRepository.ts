@@ -16,9 +16,16 @@ export class PrismaEmployeeRepository implements EmployeeRepository {
     });
   };
 
-  async findById(id: string): Promise<Employee | null> {
+  async findById(id: string): Promise<any> {
     const employeeRaw = await this.prisma.employee.findUnique({
-      where: { id }
+      where: { id },
+      include: {
+        job: {
+          select: {
+            jobTitle: true
+          }
+        }
+      },
     });
 
     if(!employeeRaw) return null;
@@ -41,13 +48,20 @@ export class PrismaEmployeeRepository implements EmployeeRepository {
     });
   };
 
-  async getMany(page: number, perPage: number): Promise<Employee[]> {
+  async getMany(page: number, perPage: number): Promise<any> {
     const employees = await this.prisma.employee.findMany({
+      include: {
+        job: {
+          select: {
+            jobTitle: true
+          }
+        }
+      },
       take: perPage,
       skip: (page -1) * perPage
     });
 
-    return employees.map(PrismaEmployeeMapper.toDomain )
+    return employees;
   };
   
   async findOne(employeeName: string): Promise<Employee | null> {
