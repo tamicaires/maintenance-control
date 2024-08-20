@@ -3,6 +3,6 @@ export interface UserPayload {
   email: string;
   name: string; 
   role: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 }

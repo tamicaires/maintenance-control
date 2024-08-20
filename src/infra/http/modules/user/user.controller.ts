@@ -4,15 +4,17 @@ import { CreateUserBody } from "./dtos/createUserBody";
 import { UserViewModel } from "./viewModel/userViewModel";
 import { Role } from "../auth/decorators/roles.decorator";
 import { AuthorizationGuard } from "../auth/guards/authorization.guard";
+import { Public } from "../auth/decorators/is-public.decorator";
 
 @Controller('users')
 export class UserController {
   constructor(private createUserUseCase: CreateUser){}
 
+  @Public()
   @Post()
   @UseGuards(AuthorizationGuard)
   @Role('ADMIN')
-  async createPost(@Body() body: CreateUserBody) {
+  async createUser(@Body() body: CreateUserBody) {
 
     const { email, password, name, role } = body;
 
