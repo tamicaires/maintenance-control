@@ -54,9 +54,20 @@ export class PrismaWorkOrderRepository implements WorkOrderRepository {
     const workOrderServices = await this.prisma.workOrder.findMany({
       where: { id },
       include: { 
+        fleet: {
+          select: {
+            fleetNumber: true
+          }
+        },
         serviceAssignments: {
           select: {
-            service: true
+            service: true,
+            employee: {
+              select: { 
+                id: true,
+                name: true
+              }
+            }
             }
           }
         } 
