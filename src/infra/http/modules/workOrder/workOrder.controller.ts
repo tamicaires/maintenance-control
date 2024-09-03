@@ -48,7 +48,7 @@ export class WorkOrderController {
       workOrderData
     );
     
-    return WorkOrderViewModel.toHttp(workOrder);
+    return workOrder
   };
 
   @Put(':id')
@@ -68,7 +68,7 @@ export class WorkOrderController {
       console.log('controler', workOrderData)
     const workOrder = await this.updateWorkOrder.execute(workOrderData);
 
-    return WorkOrderViewModel.toHttp(workOrder);
+    return workOrder;
   };
 
   @Delete(':id')
@@ -94,7 +94,7 @@ export class WorkOrderController {
       page,
       perPage
     });
-
-    return workOrders.map(WorkOrderViewModel.toHttp)
+    
+    return workOrders.map(WorkOrderViewModel.toHttp);
   };
 };
