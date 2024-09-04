@@ -21,7 +21,6 @@ import { DeleteWorkOrder } from 'src/modules/workOrder/useCases/deleteWorkOrder/
 import { WorkOrderViewModel } from './viewModels/workOrderViewModel';
 import { GetManyWorkOrders } from 'src/modules/workOrder/useCases/getManyWorkOrders/getManyWorkOrders';
 import { AuthenticatedRequestModel } from '../auth/models/authenticateRequestModel';
-import { GetWorkOrderServices } from 'src/modules/workOrder/useCases/getWorkOrderWithServices/getWorkOrderWithServices';
 
 @Controller('work-orders')
 export class WorkOrderController {
@@ -30,7 +29,6 @@ export class WorkOrderController {
     private updateWorkOrder: UpdateWorkOrder,
     private deleteWorkOrder: DeleteWorkOrder,
     private getManyWorkOrder: GetManyWorkOrders,
-    private getWorkOrderServices: GetWorkOrderServices,
   ) {}
 
   @Post()
@@ -74,15 +72,6 @@ export class WorkOrderController {
   @Delete(':id')
   async delete(@Param('id') workOrderId: string) {
     await this.deleteWorkOrder.execute({ workOrderId });
-  }
-
-  @Get(':id')
-  async getOneWithServices(@Param('id') workOrderId: string) {
-    const workOrderServices = await this.getWorkOrderServices.execute({
-      workOrderId,
-    });
-
-    return workOrderServices;
   }
 
   @Get()
