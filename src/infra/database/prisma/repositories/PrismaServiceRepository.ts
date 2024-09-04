@@ -1,65 +1,69 @@
-import { Service } from "src/modules/service/entities/Service";
-import { ServiceRepository } from "src/modules/service/repositories/serviceRepository";
-import { PrismaServiceMapper } from "../mappers/PrismaServiceMapper";
-import { PrismaService } from "../prisma.service";
-import { Injectable } from "@nestjs/common";
+import { Service } from 'src/modules/service/entities/Service';
+import { ServiceRepository } from 'src/modules/service/repositories/serviceRepository';
+import { PrismaServiceMapper } from '../mappers/PrismaServiceMapper';
+import { PrismaService } from '../prisma.service';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class PrismaServiceRepository implements ServiceRepository {
-  constructor(private prisma: PrismaService){}
-  
+  constructor(private prisma: PrismaService) {}
+
   async create(service: Service): Promise<void> {
     const serviceRaw = PrismaServiceMapper.toPrisma(service);
 
     await this.prisma.service.create({
-      data: serviceRaw
+      data: serviceRaw,
     });
-  };
+  }
 
   async findById(id: string): Promise<Service | null> {
     const serviceRaw = await this.prisma.service.findUnique({
-      where: { id }
+      where: { id },
     });
 
-    if(!serviceRaw) return null;
+    if (!serviceRaw) return null;
 
     return PrismaServiceMapper.toDomain(serviceRaw);
-  };
+  }
 
   async delete(id: string): Promise<void> {
     await this.prisma.service.delete({ where: { id } });
-  };
+  }
 
   async save(service: Service): Promise<void> {
     const serviceRaw = PrismaServiceMapper.toPrisma(service);
 
     await this.prisma.service.update({
       data: serviceRaw,
-      where: { id: serviceRaw.id}
+      where: { id: serviceRaw.id },
     });
-  };
+  }
 
-  async findMany(filter: string, page: number, perPage: number): Promise<Service[]> {
+  async findMany(
+    filter: string,
+    page: number,
+    perPage: number,
+  ): Promise<Service[]> {
     const services = await this.prisma.service.findMany({
       where: {
         serviceName: {
-          contains: filter
-        }
+          contains: filter,
+        },
       },
       take: perPage,
-      skip: (page - 1) * perPage
+      skip: (page - 1) * perPage,
     });
 
-    return services.map(PrismaServiceMapper.toDomain)
-  };
+    return services.map(PrismaServiceMapper.toDomain);
+  }
 
   async findOne(serviceName: string): Promise<Service | null> {
     const service = await this.prisma.service.findUnique({
-      where: { serviceName: serviceName }
+      where: { serviceName: serviceName },
     });
 
-    if(!service) return null;
+    if (!service) return null;
 
     return PrismaServiceMapper.toDomain(service);
-  };
-};
+  }
+}
