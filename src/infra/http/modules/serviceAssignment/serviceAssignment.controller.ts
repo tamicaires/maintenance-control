@@ -8,7 +8,6 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import { CreateServiceAssignmentBody } from './dtos/CreateServiceAssignmentBody';
 import { CreateServiceAssignment } from 'src/modules/serviceAssignment/useCases/createServiceAssignment/createServiceAssignment';
 import { UpdateServiceAssignmentBody } from './dtos/updateServiceAssignmentBody';
 import { UpdateServiceAssignment } from 'src/modules/serviceAssignment/useCases/updateServiceAssignment/updateServiceAssignment';
@@ -16,6 +15,7 @@ import { DeleteServiceAssignment } from 'src/modules/serviceAssignment/useCases/
 import { GetServiceAssignment } from 'src/modules/serviceAssignment/useCases/getServiceAssignment/getServiceAssignment';
 import { ServiceAssignmentViewModel } from './viewModels/ServiceAssignmentViewModel';
 import { GetManyServiceAssignments } from 'src/modules/serviceAssignment/useCases/getManyServiceAssignments/getManyServiceAssignments';
+import { CreateServiceAssignmentBody } from './dtos/createServiceAssignmentsBody';
 
 @Controller('service-assignments')
 export class ServiceAssignmentController {

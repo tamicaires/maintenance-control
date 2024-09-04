@@ -18,9 +18,9 @@ import {
   mapUpdateWorkOrderData,
 } from 'src/utils/workOrderUtils';
 import { DeleteWorkOrder } from 'src/modules/workOrder/useCases/deleteWorkOrder/deleteWorkOrder';
-import { WorkOrderViewModel } from './viewModels/workOrderViewModel';
 import { GetManyWorkOrders } from 'src/modules/workOrder/useCases/getManyWorkOrders/getManyWorkOrders';
 import { AuthenticatedRequestModel } from '../auth/models/authenticateRequestModel';
+import { WorkOrderViewModel } from './viewModels/workOrdersViewModel';
 
 @Controller('work-orders')
 export class WorkOrderController {
