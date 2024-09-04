@@ -17,13 +17,7 @@ export class GetWorkOrderServices {
 
     if(!workOrderServices) throw new WorkOrderNotFoundException();
     
-    const services: WorkOrder[] = [];
-
-    workOrderServices.map(workOrder => {
-      services.push(workOrder)
-    }); 
-
-    return services;
+    return workOrderServices;
   };
 };
 
