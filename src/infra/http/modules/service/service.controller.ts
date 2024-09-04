@@ -1,21 +1,22 @@
-import { 
-  Body, 
-  Controller, 
-  Delete, 
-  Get, 
-  Param, 
-  Post, 
-  Put, 
-  Query 
-} from "@nestjs/common";
-import { CreateServiceBody } from "./dtos/createServiceBody";
-import { CreateService } from "src/modules/service/useCases/createService/createService";
-import { UpdateServiceBody } from "./dtos/updateServiceBody";
-import { UpdateService } from "src/modules/service/useCases/updateService/updateService";
-import { DeleteService } from "src/modules/service/useCases/deleteService/deleteService";
-import { GetService } from "src/modules/service/useCases/getService/getService";
-import { ServiceViewModel } from "./viewModels/ServiceViewModel";
-import { GetManyServices } from "src/modules/service/useCases/getManyServices/getManyServices";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common';
+import { CreateServiceBody } from './dtos/createServiceBody';
+import { CreateService } from 'src/modules/service/useCases/createService/createService';
+import { UpdateServiceBody } from './dtos/updateServiceBody';
+import { UpdateService } from 'src/modules/service/useCases/updateService/updateService';
+import { DeleteService } from 'src/modules/service/useCases/deleteService/deleteService';
+import { GetService } from 'src/modules/service/useCases/getService/getService';
+import { ServiceViewModel } from './viewModels/ServiceViewModel';
+import { GetManyServices } from 'src/modules/service/useCases/getManyServices/getManyServices';
+import { GetServicesByWorkOrder } from 'src/modules/service/useCases/getServicesByWorkOrder/getServicesByWorkOrder.use-case';
 
 @Controller('services')
 export class ServiceController {
@@ -24,65 +25,73 @@ export class ServiceController {
     private updateService: UpdateService,
     private deleteService: DeleteService,
     private getService: GetService,
-    private getManyServices: GetManyServices
-  ){}
+    private getManyServices: GetManyServices,
+    private _getServicesByWorkOrder: GetServicesByWorkOrder,
+  ) {}
 
   @Post()
-  async create(@Body() createServiceBody: CreateServiceBody){
+  async create(@Body() createServiceBody: CreateServiceBody) {
     const { serviceCategory, serviceName } = createServiceBody;
 
     const service = await this.createService.execute({
       serviceCategory,
-      serviceName
+      serviceName,
     });
- 
+
     return service;
-  };
+  }
 
   @Put(':id')
   async update(
     @Param('id') serviceId: string,
-    @Body() updateServiceBody: UpdateServiceBody
-  ){
+    @Body() updateServiceBody: UpdateServiceBody,
+  ) {
     const { serviceCategory, serviceName } = updateServiceBody;
 
     const service = await this.updateService.execute({
       serviceId: serviceId,
       serviceCategory,
-      serviceName
+      serviceName,
     });
 
     return service;
-  };
+  }
 
   @Delete(':id')
-  async delete(@Param('id') serviceId: string){
+  async delete(@Param('id') serviceId: string) {
     await this.deleteService.execute({
-      serviceId
+      serviceId,
     });
-  };
+  }
 
   @Get(':id')
-  async getOne(@Param('id') serviceId: string){
+  async getOne(@Param('id') serviceId: string) {
     const service = await this.getService.execute({
-      serviceId: serviceId
+      serviceId: serviceId,
     });
 
-    return ServiceViewModel.toHttp(service);
-  };
+    return service;
+  }
 
   @Get()
   async getMany(
     @Query('filter') filter: string,
     @Query('page') page: string,
-    @Query('perPage') perPage: string
-  ){
+    @Query('perPage') perPage: string,
+  ) {
     const services = await this.getManyServices.execute({
       filter,
       page,
-      perPage
+      perPage,
     });
 
-    return services.map(ServiceViewModel.toHttp)
-  };
-};
+    return services.map(ServiceViewModel.toHttp);
+  }
+
+  @Get(':workOrderId/services')
+  async getWorkOrderServices(@Param('workOrderId') workOrderId: string) {
+    const services = await this._getServicesByWorkOrder.execute(workOrderId);
+
+    return services.map(ServiceViewModel.toHttp);
+  }
+}

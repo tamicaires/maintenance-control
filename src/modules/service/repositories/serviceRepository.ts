@@ -1,4 +1,5 @@
-import { Service } from "../entities/Service";
+import { ServiceWithEmployee } from 'src/types/service.interface';
+import { Service } from '../entities/Service';
 
 export abstract class ServiceRepository {
   abstract create(service: Service): Promise<void>;
@@ -9,6 +10,7 @@ export abstract class ServiceRepository {
   abstract findMany(
     filter: string,
     page: number,
-    perPage: number
+    perPage: number,
   ): Promise<Service[]>;
-};
+  abstract findByWorkOrder(workOrderId: string): Promise<[]>;
+}

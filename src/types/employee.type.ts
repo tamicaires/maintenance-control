@@ -1,4 +1,4 @@
-import { EmployeeStatus } from "src/modules/employee/enum/employee-status.enum";
+import { EmployeeStatus } from 'src/modules/employee/enum/employee-status.enum';
 
 interface Job {
   jobTitle: string;
@@ -13,4 +13,10 @@ export interface EmployeeWithJobInfo {
   createdAt: Date;
   updatedAt: Date;
   job: Job;
+}
+
+export interface EmployeeBasicInfo {
+  id: string;
+  name: string;
+  jobTitle: string;
 }

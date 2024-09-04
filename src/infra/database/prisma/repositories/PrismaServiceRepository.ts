@@ -3,6 +3,7 @@ import { ServiceRepository } from 'src/modules/service/repositories/serviceRepos
 import { PrismaServiceMapper } from '../mappers/PrismaServiceMapper';
 import { PrismaService } from '../prisma.service';
 import { Injectable } from '@nestjs/common';
+import { ServiceWithEmployee } from 'src/types/service.interface';
 
 @Injectable()
 export class PrismaServiceRepository implements ServiceRepository {
@@ -65,5 +66,30 @@ export class PrismaServiceRepository implements ServiceRepository {
     if (!service) return null;
 
     return PrismaServiceMapper.toDomain(service);
+  }
+  
+  async findByWorkOrder(workOrderId: string): Promise<any> {
+    const services = await this.prisma.service.findMany({
+      where: { serviceAssignmets: { some: { workOrderId } } },
+      include: {
+        serviceAssignmets: {
+          select: {
+            employee: {
+              select: {
+                id: true,
+                name: true,
+                job: {
+                  select: {
+                    jobTitle: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    return services;
   }
 }
