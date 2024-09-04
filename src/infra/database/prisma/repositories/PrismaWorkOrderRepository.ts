@@ -45,6 +45,19 @@ export class PrismaWorkOrderRepository implements WorkOrderRepository {
     const workOrders = await this.prisma.workOrder.findMany({
       take: perPage,
       skip: (page - 1) * perPage,
+      include: {
+        fleet: {
+          select: {
+            fleetNumber: true,
+            plate: true,
+            carrier: {
+              select: {
+                carrierName: true,
+              },
+            },
+          },
+        },
+      },
     });
 
     return workOrders;

@@ -1,8 +1,19 @@
-import { WorkOrder } from "src/modules/workOrder/entities/WorkOrder";
+import { WorkOrder } from 'src/modules/workOrder/entities/WorkOrder';
+
+interface WorkOrderWithRelationalInfo extends WorkOrder {
+  fleet: {
+    fleetNumber: string;
+    plate: string;
+    carrier: {
+      carrierName: string;
+    };
+  };
+}
 
 export class WorkOrderViewModel {
   static toHttp({
     id,
+    fleet,
     displayId,
     severityLevel,
     entryQueue,
@@ -18,15 +29,22 @@ export class WorkOrderViewModel {
     userId,
     typeOfMaintenance,
     status,
-    box, 
+    box,
     createdBy,
     updatedBy,
     createdAt,
-    updatedAt
-  }: WorkOrder){
+    updatedAt,
+  }: WorkOrderWithRelationalInfo) {
+    const fleetNumber = fleet?.fleetNumber;
+    const carrierName = fleet?.carrier?.carrierName;
+    const plate = fleet?.plate;
     return {
       id,
       displayId,
+      fleetId,
+      fleetNumber,
+      plate,
+      carrierName,
       severityLevel,
       entryQueue,
       entryMaintenance,
@@ -37,15 +55,14 @@ export class WorkOrderViewModel {
       maintenanceDuration,
       waitingPartsDuration,
       exitSupervisor,
-      fleetId,
       userId,
       typeOfMaintenance,
       status,
-      box, 
+      box,
       createdBy,
       updatedBy,
       createdAt,
-      updatedAt
+      updatedAt,
     };
-  };
-};
+  }
+}
