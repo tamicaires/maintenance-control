@@ -1,14 +1,14 @@
-import { JobNotFoundException } from "../../exceptions/JobNotFoundException";
-import { makeJob } from "../../factories/jobFactory";
-import { JobRepositoryInMemory } from "../../repositories/jobRepositoryInMemory";
-import { DeleteJob } from "./deleteJob";
+import { JobNotFoundException } from '../../exceptions/JobNotFoundException';
+import { makeJob } from '../../factories/jobFactory';
+import { JobRepositoryInMemory } from '../../repositories/jobRepositoryInMemory';
+import { DeleteJob } from './deleteJob';
 
-let jobRepositoryInMemory: JobRepositoryInMemory
-let deleteJob: DeleteJob
+let jobRepositoryInMemory: JobRepositoryInMemory;
+let deleteJob: DeleteJob;
 
-describe('Delete Job',() => {
+describe('Delete Job', () => {
   beforeEach(() => {
-    jobRepositoryInMemory = new JobRepositoryInMemory()
+    jobRepositoryInMemory = new JobRepositoryInMemory();
     deleteJob = new DeleteJob(jobRepositoryInMemory);
   });
 
@@ -23,12 +23,10 @@ describe('Delete Job',() => {
   });
 
   it('Should be able to throw error when not find job', async () => {
-
     expect(async () => {
       await deleteJob.execute({
-        jobId: 'fakeId'
+        jobId: 'fakeId',
       });
-    }).rejects.toThrow(JobNotFoundException)
-    
+    }).rejects.toThrow(JobNotFoundException);
   });
 });

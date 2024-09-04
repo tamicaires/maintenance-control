@@ -1,4 +1,4 @@
-import { Employee } from "../entities/Employee";
+import { Employee } from '../entities/Employee';
 
 export abstract class EmployeeRepository {
   abstract create(employee: Employee): Promise<void>;
@@ -7,8 +7,5 @@ export abstract class EmployeeRepository {
   abstract delete(id: string): Promise<void>;
   abstract findOne(employeeName: string): Promise<Employee | null>;
   abstract getEmployeeServices(id: string): Promise<any>;
-  abstract getMany(
-    page: number,
-    perPage: number
-  ): Promise<any>;
-}; 
+  abstract getMany(page: number, perPage: number): Promise<any>;
+}

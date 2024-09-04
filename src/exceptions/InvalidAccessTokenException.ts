@@ -1,11 +1,11 @@
-import { HttpStatus } from "@nestjs/common";
-import { AppException } from "./appException";
+import { HttpStatus } from '@nestjs/common';
+import { AppException } from './appException';
 
 export class InvalidAccessTokenException extends AppException {
-  constructor(){
+  constructor() {
     super({
       message: 'Access token inválido ou expirado',
-      status: HttpStatus.UNAUTHORIZED
+      status: HttpStatus.UNAUTHORIZED,
     });
-  };
-};
+  }
+}

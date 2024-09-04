@@ -1,26 +1,25 @@
-import { Injectable } from "@nestjs/common";
-import { Note } from "../../entities/Note";
-import { NoteRepository } from "../../repositories/noteRepository";
+import { Injectable } from '@nestjs/common';
+import { Note } from '../../entities/Note';
+import { NoteRepository } from '../../repositories/noteRepository';
 
 interface CreateNoteRequest {
   title: string;
   description?: string;
-  userId: string ;
+  userId: string;
 }
 
 @Injectable()
 export class CreateNote {
-
   constructor(private noteRepository: NoteRepository) {}
-  async execute({title, description, userId}: CreateNoteRequest) {
+  async execute({ title, description, userId }: CreateNoteRequest) {
     const note = new Note({
       userId,
       description,
-      title
+      title,
     });
 
-    await this.noteRepository.create(note)
-    
+    await this.noteRepository.create(note);
+
     return note;
   }
 }

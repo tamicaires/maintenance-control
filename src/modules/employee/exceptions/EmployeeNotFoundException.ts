@@ -1,11 +1,11 @@
-import { HttpStatus } from "@nestjs/common";
-import { AppException } from "src/exceptions/appException";
+import { HttpStatus } from '@nestjs/common';
+import { AppException } from 'src/exceptions/appException';
 
 export class EmployeeNotFoundException extends AppException {
-  constructor(){
+  constructor() {
     super({
       message: 'Colaborador não encontrado',
-      status: HttpStatus.NOT_FOUND
+      status: HttpStatus.NOT_FOUND,
     });
-  };
-};
+  }
+}

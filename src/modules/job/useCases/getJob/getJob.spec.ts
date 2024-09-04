@@ -1,16 +1,15 @@
-import { JobNotFoundException } from "../../exceptions/JobNotFoundException";
-import { makeJob } from "../../factories/jobFactory";
-import { JobRepositoryInMemory } from "../../repositories/jobRepositoryInMemory";
-import { GetJob } from "./getJob";
+import { JobNotFoundException } from '../../exceptions/JobNotFoundException';
+import { makeJob } from '../../factories/jobFactory';
+import { JobRepositoryInMemory } from '../../repositories/jobRepositoryInMemory';
+import { GetJob } from './getJob';
 
-
-let jobRepositoryInMemory: JobRepositoryInMemory
-let getJob: GetJob
+let jobRepositoryInMemory: JobRepositoryInMemory;
+let getJob: GetJob;
 
 describe('Get Job', () => {
   beforeEach(() => {
-    jobRepositoryInMemory = new JobRepositoryInMemory()
-    getJob = new GetJob(jobRepositoryInMemory)
+    jobRepositoryInMemory = new JobRepositoryInMemory();
+    getJob = new GetJob(jobRepositoryInMemory);
   });
 
   it('Should be able to get job if exists', async () => {
@@ -24,11 +23,10 @@ describe('Get Job', () => {
   });
 
   it('Should be able to throw error when not find job', async () => {
-    
     expect(async () => {
       await getJob.execute({
-        jobId: 'fakeId'
-      })
-    }).rejects.toThrow(JobNotFoundException)
+        jobId: 'fakeId',
+      });
+    }).rejects.toThrow(JobNotFoundException);
   });
 });

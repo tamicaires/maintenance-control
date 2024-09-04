@@ -1,11 +1,11 @@
-import { HttpStatus } from "@nestjs/common";
-import { AppException } from "src/exceptions/appException";
+import { HttpStatus } from '@nestjs/common';
+import { AppException } from 'src/exceptions/appException';
 
 export class JobWithSameNameException extends AppException {
-  constructor(){
+  constructor() {
     super({
       message: 'Cargo já cadastrado',
-      status: HttpStatus.CONFLICT
+      status: HttpStatus.CONFLICT,
     });
-  };
-};
+  }
+}

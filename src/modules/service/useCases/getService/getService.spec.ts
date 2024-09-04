@@ -1,7 +1,7 @@
-import { ServiceNotFoundExcetion } from "../../exceptions/serviceNotFoundException";
-import { makeService } from "../../factories/serviceFactory";
-import { ServiceRepositoryInMemory } from "../../repositories/serviceRepositoryInMemory";
-import { GetService } from "./getService";
+import { ServiceNotFoundExcetion } from '../../exceptions/serviceNotFoundException';
+import { makeService } from '../../factories/serviceFactory';
+import { ServiceRepositoryInMemory } from '../../repositories/serviceRepositoryInMemory';
+import { GetService } from './getService';
 
 let serviceRepositoryInMemory: ServiceRepositoryInMemory;
 let getService: GetService;
@@ -18,19 +18,17 @@ describe('Get Service', () => {
     serviceRepositoryInMemory.services = [service];
 
     const result = await getService.execute({
-      serviceId: service.id
+      serviceId: service.id,
     });
 
     expect(result).toEqual(service);
   });
 
   it('Should be able to throw erroe when not found service', async () => {
-    
     expect(async () => {
       await getService.execute({
-        serviceId: 'fakeId'
+        serviceId: 'fakeId',
       });
     }).rejects.toThrow(ServiceNotFoundExcetion);
-
   });
 });

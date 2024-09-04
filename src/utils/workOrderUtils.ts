@@ -1,39 +1,46 @@
-import { CreateWorkOrderBody } from "src/infra/http/modules/workOrder/dtos/createWorkOrderBody";
-import { UpdateWorkOrderBody } from "src/infra/http/modules/workOrder/dtos/updateWorkOrderBody";
-import { WorkOrder } from "src/modules/workOrder/entities/WorkOrder";
-import { TypeOfMaintenance } from "src/modules/workOrder/enum/type-of-maintenance.enum";
+import { CreateWorkOrderBody } from 'src/infra/http/modules/workOrder/dtos/createWorkOrderBody';
+import { UpdateWorkOrderBody } from 'src/infra/http/modules/workOrder/dtos/updateWorkOrderBody';
+import { WorkOrder } from 'src/modules/workOrder/entities/WorkOrder';
+import { TypeOfMaintenance } from 'src/modules/workOrder/enum/type-of-maintenance.enum';
 
-export const updateWorkOrderProperties = (workOrder: WorkOrder, data: Partial<WorkOrder>) => {
+export const updateWorkOrderProperties = (
+  workOrder: WorkOrder,
+  data: Partial<WorkOrder>,
+) => {
   workOrder.severityLevel = data.severityLevel ?? workOrder.severityLevel;
   workOrder.entryQueue = data.entryQueue ?? workOrder.entryQueue;
-  workOrder.entryMaintenance = data.entryMaintenance ?? workOrder.entryMaintenance;
+  workOrder.entryMaintenance =
+    data.entryMaintenance ?? workOrder.entryMaintenance;
   workOrder.exitMaintenance = data.exitMaintenance ?? workOrder.exitMaintenance;
   workOrder.fleetId = data.fleetId ?? workOrder.fleetId;
   workOrder.userId = data.userId ?? workOrder.userId;
   workOrder.updatedBy = data.updatedBy ?? workOrder.updatedBy;
   workOrder.status = data.status ?? workOrder.status;
-  workOrder.typeOfMaintenance = data.typeOfMaintenance ?? workOrder.typeOfMaintenance;
+  workOrder.typeOfMaintenance =
+    data.typeOfMaintenance ?? workOrder.typeOfMaintenance;
   workOrder.box = data.box ?? workOrder.box;
   workOrder.exitSupervisor = data.exitSupervisor ?? workOrder.exitSupervisor;
 
   workOrder.queueDuration = calculateDuration(
     workOrder.entryQueue,
-    workOrder.entryMaintenance
+    workOrder.entryMaintenance,
   );
 
   workOrder.maintenanceDuration = calculateDuration(
     workOrder.entryMaintenance,
-    workOrder.exitMaintenance
+    workOrder.exitMaintenance,
   );
 
   workOrder.waitingPartsDuration = calculateDuration(
     workOrder.startWaitingParts,
-    workOrder.endWaitingParts
+    workOrder.endWaitingParts,
   );
-
 };
 
-export const calculateDuration = (startDate: Date | null, endDate: Date | null): number | null => {
+export const calculateDuration = (
+  startDate: Date | null,
+  endDate: Date | null,
+): number | null => {
   if (startDate && endDate) {
     const startTime = startDate.getTime();
     const endTime = endDate.getTime();
@@ -44,41 +51,43 @@ export const calculateDuration = (startDate: Date | null, endDate: Date | null):
   }
 };
 
-
 export const validateMaintenanceDates = ({
   entryMaintenance,
   entryQueue,
-  exitMaintenance
+  exitMaintenance,
 }: WorkOrder): boolean => {
-
-  const validateEntryDates = (entryQueue: Date | null,
-    entryMaintenance: Date | null) => {
-
+  const validateEntryDates = (
+    entryQueue: Date | null,
+    entryMaintenance: Date | null,
+  ) => {
     if (entryQueue && entryMaintenance) {
       if (entryQueue > entryMaintenance) return false;
-    };
+    }
 
     return true;
   };
 
-  const validateExitDate = (entryMaintenance: Date | null,
-    exitMaintenance: Date | null) => {
-
+  const validateExitDate = (
+    entryMaintenance: Date | null,
+    exitMaintenance: Date | null,
+  ) => {
     if (entryMaintenance && exitMaintenance) {
       if (entryMaintenance > exitMaintenance) return false;
-    };
+    }
 
     return true;
   };
 
-  return validateEntryDates(entryQueue, entryMaintenance)
-    && validateExitDate(entryMaintenance, exitMaintenance);
+  return (
+    validateEntryDates(entryQueue, entryMaintenance) &&
+    validateExitDate(entryMaintenance, exitMaintenance)
+  );
 };
 
 export const mapCreateWorkOrderData = (
   userId: string,
   createdBy: string,
-  workOrderData: CreateWorkOrderBody
+  workOrderData: CreateWorkOrderBody,
 ) => {
   const {
     severityLevel,
@@ -100,7 +109,7 @@ export const mapCreateWorkOrderData = (
     createdBy,
     box,
     status,
-    typeOfMaintenance
+    typeOfMaintenance,
   };
 };
 
@@ -108,7 +117,7 @@ export const mapUpdateWorkOrderData = (
   workOrderId: string,
   userId: string,
   updatedBy: string,
-  workOrderData: UpdateWorkOrderBody
+  workOrderData: UpdateWorkOrderBody,
 ) => {
   const {
     severityLevel,
@@ -123,7 +132,7 @@ export const mapUpdateWorkOrderData = (
     endWaitingParts,
     exitSupervisor,
   } = workOrderData;
-  console.log(updatedBy)
+  console.log(updatedBy);
   return {
     workOrderId,
     severityLevel,
@@ -143,7 +152,6 @@ export const mapUpdateWorkOrderData = (
 };
 
 export const generateDisplayId = (() => {
-
   const orderServiceCounters = {
     [TypeOfMaintenance.Preditiva]: 0,
     [TypeOfMaintenance.Preventiva]: 0,
@@ -151,7 +159,6 @@ export const generateDisplayId = (() => {
   };
 
   return (type: TypeOfMaintenance): string => {
-
     let prefix: string;
     switch (type) {
       case TypeOfMaintenance.Preditiva:
@@ -176,4 +183,3 @@ export const generateDisplayId = (() => {
     return `${prefix}${formattedNumber}`;
   };
 })();
-

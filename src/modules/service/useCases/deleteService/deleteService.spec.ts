@@ -1,6 +1,6 @@
-import { makeService } from "../../factories/serviceFactory";
-import { ServiceRepositoryInMemory } from "../../repositories/serviceRepositoryInMemory";
-import { DeleteService } from "./deleteService";
+import { makeService } from '../../factories/serviceFactory';
+import { ServiceRepositoryInMemory } from '../../repositories/serviceRepositoryInMemory';
+import { DeleteService } from './deleteService';
 
 let serviceRepositoryInMemory: ServiceRepositoryInMemory;
 let deleteService: DeleteService;
@@ -19,7 +19,7 @@ describe('Delete Service', () => {
     expect(serviceRepositoryInMemory.services).toEqual([service]);
 
     await deleteService.execute({
-      serviceId: service.id
+      serviceId: service.id,
     });
 
     expect(serviceRepositoryInMemory.services).toHaveLength(0);

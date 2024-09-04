@@ -67,7 +67,7 @@ export class PrismaServiceRepository implements ServiceRepository {
 
     return PrismaServiceMapper.toDomain(service);
   }
-  
+
   async findByWorkOrder(workOrderId: string): Promise<any> {
     const services = await this.prisma.service.findMany({
       where: { serviceAssignmets: { some: { workOrderId } } },

@@ -1,16 +1,16 @@
-import { HttpStatus } from "@nestjs/common";
-import { AppException, AppExceptionProps } from "./appException";
+import { HttpStatus } from '@nestjs/common';
+import { AppException, AppExceptionProps } from './appException';
 
 interface IncorrectValuesExceptionProps {
-  fields: AppExceptionProps['fields']
-};
+  fields: AppExceptionProps['fields'];
+}
 
 export class IncorrectValuesException extends AppException {
-  constructor({ fields }: IncorrectValuesExceptionProps){
+  constructor({ fields }: IncorrectValuesExceptionProps) {
     super({
       message: 'Dados inválidos',
       status: HttpStatus.BAD_REQUEST,
-      fields: fields
+      fields: fields,
     });
-  };
-};
+  }
+}

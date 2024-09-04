@@ -1,8 +1,8 @@
 import {
   isNotEmpty,
   registerDecorator,
-  ValidationArguments, 
-  ValidationOptions
+  ValidationArguments,
+  ValidationOptions,
 } from 'class-validator';
 import { ExceptionMessage } from '../data/exceptionMessage';
 
@@ -15,13 +15,12 @@ export function IsNotEmptyCustom(validationOptions?: ValidationOptions) {
       constraints: [],
       options: validationOptions,
       validator: {
-
         validate(value: string) {
-          return isNotEmpty(value)
+          return isNotEmpty(value);
         },
-        defaultMessage(validationArguments: ValidationArguments){
+        defaultMessage(validationArguments: ValidationArguments) {
           return ExceptionMessage.IsNotEmpty(validationArguments.property);
-        }
+        },
       },
     });
   };

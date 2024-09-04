@@ -1,23 +1,23 @@
-import { Carrier } from "src/modules/carrier/entities/Carrier";
+import { Carrier } from 'src/modules/carrier/entities/Carrier';
 
 export class CarrierViewModel {
-  static toHttp({ 
+  static toHttp({
     id,
     carrierName,
     managerName,
     managerPhone,
     status,
-    createdAt, 
-    updatedAt
+    createdAt,
+    updatedAt,
   }: Carrier) {
-    return { 
+    return {
       id,
       carrierName,
       managerName,
       managerPhone,
       status,
-      createdAt, 
-      updatedAt
+      createdAt,
+      updatedAt,
     };
-  };
-};
+  }
+}

@@ -1,5 +1,5 @@
-import { randomUUID } from "crypto";
-import { Replace } from "src/utils/replace";
+import { randomUUID } from 'crypto';
+import { Replace } from 'src/utils/replace';
 
 interface NoteProps {
   title: string;
@@ -10,20 +10,23 @@ interface NoteProps {
 }
 
 export class Note {
+  private props: NoteProps;
+  private _id: string;
 
-  private props: NoteProps
-  private _id: string
-
-  constructor(props: Replace<NoteProps, {createdAt?: Date, updatedAt?: Date, description?: string | null }>, 
-    id?: string
-    ) {
+  constructor(
+    props: Replace<
+      NoteProps,
+      { createdAt?: Date; updatedAt?: Date; description?: string | null }
+    >,
+    id?: string,
+  ) {
     this.props = {
       ...props,
       createdAt: props.createdAt ?? new Date(),
       updatedAt: new Date(),
-      description: props.description ?? null
+      description: props.description ?? null,
     };
-    this._id = id || randomUUID()
+    this._id = id || randomUUID();
   }
 
   get id(): string {
@@ -45,7 +48,7 @@ export class Note {
   set description(description: string | null) {
     this.props.description = description;
   }
-  
+
   get userId(): string {
     return this.props.userId;
   }
@@ -58,7 +61,7 @@ export class Note {
     return this.props.updatedAt;
   }
 
-  set updatedAt(updatedAt : Date) {
-    this.props.updatedAt = updatedAt
+  set updatedAt(updatedAt: Date) {
+    this.props.updatedAt = updatedAt;
   }
 }

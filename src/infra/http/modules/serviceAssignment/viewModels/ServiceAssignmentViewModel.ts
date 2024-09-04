@@ -1,12 +1,12 @@
-import { ServiceAssignment } from "src/modules/serviceAssignment/entities/ServiceAssignment";
+import { ServiceAssignment } from 'src/modules/serviceAssignment/entities/ServiceAssignment';
 
 export class ServiceAssignmentViewModel {
-  static toHttp({ id, workOrderId, serviceId, employeeId }: ServiceAssignment){
+  static toHttp({ id, workOrderId, serviceId, employeeId }: ServiceAssignment) {
     return {
-      id, 
+      id,
       workOrderId,
       serviceId,
-      employeeId
+      employeeId,
     };
-  };
-};
+  }
+}

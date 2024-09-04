@@ -1,17 +1,17 @@
-import { Employee } from "../entities/Employee";
-import { EmployeeStatus } from "../enum/employee-status.enum";
+import { Employee } from '../entities/Employee';
+import { EmployeeStatus } from '../enum/employee-status.enum';
 
-
-type Override = Partial<Employee>
+type Override = Partial<Employee>;
 
 export const makeEmployee = ({ id, ...override }: Override) => {
-  return new Employee({
-    name: 'Elves Caires',
-    workShift: 'Manhã',
-    jobTitleId: '12355',
-    status: EmployeeStatus.ATIVO,
-    ...override
-  },
-  id
+  return new Employee(
+    {
+      name: 'Elves Caires',
+      workShift: 'Manhã',
+      jobTitleId: '12355',
+      status: EmployeeStatus.ATIVO,
+      ...override,
+    },
+    id,
   );
 };

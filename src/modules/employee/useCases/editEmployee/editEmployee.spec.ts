@@ -1,10 +1,10 @@
-import { EmployeeNotFoundException } from "../../exceptions/EmployeeNotFoundException";
-import { makeEmployee } from "../../factories/employeeFactory";
-import { EmployeeRepositoryInMemory } from "../../repositories/EmployeeRepositoryInMemory";
-import { EditEmployee } from "./editEmployee";
+import { EmployeeNotFoundException } from '../../exceptions/EmployeeNotFoundException';
+import { makeEmployee } from '../../factories/employeeFactory';
+import { EmployeeRepositoryInMemory } from '../../repositories/EmployeeRepositoryInMemory';
+import { EditEmployee } from './editEmployee';
 
-let employeeRepositoryInMemory: EmployeeRepositoryInMemory
-let editEmployee: EditEmployee
+let employeeRepositoryInMemory: EmployeeRepositoryInMemory;
+let editEmployee: EditEmployee;
 
 describe('Edit Employee', () => {
   beforeEach(() => {
@@ -21,17 +21,16 @@ describe('Edit Employee', () => {
 
     const result = await editEmployee.execute({
       name: employeeNameChanged,
-      employeeId: employee.id
+      employeeId: employee.id,
     });
 
     expect(result.name).toEqual(employeeNameChanged);
   });
 
   it('Shoud be able to throw error when not find employee', async () => {
-    
     expect(async () => {
       await editEmployee.execute({
-        employeeId: 'fakeid'
+        employeeId: 'fakeid',
       });
     }).rejects.toThrow(EmployeeNotFoundException);
   });

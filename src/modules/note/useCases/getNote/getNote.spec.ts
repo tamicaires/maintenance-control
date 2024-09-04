@@ -22,19 +22,17 @@ describe('Get Note', () => {
 
     const result = await getNote.execute({
       noteId: note.id,
-      userId: user.id
+      userId: user.id,
     });
 
     expect(result).toEqual(note);
-
   });
 
   it('Should be able to throw error when not found note', async () => {
-
     expect(async () => {
       await getNote.execute({
         noteId: 'fakeId',
-        userId: 'fakeId'
+        userId: 'fakeId',
       });
     }).rejects.toThrow(NoteNotFoundException);
   });
@@ -47,7 +45,7 @@ describe('Get Note', () => {
     expect(async () => {
       await getNote.execute({
         noteId: note.id,
-        userId: 'fakeId'
+        userId: 'fakeId',
       });
     }).rejects.toThrow(NoteWithoutPermissionException);
   });

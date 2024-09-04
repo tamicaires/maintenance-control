@@ -1,5 +1,5 @@
-import { EditFleetBody } from "src/infra/http/modules/fleet/dtos/editFleetBody";
-import { Fleet } from "src/modules/fleet/entities/Fleet";
+import { EditFleetBody } from 'src/infra/http/modules/fleet/dtos/editFleetBody';
+import { Fleet } from 'src/modules/fleet/entities/Fleet';
 
 export function updateFleetProperties(fleet: Fleet, data: Partial<Fleet>) {
   if (data.fleetNumber !== undefined) {
@@ -23,27 +23,27 @@ export function updateFleetProperties(fleet: Fleet, data: Partial<Fleet>) {
   if (data.status !== undefined) {
     fleet.status = data.status;
   }
-};
+}
 
-export function mapEditFleetData(body: EditFleetBody, fleetId: string){
-  const { 
-    fleetNumber, 
-    plate, 
-    firstTrailerPlate, 
-    secondTrailerPlate, 
-    thirdTrailerPlate, 
-    km, 
-    status
+export function mapEditFleetData(body: EditFleetBody, fleetId: string) {
+  const {
+    fleetNumber,
+    plate,
+    firstTrailerPlate,
+    secondTrailerPlate,
+    thirdTrailerPlate,
+    km,
+    status,
   } = body;
 
   return {
     fleetId,
-    fleetNumber, 
-    plate, 
-    firstTrailerPlate, 
-    secondTrailerPlate, 
-    thirdTrailerPlate, 
-    km, 
-    status
+    fleetNumber,
+    plate,
+    firstTrailerPlate,
+    secondTrailerPlate,
+    thirdTrailerPlate,
+    km,
+    status,
   };
-};
+}

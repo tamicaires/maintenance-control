@@ -1,32 +1,30 @@
-import { Injectable } from "@nestjs/common";
-import { ServiceRepository } from "../../repositories/serviceRepository";
+import { Injectable } from '@nestjs/common';
+import { ServiceRepository } from '../../repositories/serviceRepository';
 
 interface GetManyServicesRequest {
   filter?: string;
   page?: string;
-  perPage?: string; 
-};
+  perPage?: string;
+}
 
 @Injectable()
-export class GetManyServices{
-  constructor(private serviceRepository: ServiceRepository){}
+export class GetManyServices {
+  constructor(private serviceRepository: ServiceRepository) {}
 
-  async execute({ filter, page, perPage }: GetManyServicesRequest){
-
+  async execute({ filter, page, perPage }: GetManyServicesRequest) {
     const DEFAULT_PAGE = 1;
     const DEFAULT_PERPAGE = 20;
 
-    const currentFilter = filter ?? ''
+    const currentFilter = filter ?? '';
     const currentPage = Number(page) || DEFAULT_PAGE;
     const currentPerPage = Number(perPage) || DEFAULT_PERPAGE;
 
-
     const services = await this.serviceRepository.findMany(
       currentFilter,
-      currentPage, 
-      currentPerPage 
+      currentPage,
+      currentPerPage,
     );
 
     return services;
-  };
-};
+  }
+}

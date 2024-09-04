@@ -1,8 +1,8 @@
 import {
   isString,
   registerDecorator,
-  ValidationArguments, 
-  ValidationOptions
+  ValidationArguments,
+  ValidationOptions,
 } from 'class-validator';
 import { ExceptionMessage } from '../data/exceptionMessage';
 
@@ -15,13 +15,12 @@ export function IsStringCustom(validationOptions?: ValidationOptions) {
       constraints: [],
       options: validationOptions,
       validator: {
-
         validate(value: string) {
-          return isString(value)
+          return isString(value);
         },
-        defaultMessage(validationArguments: ValidationArguments){
+        defaultMessage(validationArguments: ValidationArguments) {
           return ExceptionMessage.IsString(validationArguments.property);
-        }
+        },
       },
     });
   };

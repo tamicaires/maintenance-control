@@ -1,9 +1,8 @@
-import { IsOptional } from "class-validator";
-import { IsStringCustom } from "src/infra/http/classValidator/decorators/IsStringCustom";
-import { ServiceCategory } from "src/modules/service/enum/service-category.enum";
+import { IsOptional } from 'class-validator';
+import { IsStringCustom } from 'src/infra/http/classValidator/decorators/IsStringCustom';
+import { ServiceCategory } from 'src/modules/service/enum/service-category.enum';
 
 export class UpdateServiceBody {
-  
   @IsOptional()
   @IsStringCustom()
   serviceName: string;
@@ -11,4 +10,4 @@ export class UpdateServiceBody {
   @IsOptional()
   @IsStringCustom()
   serviceCategory: ServiceCategory;
-};
+}

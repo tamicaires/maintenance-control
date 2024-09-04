@@ -10,9 +10,9 @@ async function bootstrap() {
 
   app.useGlobalPipes(
     new ValidationPipe({
-      exceptionFactory(errors: ValidationError[]){
+      exceptionFactory(errors: ValidationError[]) {
         throw new IncorrectValuesException({
-          fields: mapperClassValidationErrorToAppException(errors)
+          fields: mapperClassValidationErrorToAppException(errors),
         });
       },
       transform: true,
@@ -23,7 +23,7 @@ async function bootstrap() {
   app.enableCors({
     origin: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    credentials: true
+    credentials: true,
   });
 
   await app.listen(3000);

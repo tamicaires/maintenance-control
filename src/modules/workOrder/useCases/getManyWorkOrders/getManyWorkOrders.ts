@@ -1,16 +1,15 @@
-import { Injectable } from "@nestjs/common";
-import { WorkOrderRepository } from "../../repositories/workOrderRepository";
+import { Injectable } from '@nestjs/common';
+import { WorkOrderRepository } from '../../repositories/workOrderRepository';
 
 interface GetManyWorkOrdersRequest {
   page?: string;
   perPage?: string;
-};
+}
 
 @Injectable()
 export class GetManyWorkOrders {
-  constructor(private workOrderRepository: WorkOrderRepository){}
-  async execute({ page, perPage }: GetManyWorkOrdersRequest){
-
+  constructor(private workOrderRepository: WorkOrderRepository) {}
+  async execute({ page, perPage }: GetManyWorkOrdersRequest) {
     const DEFAULT_PAGE = 1;
     const DEFAULT_PERPAGE = 20;
 
@@ -19,9 +18,9 @@ export class GetManyWorkOrders {
 
     const workOrders = await this.workOrderRepository.findMany(
       currentPage,
-      currentPerPage
+      currentPerPage,
     );
 
     return workOrders;
-  };
-};
+  }
+}

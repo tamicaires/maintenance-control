@@ -1,13 +1,12 @@
-import { IsOptional } from "class-validator";
-import { IsStringCustom } from "src/infra/http/classValidator/decorators/IsStringCustom";
-import { FleetStatus } from "src/modules/fleet/enum/fleet-status.enum";
+import { IsOptional } from 'class-validator';
+import { IsStringCustom } from 'src/infra/http/classValidator/decorators/IsStringCustom';
+import { FleetStatus } from 'src/modules/fleet/enum/fleet-status.enum';
 
-export class EditFleetBody{
-
+export class EditFleetBody {
   @IsStringCustom()
   @IsOptional()
   fleetNumber: string;
-  
+
   @IsStringCustom()
   @IsOptional()
   plate: string;
@@ -35,4 +34,4 @@ export class EditFleetBody{
   @IsStringCustom()
   @IsOptional()
   status: FleetStatus;
-};
+}

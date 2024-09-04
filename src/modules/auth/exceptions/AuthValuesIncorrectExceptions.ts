@@ -1,11 +1,11 @@
-import { HttpStatus } from "@nestjs/common";
-import { AppException } from "src/exceptions/appException";
+import { HttpStatus } from '@nestjs/common';
+import { AppException } from 'src/exceptions/appException';
 
 export class AuthValuesIncorretException extends AppException {
-  constructor(){
+  constructor() {
     super({
       message: 'Email ou senha incorretos',
-      status: HttpStatus.NOT_FOUND
+      status: HttpStatus.NOT_FOUND,
     });
   }
 }

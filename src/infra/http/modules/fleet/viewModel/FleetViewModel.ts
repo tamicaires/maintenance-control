@@ -1,7 +1,7 @@
-import { Fleet } from "src/modules/fleet/entities/Fleet";
+import { Fleet } from 'src/modules/fleet/entities/Fleet';
 
 interface FleetWithCarrier extends Fleet {
-  carrier: { carrierName: string }; 
+  carrier: { carrierName: string };
 }
 export class FleetViewModel {
   static toHttp(fleet: Fleet | FleetWithCarrier) {
@@ -18,8 +18,7 @@ export class FleetViewModel {
       km: fleet.km,
       status: fleet.status,
       createdAt: fleet.createdAt,
-      updatedAt: fleet.updatedAt
+      updatedAt: fleet.updatedAt,
     };
-  };
-};
-
+  }
+}

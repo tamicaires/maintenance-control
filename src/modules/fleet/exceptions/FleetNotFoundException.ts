@@ -1,11 +1,11 @@
-import { HttpStatus } from "@nestjs/common";
-import { AppException } from "src/exceptions/appException";
+import { HttpStatus } from '@nestjs/common';
+import { AppException } from 'src/exceptions/appException';
 
-export class FleetNotFoundException extends AppException{
-  constructor(){
+export class FleetNotFoundException extends AppException {
+  constructor() {
     super({
       message: 'Frota não encontrada',
-      status: HttpStatus.NOT_FOUND
+      status: HttpStatus.NOT_FOUND,
     });
-  };
-};
+  }
+}

@@ -1,8 +1,8 @@
 import {
   isEmail,
   registerDecorator,
-  ValidationArguments, 
-  ValidationOptions
+  ValidationArguments,
+  ValidationOptions,
 } from 'class-validator';
 import { ExceptionMessage } from '../data/exceptionMessage';
 
@@ -15,13 +15,12 @@ export function IsEmailCustom(validationOptions?: ValidationOptions) {
       constraints: [],
       options: validationOptions,
       validator: {
-
         validate(value: string) {
-          return isEmail(value)
+          return isEmail(value);
         },
-        defaultMessage(validationArguments: ValidationArguments){
+        defaultMessage(validationArguments: ValidationArguments) {
           return ExceptionMessage.IsEmail(validationArguments.property);
-        }
+        },
       },
     });
   };

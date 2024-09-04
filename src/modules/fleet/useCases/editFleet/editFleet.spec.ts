@@ -1,18 +1,16 @@
-import { FleetStatus } from "../../enum/fleet-status.enum";
-import { makeFleet } from "../../factories/fleetFactory";
-import { FleetRepositoryInMemory } from "../../repositories/FleetRepositoryInMemory";
-import { EditFleet } from "./editFleet";
-import { FleetNotFoundException } from "../../exceptions/FleetNotFoundException";
+import { FleetStatus } from '../../enum/fleet-status.enum';
+import { makeFleet } from '../../factories/fleetFactory';
+import { FleetRepositoryInMemory } from '../../repositories/FleetRepositoryInMemory';
+import { EditFleet } from './editFleet';
+import { FleetNotFoundException } from '../../exceptions/FleetNotFoundException';
 
-
-let fleetRepositoryInMemory: FleetRepositoryInMemory
-let editFleet: EditFleet
+let fleetRepositoryInMemory: FleetRepositoryInMemory;
+let editFleet: EditFleet;
 
 describe('Edit Fleet', () => {
-  
   beforeEach(() => {
-    fleetRepositoryInMemory = new FleetRepositoryInMemory()
-    editFleet = new EditFleet(fleetRepositoryInMemory)
+    fleetRepositoryInMemory = new FleetRepositoryInMemory();
+    editFleet = new EditFleet(fleetRepositoryInMemory);
   });
 
   it('Should be able to edit fleet', async () => {
@@ -31,15 +29,15 @@ describe('Edit Fleet', () => {
       secondTrailerPlate: 'PTB445SD',
       thirdTrailerPlate: 'PTB445SD',
       km: '54525',
-      status: FleetStatus.ATIVO
+      status: FleetStatus.ATIVO,
     });
 
-    expect(fleetRepositoryInMemory.fleets[0].fleetNumber).toEqual(fleetNumberChanged)
-
+    expect(fleetRepositoryInMemory.fleets[0].fleetNumber).toEqual(
+      fleetNumberChanged,
+    );
   });
 
   it('Should be able to throw error when not find fleet', async () => {
-
     expect(async () => {
       await editFleet.execute({
         fleetId: 'fakeId',
@@ -47,11 +45,10 @@ describe('Edit Fleet', () => {
         plate: 'PTB445SD',
         firstTrailerPlate: 'PTB445SD',
         secondTrailerPlate: 'PTB445SD',
-        thirdTrailerPlate: 'PTB445SD', 
+        thirdTrailerPlate: 'PTB445SD',
         km: '54525',
-        status: FleetStatus.ATIVO
+        status: FleetStatus.ATIVO,
       });
     }).rejects.toThrow(FleetNotFoundException);
-
   });
-})
+});

@@ -15,12 +15,12 @@ describe('Get many notes', () => {
   it('Should be able to get many note', async () => {
     const user = makeUser({});
 
-    const notes = [... new Array(10)].map(() => makeNote({ userId: user.id }))
+    const notes = [...new Array(10)].map(() => makeNote({ userId: user.id }));
 
     noteRepositoryInMemory.notes = notes;
 
     const result = await getManyNotes.execute({
-      userId: user.id 
+      userId: user.id,
     });
 
     expect(result).toEqual(notes);
@@ -30,12 +30,14 @@ describe('Get many notes', () => {
     const user1 = makeUser({});
     const user2 = makeUser({});
 
-    const notes = [... new Array(10)].map((_, index) => makeNote({ userId: index < 5 ? user1.id : user2.id }))
+    const notes = [...new Array(10)].map((_, index) =>
+      makeNote({ userId: index < 5 ? user1.id : user2.id }),
+    );
 
     noteRepositoryInMemory.notes = notes;
 
     const result = await getManyNotes.execute({
-      userId: user1.id 
+      userId: user1.id,
     });
 
     expect(result).toHaveLength(5);
@@ -44,31 +46,33 @@ describe('Get many notes', () => {
   it('Should be able to controle notes per page', async () => {
     const user = makeUser({});
 
-    const notes = [... new Array(10)].map(() => makeNote({ userId: user.id }))
+    const notes = [...new Array(10)].map(() => makeNote({ userId: user.id }));
 
     noteRepositoryInMemory.notes = notes;
 
     const result = await getManyNotes.execute({
       userId: user.id,
-      perPage: '8'
-    })
+      perPage: '8',
+    });
 
-    expect(result).toHaveLength(8)
+    expect(result).toHaveLength(8);
   });
 
-  it('Should be able to control note page', async () => { 
+  it('Should be able to control note page', async () => {
     const user = makeUser({});
-   
-    const notes = [... new Array(10)].map((_, index) => makeNote({ userId: user.id, title: index < 5 ? 'page 1' : 'page 2'}))
+
+    const notes = [...new Array(10)].map((_, index) =>
+      makeNote({ userId: user.id, title: index < 5 ? 'page 1' : 'page 2' }),
+    );
 
     noteRepositoryInMemory.notes = notes;
 
     const result = await getManyNotes.execute({
       userId: user.id,
-      perPage:'5',
+      perPage: '5',
       page: '1',
     });
 
-    expect(result[0].title).toEqual('page 1')
-  })
+    expect(result[0].title).toEqual('page 1');
+  });
 });

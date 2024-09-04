@@ -27,11 +27,11 @@ export class CreateFleet {
       thirdTrailerPlate: data.thirdTrailerPlate,
       km: data.km,
       carrierId: data.carrierId,
-      status: data.status
+      status: data.status,
     });
 
     await this.fleetRepository.create(fleet);
 
     return fleet;
-  };
-};
+  }
+}

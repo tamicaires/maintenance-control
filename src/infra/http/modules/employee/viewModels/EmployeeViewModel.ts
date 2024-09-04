@@ -1,11 +1,11 @@
-import { Employee } from "src/modules/employee/entities/Employee";
+import { Employee } from 'src/modules/employee/entities/Employee';
 
 interface EmployeeWithRelationInfo extends Employee {
-  job: { jobTitle: string }; 
+  job: { jobTitle: string };
 }
 
 export class EmployeeViewModel {
-  static toHttp({ 
+  static toHttp({
     id,
     name,
     workShift,
@@ -13,19 +13,19 @@ export class EmployeeViewModel {
     status,
     createdAt,
     updatedAt,
-    job 
-  }: EmployeeWithRelationInfo){
-    const jobTitle = job?.jobTitle; 
+    job,
+  }: EmployeeWithRelationInfo) {
+    const jobTitle = job?.jobTitle;
 
     return {
       id,
       name,
       workShift,
       jobTitleId,
-      jobTitle, 
+      jobTitle,
       status,
       createdAt,
-      updatedAt
+      updatedAt,
     };
-  };
-};
+  }
+}

@@ -1,9 +1,9 @@
-import { makeUser } from "src/modules/user/factories/userFactory";
-import { InvalidDateException } from "../../exceptions/invalidDatesException";
-import { WorkOrderNotFoundException } from "../../exceptions/workOrderNotFoundException";
-import { makeWorkOrder } from "../../factories/workOrderFactory";
-import { WorkOrderRepositoryInMemory } from "../../repositories/workOrderRepositoryInMemory";
-import { UpdateWorkOrder } from "./updateWorkOrder";
+import { makeUser } from 'src/modules/user/factories/userFactory';
+import { InvalidDateException } from '../../exceptions/invalidDatesException';
+import { WorkOrderNotFoundException } from '../../exceptions/workOrderNotFoundException';
+import { makeWorkOrder } from '../../factories/workOrderFactory';
+import { WorkOrderRepositoryInMemory } from '../../repositories/workOrderRepositoryInMemory';
+import { UpdateWorkOrder } from './updateWorkOrder';
 
 let workOrderRepositoryInMemory: WorkOrderRepositoryInMemory;
 let updateWorkOrder: UpdateWorkOrder;
@@ -16,7 +16,7 @@ describe('Update Work Order', () => {
 
   it('Should be able to update work order', async () => {
     const user = makeUser({});
-    const workOrder = makeWorkOrder({ });
+    const workOrder = makeWorkOrder({});
 
     workOrderRepositoryInMemory.workOrders = [workOrder];
 
@@ -25,23 +25,22 @@ describe('Update Work Order', () => {
     const result = await updateWorkOrder.execute({
       userId: user.id,
       workOrderId: workOrder.id,
-      severityLevel: severityLevelChanged
+      severityLevel: severityLevelChanged,
     });
 
     expect(result.severityLevel).toEqual(severityLevelChanged);
   });
 
-  it('Should be able to throw error when not find work order', async () =>{
+  it('Should be able to throw error when not find work order', async () => {
     const user = makeUser({});
 
     expect(async () => {
       await updateWorkOrder.execute({
         workOrderId: 'fakeId',
-        userId: user.id
-      })
+        userId: user.id,
+      });
     }).rejects.toThrow(WorkOrderNotFoundException);
   });
-
 
   it('Should be able to throw error whren validate entries date dont work', async () => {
     const user = makeUser({});
@@ -58,12 +57,11 @@ describe('Update Work Order', () => {
         userId: user.id,
         workOrderId: workOrder.id,
         entryQueue: entryQueueChanged,
-        entryMaintenance: entryMaintenanceChanged
+        entryMaintenance: entryMaintenanceChanged,
       });
     }).rejects.toThrow(InvalidDateException);
   });
 
-  
   it('Should be able to validate exit date orders', async () => {
     const user = makeUser({});
     const workOrder = makeWorkOrder({});
@@ -79,9 +77,8 @@ describe('Update Work Order', () => {
         workOrderId: workOrder.id,
         entryQueue: undefined,
         entryMaintenance: entryMaintenanceChanged,
-        exitMaintenance: exitMaintenanceChanged
+        exitMaintenance: exitMaintenanceChanged,
       });
     }).rejects.toThrow(InvalidDateException);
   });
-
 });

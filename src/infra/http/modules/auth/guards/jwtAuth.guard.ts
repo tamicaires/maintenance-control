@@ -1,16 +1,12 @@
-import { 
-  ExecutionContext, 
-  Injectable, 
-} from "@nestjs/common";
-import { AuthGuard } from "@nestjs/passport";
-import { IS_PUBLIC_KEY } from "../decorators/is-public.decorator";
-import { Reflector } from "@nestjs/core";
-import { InvalidAccessTokenException } from "src/exceptions/InvalidAccessTokenException";
+import { ExecutionContext, Injectable } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { IS_PUBLIC_KEY } from '../decorators/is-public.decorator';
+import { Reflector } from '@nestjs/core';
+import { InvalidAccessTokenException } from 'src/exceptions/InvalidAccessTokenException';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
-
-  constructor(private reflector: Reflector){
+  constructor(private reflector: Reflector) {
     super();
   }
 
@@ -26,7 +22,6 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
   }
 
   handleRequest(err, user) {
-
     if (err || !user) {
       throw err || new InvalidAccessTokenException();
     }

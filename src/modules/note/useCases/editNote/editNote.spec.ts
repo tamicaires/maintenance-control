@@ -17,7 +17,7 @@ describe('Edit Note', () => {
   it('Should be able to edit note', async () => {
     const user = makeUser({});
     const note = makeNote({
-      userId: user.id
+      userId: user.id,
     });
 
     noteRepositoryInMemory.notes = [note];
@@ -33,16 +33,17 @@ describe('Edit Note', () => {
     });
 
     expect(noteRepositoryInMemory.notes[0].title).toEqual(titleChanged);
-    expect(noteRepositoryInMemory.notes[0].description).toEqual(descriptionChanged);
+    expect(noteRepositoryInMemory.notes[0].description).toEqual(
+      descriptionChanged,
+    );
   });
 
   it('Should be able to throw error when not found note', async () => {
-
     expect(async () => {
       await editNote.execute({
         title: 'Preventiva 22545',
         noteId: 'fakeId',
-        userId: 'fakeId'
+        userId: 'fakeId',
       });
     }).rejects.toThrow(NoteNotFoundException);
   });
@@ -56,7 +57,7 @@ describe('Edit Note', () => {
       await editNote.execute({
         title: 'Preventiva agendada 22311',
         noteId: note.id,
-        userId: 'fakeId'
+        userId: 'fakeId',
       });
     }).rejects.toThrow(NoteWithoutPermissionException);
   });

@@ -6,5 +6,5 @@ export enum Box {
   Cinco = 'Cinco',
   Seis = 'Seis',
   Sete = 'Sete',
-  Oito = 'Oito'
-};
+  Oito = 'Oito',
+}

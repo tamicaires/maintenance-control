@@ -1,28 +1,31 @@
-import { randomUUID } from "crypto";
-import { CarrierStatus } from "../enum/carrier-status.enum";
-import { Replace } from "src/utils/replace";
+import { randomUUID } from 'crypto';
+import { CarrierStatus } from '../enum/carrier-status.enum';
+import { Replace } from 'src/utils/replace';
 
 interface CarrierSchema {
   carrierName: string;
   managerName: string;
   managerPhone: string;
   status: CarrierStatus;
-  createdAt: Date; 
-  updatedAt: Date; 
+  createdAt: Date;
+  updatedAt: Date;
 }
 export class Carrier {
   private props: CarrierSchema;
   private _id: string;
-  
-  constructor(props: Replace<CarrierSchema, {createdAt?: Date, updatedAt?: Date}>, id?: string) {
-    this.props = {
-      ...props, 
+
+  constructor(
+    props: Replace<CarrierSchema, { createdAt?: Date; updatedAt?: Date }>,
+    id?: string,
+  ) {
+    (this.props = {
+      ...props,
       createdAt: props.createdAt || new Date(),
-      updatedAt: new Date()
-    },
-    this._id = id || randomUUID()
+      updatedAt: new Date(),
+    }),
+      (this._id = id || randomUUID());
   }
-    
+
   get id(): string {
     return this._id;
   }
@@ -70,5 +73,4 @@ export class Carrier {
   set updatedAt(updatedAt: Date) {
     this.props.updatedAt = updatedAt;
   }
-
 }

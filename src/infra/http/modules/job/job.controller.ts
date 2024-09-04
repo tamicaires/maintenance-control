@@ -1,19 +1,18 @@
-import { 
-  Body, 
-  Controller, 
-  Delete, 
-  Get, 
-  Param, 
-  Post,  
-  Query 
-} from "@nestjs/common";
-import { CreateJob } from "src/modules/job/useCases/createJob/createJob";
-import { CreateJobBody } from "./dto/createJobBody";
-import { JobViewModel } from "./viewModels/JobViewModel";
-import { DeleteJob } from "src/modules/job/useCases/deleteJob/deleteJob";
-import { GetJob } from "src/modules/job/useCases/getJob/getJob";
-import { GetManyJobs } from "src/modules/job/useCases/getManyJobs/getManyJobs";
-
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
+import { CreateJob } from 'src/modules/job/useCases/createJob/createJob';
+import { CreateJobBody } from './dto/createJobBody';
+import { JobViewModel } from './viewModels/JobViewModel';
+import { DeleteJob } from 'src/modules/job/useCases/deleteJob/deleteJob';
+import { GetJob } from 'src/modules/job/useCases/getJob/getJob';
+import { GetManyJobs } from 'src/modules/job/useCases/getManyJobs/getManyJobs';
 
 @Controller('jobs')
 export class JobController {
@@ -21,50 +20,46 @@ export class JobController {
     private createJobUseCase: CreateJob,
     private deleteJobUseCase: DeleteJob,
     private getJobUseCase: GetJob,
-    private getManyJobsUseCase: GetManyJobs
+    private getManyJobsUseCase: GetManyJobs,
   ) {}
 
   @Post()
-  async createJob(
-    @Body() body: CreateJobBody
-  ) {
+  async createJob(@Body() body: CreateJobBody) {
     const { jobTitle } = body;
 
-    const job = await this.createJobUseCase.execute({ 
-      jobTitle 
+    const job = await this.createJobUseCase.execute({
+      jobTitle,
     });
 
     return JobViewModel.toHttp(job);
-  };
+  }
 
   @Delete(':id')
-  async deleteJob(
-    @Param('id') jobId: string
-  ){
+  async deleteJob(@Param('id') jobId: string) {
     await this.deleteJobUseCase.execute({
-      jobId
+      jobId,
     });
-  };
+  }
 
   @Get(':id')
-  async getJob(@Param('id') jobId: string){
+  async getJob(@Param('id') jobId: string) {
     const job = await this.getJobUseCase.execute({
-      jobId
+      jobId,
     });
 
     return JobViewModel.toHttp(job);
-  };
+  }
 
   @Get()
   async getManyJobs(
     @Query('page') page: string,
-    @Query('perPage') perPage: string
-  ){
-    const jobs = await this.getManyJobsUseCase.execute({ 
+    @Query('perPage') perPage: string,
+  ) {
+    const jobs = await this.getManyJobsUseCase.execute({
       page,
-      perPage
+      perPage,
     });
 
-    return jobs?.map(JobViewModel.toHttp)
-  };
-};
+    return jobs?.map(JobViewModel.toHttp);
+  }
+}

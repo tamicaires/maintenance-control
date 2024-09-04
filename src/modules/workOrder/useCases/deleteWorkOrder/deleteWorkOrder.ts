@@ -1,21 +1,20 @@
-import { Injectable } from "@nestjs/common";
-import { WorkOrderRepository } from "../../repositories/workOrderRepository";
-import { WorkOrderNotFoundException } from "../../exceptions/workOrderNotFoundException";
+import { Injectable } from '@nestjs/common';
+import { WorkOrderRepository } from '../../repositories/workOrderRepository';
+import { WorkOrderNotFoundException } from '../../exceptions/workOrderNotFoundException';
 
-
-interface DeleteWorkOrderRequest{
+interface DeleteWorkOrderRequest {
   workOrderId: string;
-};
+}
 
 @Injectable()
-export class DeleteWorkOrder{
-  constructor(private workOrderRepository: WorkOrderRepository){}
+export class DeleteWorkOrder {
+  constructor(private workOrderRepository: WorkOrderRepository) {}
 
-  async execute({ workOrderId }: DeleteWorkOrderRequest){
+  async execute({ workOrderId }: DeleteWorkOrderRequest) {
     const workOrder = await this.workOrderRepository.findById(workOrderId);
 
-    if(!workOrder) throw new WorkOrderNotFoundException();
+    if (!workOrder) throw new WorkOrderNotFoundException();
 
     await this.workOrderRepository.delete(workOrderId);
-  };
-};
+  }
+}

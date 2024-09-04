@@ -1,7 +1,7 @@
-import { WorkOrderNotFoundException } from "../../exceptions/workOrderNotFoundException";
-import { makeWorkOrder } from "../../factories/workOrderFactory";
-import { WorkOrderRepositoryInMemory } from "../../repositories/workOrderRepositoryInMemory";
-import { DeleteWorkOrder } from "./deleteWorkOrder";
+import { WorkOrderNotFoundException } from '../../exceptions/workOrderNotFoundException';
+import { makeWorkOrder } from '../../factories/workOrderFactory';
+import { WorkOrderRepositoryInMemory } from '../../repositories/workOrderRepositoryInMemory';
+import { DeleteWorkOrder } from './deleteWorkOrder';
 
 let workOrderRepositoryInMemory: WorkOrderRepositoryInMemory;
 let deleteWorkOrder: DeleteWorkOrder;
@@ -20,17 +20,16 @@ describe('Delete Work Order', () => {
     expect(workOrderRepositoryInMemory.workOrders).toEqual([workOrder]);
 
     await deleteWorkOrder.execute({
-      workOrderId: workOrder.id
+      workOrderId: workOrder.id,
     });
 
     expect(workOrderRepositoryInMemory.workOrders).toHaveLength(0);
   });
 
   it('Should be able to throw error when not find work order', async () => {
-    
     expect(async () => {
       await deleteWorkOrder.execute({
-        workOrderId: 'fakeId'
+        workOrderId: 'fakeId',
       });
     }).rejects.toThrow(WorkOrderNotFoundException);
   });

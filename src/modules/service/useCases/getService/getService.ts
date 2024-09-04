@@ -1,19 +1,19 @@
-import { Injectable } from "@nestjs/common";
-import { ServiceNotFoundExcetion } from "../../exceptions/serviceNotFoundException";
-import { ServiceRepository } from "../../repositories/serviceRepository";
+import { Injectable } from '@nestjs/common';
+import { ServiceNotFoundExcetion } from '../../exceptions/serviceNotFoundException';
+import { ServiceRepository } from '../../repositories/serviceRepository';
 
 interface GetServiceRequest {
   serviceId: string;
-};
+}
 
 @Injectable()
 export class GetService {
-  constructor(private serviceRepository: ServiceRepository){}
-  async execute({ serviceId }: GetServiceRequest){
+  constructor(private serviceRepository: ServiceRepository) {}
+  async execute({ serviceId }: GetServiceRequest) {
     const service = await this.serviceRepository.findById(serviceId);
 
-    if(!service) throw new ServiceNotFoundExcetion();
+    if (!service) throw new ServiceNotFoundExcetion();
 
     return service;
-  };
-};
+  }
+}

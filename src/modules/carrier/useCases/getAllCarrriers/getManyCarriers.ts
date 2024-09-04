@@ -1,5 +1,5 @@
-import { Injectable } from "@nestjs/common";
-import { CarrierRepository } from "../../repositories/CarrierRepository";
+import { Injectable } from '@nestjs/common';
+import { CarrierRepository } from '../../repositories/CarrierRepository';
 
 interface GetAllCarriersRequest {
   status?: string | null;
@@ -18,11 +18,10 @@ export class GetManyCarriers {
     const currentPage = Number(page) || DEFAULT_PAGE;
     const currentPerPage = Number(perPage) || DEFAULT_PER_PAGE;
 
-  
     const carriers = await this.carrierRepository.findMany(
-      currentPage, 
+      currentPage,
       currentPerPage,
-    )
+    );
 
     return carriers;
   }

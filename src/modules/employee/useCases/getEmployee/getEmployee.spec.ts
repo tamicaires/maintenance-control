@@ -1,15 +1,14 @@
-import { makeEmployee } from "../../factories/employeeFactory";
-import { EmployeeRepositoryInMemory } from "../../repositories/EmployeeRepositoryInMemory";
-import { GetEmployee } from "./getEmployee";
+import { makeEmployee } from '../../factories/employeeFactory';
+import { EmployeeRepositoryInMemory } from '../../repositories/EmployeeRepositoryInMemory';
+import { GetEmployee } from './getEmployee';
 
-let employeeRepositoryInMemory: EmployeeRepositoryInMemory
-let getEmployee: GetEmployee
+let employeeRepositoryInMemory: EmployeeRepositoryInMemory;
+let getEmployee: GetEmployee;
 
 describe('Get Employee', () => {
   beforeEach(() => {
     employeeRepositoryInMemory = new EmployeeRepositoryInMemory();
-    getEmployee = new GetEmployee(employeeRepositoryInMemory)
-
+    getEmployee = new GetEmployee(employeeRepositoryInMemory);
   });
 
   it('Should be able to get employee', async () => {
@@ -18,9 +17,9 @@ describe('Get Employee', () => {
     employeeRepositoryInMemory.employees = [employee];
 
     const result = await getEmployee.execute({
-      employeeId: employee.id
+      employeeId: employee.id,
     });
 
-    expect(result).toEqual(employee)
+    expect(result).toEqual(employee);
   });
-})
+});

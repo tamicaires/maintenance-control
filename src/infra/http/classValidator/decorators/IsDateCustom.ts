@@ -1,8 +1,8 @@
 import {
   isDate,
   registerDecorator,
-  ValidationArguments, 
-  ValidationOptions
+  ValidationArguments,
+  ValidationOptions,
 } from 'class-validator';
 import { ExceptionMessage } from '../data/exceptionMessage';
 
@@ -15,14 +15,13 @@ export function IsDateCustom(validationOptions?: ValidationOptions) {
       constraints: [],
       options: validationOptions,
       validator: {
-
         validate(value: string) {
-          return isDate(value)
+          return isDate(value);
         },
-        defaultMessage(validationArguments: ValidationArguments){
+        defaultMessage(validationArguments: ValidationArguments) {
           return ExceptionMessage.IsDate(validationArguments.property);
-        }
+        },
       },
     });
   };
-};
+}

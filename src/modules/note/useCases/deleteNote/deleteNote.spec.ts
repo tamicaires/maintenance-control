@@ -16,9 +16,9 @@ describe('Delete Note', () => {
 
   it('Should be able to delete note', async () => {
     const user = makeUser({});
-    
+
     const note = makeNote({
-      userId: user.id
+      userId: user.id,
     });
 
     noteRepositoryInMemory.notes = [note];
@@ -32,7 +32,6 @@ describe('Delete Note', () => {
   });
 
   it('Should be able to throw error when not found note', async () => {
-
     expect(async () => {
       await deleteNote.execute({
         noteId: 'fakeId',

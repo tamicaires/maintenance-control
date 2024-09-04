@@ -4,12 +4,5 @@ export enum ServiceCategory {
   Pneumatica = 'Pneumatica',
   Freios = 'Freios',
   Soldagem = 'Soldagem',
-  Borracharia = 'Borracharia'
-};
-
-
-  
-  
-  
-  
-  
+  Borracharia = 'Borracharia',
+}

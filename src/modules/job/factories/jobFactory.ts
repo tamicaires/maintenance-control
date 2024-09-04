@@ -1,12 +1,13 @@
-import { Job } from "../entities/Job";
+import { Job } from '../entities/Job';
 
-type Override = Partial<Job>
+type Override = Partial<Job>;
 
-export const makeJob = ({id, ...override}: Override) => {
-  return new Job({
-    jobTitle: 'Mecânico',
-    ...override
-  }, 
-  id
+export const makeJob = ({ id, ...override }: Override) => {
+  return new Job(
+    {
+      jobTitle: 'Mecânico',
+      ...override,
+    },
+    id,
   );
 };

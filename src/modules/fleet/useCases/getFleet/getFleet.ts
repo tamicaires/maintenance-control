@@ -1,6 +1,6 @@
-import { Injectable } from "@nestjs/common";
-import { FleetRepository } from "../../repositories/FleetRepository";
-import { FleetNotFoundException } from "../../exceptions/FleetNotFoundException";
+import { Injectable } from '@nestjs/common';
+import { FleetRepository } from '../../repositories/FleetRepository';
+import { FleetNotFoundException } from '../../exceptions/FleetNotFoundException';
 
 interface GetFleetRequest {
   fleetId: string;
@@ -13,7 +13,7 @@ export class GetFleet {
   async execute({ fleetId }: GetFleetRequest) {
     const fleet = await this.fleetRepository.findById(fleetId);
 
-    if(!fleet) throw new FleetNotFoundException();
+    if (!fleet) throw new FleetNotFoundException();
 
     return fleet;
   }

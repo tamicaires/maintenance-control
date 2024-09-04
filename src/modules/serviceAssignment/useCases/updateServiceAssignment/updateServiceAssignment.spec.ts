@@ -1,39 +1,42 @@
-import { ServiceAssignmentNotFoundException } from "../../exceptions/serviceAssignmentNotFoundException";
-import { makeServiceAssignment } from "../../factories/serviceAssignmentFactory";
-import { ServiceAssignmentRepositoryInMemory } from "../../repositories/serviceAssignmentRepositoryInMemory";
-import { UpdateServiceAssignment } from "./updateServiceAssignment";
+import { ServiceAssignmentNotFoundException } from '../../exceptions/serviceAssignmentNotFoundException';
+import { makeServiceAssignment } from '../../factories/serviceAssignmentFactory';
+import { ServiceAssignmentRepositoryInMemory } from '../../repositories/serviceAssignmentRepositoryInMemory';
+import { UpdateServiceAssignment } from './updateServiceAssignment';
 
 let serviceAssignmentRepositoryInMemory: ServiceAssignmentRepositoryInMemory;
-let updateServiceAssignment: UpdateServiceAssignment
+let updateServiceAssignment: UpdateServiceAssignment;
 
 describe('Update Service Assignment', () => {
   beforeEach(() => {
-    serviceAssignmentRepositoryInMemory = new ServiceAssignmentRepositoryInMemory();
+    serviceAssignmentRepositoryInMemory =
+      new ServiceAssignmentRepositoryInMemory();
     updateServiceAssignment = new UpdateServiceAssignment(
-      serviceAssignmentRepositoryInMemory
+      serviceAssignmentRepositoryInMemory,
     );
   });
 
   it('Should be able to update service assignment', async () => {
     const serviceAssignment = makeServiceAssignment({});
 
-    serviceAssignmentRepositoryInMemory.serviceAssignments = [serviceAssignment];
+    serviceAssignmentRepositoryInMemory.serviceAssignments = [
+      serviceAssignment,
+    ];
 
     const result = await updateServiceAssignment.execute({
       serviceAssignmentId: serviceAssignment.id,
-      workOrderId: 'NewWorkOrderId'
+      workOrderId: 'NewWorkOrderId',
     });
 
-    expect(serviceAssignmentRepositoryInMemory.serviceAssignments[0].workOrderId)
-      .toEqual(result.workOrderId);
+    expect(
+      serviceAssignmentRepositoryInMemory.serviceAssignments[0].workOrderId,
+    ).toEqual(result.workOrderId);
   });
 
   it('Should be able to throw error when not found service assignment', async () => {
-
     expect(async () => {
       await updateServiceAssignment.execute({
-        serviceAssignmentId: 'fakeId'
+        serviceAssignmentId: 'fakeId',
       });
-    }).rejects.toThrow(ServiceAssignmentNotFoundException)
+    }).rejects.toThrow(ServiceAssignmentNotFoundException);
   });
 });

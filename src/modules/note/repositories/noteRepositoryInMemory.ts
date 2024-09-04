@@ -1,8 +1,7 @@
-import { NoteRepository } from "./noteRepository";
-import { Note } from "../entities/Note";
+import { NoteRepository } from './noteRepository';
+import { Note } from '../entities/Note';
 
 export class NoteRepositoryInMemory implements NoteRepository {
-      
   public notes: Note[] = [];
 
   async create(note: Note): Promise<void> {
@@ -10,26 +9,32 @@ export class NoteRepositoryInMemory implements NoteRepository {
   }
 
   async findById(id: string): Promise<Note | null> {
-    const note = await this.notes.find(note => note.id === id);
+    const note = await this.notes.find((note) => note.id === id);
 
-    if(!note) return null;
+    if (!note) return null;
 
     return note;
   }
-  
+
   async delete(id: string): Promise<void> {
     this.notes = this.notes.filter((note) => note.id !== id);
   }
 
   async save(note: Note): Promise<void> {
-    const noteIndex = this.notes.findIndex(currentNote => currentNote.id === note.id);
+    const noteIndex = this.notes.findIndex(
+      (currentNote) => currentNote.id === note.id,
+    );
 
-    if(noteIndex >= 0) this.notes[noteIndex] = note;
+    if (noteIndex >= 0) this.notes[noteIndex] = note;
   }
-  
-  async findManyByUserId(userId: string, page: number, perPage: number): Promise<Note[]> {
+
+  async findManyByUserId(
+    userId: string,
+    page: number,
+    perPage: number,
+  ): Promise<Note[]> {
     return this.notes
-    .filter(note => note.userId === userId)
-    .slice((page - 1) * perPage, page * perPage) 
-  };
-};
+      .filter((note) => note.userId === userId)
+      .slice((page - 1) * perPage, page * perPage);
+  }
+}

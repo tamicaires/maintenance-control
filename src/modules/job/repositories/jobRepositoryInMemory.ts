@@ -1,35 +1,34 @@
-import { Job } from "../entities/Job";
-import { JobRepository } from "./jobRepository";
+import { Job } from '../entities/Job';
+import { JobRepository } from './jobRepository';
 
 export class JobRepositoryInMemory implements JobRepository {
-          
   public jobs: Job[] = [];
 
   async create(job: Job): Promise<void> {
-    this.jobs.push(job)
-  };
+    this.jobs.push(job);
+  }
 
   async findById(id: string): Promise<Job | null> {
-    const job = this.jobs.find(job => job.id  === id);
+    const job = this.jobs.find((job) => job.id === id);
 
-    if(!job) return null;
+    if (!job) return null;
 
     return job;
-  };
+  }
 
   async delete(id: string): Promise<void> {
-    this.jobs = this.jobs.filter(note => note.id !== id);
-  };
+    this.jobs = this.jobs.filter((note) => note.id !== id);
+  }
 
   async findMany(page: number, perPage: number): Promise<Job[]> {
-    return this.jobs.slice((page -1) * perPage, page * perPage);
-  };
+    return this.jobs.slice((page - 1) * perPage, page * perPage);
+  }
 
   async findOne(jobTitle: string): Promise<Job | null> {
-    const job = this.jobs.find(job => job.jobTitle === jobTitle);
+    const job = this.jobs.find((job) => job.jobTitle === jobTitle);
 
-    if(!job) return null;
+    if (!job) return null;
 
     return job;
-  };
-};
+  }
+}

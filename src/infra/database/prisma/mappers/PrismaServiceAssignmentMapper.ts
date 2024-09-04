@@ -1,24 +1,24 @@
-import { ServiceAssignment as  ServiceAssignmentRaw } from "@prisma/client";
-import { ServiceAssignment } from "src/modules/serviceAssignment/entities/ServiceAssignment";
+import { ServiceAssignment as ServiceAssignmentRaw } from '@prisma/client';
+import { ServiceAssignment } from 'src/modules/serviceAssignment/entities/ServiceAssignment';
 
 export class PrismaServiceAssignmentMapper {
-  static toPrisma({ 
+  static toPrisma({
     id,
     workOrderId,
     serviceId,
     employeeId,
     createdAt,
-    updatedAt
-  }: ServiceAssignment): ServiceAssignmentRaw{
+    updatedAt,
+  }: ServiceAssignment): ServiceAssignmentRaw {
     return {
-    id,
-    workOrderId,
-    serviceId,
-    employeeId,
-    createdAt,
-    updatedAt
+      id,
+      workOrderId,
+      serviceId,
+      employeeId,
+      createdAt,
+      updatedAt,
     };
-  };
+  }
 
   static toDomain({
     id,
@@ -26,16 +26,17 @@ export class PrismaServiceAssignmentMapper {
     serviceId,
     employeeId,
     createdAt,
-    updatedAt
-  }: ServiceAssignmentRaw): ServiceAssignment{
-    return new ServiceAssignment({
-      workOrderId,
-      serviceId,
-      employeeId,
-      createdAt,
-      updatedAt
-    }, 
-    id
+    updatedAt,
+  }: ServiceAssignmentRaw): ServiceAssignment {
+    return new ServiceAssignment(
+      {
+        workOrderId,
+        serviceId,
+        employeeId,
+        createdAt,
+        updatedAt,
+      },
+      id,
     );
-  };
-};
+  }
+}

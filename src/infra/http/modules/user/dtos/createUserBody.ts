@@ -1,8 +1,8 @@
-import { IsEmailCustom } from "src/infra/http/classValidator/decorators/IsEmailCustom";
-import { IsNotEmptyCustom } from "src/infra/http/classValidator/decorators/IsNotEmptyCustom";
-import { IsStringCustom } from "src/infra/http/classValidator/decorators/IsStringCustom";
-import { MinLengthCustom } from "src/infra/http/classValidator/decorators/MinLengthCustom";
-import { Role } from "src/modules/user/enum/Roles";
+import { IsEmailCustom } from 'src/infra/http/classValidator/decorators/IsEmailCustom';
+import { IsNotEmptyCustom } from 'src/infra/http/classValidator/decorators/IsNotEmptyCustom';
+import { IsStringCustom } from 'src/infra/http/classValidator/decorators/IsStringCustom';
+import { MinLengthCustom } from 'src/infra/http/classValidator/decorators/MinLengthCustom';
+import { Role } from 'src/modules/user/enum/Roles';
 
 export class CreateUserBody {
   @IsStringCustom()
@@ -22,5 +22,4 @@ export class CreateUserBody {
   @IsStringCustom()
   @IsNotEmptyCustom()
   role: Role;
-
 }

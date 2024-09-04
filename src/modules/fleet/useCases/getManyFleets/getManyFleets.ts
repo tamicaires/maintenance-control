@@ -1,5 +1,5 @@
-import { Injectable } from "@nestjs/common";
-import { FleetRepository } from "../../repositories/FleetRepository";
+import { Injectable } from '@nestjs/common';
+import { FleetRepository } from '../../repositories/FleetRepository';
 
 interface GetManyFleetsRequest {
   page?: string;
@@ -13,13 +13,13 @@ export class GetManyFleets {
   async execute({ page, perPage }: GetManyFleetsRequest) {
     const DEFAULT_PAGE = 1;
     const DEFAULT_PER_PAGE = 20;
-    
+
     const currentPage = Number(page) || DEFAULT_PAGE;
     const currentPerPage = Number(perPage) | DEFAULT_PER_PAGE;
 
     const fleets = await this.fleetRepository.findMany(
       currentPage,
-      currentPerPage
+      currentPerPage,
     );
 
     return fleets;

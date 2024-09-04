@@ -11,7 +11,7 @@ interface FleetSchema {
   km: string;
   carrierId: string;
   status: FleetStatus;
-  createdAt: Date; 
+  createdAt: Date;
   updatedAt: Date;
 }
 
@@ -19,11 +19,14 @@ export class Fleet {
   private props: FleetSchema;
   private _id: string;
 
-  constructor(props: Replace<FleetSchema, { createdAt?: Date, updatedAt?: Date}>, id?: string) {
+  constructor(
+    props: Replace<FleetSchema, { createdAt?: Date; updatedAt?: Date }>,
+    id?: string,
+  ) {
     this.props = {
       ...props,
       createdAt: props.createdAt || new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
     this._id = id || randomUUID();
   }
@@ -104,7 +107,7 @@ export class Fleet {
     return this.props.updatedAt;
   }
 
-  set updatedAt(updatedAt : Date) {
-    this.props.updatedAt = updatedAt
+  set updatedAt(updatedAt: Date) {
+    this.props.updatedAt = updatedAt;
   }
 }

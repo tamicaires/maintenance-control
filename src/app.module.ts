@@ -17,7 +17,7 @@ import { ServiceAssignmentModule } from './infra/http/modules/serviceAssignment/
   imports: [
     DatabaseModule,
     AuthModule,
-    UserModule, 
+    UserModule,
     NoteModule,
     CarrierModule,
     FleetModule,
@@ -25,7 +25,7 @@ import { ServiceAssignmentModule } from './infra/http/modules/serviceAssignment/
     EmployeeModule,
     ServiceModule,
     WorkOrderModule,
-    ServiceAssignmentModule
+    ServiceAssignmentModule,
   ],
   controllers: [],
   providers: [

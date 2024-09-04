@@ -1,8 +1,8 @@
-import { ServiceCategory } from "../../enum/service-category.enum";
-import { ServiceWithSameNameException } from "../../exceptions/serviceWithSameNameException";
-import { makeService } from "../../factories/serviceFactory";
-import { ServiceRepositoryInMemory } from "../../repositories/serviceRepositoryInMemory";
-import { CreateService } from "./createService";
+import { ServiceCategory } from '../../enum/service-category.enum';
+import { ServiceWithSameNameException } from '../../exceptions/serviceWithSameNameException';
+import { makeService } from '../../factories/serviceFactory';
+import { ServiceRepositoryInMemory } from '../../repositories/serviceRepositoryInMemory';
+import { CreateService } from './createService';
 
 let serviceRepositoryInMemory: ServiceRepositoryInMemory;
 let createService: CreateService;
@@ -18,7 +18,7 @@ describe('Create Service', () => {
 
     const service = await createService.execute({
       serviceName: 'Troca de Lona',
-      serviceCategory: ServiceCategory.BRAKES
+      serviceCategory: ServiceCategory.BRAKES,
     });
 
     expect(serviceRepositoryInMemory.services).toEqual([service]);
@@ -32,7 +32,7 @@ describe('Create Service', () => {
     expect(async () => {
       await createService.execute({
         serviceName: 'Solda de roda',
-        serviceCategory: ServiceCategory.WELDING
+        serviceCategory: ServiceCategory.WELDING,
       });
     }).rejects.toThrow(ServiceWithSameNameException);
   });

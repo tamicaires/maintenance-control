@@ -1,10 +1,9 @@
-import { Injectable } from "@nestjs/common";
-import { UserRepository } from "../repositories/UserRepository";
-import { User } from "../entities/User";
-import { hash } from "bcrypt";
-import { Role } from "../enum/Roles";
-import { UserWithSameEmailException } from "../exceptions/UserWithSameEmailException";
-
+import { Injectable } from '@nestjs/common';
+import { UserRepository } from '../repositories/UserRepository';
+import { User } from '../entities/User';
+import { hash } from 'bcrypt';
+import { Role } from '../enum/Roles';
+import { UserWithSameEmailException } from '../exceptions/UserWithSameEmailException';
 
 interface CreateUserRequest {
   email: string;
@@ -18,10 +17,9 @@ export class CreateUser {
   constructor(private userRepository: UserRepository) {}
 
   async execute({ email, name, password, role }: CreateUserRequest) {
-
     const userAlredyExist = await this.userRepository.findByEmail(email);
 
-    if(userAlredyExist) throw new UserWithSameEmailException();
+    if (userAlredyExist) throw new UserWithSameEmailException();
 
     const user = new User({
       email,
