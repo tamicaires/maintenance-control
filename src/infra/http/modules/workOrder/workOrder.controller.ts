@@ -78,10 +78,16 @@ export class WorkOrderController {
   async getMany(
     @Query('page') page: string,
     @Query('perPage') perPage: string,
+    @Query('status') status?: string,
+    @Query('startDate') startDate?: string,
+    @Query('endDate') endDate?: string,
   ) {
     const workOrders = await this.getManyWorkOrder.execute({
       page,
       perPage,
+      status,
+      startDate,
+      endDate,
     });
 
     return workOrders.map(WorkOrderViewModel.toHttp);
