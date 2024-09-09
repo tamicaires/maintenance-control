@@ -151,35 +151,40 @@ export const mapUpdateWorkOrderData = (
   };
 };
 
-export const generateDisplayId = (() => {
-  const orderServiceCounters = {
-    [TypeOfMaintenance.Preditiva]: 0,
-    [TypeOfMaintenance.Preventiva]: 0,
-    [TypeOfMaintenance.Corretiva]: 0,
-  };
+export function generateNextDisplayId(
+  lastDisplayId: string | null,
+  prefix: string,
+): string {
+  let nextNumber = 1;
 
-  return (type: TypeOfMaintenance): string => {
-    let prefix: string;
-    switch (type) {
-      case TypeOfMaintenance.Preditiva:
-        prefix = 'PD';
-        break;
-      case TypeOfMaintenance.Preventiva:
-        prefix = 'PV';
-        break;
-      case TypeOfMaintenance.Corretiva:
-        prefix = 'CO';
-        break;
-      default:
-        throw new Error('Tipo de manutenção inválido.');
+  if (lastDisplayId) {
+    const parts = lastDisplayId.split('-');
+    if (parts.length === 2) {
+      const lastNumber = parseInt(parts[1], 10);
+      if (!isNaN(lastNumber)) {
+        nextNumber = lastNumber + 1;
+      } else {
+        console.error(
+          `Número extraído do lastDisplayId é inválido: ${parts[1]}`,
+        );
+      }
+    } else {
+      console.error(`Formato do lastDisplayId inválido: ${lastDisplayId}`);
     }
+  }
 
-    orderServiceCounters[type]++;
+  return `${prefix}-${nextNumber.toString().padStart(4, '0')}`;
+}
 
-    const number = orderServiceCounters[type];
-
-    const formattedNumber = number.toString().padStart(3, '0');
-
-    return `${prefix}${formattedNumber}`;
-  };
-})();
+export function getPrefix(typeOfMaintenance: TypeOfMaintenance): string {
+  switch (typeOfMaintenance) {
+    case TypeOfMaintenance.Preditiva:
+      return 'PD';
+    case TypeOfMaintenance.Preventiva:
+      return 'PV';
+    case TypeOfMaintenance.Corretiva:
+      return 'CO';
+    default:
+      throw new Error('Tipo de manutenção inválido');
+  }
+}

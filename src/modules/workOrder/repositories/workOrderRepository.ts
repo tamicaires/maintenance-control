@@ -1,5 +1,6 @@
 import { Filters } from 'src/types/filters.interface';
 import { WorkOrder } from '../entities/WorkOrder';
+import { TypeOfMaintenance } from '../enum/type-of-maintenance.enum';
 
 export abstract class WorkOrderRepository {
   abstract create(workOrder: WorkOrder): Promise<void>;
@@ -11,4 +12,7 @@ export abstract class WorkOrderRepository {
     perPage: number,
     filters?: Filters,
   ): Promise<WorkOrder[]>;
+  abstract findLastWorkOrderByType(
+    typeOfMaintenance: TypeOfMaintenance,
+  ): Promise<WorkOrder | null>;
 }

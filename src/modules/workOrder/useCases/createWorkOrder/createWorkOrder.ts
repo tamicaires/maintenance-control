@@ -4,7 +4,7 @@ import { TypeOfMaintenance } from '../../enum/type-of-maintenance.enum';
 import { Box } from '../../enum/box.enum';
 import { WorkOrder } from '../../entities/WorkOrder';
 import { WorkOrderRepository } from '../../repositories/workOrderRepository';
-import { generateDisplayId } from 'src/utils/workOrderUtils';
+import { generateNextDisplayId, getPrefix } from 'src/utils/workOrderUtils';
 
 interface CreateWorkOrderRequest {
   displayId?: string | null;
@@ -30,8 +30,15 @@ export class CreateWorkOrder {
   constructor(private workOrderRepository: WorkOrderRepository) {}
 
   async execute(data: CreateWorkOrderRequest) {
-    const displayId = generateDisplayId(data.typeOfMaintenance);
-    console.log(displayId);
+    const prefix = getPrefix(data.typeOfMaintenance);
+
+    const lastWorkOrder =
+      await this.workOrderRepository.findLastWorkOrderByType(
+        data.typeOfMaintenance,
+      );
+    const lastDisplayId = lastWorkOrder?.displayId || null;
+    const displayId = generateNextDisplayId(lastDisplayId, prefix);
+
     const workOrderWithDisplayId = { ...data, displayId };
 
     const workOrder = new WorkOrder(workOrderWithDisplayId);

@@ -1,4 +1,5 @@
 import { WorkOrder } from '../entities/WorkOrder';
+import { TypeOfMaintenance } from '../enum/type-of-maintenance.enum';
 import { WorkOrderRepository } from './workOrderRepository';
 
 export class WorkOrderRepositoryInMemory implements WorkOrderRepository {
@@ -35,6 +36,12 @@ export class WorkOrderRepositoryInMemory implements WorkOrderRepository {
   }
 
   getWorkOrderServices(id: string): Promise<WorkOrder[]> {
+    throw new Error('Method not implemented.');
+  }
+
+  findLastWorkOrderByType(
+    typeOfMaintenance: TypeOfMaintenance,
+  ): Promise<WorkOrder | null> {
     throw new Error('Method not implemented.');
   }
 }

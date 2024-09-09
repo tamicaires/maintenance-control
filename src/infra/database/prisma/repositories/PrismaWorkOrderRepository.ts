@@ -5,6 +5,8 @@ import { WorkOrder } from 'src/modules/workOrder/entities/WorkOrder';
 import { PrismaWorkOrderMapper } from '../mappers/PrismaWorkOrderMapper';
 import { Filters } from 'src/types/filters.interface';
 import { Prisma } from '@prisma/client';
+import { MaintenanceStatus } from 'src/modules/workOrder/enum/maitenance-status.enum';
+import { TypeOfMaintenance } from 'src/modules/workOrder/enum/type-of-maintenance.enum';
 
 @Injectable()
 export class PrismaWorkOrderRepository implements WorkOrderRepository {
@@ -84,5 +86,17 @@ export class PrismaWorkOrderRepository implements WorkOrderRepository {
     });
 
     return workOrders;
+  }
+
+  async findLastWorkOrderByType(
+    typeOfMaintenance: TypeOfMaintenance,
+  ): Promise<WorkOrder | null> {
+    const workOrderRaw = await this.prisma.workOrder.findFirst({
+      where: { typeOfMaintenance },
+      orderBy: { createdAt: 'desc' },
+    });
+    if (!workOrderRaw) return null;
+
+    return PrismaWorkOrderMapper.toDomain(workOrderRaw);
   }
 }
