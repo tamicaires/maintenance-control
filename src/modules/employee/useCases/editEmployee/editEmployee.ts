@@ -23,8 +23,8 @@ export class EditEmployee {
 
     updateEmployeeProperties(employee, data);
 
-    await this.employeeRepository.save(employee);
+    const updatedEmployee = await this.employeeRepository.save(employee);
 
-    return employee;
+    return updatedEmployee;
   }
 }

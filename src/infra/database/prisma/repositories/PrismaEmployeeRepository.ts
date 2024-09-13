@@ -33,12 +33,15 @@ export class PrismaEmployeeRepository implements EmployeeRepository {
     return PrismaEmployeeMapper.toDomain(employeeRaw);
   }
 
-  async save(employee: Employee): Promise<void> {
+  async save(employee: Employee): Promise<any> {
     const employeeRaw = PrismaEmployeeMapper.toPrisma(employee);
 
-    await this.prisma.employee.update({
+    return await this.prisma.employee.update({
       data: employeeRaw,
       where: { id: employeeRaw.id },
+      include: {
+        job: true ,
+      },
     });
   }
 

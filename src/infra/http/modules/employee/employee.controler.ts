@@ -50,13 +50,15 @@ export class EmployeeController {
   ) {
     const { name, workShift, jobTitleId, status } = editEmployeeBody;
 
-    await this.editEmployee.execute({
+    const response = await this.editEmployee.execute({
       employeeId,
       name,
       workShift,
       jobTitleId,
       status,
     });
+
+    return EmployeeViewModel.toHttp(response);
   }
 
   @Delete()
