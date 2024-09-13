@@ -17,6 +17,7 @@ import { GetService } from 'src/modules/service/useCases/getService/getService';
 import { ServiceViewModel } from './viewModels/ServiceViewModel';
 import { GetManyServices } from 'src/modules/service/useCases/getManyServices/getManyServices';
 import { GetServicesByWorkOrder } from 'src/modules/service/useCases/getServicesByWorkOrder/getServicesByWorkOrder.use-case';
+import { ServiceWithEmployeeViewModel } from './viewModels/ServiceWithEmployee';
 
 @Controller('services')
 export class ServiceController {
@@ -92,6 +93,6 @@ export class ServiceController {
   async getWorkOrderServices(@Param('workOrderId') workOrderId: string) {
     const services = await this._getServicesByWorkOrder.execute(workOrderId);
 
-    return services.map(ServiceViewModel.toHttp);
+    return services.map(ServiceWithEmployeeViewModel.toHttp);
   }
 }
