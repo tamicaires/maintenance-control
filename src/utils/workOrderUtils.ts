@@ -8,10 +8,15 @@ export const updateWorkOrderProperties = (
   data: Partial<WorkOrder>,
 ) => {
   workOrder.severityLevel = data.severityLevel ?? workOrder.severityLevel;
-  workOrder.entryQueue = data.entryQueue ?? workOrder.entryQueue;
-  workOrder.entryMaintenance =
-    data.entryMaintenance ?? workOrder.entryMaintenance;
-  workOrder.exitMaintenance = data.exitMaintenance ?? workOrder.exitMaintenance;
+  workOrder.entryQueue = data.entryQueue
+    ? new Date(data.entryQueue)
+    : workOrder.entryQueue;
+  workOrder.entryMaintenance = data.entryMaintenance
+    ? new Date(data.entryMaintenance)
+    : workOrder.entryMaintenance;
+  workOrder.exitMaintenance = data.exitMaintenance
+    ? new Date(data.exitMaintenance)
+    : workOrder.exitMaintenance;
   workOrder.fleetId = data.fleetId ?? workOrder.fleetId;
   workOrder.userId = data.userId ?? workOrder.userId;
   workOrder.updatedBy = data.updatedBy ?? workOrder.updatedBy;
@@ -25,12 +30,10 @@ export const updateWorkOrderProperties = (
     workOrder.entryQueue,
     workOrder.entryMaintenance,
   );
-
   workOrder.maintenanceDuration = calculateDuration(
     workOrder.entryMaintenance,
     workOrder.exitMaintenance,
   );
-
   workOrder.waitingPartsDuration = calculateDuration(
     workOrder.startWaitingParts,
     workOrder.endWaitingParts,
@@ -41,10 +44,14 @@ export const calculateDuration = (
   startDate: Date | null,
   endDate: Date | null,
 ): number | null => {
-  if (startDate && endDate) {
+  if (
+    startDate instanceof Date &&
+    !isNaN(startDate.getTime()) &&
+    endDate instanceof Date &&
+    !isNaN(endDate.getTime())
+  ) {
     const startTime = startDate.getTime();
     const endTime = endDate.getTime();
-
     return endTime - startTime;
   } else {
     return null;
