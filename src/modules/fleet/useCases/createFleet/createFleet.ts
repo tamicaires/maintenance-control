@@ -11,7 +11,7 @@ interface CreateFleetRequest {
   thirdTrailerPlate: string;
   km: string;
   carrierId: string;
-  status: FleetStatus;
+  isActive: boolean;
 }
 
 @Injectable()
@@ -27,7 +27,7 @@ export class CreateFleet {
       thirdTrailerPlate: data.thirdTrailerPlate,
       km: data.km,
       carrierId: data.carrierId,
-      status: data.status,
+      isActive: data.isActive,
     });
 
     await this.fleetRepository.create(fleet);

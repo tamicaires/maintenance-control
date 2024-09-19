@@ -16,7 +16,7 @@ export function updateCarrierProperties(
     carrier.managerPhone = data.managerPhone;
   }
 
-  if (data.status !== undefined) {
-    carrier.status = data.status;
+  if (data.isActive !== undefined) {
+    carrier.isActive = data.isActive;
   }
 }

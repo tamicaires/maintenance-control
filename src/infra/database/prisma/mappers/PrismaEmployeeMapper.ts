@@ -8,7 +8,7 @@ export class PrismaEmployeeMapper {
     name,
     workShift,
     jobTitleId,
-    status,
+    isActive,
     createdAt,
     updatedAt,
   }: Employee): EmployeeRaw {
@@ -17,7 +17,7 @@ export class PrismaEmployeeMapper {
       name,
       workShift,
       jobTitleId,
-      status,
+      isActive,
       createdAt,
       updatedAt,
     };
@@ -28,7 +28,7 @@ export class PrismaEmployeeMapper {
     name,
     workShift,
     jobTitleId,
-    status,
+    isActive,
     createdAt,
     updatedAt,
   }: EmployeeRaw): Employee {
@@ -37,7 +37,7 @@ export class PrismaEmployeeMapper {
         name,
         workShift,
         jobTitleId,
-        status: status as EmployeeStatus,
+        isActive,
         createdAt,
         updatedAt,
       },

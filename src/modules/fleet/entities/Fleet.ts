@@ -10,7 +10,7 @@ interface FleetSchema {
   thirdTrailerPlate: string;
   km: string;
   carrierId: string;
-  status: FleetStatus;
+  isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -91,12 +91,12 @@ export class Fleet {
     this.props.carrierId = carrierId;
   }
 
-  get status(): FleetStatus {
-    return this.props.status;
+  get isActive(): boolean {
+    return this.props.isActive;
   }
 
-  set status(status: FleetStatus) {
-    this.props.status = status;
+  set isActive(isActive: boolean) {
+    this.props.isActive = isActive;
   }
 
   get createdAt(): Date {

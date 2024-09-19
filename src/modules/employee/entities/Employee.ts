@@ -6,7 +6,7 @@ interface EmployeeSchema {
   name: string;
   workShift: string;
   jobTitleId: string;
-  status: EmployeeStatus;
+  isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -55,12 +55,12 @@ export class Employee {
     this.props.jobTitleId = jobTitleId;
   }
 
-  get status(): EmployeeStatus {
-    return this.props.status;
+  get isActive(): boolean {
+    return this.props.isActive;
   }
 
-  set status(status: EmployeeStatus) {
-    this.props.status = status;
+  set isActive(isActive: boolean) {
+    this.props.isActive = isActive;
   }
 
   get createdAt(): Date {

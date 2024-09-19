@@ -16,7 +16,7 @@ export class FleetViewModel {
       carrierId: fleet.carrierId,
       carrierName,
       km: fleet.km,
-      status: fleet.status,
+      isActive: fleet.isActive,
       createdAt: fleet.createdAt,
       updatedAt: fleet.updatedAt,
     };

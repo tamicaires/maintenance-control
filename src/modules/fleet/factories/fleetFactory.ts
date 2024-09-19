@@ -13,7 +13,7 @@ export const makeFleet = ({ id, ...override }: Override) => {
       thirdTrailerPlate: 'OBC5F2C',
       km: '352.2',
       carrierId: '1223645',
-      status: FleetStatus.ATIVO,
+      isActive: true,
       ...override,
     },
     id,

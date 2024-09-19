@@ -1,3 +1,4 @@
+import { IsBoolean } from 'class-validator';
 import { IsNotEmptyCustom } from 'src/infra/http/classValidator/decorators/IsNotEmptyCustom';
 import { IsStringCustom } from 'src/infra/http/classValidator/decorators/IsStringCustom';
 import { MinLengthCustom } from 'src/infra/http/classValidator/decorators/MinLengthCustom';
@@ -33,7 +34,7 @@ export class CreateFleetBody {
   @IsNotEmptyCustom()
   carrierId: string;
 
-  @IsStringCustom()
+  @IsBoolean()
   @IsNotEmptyCustom()
-  status: FleetStatus;
+  isActive: boolean;
 }

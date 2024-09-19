@@ -9,7 +9,7 @@ export const makeEmployee = ({ id, ...override }: Override) => {
       name: 'Elves Caires',
       workShift: 'Manhã',
       jobTitleId: '12355',
-      status: EmployeeStatus.ATIVO,
+      isActive: true,
       ...override,
     },
     id,

@@ -34,14 +34,7 @@ export class CarrierController {
   @UseGuards(AuthorizationGuard)
   @Role('ADMIN')
   async createCarrier(@Body() body: CreateCarrierBody) {
-    const { carrierName, managerName, managerPhone, status } = body;
-
-    const carrier = await this.createCarrierUseCase.execute({
-      carrierName,
-      managerName,
-      managerPhone,
-      status,
-    });
+    const carrier = await this.createCarrierUseCase.execute(body);
 
     return CarrierViewModel.toHttp(carrier);
   }
@@ -53,14 +46,9 @@ export class CarrierController {
     @Param('id') carrierId: string,
     @Body() body: EditCarrierBody,
   ) {
-    const { carrierName, managerName, managerPhone, status } = body;
-
-    await this.editCarrierUseCase.execute({
+    return await this.editCarrierUseCase.execute({
       carrierId,
-      carrierName,
-      managerName,
-      managerPhone,
-      status,
+      ...body,
     });
   }
 

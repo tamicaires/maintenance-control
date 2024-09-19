@@ -10,7 +10,7 @@ export class EmployeeViewModel {
     name,
     workShift,
     jobTitleId,
-    status,
+    isActive,
     createdAt,
     updatedAt,
     job,
@@ -23,7 +23,7 @@ export class EmployeeViewModel {
       workShift,
       jobTitleId,
       jobTitle,
-      status,
+      isActive,
       createdAt,
       updatedAt,
     };

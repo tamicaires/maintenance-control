@@ -20,8 +20,8 @@ export function updateFleetProperties(fleet: Fleet, data: Partial<Fleet>) {
   if (data.km !== undefined) {
     fleet.km = data.km;
   }
-  if (data.status !== undefined) {
-    fleet.status = data.status;
+  if (data.isActive !== undefined) {
+    fleet.isActive = data.isActive;
   }
 }
 
@@ -33,7 +33,7 @@ export function mapEditFleetData(body: EditFleetBody, fleetId: string) {
     secondTrailerPlate,
     thirdTrailerPlate,
     km,
-    status,
+    isActive,
   } = body;
 
   return {
@@ -44,6 +44,6 @@ export function mapEditFleetData(body: EditFleetBody, fleetId: string) {
     secondTrailerPlate,
     thirdTrailerPlate,
     km,
-    status,
+    isActive,
   };
 }

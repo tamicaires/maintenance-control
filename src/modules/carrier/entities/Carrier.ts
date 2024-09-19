@@ -1,12 +1,11 @@
 import { randomUUID } from 'crypto';
-import { CarrierStatus } from '../enum/carrier-status.enum';
 import { Replace } from 'src/utils/replace';
 
 interface CarrierSchema {
   carrierName: string;
   managerName: string;
   managerPhone: string;
-  status: CarrierStatus;
+  isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -54,12 +53,12 @@ export class Carrier {
     this.props.managerPhone = managerPhone;
   }
 
-  get status(): CarrierStatus {
-    return this.props.status;
+  get isActive(): boolean {
+    return this.props.isActive;
   }
 
-  set status(status: CarrierStatus) {
-    this.props.status = status;
+  set isActive(isActive: boolean) {
+    this.props.isActive = isActive;
   }
 
   get createdAt(): Date {

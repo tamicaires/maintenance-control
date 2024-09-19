@@ -1,6 +1,6 @@
+import { IsBoolean } from 'class-validator';
 import { IsNotEmptyCustom } from 'src/infra/http/classValidator/decorators/IsNotEmptyCustom';
 import { IsStringCustom } from 'src/infra/http/classValidator/decorators/IsStringCustom';
-import { CarrierStatus } from 'src/modules/carrier/enum/carrier-status.enum';
 
 export class CreateCarrierBody {
   @IsStringCustom()
@@ -15,7 +15,7 @@ export class CreateCarrierBody {
   @IsNotEmptyCustom()
   managerPhone: string;
 
-  @IsStringCustom()
+  @IsBoolean()
   @IsNotEmptyCustom()
-  status: CarrierStatus;
+  isActive: boolean;
 }

@@ -35,9 +35,7 @@ export class FleetController {
   @UseGuards(AuthorizationGuard)
   @Role('ADMIN')
   async createFleet(@Body() createFleetBody: CreateFleetBody) {
-    const fleetData = createFleetBody;
-    const fleet = await this.createFleetUseCase.execute(fleetData);
-    return fleet;
+    return await this.createFleetUseCase.execute(createFleetBody);
   }
 
   @Put(':id')
@@ -61,7 +59,7 @@ export class FleetController {
   @Get(':id')
   async getCarrier(@Param('id') fleetId: string) {
     const fleet = await this.getFleetUseCase.execute({ fleetId });
-    console.log(fleet);
+
     return FleetViewModel.toHttp(fleet);
   }
 

@@ -6,7 +6,7 @@ export class CarrierViewModel {
     carrierName,
     managerName,
     managerPhone,
-    status,
+    isActive,
     createdAt,
     updatedAt,
   }: Carrier) {
@@ -15,7 +15,7 @@ export class CarrierViewModel {
       carrierName,
       managerName,
       managerPhone,
-      status,
+      isActive,
       createdAt,
       updatedAt,
     };

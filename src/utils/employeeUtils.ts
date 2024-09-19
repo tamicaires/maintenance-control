@@ -16,7 +16,7 @@ export function updateEmployeeProperties(
     employee.jobTitleId = data.jobTitleId;
   }
 
-  if (data.status !== undefined) {
-    employee.status = data.status;
+  if (data.isActive !== undefined) {
+    employee.isActive = data.isActive;
   }
 }

@@ -1,6 +1,5 @@
 import { Carrier as CarrierRaw } from '@prisma/client';
 import { Carrier } from 'src/modules/carrier/entities/Carrier';
-import { CarrierStatus } from 'src/modules/carrier/enum/carrier-status.enum';
 
 export class PrismaCarrierMapper {
   static toPrisma({
@@ -8,7 +7,7 @@ export class PrismaCarrierMapper {
     carrierName,
     managerName,
     managerPhone,
-    status,
+    isActive,
     createdAt,
     updatedAt,
   }: Carrier): CarrierRaw {
@@ -17,7 +16,7 @@ export class PrismaCarrierMapper {
       carrierName,
       managerName,
       managerPhone,
-      status,
+      isActive,
       createdAt,
       updatedAt,
     };
@@ -28,7 +27,7 @@ export class PrismaCarrierMapper {
     carrierName,
     managerName,
     managerPhone,
-    status,
+    isActive,
     createdAt,
     updatedAt,
   }: CarrierRaw): Carrier {
@@ -37,7 +36,7 @@ export class PrismaCarrierMapper {
         carrierName,
         managerName,
         managerPhone,
-        status: status as CarrierStatus,
+        isActive,
         createdAt,
         updatedAt,
       },

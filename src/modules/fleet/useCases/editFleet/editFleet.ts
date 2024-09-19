@@ -12,7 +12,7 @@ interface EditFleetRequest {
   secondTrailerPlate?: string;
   thirdTrailerPlate?: string;
   km?: string;
-  status?: FleetStatus;
+  isActive?: boolean;
 }
 
 @Injectable()

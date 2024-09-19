@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { CarrierStatus } from '../../enum/carrier-status.enum';
 import { CarrierRepository } from '../../repositories/CarrierRepository';
 import { Carrier } from '../../entities/Carrier';
 import { CarrierWithSameNameException } from '../../exceptions/CarrierWithSameNameException';
@@ -8,7 +7,7 @@ interface CreateCarrierRequest {
   carrierName: string;
   managerName: string;
   managerPhone: string;
-  status: CarrierStatus;
+  isActive: boolean;
 }
 
 @Injectable()

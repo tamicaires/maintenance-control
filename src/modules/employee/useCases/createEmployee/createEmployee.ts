@@ -8,7 +8,7 @@ interface CreateEmployeeRequest {
   name: string;
   jobTitleId: string;
   workShift: string;
-  status: EmployeeStatus;
+  isActive: boolean;
 }
 
 @Injectable()
@@ -19,7 +19,7 @@ export class CreateEmployee {
     jobTitleId,
     name,
     workShift,
-    status,
+    isActive,
   }: CreateEmployeeRequest) {
     const employeeAlreadyExists = await this.employeeRepository.findOne(name);
 
@@ -29,7 +29,7 @@ export class CreateEmployee {
       name,
       jobTitleId,
       workShift,
-      status,
+      isActive,
     });
 
     await this.employeeRepository.create(employee);

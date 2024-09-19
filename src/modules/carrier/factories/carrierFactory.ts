@@ -9,7 +9,7 @@ export const makeCarrier = ({ id, ...override }: Override) => {
       carrierName: '3T Transportes',
       managerName: 'Thiago',
       managerPhone: '(99) 99101-6185',
-      status: CarrierStatus.ATIVO,
+      isActive: true,
       ...override,
     },
     id,

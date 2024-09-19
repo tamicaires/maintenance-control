@@ -9,7 +9,7 @@ interface EditEmployeeRequest {
   name?: string;
   jobTitleId?: string;
   workShift?: string;
-  status?: EmployeeStatus;
+  isActive?: boolean;
 }
 
 @Injectable()
