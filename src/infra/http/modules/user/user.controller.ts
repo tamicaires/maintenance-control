@@ -12,8 +12,6 @@ export class UserController {
 
   @Public()
   @Post()
-  @UseGuards(AuthorizationGuard)
-  @Role('ADMIN')
   async createUser(@Body() body: CreateUserBody) {
     const { email, password, name, role } = body;
 
