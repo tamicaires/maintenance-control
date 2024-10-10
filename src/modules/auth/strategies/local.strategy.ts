@@ -12,9 +12,11 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(email: string, password: string) {
-    return await this.validateUserUseCase.execute({
+    const validated = await this.validateUserUseCase.execute({
       email,
       password,
     });
+    console.log("validated", validated);
+    return validated
   }
 }

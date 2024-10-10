@@ -1,8 +1,11 @@
+import { Role } from "src/modules/role/entities/Role";
+
 export interface UserPayload {
   sub: string;
   email: string;
   name: string;
-  role: string;
+  roles: Role[];
+  companyId: string | null;
   createdAt?: string;
   updatedAt?: string;
 }

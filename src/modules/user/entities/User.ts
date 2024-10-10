@@ -1,12 +1,13 @@
 import { randomUUID } from 'crypto';
-import { Role } from '../enum/Roles';
+import { Role } from 'src/modules/role/entities/Role';
+import { RoleEnum } from 'src/modules/role/enum/role.enum';
 import { Replace } from 'src/utils/replace';
 
 interface UserSchema {
   email: string;
   password: string;
   name: string;
-  role: Role;
+  companyId: string | null;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -55,12 +56,12 @@ export class User {
     this.props.name = name;
   }
 
-  get role(): Role {
-    return this.props.role;
+  get companyId(): string | null {
+    return this.props.companyId;
   }
 
-  set role(role: Role) {
-    this.props.role = role;
+  set companyId(companyId: string | null) {
+    this.props.companyId = companyId;
   }
 
   get createdAt(): Date {

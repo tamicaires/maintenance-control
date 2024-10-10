@@ -13,13 +13,14 @@ export class ValidateUserUseCase {
   constructor(private userRepository: UserRepository) {}
   async execute({ email, password }: ValidateUserRequest) {
     const user = await this.userRepository.findByEmail(email);
-
+    
     if (!user) throw new AuthValuesIncorretException();
 
     const isPasswordMatched = await compare(password, user.password);
 
     if (!isPasswordMatched) throw new AuthValuesIncorretException();
 
-    return user;
+    const userAutenticated = await this.userRepository.findUserWithRole(user.id);
+    return userAutenticated;
   }
 }

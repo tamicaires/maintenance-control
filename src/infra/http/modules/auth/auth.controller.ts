@@ -23,11 +23,11 @@ export class AuthControler {
   @Public()
   @HttpCode(HttpStatus.OK)
   @UseGuards(LocalAuthGuard)
-  async signIn(@Request() request: AuthRequestModel) {
-    const access_token = await this.signInUseCase.execute({
-      user: request.user,
-    });
-
+  async signIn(@Request() request: AuthRequestModel,
+) {
+    const access_token = await this.signInUseCase.execute(request.user);
+    console.log("request user",request.user);
+    console.log("role dentro de request", request.user.roles);
     return { access_token };
   }
 

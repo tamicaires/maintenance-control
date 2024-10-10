@@ -6,7 +6,7 @@ import { PrismaUserMapper } from '../mappers/PrismaUserMapper';
 
 @Injectable()
 export class PrismaUserRepository implements UserRepository {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async create(user: User): Promise<void> {
     const userRaw = PrismaUserMapper.toPrisma(user);
@@ -37,4 +37,51 @@ export class PrismaUserRepository implements UserRepository {
 
     return PrismaUserMapper.toDomain(user);
   }
+
+  async associateUserToCompany(companyId: string, userId: string): Promise<void> {
+    const userRaw = await this.prisma.user.findUnique({ where: { id: userId } });
+
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        company: {
+          connect: { id: companyId },
+        },
+      },
+    });
+  }
+
+  async findUserWithRole(userId: string): Promise<any> {
+    const user = await this.prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+      include: {
+        roles: {
+          select: {
+            role: {
+              select: {
+                id: true,
+                name: true,
+              }
+            }
+          },
+        }
+      }
+    });
+
+    if (!user) return null;
+
+    return user;
+  }
+
+  async assignRoleToUser(userId: string, rolesIds: string[]): Promise<void> {
+    // const result = await this.prisma.userRole.createMany({
+    //   data: rolesIds.map(roleId => ({
+    //     userId,
+    //     roleId: roleId,
+    //   })),
+    // });
+  }
+
 }

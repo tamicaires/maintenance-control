@@ -1,3 +1,4 @@
+import { RoleEnum } from 'src/modules/role/enum/role.enum';
 import { User } from '../entities/User';
 import { Role } from '../enum/Roles';
 
@@ -9,7 +10,7 @@ export const makeUser = ({ id, ...override }: Override) => {
       email: 'tami@gmail.com',
       name: 'Tamires',
       password: '123456',
-      role: Role.ADMIN,
+      companyId: '1',
       ...override,
     },
     id,

@@ -1,14 +1,17 @@
 import { User as UserRaw } from '@prisma/client';
+import { Role } from 'src/modules/role/entities/Role';
 import { User } from 'src/modules/user/entities/User';
-import { Role } from 'src/modules/user/enum/Roles';
 
+interface UserWithRoles extends UserRaw {
+  roles: Role[];
+}
 export class PrismaUserMapper {
   static toPrisma({
     id,
     email,
     name,
     password,
-    role,
+    companyId,
     createdAt,
     updatedAt,
   }: User): UserRaw {
@@ -17,7 +20,7 @@ export class PrismaUserMapper {
       email,
       name,
       password,
-      role,
+      companyId,
       createdAt,
       updatedAt,
     };
@@ -28,7 +31,7 @@ export class PrismaUserMapper {
     email,
     name,
     password,
-    role,
+    companyId,
     createdAt,
     updatedAt,
   }: UserRaw): User {
@@ -37,11 +40,26 @@ export class PrismaUserMapper {
         email,
         name,
         password,
-        role: role as Role,
+        companyId,
         createdAt,
         updatedAt,
       },
       id,
+    );
+  }
+
+  static toDomainWithRoles(user: UserWithRoles): User {
+    const roles = user.roles.map((role) => role.name);
+    return new User(
+      {
+        email: user.email,
+        name: user.name,
+        password: user.password,
+        companyId: user.companyId,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+      },
+      user.id,
     );
   }
 }

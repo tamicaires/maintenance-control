@@ -7,10 +7,11 @@ export class PrismaNoteMapper {
     title,
     description,
     userId,
+    workOrderId,
     createdAt,
     updatedAt,
   }: Note): NoteRaw {
-    return { id, title, description, userId, createdAt, updatedAt };
+    return { id, title, description, userId, workOrderId, createdAt, updatedAt };
   }
 
   static toDomain({
@@ -18,6 +19,7 @@ export class PrismaNoteMapper {
     title,
     description,
     userId,
+    workOrderId,
     createdAt,
     updatedAt,
   }: NoteRaw): Note {
@@ -26,6 +28,7 @@ export class PrismaNoteMapper {
         title,
         description,
         userId,
+        workOrderId,
         createdAt,
         updatedAt,
       },

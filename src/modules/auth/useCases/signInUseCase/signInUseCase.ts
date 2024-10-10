@@ -2,21 +2,24 @@ import { Injectable } from '@nestjs/common';
 import { User } from 'src/modules/user/entities/User';
 import { UserPayload } from '../../models/UserPayload';
 import { JwtService } from '@nestjs/jwt';
+import { Role } from 'src/modules/role/entities/Role';
+import { UserWithRoles } from 'src/types/user.interface';
 
-interface SignInRequest {
-  user: User;
+interface SignInRequest extends UserWithRoles{
+  
 }
 
 @Injectable()
 export class SignInUseCase {
-  constructor(private jwtService: JwtService) {}
+  constructor(private jwtService: JwtService) { }
 
-  async execute({ user }: SignInRequest) {
+  async execute(user: SignInRequest) {
     const payload: UserPayload = {
       sub: user.id,
       name: user.name,
       email: user.email,
-      role: user.role,
+      companyId: user.companyId,
+      roles: user.roles,
       createdAt: user.createdAt.toJSON(),
       updatedAt: user.updatedAt.toJSON(),
     };
