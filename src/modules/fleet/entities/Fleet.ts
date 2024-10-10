@@ -1,15 +1,12 @@
 import { randomUUID } from 'crypto';
-import { FleetStatus } from '../enum/fleet-status.enum';
 import { Replace } from 'src/utils/replace';
 
 interface FleetSchema {
   fleetNumber: string;
   plate: string;
-  firstTrailerPlate: string;
-  secondTrailerPlate: string;
-  thirdTrailerPlate: string;
   km: string;
   carrierId: string;
+  companyId: string;
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -51,30 +48,6 @@ export class Fleet {
     this.props.plate = plate;
   }
 
-  get firstTrailerPlate(): string {
-    return this.props.firstTrailerPlate;
-  }
-
-  set firstTrailerPlate(firstTrailerPlate: string) {
-    this.props.firstTrailerPlate = firstTrailerPlate;
-  }
-
-  get secondTrailerPlate(): string {
-    return this.props.secondTrailerPlate;
-  }
-
-  set secondTrailerPlate(secondTrailerPlate: string) {
-    this.props.secondTrailerPlate = secondTrailerPlate;
-  }
-
-  get thirdTrailerPlate(): string {
-    return this.props.thirdTrailerPlate;
-  }
-
-  set thirdTrailerPlate(thirdTrailerPlate: string) {
-    this.props.thirdTrailerPlate = thirdTrailerPlate;
-  }
-
   get km(): string {
     return this.props.km;
   }
@@ -89,6 +62,14 @@ export class Fleet {
 
   set carrierId(carrierId: string) {
     this.props.carrierId = carrierId;
+  }
+
+  get companyId(): string {
+    return this.props.companyId;
+  }
+
+  set companyId(companyId: string) {
+    this.props.companyId = companyId;
   }
 
   get isActive(): boolean {

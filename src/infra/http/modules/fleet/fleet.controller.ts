@@ -7,6 +7,7 @@ import {
   Post,
   Put,
   Query,
+  Request,
   UseGuards,
 } from '@nestjs/common';
 import { CreateFleetBody } from './dtos/createFleetBody';
@@ -18,8 +19,7 @@ import { DeleteFleet } from 'src/modules/fleet/useCases/deleteFleet/deleteFleet'
 import { GetFleet } from 'src/modules/fleet/useCases/getFleet/getFleet';
 import { FleetViewModel } from './viewModel/FleetViewModel';
 import { GetManyFleets } from 'src/modules/fleet/useCases/getManyFleets/getManyFleets';
-import { AuthorizationGuard } from '../auth/guards/authorization.guard';
-import { Role } from '../auth/decorators/roles.decorator';
+import { AuthenticatedRequestModel } from '../auth/models/authenticateRequestModel';
 
 @Controller('fleets')
 export class FleetController {
@@ -32,15 +32,17 @@ export class FleetController {
   ) {}
 
   @Post()
-  @UseGuards(AuthorizationGuard)
-  @Role('ADMIN')
-  async createFleet(@Body() createFleetBody: CreateFleetBody) {
-    return await this.createFleetUseCase.execute(createFleetBody);
+  async createFleet(
+    @Body() createFleetBody: CreateFleetBody,
+    @Request() request: AuthenticatedRequestModel,
+  ) {
+    return await this.createFleetUseCase.execute({
+      ...createFleetBody,
+      companyId: request.user.companyId,
+    });
   }
 
   @Put(':id')
-  @UseGuards(AuthorizationGuard)
-  @Role('ADMIN')
   async editFleet(
     @Param('id') fleetId: string,
     @Body() editFleetBody: EditFleetBody,
@@ -50,8 +52,6 @@ export class FleetController {
   }
 
   @Delete(':id')
-  @UseGuards(AuthorizationGuard)
-  @Role('ADMIN')
   async DeleteFleet(@Param('id') fleetId: string) {
     await this.deleteFleetUseCase.execute({ fleetId });
   }
