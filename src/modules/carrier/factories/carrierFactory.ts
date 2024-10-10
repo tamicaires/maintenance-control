@@ -1,5 +1,4 @@
 import { Carrier } from '../entities/Carrier';
-import { CarrierStatus } from '../enum/carrier-status.enum';
 
 type Override = Partial<Carrier>;
 
@@ -10,6 +9,7 @@ export const makeCarrier = ({ id, ...override }: Override) => {
       managerName: 'Thiago',
       managerPhone: '(99) 99101-6185',
       isActive: true,
+      companyId: '1',
       ...override,
     },
     id,

@@ -7,6 +7,7 @@ interface CreateCarrierRequest {
   carrierName: string;
   managerName: string;
   managerPhone: string;
+  companyId: string;
   isActive: boolean;
 }
 

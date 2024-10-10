@@ -8,7 +8,8 @@ interface EditCarrierRequest {
   carrierName?: string;
   managerName?: string;
   managerPhone?: string;
-  status?: CarrierStatus;
+  companyId?: string;
+  isActive?: boolean;
   carrierId: string;
 }
 

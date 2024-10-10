@@ -5,6 +5,7 @@ interface CarrierSchema {
   carrierName: string;
   managerName: string;
   managerPhone: string;
+  companyId: string;
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -51,6 +52,14 @@ export class Carrier {
 
   set managerPhone(managerPhone: string) {
     this.props.managerPhone = managerPhone;
+  }
+
+  get companyId(): string {
+    return this.props.companyId;
+  }
+
+  set companyId(companyId: string) {
+    this.props.companyId = companyId;
   }
 
   get isActive(): boolean {
