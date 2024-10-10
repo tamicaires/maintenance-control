@@ -18,13 +18,31 @@ import { WorkOrderRepository } from 'src/modules/workOrder/repositories/workOrde
 import { PrismaWorkOrderRepository } from './prisma/repositories/PrismaWorkOrderRepository';
 import { ServiceAssignmentRepository } from 'src/modules/serviceAssignment/repositories/serviceAssignmentRepository';
 import { PrismaServiceAssignmentsRepository } from './prisma/repositories/PrismaServiceAssignmentsRepository';
+import { CompanyRepository } from 'src/modules/company/repositories/CompanyRepository';
+import { PrismaCompanyRepository } from './prisma/repositories/PrismaCompanyRepository';
+import { RoleRepository } from 'src/modules/role/repositories/roleRepository';
+import { PrismaRoleRepository } from './prisma/repositories/PrismaRoleRepository';
+import { RoleAssignmentRepository } from 'src/modules/roleAssignment/repositories/RoleAssignmentRepository';
+import { PrismaRoleAssigmentRepository } from './prisma/repositories/PrismaRoleAssignment';
 
 @Module({
   providers: [
     PrismaService,
     {
+      provide: CompanyRepository,
+      useClass: PrismaCompanyRepository,
+    },
+    {
       provide: UserRepository,
       useClass: PrismaUserRepository,
+    },
+    {
+      provide: RoleRepository,
+      useClass: PrismaRoleRepository,
+    },
+    {
+      provide: RoleAssignmentRepository,
+      useClass: PrismaRoleAssigmentRepository,
     },
     {
       provide: NoteRepository,
@@ -60,7 +78,10 @@ import { PrismaServiceAssignmentsRepository } from './prisma/repositories/Prisma
     },
   ],
   exports: [
+    CompanyRepository,
     UserRepository,
+    RoleRepository,
+    RoleAssignmentRepository,
     NoteRepository,
     CarrierRepository,
     FleetRepository,
