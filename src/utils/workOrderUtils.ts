@@ -23,7 +23,7 @@ export const updateWorkOrderProperties = (
   workOrder.status = data.status ?? workOrder.status;
   workOrder.typeOfMaintenance =
     data.typeOfMaintenance ?? workOrder.typeOfMaintenance;
-  workOrder.box = data.box ?? workOrder.box;
+  workOrder.boxId = data.boxId ?? workOrder.boxId;
   workOrder.exitSupervisor = data.exitSupervisor ?? workOrder.exitSupervisor;
 
   workOrder.queueDuration = calculateDuration(
@@ -102,8 +102,9 @@ export const mapCreateWorkOrderData = (
     entryMaintenance,
     exitMaintenance,
     fleetId,
-    box,
+    boxId,
     status,
+    isCancelled,
     typeOfMaintenance,
   } = workOrderData;
   return {
@@ -114,7 +115,8 @@ export const mapCreateWorkOrderData = (
     fleetId,
     userId,
     createdBy,
-    box,
+    boxId,
+    isCancelled,
     status,
     typeOfMaintenance,
   };
