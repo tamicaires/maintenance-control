@@ -5,6 +5,7 @@ interface NoteProps {
   title: string;
   description: string | null;
   userId: string;
+  workOrderId: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -51,6 +52,10 @@ export class Note {
 
   get userId(): string {
     return this.props.userId;
+  }
+
+  get workOrderId(): string {
+    return this.props.workOrderId;
   }
 
   get createdAt(): Date {

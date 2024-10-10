@@ -16,6 +16,7 @@ export class CreateNote {
       userId,
       description,
       title,
+      workOrderId: 'alterar'
     });
 
     await this.noteRepository.create(note);
