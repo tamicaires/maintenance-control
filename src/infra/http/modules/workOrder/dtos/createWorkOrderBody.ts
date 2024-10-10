@@ -1,4 +1,4 @@
-import { IsDateString, IsOptional } from 'class-validator';
+import { IsBoolean, IsDateString, IsOptional } from 'class-validator';
 import { IsDateCustom } from 'src/infra/http/classValidator/decorators/IsDateCustom';
 import { IsNotEmptyCustom } from 'src/infra/http/classValidator/decorators/IsNotEmptyCustom';
 import { IsStringCustom } from 'src/infra/http/classValidator/decorators/IsStringCustom';
@@ -37,5 +37,9 @@ export class CreateWorkOrderBody {
 
   @IsStringCustom()
   @IsOptional()
-  box: Box;
+  boxId: string;
+
+  @IsBoolean()
+  @IsNotEmptyCustom()
+  isCancelled: boolean;
 }

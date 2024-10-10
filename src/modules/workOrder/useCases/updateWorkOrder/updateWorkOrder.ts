@@ -24,6 +24,7 @@ interface UpdateWorkOrderRequest {
   userId: string;
   typeOfMaintenance?: TypeOfMaintenance;
   box?: Box;
+  isCancelled?: boolean;
 }
 
 @Injectable()

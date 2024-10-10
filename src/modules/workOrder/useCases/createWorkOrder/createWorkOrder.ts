@@ -20,8 +20,10 @@ interface CreateWorkOrderRequest {
   status: MaintenanceStatus;
   fleetId: string;
   userId: string;
+  companyId: string;
   typeOfMaintenance: TypeOfMaintenance;
-  box: Box | null;
+  boxId: string | null;
+  isCancelled: boolean;
   createdBy?: string | null;
 }
 

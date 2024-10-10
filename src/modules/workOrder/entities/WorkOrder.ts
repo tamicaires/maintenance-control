@@ -19,8 +19,10 @@ interface WorkOrderSchema {
   status: MaintenanceStatus;
   fleetId: string;
   userId: string;
+  companyId: string;
   typeOfMaintenance: TypeOfMaintenance;
-  box: Box | null;
+  boxId: string | null;
+  isCancelled: boolean;
   createdBy: string | null;
   updatedBy: string | null;
   createdAt: Date;
@@ -66,7 +68,7 @@ export class WorkOrder {
       maintenanceDuration: props.maintenanceDuration ?? null,
       waitingPartsDuration: props.waitingPartsDuration ?? null,
       exitSupervisor: props.exitSupervisor ?? null,
-      box: props.box ?? null,
+      boxId: props.box ?? null,
       createdBy: props.createdBy ?? null,
       updatedBy: props.updatedBy ?? null,
       createdAt: props.createdAt || new Date(),
@@ -180,6 +182,14 @@ export class WorkOrder {
     this.props.userId = userId;
   }
 
+  get companyId(): string {
+    return this.props.companyId;
+  }
+
+  set companyId(companyId: string) {
+    this.props.companyId = companyId;
+  }
+
   get fleetId(): string {
     return this.props.fleetId;
   }
@@ -196,12 +206,20 @@ export class WorkOrder {
     this.props.typeOfMaintenance = typeOfMaintenance;
   }
 
-  get box(): Box | null {
-    return this.props.box;
+  get boxId(): string | null {
+    return this.props.boxId;
   }
 
-  set box(box: Box | null) {
-    this.props.box = box;
+  set boxId(boxId: string | null) {
+    this.props.boxId = boxId;
+  }
+
+  get isCancelled(): boolean {
+    return this.props.isCancelled;
+  }
+
+  set isCancelled(isCancelled: boolean) {
+    this.props.isCancelled = isCancelled;
   }
 
   get createdBy(): string | null {

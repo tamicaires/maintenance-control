@@ -44,7 +44,10 @@ export class WorkOrderController {
       createWorkOrderBody,
     );
 
-    const workOrder = await this.createWorkOrder.execute(workOrderData);
+    const workOrder = await this.createWorkOrder.execute({
+      ...workOrderData,
+      companyId: currentUser.companyId,
+    });
 
     return workOrder;
   }
