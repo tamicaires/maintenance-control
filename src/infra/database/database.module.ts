@@ -22,6 +22,8 @@ import { CompanyRepository } from 'src/modules/company/repositories/CompanyRepos
 import { PrismaCompanyRepository } from './prisma/repositories/PrismaCompanyRepository';
 import { MembershipRepository } from 'src/modules/memberShip/repositories/membershipRepository';
 import { PrismaMembershipRepository } from './prisma/repositories/PrismaMembershipRepository';
+import { TrailerRepository } from 'src/modules/trailer/repositories/trailerRepository';
+import { PrismaTrailerRepository } from './prisma/repositories/PrismaTrailerRepository';
 
 @Module({
   providers: [
@@ -51,6 +53,10 @@ import { PrismaMembershipRepository } from './prisma/repositories/PrismaMembersh
       useClass: PrismaFleetRepository,
     },
     {
+      provide: TrailerRepository,
+      useClass: PrismaTrailerRepository,
+    },
+    {
       provide: JobRepository,
       useClass: PrismaJobRepository,
     },
@@ -78,6 +84,7 @@ import { PrismaMembershipRepository } from './prisma/repositories/PrismaMembersh
     NoteRepository,
     CarrierRepository,
     FleetRepository,
+    TrailerRepository,
     JobRepository,
     EmployeeRepository,
     ServiceRepository,

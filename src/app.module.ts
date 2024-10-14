@@ -14,6 +14,7 @@ import { WorkOrderModule } from './infra/http/modules/workOrder/workOrder.module
 import { ServiceAssignmentModule } from './infra/http/modules/serviceAssignment/serviceAssignment.module';
 import { CompanyModule } from './infra/http/modules/company/company.module';
 import { MembershipModule } from './infra/http/modules/membership/membership.module';
+import { TrailerModule } from './infra/http/modules/trailer/trailer.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { MembershipModule } from './infra/http/modules/membership/membership.mod
     NoteModule,
     CarrierModule,
     FleetModule,
+    TrailerModule,
     JobModule,
     EmployeeModule,
     ServiceModule,
