@@ -20,8 +20,12 @@ import { GetFleet } from 'src/modules/fleet/useCases/getFleet/getFleet';
 import { FleetViewModel } from './viewModel/FleetViewModel';
 import { GetManyFleets } from 'src/modules/fleet/useCases/getManyFleets/getManyFleets';
 import { AuthenticatedRequestModel } from '../auth/models/authenticateRequestModel';
+import { PolicyGuard } from '../auth/guards/policy.guard';
+import { Permission } from '../auth/decorators/permissions.decorator';
+import { Action } from '../ability/ability';
 
 @Controller('fleets')
+@UseGuards(PolicyGuard)
 export class FleetController {
   constructor(
     private createFleetUseCase: CreateFleet,
@@ -29,16 +33,16 @@ export class FleetController {
     private deleteFleetUseCase: DeleteFleet,
     private getFleetUseCase: GetFleet,
     private getManyFleetsUseCase: GetManyFleets,
-  ) {}
+  ) { }
 
   @Post()
+  // @Permission(Action.Read, 'Fleet')
   async createFleet(
     @Body() createFleetBody: CreateFleetBody,
     @Request() request: AuthenticatedRequestModel,
   ) {
     return await this.createFleetUseCase.execute({
       ...createFleetBody,
-      companyId: request.user.companyId,
     });
   }
 
@@ -58,9 +62,7 @@ export class FleetController {
 
   @Get(':id')
   async getCarrier(@Param('id') fleetId: string) {
-    const fleet = await this.getFleetUseCase.execute({ fleetId });
-
-    return FleetViewModel.toHttp(fleet);
+    const fleet = await this.getFleetUseCase.execute({ fleetId });                                  
   }
 
   @Get()

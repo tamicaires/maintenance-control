@@ -28,16 +28,14 @@ export class CarrierController {
     private deleteCarrierUseCase: DeleteCarrier,
     private getCarrierUseCase: GetCarrier,
     private getManyCarriersUseCase: GetManyCarriers,
-  ) {}
+  ) { }
 
   @Post()
   async createCarrier(
     @Body() body: CreateCarrierBody,
-    @Request() request: AuthenticatedRequestModel,
   ) {
     const carrier = await this.createCarrierUseCase.execute({
       ...body,
-      companyId: request.user.companyId,
     });
 
     return CarrierViewModel.toHttp(carrier);

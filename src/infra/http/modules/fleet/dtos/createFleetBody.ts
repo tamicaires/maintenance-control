@@ -16,23 +16,15 @@ export class CreateFleetBody {
 
   @IsStringCustom()
   @IsNotEmptyCustom()
-  firstTrailerPlate: string;
-
-  @IsStringCustom()
-  @IsNotEmptyCustom()
-  secondTrailerPlate: string;
-
-  @IsStringCustom()
-  @IsNotEmptyCustom()
-  thirdTrailerPlate: string;
-
-  @IsStringCustom()
-  @IsNotEmptyCustom()
   km: string;
 
   @IsStringCustom()
   @IsNotEmptyCustom()
   carrierId: string;
+
+  @IsStringCustom()
+  @IsNotEmptyCustom()
+  companyId: string;
 
   @IsBoolean()
   @IsNotEmptyCustom()
