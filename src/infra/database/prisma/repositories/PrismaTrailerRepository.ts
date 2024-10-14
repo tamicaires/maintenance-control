@@ -27,6 +27,19 @@ export class PrismaTrailerRepository implements TrailerRepository {
 
     return PrismaTrailerMapper.toDomain(trailer);
   }
+
+  async findById(trailerId: string): Promise<Trailer | null> {
+    const trailer = await this.prisma.trailer.findUnique({
+      where: { id: trailerId }
+    });
+
+    if (!trailer) {
+      return null;
+    }
+
+    return PrismaTrailerMapper.toDomain(trailer);
+  }
+
   save(trailer: Trailer): Promise<void> {
     throw new Error("Method not implemented.");
   }
