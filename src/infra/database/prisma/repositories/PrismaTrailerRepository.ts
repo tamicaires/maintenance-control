@@ -43,4 +43,10 @@ export class PrismaTrailerRepository implements TrailerRepository {
   save(trailer: Trailer): Promise<void> {
     throw new Error("Method not implemented.");
   }
+
+  async list(): Promise<Trailer[]> {
+    const trailers = await this.prisma.trailer.findMany();
+
+    return trailers.map(PrismaTrailerMapper.toDomain);
+  }
 }
