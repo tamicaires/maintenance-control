@@ -1,6 +1,4 @@
 import { randomUUID } from 'crypto';
-import { Role } from 'src/modules/role/entities/Role';
-import { RoleEnum } from 'src/modules/role/enum/role.enum';
 import { Replace } from 'src/utils/replace';
 
 interface UserSchema {

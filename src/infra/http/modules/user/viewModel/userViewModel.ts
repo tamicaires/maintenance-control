@@ -1,8 +1,8 @@
-import { Role } from 'src/modules/role/entities/Role';
 import { User } from 'src/modules/user/entities/User';
+import { TRole } from '../../ability/enums/role.enum';
 
 interface UserWithRelationalInfo extends User {
-  roles: Role[];
+  roles: TRole[];
 }
 export class UserViewModel {
   static toHttp({
@@ -42,6 +42,6 @@ export class UserViewModel {
       updatedAt,
     };
   }
-  
-  
+
+
 }

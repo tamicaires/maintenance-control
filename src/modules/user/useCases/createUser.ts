@@ -3,13 +3,11 @@ import { UserRepository } from '../repositories/UserRepository';
 import { User } from '../entities/User';
 import { hash } from 'bcrypt';
 import { UserWithSameEmailException } from '../exceptions/UserWithSameEmailException';
-import { Role } from 'src/modules/role/entities/Role';
 
 interface CreateUserRequest {
   email: string;
   name: string;
   password: string;
-  rolesIds: string[];
   companyId: string;
 }
 
@@ -17,7 +15,7 @@ interface CreateUserRequest {
 export class CreateUser {
   constructor(private userRepository: UserRepository) { }
 
-  async execute({ email, name, password, companyId, rolesIds }: CreateUserRequest): Promise<User> {
+  async execute({ email, name, password, companyId }: CreateUserRequest): Promise<User> {
     const userAlredyExist = await this.userRepository.findByEmail(email);
 
     if (userAlredyExist) throw new UserWithSameEmailException();
@@ -28,18 +26,8 @@ export class CreateUser {
       password: await hash(password, 10),
       companyId,
     });
-    
+
     await this.userRepository.create(user);
-    // await this.userRepository.assignRoleToUser(user.id, rolesIds);
-
-    // const roleAssignments = rolesIds.map(roleId => new RoleAssignment({
-    //   roleId,
-    //   userId,
-    // }));
-
-    // // Envia todas as atribuições para o repositório de uma vez
-    // await this.roleAssignmentRepository.createMany(roleAssignments);
-    
     return user;
   }
 }

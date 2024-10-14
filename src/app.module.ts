@@ -13,18 +13,14 @@ import { ServiceModule } from './infra/http/modules/service/service.module';
 import { WorkOrderModule } from './infra/http/modules/workOrder/workOrder.module';
 import { ServiceAssignmentModule } from './infra/http/modules/serviceAssignment/serviceAssignment.module';
 import { CompanyModule } from './infra/http/modules/company/company.module';
-// import { AbilityModule } from './infra/http/modules/ability/ability.module';
-import { RoleModule } from './infra/http/modules/role/role.module';
-import { RoleAssignmentModule } from './infra/http/modules/roleAssignment/roleAssignment.module';
+import { MembershipModule } from './infra/http/modules/membership/membership.module';
 
 @Module({
   imports: [
-    // AbilityModule,
     DatabaseModule,
     AuthModule,
     CompanyModule,
-    RoleModule,
-    RoleAssignmentModule,
+    MembershipModule,
     UserModule,
     NoteModule,
     CarrierModule,
@@ -43,4 +39,4 @@ import { RoleAssignmentModule } from './infra/http/modules/roleAssignment/roleAs
     },
   ],
 })
-export class AppModule {}
+export class AppModule { }

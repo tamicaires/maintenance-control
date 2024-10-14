@@ -28,6 +28,7 @@ model Company {
   fleets      Fleet[]
   workOrders  WorkOrder[]
   ChecklistTemplates ChecklistTemplate[]
+  MemberShip MemberShip[]
 }
 
 model User {
@@ -47,7 +48,37 @@ model User {
   notes        Note[]
   workOrder    WorkOrder[]
   roles        UserRole[]
+  MemberShip MemberShip[]
 } 
+
+model MemberShip {
+  id           String @id
+  role         RoleType[]
+
+  company      Company @relation(fields: [companyId], references: [id])
+  companyId    String
+
+  user         User @relation(fields: [userId], references: [id])
+  userId       String
+
+  @@map("memberships")
+  @@index([companyId])
+  @@index([userId])
+}
+
+enum RoleType {
+  ADMIN                    
+  SUPER_ADMIN              
+  REPORT_MANAGER           
+  REPORT_VIEWER           
+  GENERAL_VIEWER           
+  MAINTENANCE_MANAGER      
+  MAINTENANCE_CONSULTANT   
+  TIRE_CONSULTANT          
+  PARTS_CONSULTANT         
+  PARTS_MANAGER            
+  GUEST                    
+}
 
 model Role {
   id          String     @id 
@@ -68,13 +99,6 @@ model UserRole {
   @@map("user_roles")
   @@unique([userId, roleId])
 }
-
-enum RoleType {
-  ADMIN
-  USER
-  GUEST
-}
-
 
 model Note {
   id            String    @id

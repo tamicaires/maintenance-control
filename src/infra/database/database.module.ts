@@ -20,10 +20,8 @@ import { ServiceAssignmentRepository } from 'src/modules/serviceAssignment/repos
 import { PrismaServiceAssignmentsRepository } from './prisma/repositories/PrismaServiceAssignmentsRepository';
 import { CompanyRepository } from 'src/modules/company/repositories/CompanyRepository';
 import { PrismaCompanyRepository } from './prisma/repositories/PrismaCompanyRepository';
-import { RoleRepository } from 'src/modules/role/repositories/roleRepository';
-import { PrismaRoleRepository } from './prisma/repositories/PrismaRoleRepository';
-import { RoleAssignmentRepository } from 'src/modules/roleAssignment/repositories/RoleAssignmentRepository';
-import { PrismaRoleAssigmentRepository } from './prisma/repositories/PrismaRoleAssignment';
+import { MembershipRepository } from 'src/modules/memberShip/repositories/membershipRepository';
+import { PrismaMembershipRepository } from './prisma/repositories/PrismaMembershipRepository';
 
 @Module({
   providers: [
@@ -37,12 +35,8 @@ import { PrismaRoleAssigmentRepository } from './prisma/repositories/PrismaRoleA
       useClass: PrismaUserRepository,
     },
     {
-      provide: RoleRepository,
-      useClass: PrismaRoleRepository,
-    },
-    {
-      provide: RoleAssignmentRepository,
-      useClass: PrismaRoleAssigmentRepository,
+      provide: MembershipRepository,
+      useClass: PrismaMembershipRepository,
     },
     {
       provide: NoteRepository,
@@ -80,8 +74,7 @@ import { PrismaRoleAssigmentRepository } from './prisma/repositories/PrismaRoleA
   exports: [
     CompanyRepository,
     UserRepository,
-    RoleRepository,
-    RoleAssignmentRepository,
+    MembershipRepository,
     NoteRepository,
     CarrierRepository,
     FleetRepository,
@@ -92,4 +85,4 @@ import { PrismaRoleAssigmentRepository } from './prisma/repositories/PrismaRoleA
     ServiceAssignmentRepository,
   ],
 })
-export class DatabaseModule {}
+export class DatabaseModule { }

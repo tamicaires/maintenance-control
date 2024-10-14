@@ -38,6 +38,11 @@ export class PrismaUserRepository implements UserRepository {
     return PrismaUserMapper.toDomain(user);
   }
 
+  async list(): Promise<User[]> {
+    const users = await this.prisma.user.findMany();
+
+    return users.map(user => PrismaUserMapper.toDomain(user));
+  }
   async associateUserToCompany(companyId: string, userId: string): Promise<void> {
     const userRaw = await this.prisma.user.findUnique({ where: { id: userId } });
 
@@ -56,16 +61,23 @@ export class PrismaUserRepository implements UserRepository {
       where: {
         id: userId,
       },
+      // include: {
+      //   roles: {
+      //     select: {
+      //       role: {
+      //         select: {
+      //           id: true,
+      //           name: true,
+      //         }
+      //       }
+      //     },
+      //   }
+      // }
       include: {
-        roles: {
+        MemberShip: {
           select: {
-            role: {
-              select: {
-                id: true,
-                name: true,
-              }
-            }
-          },
+            role: true
+          }
         }
       }
     });
