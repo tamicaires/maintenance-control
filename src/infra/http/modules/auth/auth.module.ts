@@ -9,14 +9,15 @@ import { SignInUseCase } from 'src/modules/auth/useCases/signInUseCase/signInUse
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from 'src/modules/auth/strategies/jwtStrategy';
 import { PrismaService } from 'src/infra/database/prisma/prisma.service';
+import { jwtKeys } from 'src/config/constants';
 
 @Module({
   imports: [
     DatabaseModule,
     UserModule,
     JwtModule.register({
-      secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: process.env.JWT_EXPIRE },
+      secret: jwtKeys.secret,
+      signOptions: { expiresIn: jwtKeys.expires },
     }),
   ],
   controllers: [AuthControler],
