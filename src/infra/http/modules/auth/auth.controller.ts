@@ -17,17 +17,15 @@ import { User } from 'src/modules/user/entities/User';
 
 @Controller()
 export class AuthControler {
-  constructor(private signInUseCase: SignInUseCase) {}
+  constructor(private signInUseCase: SignInUseCase) { }
 
   @Post('login')
   @Public()
   @HttpCode(HttpStatus.OK)
   @UseGuards(LocalAuthGuard)
   async signIn(@Request() request: AuthRequestModel,
-) {
-    const access_token = await this.signInUseCase.execute(request.user);
-    console.log("request user",request.user);
-    console.log("role dentro de request", request.user.roles);
+  ) {
+    const access_token = await this.signInUseCase.execute({ user: request.user });
     return { access_token };
   }
 

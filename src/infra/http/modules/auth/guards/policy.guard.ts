@@ -1,44 +1,60 @@
-import { Injectable, CanActivate, ExecutionContext, ForbiddenException } from '@nestjs/common';
- import { User } from 'src/modules/user/entities/User';
-import { Ability, Action, Rule } from '../../ability/ability.factory';
+import { Logger } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
+import { Request } from 'express';
+import { CanActivate, ExecutionContext, Injectable, ForbiddenException } from '@nestjs/common';
+import { Action } from '../../ability/ability';
+import { PERMISSION_KEY } from '../decorators/permissions.decorator';
+import { defineAbilitiesForUser } from '../../ability/permissions';
+import { TSubject } from '../../ability/enums/subject.enum';
+import { ForbiddenUserRoleException } from 'src/exceptions/ForbiddenUserRoleException';
+import { TRole } from '../../ability/enums/role.enum';
 
 @Injectable()
 export class PolicyGuard implements CanActivate {
-  constructor(private readonly ability: Ability) {}
+  private readonly logger = new Logger(PolicyGuard.name);
 
-  canActivate(context: ExecutionContext): boolean {
-    const request = context.switchToHttp().getRequest();
-    const user = request.user; 
-    console.log("user do guard", user);
+  constructor(private readonly reflector: Reflector) { }
 
-    // Construa as regras de permissão para o usuário
-    this.setupUserPermissions(user);
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    const permission = this.reflector.get<{ action: Action; subject: TSubject }>(
+      PERMISSION_KEY,
+      context.getHandler(),
+    );
 
-    // Verifique se o usuário tem permissão para a rota
-    const requiredPermissions = this.getRequiredPermissions(context);
-
-    for (const permission of requiredPermissions) {
-      if (this.ability.cannot(permission.action, permission.subject)) {
-        throw new ForbiddenException('Você não tem permissão para acessar este recurso.');
-      }
+    if (!permission) {
+      return true;
     }
 
-    return true; // Permissão concedida
+    const request: Request = context.switchToHttp().getRequest();
+    const currentMembershipSession = request.session?.currentMembership;
+
+    if (!currentMembershipSession) {
+      this.logger.warn('Tentativa de acesso sem sessão válida ou dados incompletos na sessão');
+      throw new ForbiddenUserRoleException();
+    }
+
+    const { userId, companyId, roles: userRoles } = currentMembershipSession;
+
+    return this.checkPermissions(
+      userId,
+      companyId,
+      userRoles,
+      permission
+    );
   }
 
-  private setupUserPermissions(user: User) {
-    // Exemplo: Definindo as regras de permissão do usuário
-    // Aqui, você pode definir a lógica de regras baseada nas funções ou no perfil do usuário
-    this.ability.addRule({ action: Action.Read, subject: 'Fleet' }); // Exemplo
-    this.ability.addRule({ action: Action.Create, subject: 'Carrier' }); // Exemplo
-    // Adicione outras regras conforme necessário
-  }
+  private checkPermissions(
+    userId: string,
+    companyId: string,
+    userRoles: TRole[],
+    permission: { action: Action; subject: TSubject }
+  ): boolean {
+    const ability = defineAbilitiesForUser(userId, companyId, userRoles);
 
-  private getRequiredPermissions(context: ExecutionContext): Rule[] {
-    // Aqui você pode implementar lógica para extrair permissões necessárias com base na rota
-    const handler = context.getHandler();
-    // Por exemplo, você pode usar decorators para definir as permissões
-    const requiredPermissions = Reflect.getMetadata('permissions', handler) || [];
-    return requiredPermissions;
+    if (!ability.can(permission.action, permission.subject, { companyId })) {
+      throw new ForbiddenException(`Ação ${permission.action} no recurso ${permission.subject} não permitida.`);
+    }
+
+    return true;
   }
 }

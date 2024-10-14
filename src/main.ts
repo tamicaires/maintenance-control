@@ -4,6 +4,8 @@ import { ValidationPipe } from '@nestjs/common';
 import { ValidationError } from 'class-validator';
 import { IncorrectValuesException } from './exceptions/IncorrectValuesExceptions';
 import { mapperClassValidationErrorToAppException } from './utils/mappers';
+import * as session from 'express-session';
+import { sessionKeys } from './config/constants';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -18,6 +20,18 @@ async function bootstrap() {
       transform: true,
       whitelist: true,
       forbidNonWhitelisted: true,
+    }),
+  );
+  app.use(
+    session({
+      secret: sessionKeys.secret,
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        maxAge: 1000 * 60 * 60 * 24 * 7,
+        secure: false,
+        
+      }
     }),
   );
   app.enableCors({

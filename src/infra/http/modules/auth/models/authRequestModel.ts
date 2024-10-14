@@ -1,6 +1,7 @@
-import { Request } from 'express';
-import { UserWithRoles } from 'src/types/user.interface';
+import { User } from 'src/modules/user/entities/User';
+import { SessionData } from './sessionModel';
 
 export class AuthRequestModel extends Request {
-  user: UserWithRoles
+  user: User
+  session: SessionData
 }

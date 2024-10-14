@@ -8,6 +8,7 @@ import { signInDTOValidateMiddleware } from './middleware/signInDTOValidate.midd
 import { SignInUseCase } from 'src/modules/auth/useCases/signInUseCase/signInUseCase';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from 'src/modules/auth/strategies/jwtStrategy';
+import { PrismaService } from 'src/infra/database/prisma/prisma.service';
 
 @Module({
   imports: [
@@ -19,7 +20,13 @@ import { JwtStrategy } from 'src/modules/auth/strategies/jwtStrategy';
     }),
   ],
   controllers: [AuthControler],
-  providers: [LocalStrategy, JwtStrategy, ValidateUserUseCase, SignInUseCase],
+  providers: [
+    LocalStrategy,
+    JwtStrategy,
+    ValidateUserUseCase,
+    SignInUseCase,
+    PrismaService
+  ],
 })
 export class AuthModule {
   configure(consumer: MiddlewareConsumer) {

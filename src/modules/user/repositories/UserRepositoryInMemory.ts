@@ -1,8 +1,11 @@
-import { RoleEnum } from 'src/modules/role/enum/role.enum';
+import { RoleEnum } from 'src/infra/http/modules/ability/enums/role.enum';
 import { User } from '../entities/User';
 import { UserRepository } from './UserRepository';
 
 export class UserRepositoryInMemory implements UserRepository {
+  list(): Promise<User[]> {
+    throw new Error('Method not implemented.');
+  }
   assignRoleToUser(userId: string, roles: RoleEnum[]): Promise<void> {
     throw new Error('Method not implemented.');
   }
