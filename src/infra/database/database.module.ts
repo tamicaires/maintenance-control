@@ -24,6 +24,8 @@ import { MembershipRepository } from 'src/modules/memberShip/repositories/member
 import { PrismaMembershipRepository } from './prisma/repositories/PrismaMembershipRepository';
 import { TrailerRepository } from 'src/modules/trailer/repositories/trailerRepository';
 import { PrismaTrailerRepository } from './prisma/repositories/PrismaTrailerRepository';
+import { AxleRepository } from 'src/modules/axle/repositories/axleRepository';
+import { PrismaAxleRepository } from './prisma/repositories/PrismaAxleRepository';
 
 @Module({
   providers: [
@@ -57,6 +59,10 @@ import { PrismaTrailerRepository } from './prisma/repositories/PrismaTrailerRepo
       useClass: PrismaTrailerRepository,
     },
     {
+      provide: AxleRepository,
+      useClass: PrismaAxleRepository,
+    },
+    {
       provide: JobRepository,
       useClass: PrismaJobRepository,
     },
@@ -85,6 +91,7 @@ import { PrismaTrailerRepository } from './prisma/repositories/PrismaTrailerRepo
     CarrierRepository,
     FleetRepository,
     TrailerRepository,
+    AxleRepository,
     JobRepository,
     EmployeeRepository,
     ServiceRepository,
