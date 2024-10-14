@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "Role" AS ENUM ('USER', 'ADMIN');
+CREATE TYPE "RoleType" AS ENUM ('ADMIN', 'SUPER_ADMIN', 'REPORT_MANAGER', 'REPORT_VIEWER', 'GENERAL_VIEWER', 'MAINTENANCE_MANAGER', 'MAINTENANCE_CONSULTANT', 'TIRE_CONSULTANT', 'PARTS_CONSULTANT', 'PARTS_MANAGER', 'GUEST');
 
 -- CreateEnum
 CREATE TYPE "AxleType" AS ENUM ('Tracionado', 'Livre', 'Direcional');
@@ -25,9 +25,6 @@ CREATE TYPE "MaintenanceStatus" AS ENUM ('Fila', 'Manutencao', 'AguardandoPeca',
 -- CreateEnum
 CREATE TYPE "TypeOfMaintenance" AS ENUM ('Preditiva', 'Preventiva', 'Corretiva');
 
--- CreateEnum
-CREATE TYPE "Box" AS ENUM ('1', '2', '3', '4', '5', '6', '7', '8');
-
 -- CreateTable
 CREATE TABLE "companies" (
     "id" TEXT NOT NULL,
@@ -48,12 +45,20 @@ CREATE TABLE "users" (
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "role" "Role" NOT NULL DEFAULT 'USER',
-    "companyId" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "memberships" (
+    "id" TEXT NOT NULL,
+    "role" "RoleType"[],
+    "companyId" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+
+    CONSTRAINT "memberships_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -62,6 +67,7 @@ CREATE TABLE "notes" (
     "title" TEXT NOT NULL,
     "description" TEXT,
     "userId" TEXT NOT NULL,
+    "workOrderId" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -249,7 +255,8 @@ CREATE TABLE "work_orders" (
     "userId" TEXT NOT NULL,
     "companyId" TEXT NOT NULL,
     "typeOfMaintenance" "TypeOfMaintenance" NOT NULL,
-    "box" "Box",
+    "boxId" TEXT,
+    "is_cancelled" BOOLEAN NOT NULL DEFAULT false,
     "created_by" TEXT,
     "updated_by" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL,
@@ -270,6 +277,64 @@ CREATE TABLE "service_assignments" (
     CONSTRAINT "service_assignments_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "checklist_templates" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "companyId" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "checklist_templates_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "checklist_item_templates" (
+    "id" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "templateId" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "checklist_item_templates_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "checklists" (
+    "id" TEXT NOT NULL,
+    "workOrderId" TEXT NOT NULL,
+    "templateId" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "checklists_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "checklist_items" (
+    "id" TEXT NOT NULL,
+    "checklistId" TEXT NOT NULL,
+    "itemTemplateId" TEXT NOT NULL,
+    "isConform" BOOLEAN NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "checklist_items_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "boxes" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "description" TEXT,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
+
+    CONSTRAINT "boxes_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "companies_id_key" ON "companies"("id");
+
 -- CreateIndex
 CREATE UNIQUE INDEX "companies_name_key" ON "companies"("name");
 
@@ -280,22 +345,85 @@ CREATE UNIQUE INDEX "companies_cnpj_key" ON "companies"("cnpj");
 CREATE UNIQUE INDEX "companies_email_key" ON "companies"("email");
 
 -- CreateIndex
+CREATE INDEX "companies_name_idx" ON "companies"("name");
+
+-- CreateIndex
+CREATE INDEX "companies_email_idx" ON "companies"("email");
+
+-- CreateIndex
+CREATE INDEX "companies_cnpj_idx" ON "companies"("cnpj");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
+
+-- CreateIndex
+CREATE INDEX "users_email_idx" ON "users"("email");
+
+-- CreateIndex
+CREATE INDEX "memberships_companyId_idx" ON "memberships"("companyId");
+
+-- CreateIndex
+CREATE INDEX "memberships_userId_idx" ON "memberships"("userId");
+
+-- CreateIndex
+CREATE INDEX "notes_userId_idx" ON "notes"("userId");
+
+-- CreateIndex
+CREATE INDEX "notes_workOrderId_idx" ON "notes"("workOrderId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "carries_carrierName_key" ON "carries"("carrierName");
 
 -- CreateIndex
+CREATE INDEX "carries_companyId_idx" ON "carries"("companyId");
+
+-- CreateIndex
+CREATE INDEX "fleets_carrier_id_idx" ON "fleets"("carrier_id");
+
+-- CreateIndex
+CREATE INDEX "fleets_companyId_idx" ON "fleets"("companyId");
+
+-- CreateIndex
+CREATE INDEX "trailers_fleetId_idx" ON "trailers"("fleetId");
+
+-- CreateIndex
+CREATE INDEX "axles_trailerId_idx" ON "axles"("trailerId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "parts_part_number_key" ON "parts"("part_number");
+
+-- CreateIndex
+CREATE INDEX "parts_trailerId_idx" ON "parts"("trailerId");
+
+-- CreateIndex
+CREATE INDEX "parts_categoryId_idx" ON "parts"("categoryId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "categories_name_key" ON "categories"("name");
 
 -- CreateIndex
+CREATE INDEX "categories_name_idx" ON "categories"("name");
+
+-- CreateIndex
+CREATE INDEX "tires_axleId_idx" ON "tires"("axleId");
+
+-- CreateIndex
+CREATE INDEX "axle_history_axleId_idx" ON "axle_history"("axleId");
+
+-- CreateIndex
+CREATE INDEX "axle_history_workOrderId_idx" ON "axle_history"("workOrderId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "employees_name_key" ON "employees"("name");
 
 -- CreateIndex
+CREATE INDEX "employees_jobTitleId_idx" ON "employees"("jobTitleId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "job_titles_job_title_key" ON "job_titles"("job_title");
+
+-- CreateIndex
+CREATE INDEX "job_titles_job_title_idx" ON "job_titles"("job_title");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "services_service_name_key" ON "services"("service_name");
@@ -303,11 +431,50 @@ CREATE UNIQUE INDEX "services_service_name_key" ON "services"("service_name");
 -- CreateIndex
 CREATE UNIQUE INDEX "work_orders_display_id_key" ON "work_orders"("display_id");
 
+-- CreateIndex
+CREATE INDEX "work_orders_fleetId_idx" ON "work_orders"("fleetId");
+
+-- CreateIndex
+CREATE INDEX "work_orders_userId_idx" ON "work_orders"("userId");
+
+-- CreateIndex
+CREATE INDEX "work_orders_companyId_idx" ON "work_orders"("companyId");
+
+-- CreateIndex
+CREATE INDEX "service_assignments_word_order_id_idx" ON "service_assignments"("word_order_id");
+
+-- CreateIndex
+CREATE INDEX "service_assignments_employee_id_idx" ON "service_assignments"("employee_id");
+
+-- CreateIndex
+CREATE INDEX "service_assignments_serviceId_idx" ON "service_assignments"("serviceId");
+
+-- CreateIndex
+CREATE INDEX "checklist_templates_companyId_idx" ON "checklist_templates"("companyId");
+
+-- CreateIndex
+CREATE INDEX "checklists_workOrderId_idx" ON "checklists"("workOrderId");
+
+-- CreateIndex
+CREATE INDEX "checklists_templateId_idx" ON "checklists"("templateId");
+
+-- CreateIndex
+CREATE INDEX "checklist_items_checklistId_idx" ON "checklist_items"("checklistId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "boxes_name_key" ON "boxes"("name");
+
 -- AddForeignKey
-ALTER TABLE "users" ADD CONSTRAINT "users_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "companies"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "memberships" ADD CONSTRAINT "memberships_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "companies"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "memberships" ADD CONSTRAINT "memberships_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "notes" ADD CONSTRAINT "notes_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "notes" ADD CONSTRAINT "notes_workOrderId_fkey" FOREIGN KEY ("workOrderId") REFERENCES "work_orders"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "carries" ADD CONSTRAINT "carries_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "companies"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -361,6 +528,9 @@ ALTER TABLE "work_orders" ADD CONSTRAINT "work_orders_userId_fkey" FOREIGN KEY (
 ALTER TABLE "work_orders" ADD CONSTRAINT "work_orders_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "companies"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "work_orders" ADD CONSTRAINT "work_orders_boxId_fkey" FOREIGN KEY ("boxId") REFERENCES "boxes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "service_assignments" ADD CONSTRAINT "service_assignments_word_order_id_fkey" FOREIGN KEY ("word_order_id") REFERENCES "work_orders"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -368,3 +538,21 @@ ALTER TABLE "service_assignments" ADD CONSTRAINT "service_assignments_serviceId_
 
 -- AddForeignKey
 ALTER TABLE "service_assignments" ADD CONSTRAINT "service_assignments_employee_id_fkey" FOREIGN KEY ("employee_id") REFERENCES "employees"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "checklist_templates" ADD CONSTRAINT "checklist_templates_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "companies"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "checklist_item_templates" ADD CONSTRAINT "checklist_item_templates_templateId_fkey" FOREIGN KEY ("templateId") REFERENCES "checklist_templates"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "checklists" ADD CONSTRAINT "checklists_workOrderId_fkey" FOREIGN KEY ("workOrderId") REFERENCES "work_orders"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "checklists" ADD CONSTRAINT "checklists_templateId_fkey" FOREIGN KEY ("templateId") REFERENCES "checklist_templates"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "checklist_items" ADD CONSTRAINT "checklist_items_checklistId_fkey" FOREIGN KEY ("checklistId") REFERENCES "checklists"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "checklist_items" ADD CONSTRAINT "checklist_items_itemTemplateId_fkey" FOREIGN KEY ("itemTemplateId") REFERENCES "checklist_item_templates"("id") ON DELETE CASCADE ON UPDATE CASCADE;
