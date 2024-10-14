@@ -5,7 +5,6 @@ interface UserSchema {
   email: string;
   password: string;
   name: string;
-  companyId: string | null;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -52,14 +51,6 @@ export class User {
 
   set name(name: string) {
     this.props.name = name;
-  }
-
-  get companyId(): string | null {
-    return this.props.companyId;
-  }
-
-  set companyId(companyId: string | null) {
-    this.props.companyId = companyId;
   }
 
   get createdAt(): Date {

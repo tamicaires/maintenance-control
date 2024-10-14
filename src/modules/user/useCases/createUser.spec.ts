@@ -1,7 +1,6 @@
 import { compare } from 'bcrypt';
 import { UserRepositoryInMemory } from '../repositories/UserRepositoryInMemory';
 import { CreateUser } from './createUser';
-import { Role } from '../enum/Roles';
 import { makeUser } from '../factories/userFactory';
 import { UserWithSameEmailException } from '../exceptions/UserWithSameEmailException';
 
@@ -21,7 +20,6 @@ describe('Create User', () => {
       email: 'email@gmail.com',
       name: 'Elves',
       password: userPasswordWithoutEncryption,
-      role: Role.ADMIN,
     });
 
     const userHasPasswordEncrypted = await compare(
@@ -42,7 +40,6 @@ describe('Create User', () => {
         email: user.email,
         name: 'vitor',
         password: '123123',
-        role: Role.ADMIN,
       }),
     ).rejects.toThrow(UserWithSameEmailException);
   });

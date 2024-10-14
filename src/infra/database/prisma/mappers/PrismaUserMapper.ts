@@ -7,7 +7,6 @@ export class PrismaUserMapper {
     email,
     name,
     password,
-    companyId,
     createdAt,
     updatedAt,
   }: User): UserRaw {
@@ -16,7 +15,6 @@ export class PrismaUserMapper {
       email,
       name,
       password,
-      companyId,
       createdAt,
       updatedAt,
     };
@@ -27,7 +25,6 @@ export class PrismaUserMapper {
     email,
     name,
     password,
-    companyId,
     createdAt,
     updatedAt,
   }: UserRaw): User {
@@ -36,7 +33,6 @@ export class PrismaUserMapper {
         email,
         name,
         password,
-        companyId,
         createdAt,
         updatedAt,
       },

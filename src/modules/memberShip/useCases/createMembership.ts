@@ -6,6 +6,7 @@ import { MembershipRepository } from "../repositories/membershipRepository";
 import { UserNotFoundException } from "src/modules/user/exceptions/UserNotFountException";
 import { CompanyNotFoundException } from "src/modules/company/exceptions/CompanyNotFoundException";
 import { Membership } from "../entity/Membership";
+import { MembershipAlreadyExists } from "../exceptions/MembershipAlreadyExists";
 
 interface CreateMembershipRequest {
   userId: string;
@@ -32,6 +33,10 @@ export class CreateMembership {
       throw new CompanyNotFoundException();
     }
 
+    const membershipAlreadyExists = await this.membershipRepository.findByUserIdAndCompanyId(userId, companyId);
+    if (membershipAlreadyExists) {
+      throw new MembershipAlreadyExists();
+    }
     const membership = new Membership({
       companyId: company.id,
       userId: user.id,

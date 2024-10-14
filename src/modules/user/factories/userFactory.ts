@@ -1,6 +1,4 @@
-import { RoleEnum } from 'src/infra/http/modules/ability/enums/role.enum';
 import { User } from '../entities/User';
-import { Role } from '../enum/Roles';
 
 type Override = Partial<User>;
 
@@ -10,7 +8,6 @@ export const makeUser = ({ id, ...override }: Override) => {
       email: 'tami@gmail.com',
       name: 'Tamires',
       password: '123456',
-      companyId: '1',
       ...override,
     },
     id,

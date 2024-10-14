@@ -11,13 +11,11 @@ export class UserViewModel {
     email,
     id,
     name,
-    companyId,
   }: User) {
     return {
       id,
       email,
       name,
-      companyId,
       createdAt,
       updatedAt,
     };
@@ -29,14 +27,12 @@ export class UserViewModel {
     email,
     id,
     name,
-    companyId,
     roles,
   }: UserWithRelationalInfo) {
     return {
       id,
       email,
       name,
-      companyId,
       roles,
       createdAt,
       updatedAt,

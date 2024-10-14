@@ -43,36 +43,12 @@ export class PrismaUserRepository implements UserRepository {
 
     return users.map(user => PrismaUserMapper.toDomain(user));
   }
-  async associateUserToCompany(companyId: string, userId: string): Promise<void> {
-    const userRaw = await this.prisma.user.findUnique({ where: { id: userId } });
-
-    await this.prisma.user.update({
-      where: { id: userId },
-      data: {
-        company: {
-          connect: { id: companyId },
-        },
-      },
-    });
-  }
 
   async findUserWithRole(userId: string): Promise<any> {
     const user = await this.prisma.user.findFirst({
       where: {
         id: userId,
       },
-      // include: {
-      //   roles: {
-      //     select: {
-      //       role: {
-      //         select: {
-      //           id: true,
-      //           name: true,
-      //         }
-      //       }
-      //     },
-      //   }
-      // }
       include: {
         MemberShip: {
           select: {
@@ -86,14 +62,4 @@ export class PrismaUserRepository implements UserRepository {
 
     return user;
   }
-
-  async assignRoleToUser(userId: string, rolesIds: string[]): Promise<void> {
-    // const result = await this.prisma.userRole.createMany({
-    //   data: rolesIds.map(roleId => ({
-    //     userId,
-    //     roleId: roleId,
-    //   })),
-    // });
-  }
-
 }
