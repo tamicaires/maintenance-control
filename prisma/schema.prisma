@@ -173,7 +173,7 @@ model Part {
   id                String    @id 
   name              String    // Nome da peça
   description       String?   // Descrição da peça
-  partNumber        String?   @unique @map("part_number") // Número da peça
+  partNumber        String   @unique @map("part_number") // Número da peça
   model             String?   // Modelo da peça
   brand             String?   // Marca da peça
   supplier          String?   // Fornecedor da peça
@@ -185,8 +185,8 @@ model Part {
   category          PartCategory  @relation(fields: [categoryId], references: [id]) // Relação com categoria
   categoryId        String    // Campo de chave estrangeira para a categoria
 
-  trailer           Trailer   @relation(fields: [trailerId], references: [id], onDelete: Cascade) // Peça associada a um reboque
-  trailerId         String    // Relacionamento obrigatório com o reboque
+  trailer           Trailer?   @relation(fields: [trailerId], references: [id], onDelete: Cascade) // Peça associada a um reboque
+  trailerId         String?    // Relacionamento obrigatório com o reboque
   
   axle              Axle?     @relation(fields: [axleId], references: [id], onDelete: Cascade) // Peça associada a um eixo (opcional)
   axleId            String?   // Chave estrangeira opcional para associar a um eixo
@@ -228,8 +228,8 @@ model Tire {
   id               String   @id 
   brand            String
   serialNumber     String?
-  axle             Axle     @relation(fields: [axleId], references: [id], onDelete: Cascade)
-  axleId           String
+  axle             Axle?     @relation(fields: [axleId], references: [id], onDelete: Cascade)
+  axleId           String?
   status           TireCondition @default(NOVO)
 
   treadDepth       Int?     @map("tread_depth")  // Profundidade do sulco em milímetros

@@ -17,6 +17,7 @@ import { MembershipModule } from './infra/http/modules/membership/membership.mod
 import { TrailerModule } from './infra/http/modules/trailer/trailer.module';
 import { AxleModule } from './infra/http/modules/axle/axle.module';
 import { PartCategoryModule } from './infra/http/modules/partCategory/partCategory.module';
+import { PartModule } from './infra/http/modules/part/part.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { PartCategoryModule } from './infra/http/modules/partCategory/partCatego
     TrailerModule,
     AxleModule,
     PartCategoryModule,
+    PartModule,
     JobModule,
     EmployeeModule,
     ServiceModule,
