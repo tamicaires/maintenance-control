@@ -27,4 +27,16 @@ export class PrismaTireRepository implements TireRepository {
 
     return PrismaTireMapper.toDomain(tireRaw);
   }
+
+  async findById(tireId: string): Promise<Tire | null> {
+    const tireRaw = await this.prisma.tire.findUnique({
+      where: { id: tireId },
+    });
+
+    if (!tireRaw) {
+      return null;
+    }
+
+    return PrismaTireMapper.toDomain(tireRaw);
+  }
 }
