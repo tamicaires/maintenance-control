@@ -4,6 +4,7 @@ import { DatabaseModule } from "src/infra/database/database.module";
 import { CreatePart } from "src/modules/part/useCases/createPart";
 import { GetPart } from "src/modules/part/useCases/getPart";
 import { ListParts } from "src/modules/part/useCases/listParts";
+import { UpdatePart } from "src/modules/part/useCases/updatePart";
 
 @Module({
   controllers: [PartController],
@@ -12,6 +13,7 @@ import { ListParts } from "src/modules/part/useCases/listParts";
     CreatePart,
     GetPart,
     ListParts,
+    UpdatePart,
   ]
 })
 

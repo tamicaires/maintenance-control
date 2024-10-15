@@ -5,4 +5,5 @@ export abstract class PartRepository {
   abstract findByPartnumber(partNumber: string): Promise<Part | null>;
   abstract findById(id: string): Promise<Part | null>;
   abstract list(): Promise<Part[]>;
+  abstract save(part: Part): Promise<void>;
 }

@@ -46,4 +46,13 @@ export class PrismaPartRepository implements PartRepository {
 
     return parts.map((part) => PrismaPartMapper.toDomain(part));
   }
+
+  async save(part: Part): Promise<void> {
+    const partRaw = PrismaPartMapper.toPrisma(part);
+
+    await this.prisma.part.update({
+      where: { id: part.id },
+      data: partRaw,
+    });
+  }
 }
