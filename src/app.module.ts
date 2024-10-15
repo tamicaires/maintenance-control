@@ -18,6 +18,7 @@ import { TrailerModule } from './infra/http/modules/trailer/trailer.module';
 import { AxleModule } from './infra/http/modules/axle/axle.module';
 import { PartCategoryModule } from './infra/http/modules/partCategory/partCategory.module';
 import { PartModule } from './infra/http/modules/part/part.module';
+import { TireModule } from './infra/http/modules/tire/tire.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { PartModule } from './infra/http/modules/part/part.module';
     AxleModule,
     PartCategoryModule,
     PartModule,
+    TireModule,
     JobModule,
     EmployeeModule,
     ServiceModule,

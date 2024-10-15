@@ -227,15 +227,15 @@ enum PartStatus {
 model Tire {
   id               String   @id 
   brand            String
-  serialNumber     String?
-  axle             Axle?     @relation(fields: [axleId], references: [id], onDelete: Cascade)
+  serialNumber     String   @unique @map("serial_number")
+  axle             Axle?    @relation(fields: [axleId], references: [id], onDelete: Cascade)
   axleId           String?
   status           TireCondition @default(NOVO)
 
   treadDepth       Int?     @map("tread_depth")  // Profundidade do sulco em milímetros
   treadPattern     String?   @map("tread_pattern") // Padrão de sulco (ex: radial, diagonal)
   wearRating       Int?      // Classificação de desgaste, de 1 a 10, por exemplo
-  fireNumber       String?   @map("fire_number") // Número de fogo para identificação
+  fireNumber       String?   @unique @map("fire_number") // Número de fogo para identificação
   location         TireLocation // Localização do pneu
 
   createdAt        DateTime  @default(now()) @map("created_at")

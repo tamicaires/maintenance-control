@@ -30,6 +30,8 @@ import { PartCategoryRepository } from 'src/modules/partCategory/repositories/pa
 import { PrismaPartCategoryRepository } from './prisma/repositories/PrismaPartCategoryRepository';
 import { PartRepository } from 'src/modules/part/repositories/partRepository';
 import { PrismaPartRepository } from './prisma/repositories/PrismaPartRepository';
+import { TireRepository } from 'src/modules/tire/repositories/TireRepository';
+import { PrismaTireRepository } from './prisma/repositories/PrismaTireRepository';
 
 @Module({
   providers: [
@@ -75,6 +77,10 @@ import { PrismaPartRepository } from './prisma/repositories/PrismaPartRepository
       useClass: PrismaPartRepository,
     },
     {
+      provide: TireRepository,
+      useClass: PrismaTireRepository,
+    },
+    {
       provide: JobRepository,
       useClass: PrismaJobRepository,
     },
@@ -106,6 +112,7 @@ import { PrismaPartRepository } from './prisma/repositories/PrismaPartRepository
     AxleRepository,
     PartCategoryRepository,
     PartRepository,
+    TireRepository,
     JobRepository,
     EmployeeRepository,
     ServiceRepository,
