@@ -3,6 +3,7 @@ import { TireController } from "./tire.controller";
 import { DatabaseModule } from "src/infra/database/database.module";
 import { CreateTire } from "src/modules/tire/useCases/createTire";
 import { GetTire } from "src/modules/tire/useCases/getTire";
+import { UpdateTire } from "src/modules/tire/useCases/updateTire";
 
 @Module({
   controllers: [TireController],
@@ -10,6 +11,7 @@ import { GetTire } from "src/modules/tire/useCases/getTire";
   providers: [
     CreateTire,
     GetTire,
+    UpdateTire,
   ],
 })
 

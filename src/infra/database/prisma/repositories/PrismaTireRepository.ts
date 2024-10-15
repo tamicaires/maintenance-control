@@ -39,4 +39,14 @@ export class PrismaTireRepository implements TireRepository {
 
     return PrismaTireMapper.toDomain(tireRaw);
   }
+
+  async save(tire: Tire): Promise<void> {
+    const tireRaw = PrismaTireMapper.toPrisma(tire);
+    console.log("tireRaw", tireRaw);
+    console.log("tire", tire);
+    await this.prisma.tire.update({
+      where: { id: tire.id },
+      data: tireRaw,
+    });
+  }
 }

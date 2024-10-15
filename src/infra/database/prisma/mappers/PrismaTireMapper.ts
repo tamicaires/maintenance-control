@@ -30,7 +30,7 @@ export class PrismaTireMapper {
       wearRating: tire.wearRating,
       fireNumber: tire.fireNumber,
       location: tire.location,
-    });
+    }, tire.id);
   }
 
 }

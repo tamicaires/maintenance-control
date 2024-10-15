@@ -51,7 +51,7 @@ export class PrismaPartRepository implements PartRepository {
     const partRaw = PrismaPartMapper.toPrisma(part);
 
     await this.prisma.part.update({
-      where: { id: part.id },
+      where: { id: "e225bf53-4303-40f3-830e-30106c09b18b" },
       data: partRaw,
     });
   }
