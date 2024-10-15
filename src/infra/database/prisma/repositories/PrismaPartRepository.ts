@@ -40,4 +40,10 @@ export class PrismaPartRepository implements PartRepository {
 
     return PrismaPartMapper.toDomain(partRaw);
   }
+
+  async list(): Promise<Part[]> {
+    const parts = await this.prisma.part.findMany();
+
+    return parts.map((part) => PrismaPartMapper.toDomain(part));
+  }
 }

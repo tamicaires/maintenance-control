@@ -3,12 +3,14 @@ import { CreatePartBody } from "./dtos/createPartBody";
 import { CreatePart } from "src/modules/part/useCases/createPart";
 import { PartViewModel } from "./viewModel/partViewModel";
 import { GetPart } from "src/modules/part/useCases/getPart";
+import { ListParts } from "src/modules/part/useCases/listParts";
 
 @Controller("parts")
 export class PartController {
   constructor(
     private readonly createPart: CreatePart,
-    private readonly getPart: GetPart
+    private readonly getPart: GetPart,
+    private readonly listParts: ListParts,
   ) { }
 
   @Post()
@@ -21,5 +23,11 @@ export class PartController {
   async get(@Param("id") partId: string) {
     const part = await this.getPart.execute(partId);
     return PartViewModel.toHttp(part);
+  }
+
+  @Get()
+  async list() {
+    const parts = await this.listParts.execute();
+    return parts.map(PartViewModel.toHttp);
   }
 }
