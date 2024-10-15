@@ -30,4 +30,23 @@ export class PrismaPartCategoryRepository implements PartCategoryRepository {
     return PrismaPartCategoryMapper.toDomain(partCategoryRaw);
   }
 
+  async findById(id: string): Promise<PartCategory | null> {
+    const partCategoryRaw = await this.prisma.partCategory.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!partCategoryRaw) {
+      return null;
+    }
+
+    return PrismaPartCategoryMapper.toDomain(partCategoryRaw);
+  }
+
+  async list(): Promise<PartCategory[]> {
+    const partCategoriesRaw = await this.prisma.partCategory.findMany();
+
+    return partCategoriesRaw.map(PrismaPartCategoryMapper.toDomain);
+  }
 }
