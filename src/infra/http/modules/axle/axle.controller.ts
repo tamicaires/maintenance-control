@@ -14,12 +14,12 @@ export class AxleController {
 
   @Post()
   async create(@Body() axle: CreateAxleBody) {
-    return this.createAxle.execute(axle);
+    return await this.createAxle.execute(axle);
   }
 
   @Get(":id")
   async getById(@Param("id") axleId: string) {
-    return this.getAxleById.execute(axleId);
+    return await this.getAxleById.execute(axleId);
   }
 
   @Get()
