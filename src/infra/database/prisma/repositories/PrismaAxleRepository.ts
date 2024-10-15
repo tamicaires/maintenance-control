@@ -29,4 +29,10 @@ export class PrismaAxleRepository implements AxleRepository {
 
     return PrismaAxleMapper.toDomain(axle);
   }
+
+  async list(): Promise<Axle[]> {
+    const axles = await this.prisma.axle.findMany();
+
+    return axles.map((axle) => PrismaAxleMapper.toDomain(axle));
+  }
 }
