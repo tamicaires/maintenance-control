@@ -1,4 +1,4 @@
-import { IsNumber, isNumber, IsOptional } from "class-validator";
+import { IsNumber, IsOptional } from "class-validator";
 import { IsNotEmptyCustom } from "src/infra/http/classValidator/decorators/IsNotEmptyCustom";
 import { IsStringCustom } from "src/infra/http/classValidator/decorators/IsStringCustom";
 import { TTireCondition, TTireLocation } from "src/modules/tire/enum/tire.enum";
