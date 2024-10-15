@@ -26,6 +26,8 @@ import { TrailerRepository } from 'src/modules/trailer/repositories/trailerRepos
 import { PrismaTrailerRepository } from './prisma/repositories/PrismaTrailerRepository';
 import { AxleRepository } from 'src/modules/axle/repositories/axleRepository';
 import { PrismaAxleRepository } from './prisma/repositories/PrismaAxleRepository';
+import { PartCategoryRepository } from 'src/modules/partCategory/repositories/partCategoryRepository';
+import { PrismaPartCategoryRepository } from './prisma/repositories/PrismaPartCategoryRepository';
 
 @Module({
   providers: [
@@ -63,6 +65,10 @@ import { PrismaAxleRepository } from './prisma/repositories/PrismaAxleRepository
       useClass: PrismaAxleRepository,
     },
     {
+      provide: PartCategoryRepository,
+      useClass: PrismaPartCategoryRepository,
+    },
+    {
       provide: JobRepository,
       useClass: PrismaJobRepository,
     },
@@ -92,6 +98,7 @@ import { PrismaAxleRepository } from './prisma/repositories/PrismaAxleRepository
     FleetRepository,
     TrailerRepository,
     AxleRepository,
+    PartCategoryRepository,
     JobRepository,
     EmployeeRepository,
     ServiceRepository,

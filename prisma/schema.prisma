@@ -182,7 +182,7 @@ model Part {
   stockQuantity     Int       @default(0) // Quantidade em estoque
   location          PartLocation // Localização da peça (estoque, em uso, etc.)
   status            PartStatus @default(NOVO) // Status da peça (novo, recuperado, etc.)
-  category          Category  @relation(fields: [categoryId], references: [id]) // Relação com categoria
+  category          PartCategory  @relation(fields: [categoryId], references: [id]) // Relação com categoria
   categoryId        String    // Campo de chave estrangeira para a categoria
 
   trailer           Trailer   @relation(fields: [trailerId], references: [id], onDelete: Cascade) // Peça associada a um reboque
@@ -200,7 +200,7 @@ model Part {
   
 }
 
-model Category {
+model PartCategory {
   id          String    @id 
   name        String    @unique // Nome da categoria
   description String?   // Descrição da categoria
@@ -208,7 +208,7 @@ model Category {
   createdAt   DateTime  @default(now()) @map("created_at")
   updatedAt   DateTime  @updatedAt @map("updated_at")
 
-  @@map("categories")
+  @@map("part_categories")
   @@index([name])
   parts       Part[]    // Relação com várias peças
 }
