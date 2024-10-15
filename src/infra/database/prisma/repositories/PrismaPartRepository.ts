@@ -28,4 +28,16 @@ export class PrismaPartRepository implements PartRepository {
 
     return PrismaPartMapper.toDomain(partRaw);
   }
+
+  async findById(id: string): Promise<Part | null> {
+    const partRaw = await this.prisma.part.findUnique({
+      where: { id },
+    });
+
+    if (!partRaw) {
+      return null;
+    }
+
+    return PrismaPartMapper.toDomain(partRaw);
+  }
 }
