@@ -15,4 +15,18 @@ export class PrismaAxleRepository implements AxleRepository {
       data: axleRaw,
     });
   }
+
+  async getById(axleId: string): Promise<Axle | null> {
+    const axle = await this.prisma.axle.findUnique({
+      where: {
+        id: axleId,
+      },
+    });
+
+    if (!axle) {
+      return null;
+    }
+
+    return PrismaAxleMapper.toDomain(axle);
+  }
 }
