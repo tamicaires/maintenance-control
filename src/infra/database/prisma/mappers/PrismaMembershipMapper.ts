@@ -1,4 +1,4 @@
-import { MemberShip as MembershipRaw } from "@prisma/client";
+import { Membership as MembershipRaw } from "@prisma/client";
 import { Membership } from "src/modules/memberShip/entity/Membership";
 
 

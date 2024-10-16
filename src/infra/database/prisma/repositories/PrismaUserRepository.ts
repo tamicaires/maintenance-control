@@ -50,7 +50,7 @@ export class PrismaUserRepository implements UserRepository {
         id: userId,
       },
       include: {
-        MemberShip: {
+         Memberhip: {
           select: {
             role: true
           }

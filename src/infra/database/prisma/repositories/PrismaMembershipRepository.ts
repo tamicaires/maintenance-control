@@ -11,14 +11,14 @@ export class PrismaMembershipRepository implements MembershipRepository {
   async create(membership: Membership): Promise<void> {
     const membershipRaw = PrismaMembershipMapper.toPrisma(membership);
 
-    await this.prisma.memberShip.create({
+    await this.prisma.membership.create({
       data: membershipRaw,
     });
 
   }
 
   async findById(id: string): Promise<Membership | null> {
-    const membershipRaw = await this.prisma.memberShip.findUnique({
+    const membershipRaw = await this.prisma.membership.findUnique({
       where: { id },
     });
 
@@ -30,7 +30,7 @@ export class PrismaMembershipRepository implements MembershipRepository {
   }
 
   async findByUserIdAndCompanyId(userId: string, companyId: string): Promise<Membership | null> {
-    const membershipRaw = await this.prisma.memberShip.findFirst({
+    const membershipRaw = await this.prisma.membership.findFirst({
       where: { userId, companyId },
       include: { company: true }
     });
@@ -43,7 +43,7 @@ export class PrismaMembershipRepository implements MembershipRepository {
   }
 
   async findByUserId(userId: string): Promise<Membership | null> {
-    const membershipRaw = await this.prisma.memberShip.findFirst({
+    const membershipRaw = await this.prisma.membership.findFirst({
       where: { userId },
       include: { company: true }
     });
