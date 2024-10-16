@@ -27,7 +27,7 @@ model Company {
   fleets      Fleet[]
   workOrders  WorkOrder[]
   ChecklistTemplates ChecklistTemplate[]
-  MemberShip MemberShip[]
+  MemberShip Membership[]
 }
 
 model User {
@@ -43,10 +43,15 @@ model User {
   @@index([email]) 
   notes        Note[]
   workOrder    WorkOrder[]
-  MemberShip MemberShip[]
-} 
+  Memberhip    Membership[]
 
-model MemberShip {
+  partRequests  PartRequest[] @relation("PartRequestRequestedBy")
+  partHandledBy  PartRequest[] @relation("PartRequestHandledBy")
+  tireRequests   TireRequest[]  @relation("TireRequestRequestedBy")
+  tireHandleBy TireRequest[] @relation("TireRequestHandledBy")
+}
+
+model Membership {
   id           String @id
   role         RoleType[]
 
@@ -198,6 +203,7 @@ model Part {
   @@index([trailerId]) 
   @@index([categoryId])
   
+  PartRequest PartRequest[] 
 }
 
 model PartCategory {
@@ -213,6 +219,30 @@ model PartCategory {
   parts       Part[]    // Relação com várias peças
 }
 
+model PartRequest {
+  id                    String      @id 
+  part                  Part     @relation(fields: [partId], references: [id])
+  partId                String
+  requestedBy           User     @relation("PartRequestRequestedBy", fields: [requestedById], references: [id])
+  requestedById         String
+  requestedFor          Employee?   @relation("EmployeePartRequest", fields: [requestedForEmployeeId], references: [id])
+  requestedForEmployeeId String?
+  handledBy             User?    @relation("PartRequestHandledBy", fields: [handledById], references: [id]) // Nome alterado
+  handledById           String?
+  quantity              Int
+  approvedQuantity      Int?      // Quantidade aprovada (pode ser diferente da solicitada)
+  status                RequestStatus  @default(PENDING)
+  rejectionReason       String?       // Justificativa de rejeição (opcional)
+  requestedAt           DateTime @default(now())
+  approvedAt            DateTime? 
+  deliveredAt           DateTime?
+  workOrder             WorkOrder? @relation(fields: [workOrderId], references: [id])
+  workOrderId           String?
+  updatedAt             DateTime  @updatedAt @map("updated_at")
+
+  @@map("part_requests")
+}
+
 enum PartLocation {
   ESTOQUE
   APLICADO
@@ -222,6 +252,13 @@ enum PartLocation {
 enum PartStatus {
   NOVO
   RECUPERADO
+}
+
+enum RequestStatus {
+  PENDING     // Aguardando aprovação
+  APPROVED    // Aprovado
+  REJECTED    // Rejeitado
+  DELIVERED   // Entregue
 }
 
 model Tire {
@@ -244,6 +281,29 @@ model Tire {
   @@map("tires")
   @@index([axleId])
   maintenanceHistory TireHistory[] // Histórico de manutenção
+  TireRequest TireRequest[]
+}
+
+model TireRequest {
+  id                    String      @id 
+  tire                  Tire?        @relation(fields: [tireId], references: [id])
+  tireId                String?
+  requestedBy           User        @relation("TireRequestRequestedBy", fields: [requestedById], references: [id])
+  requestedById         String
+  requestedFor          Employee?   @relation("EmployeeTireRequest", fields: [requestedForEmployeeId], references: [id])
+  requestedForEmployeeId String?
+  handledBy             User?    @relation("TireRequestHandledBy", fields: [handledById], references: [id]) // Nome alterado
+  handledById           String?
+  quantity              Int       // Quantidade solicitada
+  approvedQuantity      Int?      // Quantidade aprovada (pode ser diferente da solicitada)
+  status                RequestStatus   @default(PENDING)  // Ex: PENDING, APPROVED, REJECTED
+  rejectionReason       String? 
+  requestedAt           DateTime @default(now())
+  approvedAt            DateTime? // Data de aprovação
+  deliveredAt           DateTime?
+  workOrder             WorkOrder? @relation(fields: [workOrderId], references: [id])
+  workOrderId           String?
+  updatedAt             DateTime  @updatedAt
 }
 
 enum TireCondition {
@@ -305,6 +365,8 @@ model Employee {
   @@map("employees")
   @@index([jobTitleId]) 
   serviceAssignments    ServiceAssignment[]
+  PartRequest PartRequest[] @relation("EmployeePartRequest")
+  TireRequest TireRequest[] @relation("EmployeeTireRequest")
 }
 
 model Job {
@@ -372,6 +434,8 @@ model WorkOrder {
   axleHistories         AxleHistory[]
   checklists Checklist[] // Relacionamento com os checklists
   Note Note[]
+  PartRequest PartRequest[]
+  TireRequest TireRequest[]
 }
 
 model ServiceAssignment {
