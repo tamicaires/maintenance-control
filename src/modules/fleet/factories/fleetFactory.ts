@@ -1,6 +1,4 @@
 import { Fleet } from '../entities/Fleet';
-import { FleetStatus } from '../enum/fleet-status.enum';
-
 type Override = Partial<Fleet>;
 
 export const makeFleet = ({ id, ...override }: Override) => {

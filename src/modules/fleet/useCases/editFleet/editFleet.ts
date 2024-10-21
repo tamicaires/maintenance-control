@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { FleetStatus } from '../../enum/fleet-status.enum';
 import { FleetRepository } from '../../repositories/FleetRepository';
 import { updateFleetProperties } from 'src/utils/fleetUtils';
 import { FleetNotFoundException } from '../../exceptions/FleetNotFoundException';
