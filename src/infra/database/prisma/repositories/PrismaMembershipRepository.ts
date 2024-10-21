@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
-import { Membership } from "src/modules/memberShip/entity/Membership";
-import { MembershipRepository } from "src/modules/memberShip/repositories/membershipRepository";
 import { PrismaService } from "../prisma.service";
 import { PrismaMembershipMapper } from "../mappers/PrismaMembershipMapper";
+import { MembershipRepository } from "src/domain/memberShip/repositories/membershipRepository";
+import { Membership } from "src/domain/memberShip/entity/Membership";
 
 @Injectable()
 export class PrismaMembershipRepository implements MembershipRepository {

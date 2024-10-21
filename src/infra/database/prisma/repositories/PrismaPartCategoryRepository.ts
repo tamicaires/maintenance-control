@@ -1,8 +1,8 @@
-import { PartCategoryRepository } from "src/modules/partCategory/repositories/partCategoryRepository";
 import { PrismaService } from "../prisma.service";
-import { PartCategory } from "src/modules/partCategory/entities/partCategory";
 import { PrismaPartCategoryMapper } from "../mappers/PrismaPartCatergoryMapper";
 import { Injectable } from "@nestjs/common";
+import { PartCategoryRepository } from "src/domain/partCategory/repositories/partCategoryRepository";
+import { PartCategory } from "src/domain/partCategory/entities/partCategory";
 
 @Injectable()
 export class PrismaPartCategoryRepository implements PartCategoryRepository {

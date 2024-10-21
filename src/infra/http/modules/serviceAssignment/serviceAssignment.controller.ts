@@ -8,14 +8,14 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import { CreateServiceAssignment } from 'src/modules/serviceAssignment/useCases/createServiceAssignment/createServiceAssignment';
 import { UpdateServiceAssignmentBody } from './dtos/updateServiceAssignmentBody';
-import { UpdateServiceAssignment } from 'src/modules/serviceAssignment/useCases/updateServiceAssignment/updateServiceAssignment';
-import { DeleteServiceAssignment } from 'src/modules/serviceAssignment/useCases/deleteServiceAssignment/deleteServiceAssignment';
-import { GetServiceAssignment } from 'src/modules/serviceAssignment/useCases/getServiceAssignment/getServiceAssignment';
-import { ServiceAssignmentViewModel } from './viewModels/ServiceAssignmentViewModel';
-import { GetManyServiceAssignments } from 'src/modules/serviceAssignment/useCases/getManyServiceAssignments/getManyServiceAssignments';
 import { CreateServiceAssignmentBody } from './dtos/createServiceAssignmentsBody';
+import { ServiceAssignmentViewModel } from './viewModels/ServiceAssignmentViewModel';
+import { CreateServiceAssignment } from 'src/domain/serviceAssignment/useCases/createServiceAssignment/createServiceAssignment';
+import { UpdateServiceAssignment } from 'src/domain/serviceAssignment/useCases/updateServiceAssignment/updateServiceAssignment';
+import { DeleteServiceAssignment } from 'src/domain/serviceAssignment/useCases/deleteServiceAssignment/deleteServiceAssignment';
+import { GetServiceAssignment } from 'src/domain/serviceAssignment/useCases/getServiceAssignment/getServiceAssignment';
+import { GetManyServiceAssignments } from 'src/domain/serviceAssignment/useCases/getManyServiceAssignments/getManyServiceAssignments';
 
 @Controller('service-assignments')
 export class ServiceAssignmentController {

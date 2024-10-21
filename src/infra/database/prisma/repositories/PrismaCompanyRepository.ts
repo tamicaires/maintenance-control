@@ -1,8 +1,8 @@
 import { PrismaService } from '../prisma.service';
 import { Injectable } from '@nestjs/common';
-import { Company } from 'src/modules/company/entities/Company';
-import { CompanyRepository } from 'src/modules/company/repositories/CompanyRepository';
 import { PrismaCompanyMapper } from '../mappers/PrismaCompanyMapper';
+import { CompanyRepository } from 'src/domain/company/repositories/CompanyRepository';
+import { Company } from 'src/domain/company/entities/Company';
 
 @Injectable()
 export class PrismaCompanyRepository implements CompanyRepository {

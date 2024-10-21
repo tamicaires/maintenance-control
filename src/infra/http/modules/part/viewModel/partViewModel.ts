@@ -1,4 +1,4 @@
-import { Part } from "src/modules/part/entities/Part";
+import { Part } from "src/domain/part/entities/Part";
 
 export class PartViewModel {
   static toHttp(part: Part) {

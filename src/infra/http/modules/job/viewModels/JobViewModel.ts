@@ -1,4 +1,4 @@
-import { Job } from 'src/modules/job/entities/Job';
+import { Job } from "src/domain/job/entities/Job";
 
 export class JobViewModel {
   static toHttp({ id, jobTitle }: Job) {

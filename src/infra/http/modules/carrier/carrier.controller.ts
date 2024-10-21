@@ -9,18 +9,18 @@ import {
   Query,
   Request,
 } from '@nestjs/common';
-import { CreateCarrier } from 'src/modules/carrier/useCases/createCarrier/createCarrier';
 import { CreateCarrierBody } from './dtos/createCarrierBody';
-import { CarrierViewModel } from './viewModels/CarrierViewModel';
-import { EditCarrier } from 'src/modules/carrier/useCases/editCarrier/editCarrier';
 import { EditCarrierBody } from './dtos/editCarrierBody';
-import { DeleteCarrier } from 'src/modules/carrier/useCases/deleteCarrier/deleteCarrier';
-import { GetCarrier } from 'src/modules/carrier/useCases/getCarrier/getCarrier';
-import { GetManyCarriers } from 'src/modules/carrier/useCases/getAllCarrriers/getManyCarriers';
+import { CarrierViewModel } from './viewModels/CarrierViewModel';
 import { Cookies } from '../auth/decorators/cookies.decorator';
 import { Permission } from '../auth/decorators/permissions.decorator';
 import { Action } from '../ability/ability';
 import { CookiesEnum } from 'src/core/enum/cookies';
+import { CreateCarrier } from 'src/domain/carrier/useCases/createCarrier/createCarrier';
+import { DeleteCarrier } from 'src/domain/carrier/useCases/deleteCarrier/deleteCarrier';
+import { EditCarrier } from 'src/domain/carrier/useCases/editCarrier/editCarrier';
+import { GetManyCarriers } from 'src/domain/carrier/useCases/getAllCarrriers/getManyCarriers';
+import { GetCarrier } from 'src/domain/carrier/useCases/getCarrier/getCarrier';
 
 @Controller('carriers')
 export class CarrierController {

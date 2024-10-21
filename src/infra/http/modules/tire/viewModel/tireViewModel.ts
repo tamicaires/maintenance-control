@@ -1,4 +1,4 @@
-import { Tire } from "src/modules/tire/entities/Tire";
+import { Tire } from "src/domain/tire/entities/Tire";
 
 export class TireViewModel {
   static toHttp(tire: Tire) {

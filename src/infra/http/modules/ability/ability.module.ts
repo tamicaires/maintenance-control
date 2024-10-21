@@ -1,6 +1,5 @@
 import { Module } from "@nestjs/common";
-import { CheckUserMembership } from "src/modules/memberShip/useCases/checkUserMembership";
-import { CompanyModule } from "../company/company.module";
+import { CheckUserMembership } from "src/domain/memberShip/useCases/checkUserMembership";
 import { DatabaseModule } from "src/infra/database/database.module";
 
 @Module({

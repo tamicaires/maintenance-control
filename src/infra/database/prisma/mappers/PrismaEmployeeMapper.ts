@@ -1,5 +1,6 @@
 import { Employee as EmployeeRaw } from '@prisma/client';
-import { Employee } from 'src/modules/employee/entities/Employee';
+import { Employee } from "src/domain/employee/entities/Employee";
+
 
 export class PrismaEmployeeMapper {
   static toPrisma({

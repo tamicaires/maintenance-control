@@ -1,8 +1,8 @@
-import { Note } from 'src/modules/note/entities/Note';
-import { NoteRepository } from 'src/modules/note/repositories/noteRepository';
 import { PrismaService } from '../prisma.service';
 import { PrismaNoteMapper } from '../mappers/PrismaNoteMapper';
 import { Injectable } from '@nestjs/common';
+import { NoteRepository } from 'src/domain/note/repositories/noteRepository';
+import { Note } from 'src/domain/note/entities/Note';
 
 @Injectable()
 export class PrismaNoteRepository implements NoteRepository {

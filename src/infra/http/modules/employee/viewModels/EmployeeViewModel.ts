@@ -1,4 +1,4 @@
-import { Employee } from 'src/modules/employee/entities/Employee';
+import { Employee } from "src/domain/employee/entities/Employee";
 
 interface EmployeeWithRelationInfo extends Employee {
   job: { jobTitle: string };

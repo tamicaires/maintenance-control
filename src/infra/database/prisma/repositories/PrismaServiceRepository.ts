@@ -1,9 +1,9 @@
-import { Service } from 'src/modules/service/entities/Service';
-import { ServiceRepository } from 'src/modules/service/repositories/serviceRepository';
+import { ServiceRepository } from 'src/domain/service/repositories/serviceRepository';
 import { PrismaServiceMapper } from '../mappers/PrismaServiceMapper';
 import { PrismaService } from '../prisma.service';
 import { Injectable } from '@nestjs/common';
-import { ServiceWithEmployee } from 'src/types/service.interface';
+import { ServiceWithEmployee } from 'src/shared/types/service.interface';
+import { Service } from 'src/domain/service/entities/Service';
 
 @Injectable()
 export class PrismaServiceRepository implements ServiceRepository {

@@ -1,13 +1,13 @@
 import { Module } from "@nestjs/common";
 import { MembershipController } from "./membership.controller";
 import { DatabaseModule } from "src/infra/database/database.module";
-import { CreateMembership } from "src/modules/memberShip/useCases/createMembership";
-import { SetCurrentMembership } from "src/modules/memberShip/useCases/setCurrentMembership";
-import { GetCurrentMembership } from "src/modules/memberShip/useCases/getCurrentMembership";
-import { GetMembershipByUser } from "src/modules/memberShip/useCases/getMembershipByUser";
-import { CheckUserMembership } from "src/modules/memberShip/useCases/checkUserMembership";
 import { UserModule } from "../user/user.module";
 import { CompanyModule } from "../company/company.module";
+import { CheckUserMembership } from "src/domain/memberShip/useCases/checkUserMembership";
+import { GetCurrentMembership } from "src/domain/memberShip/useCases/getCurrentMembership";
+import { GetMembershipByUser } from "src/domain/memberShip/useCases/getMembershipByUser";
+import { SetCurrentMembership } from "src/domain/memberShip/useCases/setCurrentMembership";
+import { CreateMembership } from "src/domain/memberShip/useCases/createMembership";
 
 @Module({
   controllers: [MembershipController],

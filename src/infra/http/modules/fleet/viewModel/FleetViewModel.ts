@@ -1,4 +1,4 @@
-import { Fleet } from 'src/modules/fleet/entities/Fleet';
+import { Fleet } from "src/domain/fleet/entities/Fleet";
 
 interface FleetWithCarrier extends Fleet {
   carrier: { carrierName: string };

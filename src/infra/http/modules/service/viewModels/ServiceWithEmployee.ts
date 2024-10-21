@@ -1,5 +1,5 @@
-import { Service } from 'src/modules/service/entities/Service';
-import { EmployeeBasicInfo } from 'src/types/employee.type';
+import { Service } from 'src/domain/service/entities/Service';
+import { EmployeeBasicInfo } from 'src/shared/types/employee.type';
 
 interface ServiceWithEmployee extends Service {
   serviceAssignmets: {

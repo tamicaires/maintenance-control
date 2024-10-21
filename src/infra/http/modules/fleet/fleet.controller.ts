@@ -8,24 +8,22 @@ import {
   Put,
   Query,
   Req,
-  
   UseGuards,
 } from '@nestjs/common';
 import { CreateFleetBody } from './dtos/createFleetBody';
-import { CreateFleet } from 'src/modules/fleet/useCases/createFleet/createFleet';
-import { EditFleet } from 'src/modules/fleet/useCases/editFleet/editFleet';
 import { EditFleetBody } from './dtos/editFleetBody';
-import { mapEditFleetData } from 'src/utils/fleetUtils';
-import { DeleteFleet } from 'src/modules/fleet/useCases/deleteFleet/deleteFleet';
-import { GetFleet } from 'src/modules/fleet/useCases/getFleet/getFleet';
+import { mapEditFleetData } from 'src/shared/utils/fleetUtils';
 import { FleetViewModel } from './viewModel/FleetViewModel';
-import { GetManyFleets } from 'src/modules/fleet/useCases/getManyFleets/getManyFleets';
-import { AuthenticatedRequestModel } from '../auth/models/authenticateRequestModel';
 import { PolicyGuard } from '../auth/guards/policy.guard';
 import { Permission } from '../auth/decorators/permissions.decorator';
 import { Action } from '../ability/ability';
 import { Cookies } from '../auth/decorators/cookies.decorator';
 import { Request } from 'express';
+import { CreateFleet } from 'src/domain/fleet/useCases/createFleet/createFleet';
+import { DeleteFleet } from 'src/domain/fleet/useCases/deleteFleet/deleteFleet';
+import { EditFleet } from 'src/domain/fleet/useCases/editFleet/editFleet';
+import { GetFleet } from 'src/domain/fleet/useCases/getFleet/getFleet';
+import { GetManyFleets } from 'src/domain/fleet/useCases/getManyFleets/getManyFleets';
 
 @Controller('fleets')
 @UseGuards(PolicyGuard)

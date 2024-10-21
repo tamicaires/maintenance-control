@@ -1,4 +1,4 @@
-import { Carrier } from 'src/modules/carrier/entities/Carrier';
+import { Carrier } from "src/domain/carrier/entities/Carrier";
 
 export class CarrierViewModel {
   static toHttp({

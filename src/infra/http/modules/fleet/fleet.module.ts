@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from 'src/infra/database/database.module';
 import { FleetController } from './fleet.controller';
-import { CreateFleet } from 'src/modules/fleet/useCases/createFleet/createFleet';
-import { EditFleet } from 'src/modules/fleet/useCases/editFleet/editFleet';
-import { DeleteFleet } from 'src/modules/fleet/useCases/deleteFleet/deleteFleet';
-import { GetFleet } from 'src/modules/fleet/useCases/getFleet/getFleet';
-import { GetManyFleets } from 'src/modules/fleet/useCases/getManyFleets/getManyFleets';
-import { CheckUserMembership } from 'src/modules/memberShip/useCases/checkUserMembership';
+import { CreateFleet } from 'src/domain/fleet/useCases/createFleet/createFleet';
+import { DeleteFleet } from 'src/domain/fleet/useCases/deleteFleet/deleteFleet';
+import { EditFleet } from 'src/domain/fleet/useCases/editFleet/editFleet';
+import { GetFleet } from 'src/domain/fleet/useCases/getFleet/getFleet';
+import { GetManyFleets } from 'src/domain/fleet/useCases/getManyFleets/getManyFleets';
+import { CheckUserMembership } from 'src/domain/memberShip/useCases/checkUserMembership';
 
 @Module({
   imports: [DatabaseModule],

@@ -1,4 +1,4 @@
-import { Company } from "src/modules/company/entities/Company";
+import { Company } from "src/domain/company/entities/Company";
 
 export class CompanyViewModel {
   static toHttp(company: Company) {

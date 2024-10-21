@@ -1,4 +1,4 @@
-import { User } from 'src/modules/user/entities/User';
+import { User } from 'src/domain/user/entities/User';
 import { TRole } from '../../ability/enums/role.enum';
 
 interface UserWithRelationalInfo extends User {

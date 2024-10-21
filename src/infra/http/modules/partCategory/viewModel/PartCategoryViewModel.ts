@@ -1,4 +1,4 @@
-import { PartCategory } from "src/modules/partCategory/entities/partCategory";
+import { PartCategory } from "src/domain/partCategory/entities/partCategory";
 
 export class PartCategoryViewModel {
   static toHttp(partCategory: PartCategory) {

@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { UserController } from './user.controller';
-import { CreateUser } from 'src/modules/user/useCases/createUser';
 import { DatabaseModule } from 'src/infra/database/database.module';
-import { GetUserWithRoles } from 'src/modules/user/useCases/getUserWithRoles';
-import { ListUsers } from 'src/modules/user/useCases/listUsers';
+import { CreateUser } from 'src/domain/user/useCases/createUser';
+import { GetUserWithRoles } from 'src/domain/user/useCases/getUserWithRoles';
+import { ListUsers } from 'src/domain/user/useCases/listUsers';
 
 @Module({
   imports: [DatabaseModule],

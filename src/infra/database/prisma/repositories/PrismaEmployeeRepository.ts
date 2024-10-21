@@ -1,8 +1,8 @@
-import { Employee } from 'src/modules/employee/entities/Employee';
-import { EmployeeRepository } from 'src/modules/employee/repositories/EmployeeRepository';
+import { Employee } from "src/domain/employee/entities/Employee";
 import { PrismaEmployeeMapper } from '../mappers/PrismaEmployeeMapper';
 import { PrismaService } from '../prisma.service';
 import { Injectable } from '@nestjs/common';
+import { EmployeeRepository } from "src/domain/employee/repositories/EmployeeRepository";
 
 @Injectable()
 export class PrismaEmployeeRepository implements EmployeeRepository {

@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
-import { Trailer } from "src/modules/trailer/entities/Trailer";
-import { TrailerRepository } from "src/modules/trailer/repositories/trailerRepository";
 import { PrismaService } from "../prisma.service";
 import { PrismaTrailerMapper } from "../mappers/PrimaTrailerMapper";
+import { TrailerRepository } from "src/domain/trailer/repositories/trailerRepository";
+import { Trailer } from "src/domain/trailer/entities/Trailer";
 
 @Injectable()
 export class PrismaTrailerRepository implements TrailerRepository {

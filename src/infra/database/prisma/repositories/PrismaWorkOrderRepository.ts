@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
-import { WorkOrderRepository } from 'src/modules/workOrder/repositories/workOrderRepository';
-import { WorkOrder } from 'src/modules/workOrder/entities/WorkOrder';
 import { PrismaWorkOrderMapper } from '../mappers/PrismaWorkOrderMapper';
-import { Filters } from 'src/types/filters.interface';
+import { Filters } from 'src/shared/types/filters.interface';
 import { Prisma } from '@prisma/client';
-import { MaintenanceStatus } from 'src/core/enum/maitenance-status.enum';
 import { TypeOfMaintenance } from 'src/core/enum/type-of-maintenance.enum';
+import { WorkOrderRepository } from 'src/domain/workOrder/repositories/workOrderRepository';
+import { WorkOrder } from 'src/domain/workOrder/entities/WorkOrder';
 
 @Injectable()
 export class PrismaWorkOrderRepository implements WorkOrderRepository {

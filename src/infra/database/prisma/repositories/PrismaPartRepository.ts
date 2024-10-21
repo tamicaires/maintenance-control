@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
-import { Part } from "src/modules/part/entities/Part";
-import { PartRepository } from "src/modules/part/repositories/partRepository";
 import { PrismaService } from "../prisma.service";
 import { PrismaPartMapper } from "../mappers/PrismaPartMapper";
+import { PartRepository } from "src/domain/part/repositories/partRepository";
+import { Part } from "src/domain/part/entities/Part";
 
 @Injectable()
 export class PrismaPartRepository implements PartRepository {

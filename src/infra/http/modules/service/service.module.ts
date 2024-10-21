@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ServiceController } from './service.controller';
 import { DatabaseModule } from 'src/infra/database/database.module';
-import { CreateService } from 'src/modules/service/useCases/createService/createService';
-import { UpdateService } from 'src/modules/service/useCases/updateService/updateService';
-import { DeleteService } from 'src/modules/service/useCases/deleteService/deleteService';
-import { GetService } from 'src/modules/service/useCases/getService/getService';
-import { GetManyServices } from 'src/modules/service/useCases/getManyServices/getManyServices';
-import { GetServicesByWorkOrder } from 'src/modules/service/useCases/getServicesByWorkOrder/getServicesByWorkOrder.use-case';
+import { CreateService } from 'src/domain/service/useCases/createService/createService';
+import { DeleteService } from 'src/domain/service/useCases/deleteService/deleteService';
+import { GetManyServices } from 'src/domain/service/useCases/getManyServices/getManyServices';
+import { GetService } from 'src/domain/service/useCases/getService/getService';
+import { GetServicesByWorkOrder } from 'src/domain/service/useCases/getServicesByWorkOrder/getServicesByWorkOrder.use-case';
+import { UpdateService } from 'src/domain/service/useCases/updateService/updateService';
 
 @Module({
   controllers: [ServiceController],

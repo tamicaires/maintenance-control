@@ -1,11 +1,11 @@
 import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
 import { CreatePartBody } from "./dtos/createPartBody";
-import { CreatePart } from "src/modules/part/useCases/createPart";
 import { PartViewModel } from "./viewModel/partViewModel";
-import { GetPart } from "src/modules/part/useCases/getPart";
-import { ListParts } from "src/modules/part/useCases/listParts";
-import { UpdatePart } from "src/modules/part/useCases/updatePart";
 import { UpdatePartBody } from "./dtos/updatePartBody";
+import { CreatePart } from "src/domain/part/useCases/createPart";
+import { GetPart } from "src/domain/part/useCases/getPart";
+import { ListParts } from "src/domain/part/useCases/listParts";
+import { UpdatePart } from "src/domain/part/useCases/updatePart";
 
 @Controller("parts")
 export class PartController {

@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Param, Post } from "@nestjs/common";
 import { CreateTrailerBody } from "./dtos/createTrailer.dto";
-import { CreateTrailer } from "src/modules/trailer/useCases/createTrailer";
-import { GetTrailer } from "src/modules/trailer/useCases/getTrailer";
-import { ListTrailers } from "src/modules/trailer/useCases/listTrailers";
+import { CreateTrailer } from "src/domain/trailer/useCases/createTrailer";
+import { GetTrailer } from "src/domain/trailer/useCases/getTrailer";
+import { ListTrailers } from "src/domain/trailer/useCases/listTrailers";
 
 @Controller("trailers")
 export class TrailerController {

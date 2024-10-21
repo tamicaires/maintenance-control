@@ -1,6 +1,5 @@
 import { Membership as MembershipRaw } from "@prisma/client";
-import { Membership } from "src/modules/memberShip/entity/Membership";
-
+import { Membership } from "src/domain/memberShip/entity/Membership";
 
 export class PrismaMembershipMapper {
   static toPrisma({ id, companyId, userId, role }: Membership): MembershipRaw {

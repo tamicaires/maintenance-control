@@ -10,13 +10,13 @@ import {
 } from '@nestjs/common';
 import { CreateEmployeeBody } from './dtos/createEmployeeBody';
 import { EmployeeViewModel } from './viewModels/EmployeeViewModel';
-import { CreateEmployee } from 'src/modules/employee/useCases/createEmployee/createEmployee';
-import { EditEmployee } from 'src/modules/employee/useCases/editEmployee/editEmployee';
-import { DeleteEmployee } from 'src/modules/employee/useCases/deleteEmployee/deleteEmployee';
-import { GetEmployee } from 'src/modules/employee/useCases/getEmployee/getEmployee';
-import { GetManyEmployees } from 'src/modules/employee/useCases/getManyEmployees/getManyEmployees';
 import { EditEmployeeBody } from './dtos/editEmployeeBody';
-import { GetEmployeeServices } from 'src/modules/employee/useCases/getEmployeeServices/getEmployeeServices';
+import { CreateEmployee } from 'src/domain/employee/useCases/createEmployee/createEmployee';
+import { DeleteEmployee } from 'src/domain/employee/useCases/deleteEmployee/deleteEmployee';
+import { EditEmployee } from 'src/domain/employee/useCases/editEmployee/editEmployee';
+import { GetEmployee } from 'src/domain/employee/useCases/getEmployee/getEmployee';
+import { GetEmployeeServices } from 'src/domain/employee/useCases/getEmployeeServices/getEmployeeServices';
+import { GetManyEmployees } from 'src/domain/employee/useCases/getManyEmployees/getManyEmployees';
 
 @Controller('employees')
 export class EmployeeController {

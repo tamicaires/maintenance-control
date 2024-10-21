@@ -1,4 +1,4 @@
-import { WorkOrder } from 'src/modules/workOrder/entities/WorkOrder';
+import { WorkOrder } from "src/domain/workOrder/entities/WorkOrder";
 
 interface WorkOrderWithRelationalInfo extends WorkOrder {
   fleet: {

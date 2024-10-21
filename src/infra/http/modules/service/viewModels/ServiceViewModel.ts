@@ -1,5 +1,5 @@
-import { Service } from 'src/modules/service/entities/Service';
-import { EmployeeBasicInfo } from 'src/types/employee.type';
+
+import { Service } from 'src/domain/service/entities/Service';
 
 export class ServiceViewModel {
   static toHttp({ id, serviceName, serviceCategory }: Service) {

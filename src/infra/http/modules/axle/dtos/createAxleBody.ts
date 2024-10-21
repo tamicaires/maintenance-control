@@ -1,14 +1,14 @@
 import { IsNumber, IsOptional } from "class-validator";
+import { TAxle } from "src/core/enum/axle.enum";
 import { IsNotEmptyCustom } from "src/infra/http/classValidator/decorators/IsNotEmptyCustom";
 import { IsStringCustom } from "src/infra/http/classValidator/decorators/IsStringCustom";
-import { TAxle } from "src/modules/axle/enum/axle.enum";
 
 export class CreateAxleBody {
   @IsStringCustom()
   @IsNotEmptyCustom()
   position: string;
 
-  @IsNumber()
+  @IsNumber() 
   @IsOptional()
   capacity: number | null;
 

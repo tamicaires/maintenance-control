@@ -7,12 +7,12 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { CreateJob } from 'src/modules/job/useCases/createJob/createJob';
 import { CreateJobBody } from './dto/createJobBody';
 import { JobViewModel } from './viewModels/JobViewModel';
-import { DeleteJob } from 'src/modules/job/useCases/deleteJob/deleteJob';
-import { GetJob } from 'src/modules/job/useCases/getJob/getJob';
-import { GetManyJobs } from 'src/modules/job/useCases/getManyJobs/getManyJobs';
+import { CreateJob } from 'src/domain/job/useCases/createJob/createJob';
+import { DeleteJob } from 'src/domain/job/useCases/deleteJob/deleteJob';
+import { GetJob } from 'src/domain/job/useCases/getJob/getJob';
+import { GetManyJobs } from 'src/domain/job/useCases/getManyJobs/getManyJobs';
 
 @Controller('jobs')
 export class JobController {

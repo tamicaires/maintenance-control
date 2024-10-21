@@ -1,10 +1,10 @@
 import { Module } from "@nestjs/common";
 import { PartController } from "./part.controller";
 import { DatabaseModule } from "src/infra/database/database.module";
-import { CreatePart } from "src/modules/part/useCases/createPart";
-import { GetPart } from "src/modules/part/useCases/getPart";
-import { ListParts } from "src/modules/part/useCases/listParts";
-import { UpdatePart } from "src/modules/part/useCases/updatePart";
+import { CreatePart } from "src/domain/part/useCases/createPart";
+import { GetPart } from "src/domain/part/useCases/getPart";
+import { ListParts } from "src/domain/part/useCases/listParts";
+import { UpdatePart } from "src/domain/part/useCases/updatePart";
 
 @Module({
   controllers: [PartController],

@@ -9,18 +9,18 @@ import {
   Query,
   Request,
 } from '@nestjs/common';
-import { CreateWorkOrder } from 'src/modules/workOrder/useCases/createWorkOrder/createWorkOrder';
 import { CreateWorkOrderBody } from './dtos/createWorkOrderBody';
 import { UpdateWorkOrderBody } from './dtos/updateWorkOrderBody';
-import { UpdateWorkOrder } from 'src/modules/workOrder/useCases/updateWorkOrder/updateWorkOrder';
 import {
   mapCreateWorkOrderData,
   mapUpdateWorkOrderData,
-} from 'src/utils/workOrderUtils';
-import { DeleteWorkOrder } from 'src/modules/workOrder/useCases/deleteWorkOrder/deleteWorkOrder';
-import { GetManyWorkOrders } from 'src/modules/workOrder/useCases/getManyWorkOrders/getManyWorkOrders';
+} from 'src/shared/utils/workOrderUtils';
 import { AuthenticatedRequestModel } from '../auth/models/authenticateRequestModel';
 import { WorkOrderViewModel } from './viewModels/workOrdersViewModel';
+import { CreateWorkOrder } from 'src/domain/workOrder/useCases/createWorkOrder/createWorkOrder';
+import { UpdateWorkOrder } from 'src/domain/workOrder/useCases/updateWorkOrder/updateWorkOrder';
+import { DeleteWorkOrder } from 'src/domain/workOrder/useCases/deleteWorkOrder/deleteWorkOrder';
+import { GetManyWorkOrders } from 'src/domain/workOrder/useCases/getManyWorkOrders/getManyWorkOrders';
 
 @Controller('work-orders')
 export class WorkOrderController {
@@ -29,7 +29,7 @@ export class WorkOrderController {
     private updateWorkOrder: UpdateWorkOrder,
     private deleteWorkOrder: DeleteWorkOrder,
     private getManyWorkOrder: GetManyWorkOrders,
-  ) {}
+  ) { }
 
   @Post()
   async create(

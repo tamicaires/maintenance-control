@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { CarrierController } from './carrier.controller';
-import { CreateCarrier } from 'src/modules/carrier/useCases/createCarrier/createCarrier';
-import { EditCarrier } from 'src/modules/carrier/useCases/editCarrier/editCarrier';
-import { DeleteCarrier } from 'src/modules/carrier/useCases/deleteCarrier/deleteCarrier';
-import { GetCarrier } from 'src/modules/carrier/useCases/getCarrier/getCarrier';
-import { GetManyCarriers } from 'src/modules/carrier/useCases/getAllCarrriers/getManyCarriers';
 import { DatabaseModule } from 'src/infra/database/database.module';
+import { CreateCarrier } from 'src/domain/carrier/useCases/createCarrier/createCarrier';
+import { DeleteCarrier } from 'src/domain/carrier/useCases/deleteCarrier/deleteCarrier';
+import { EditCarrier } from 'src/domain/carrier/useCases/editCarrier/editCarrier';
+import { GetManyCarriers } from 'src/domain/carrier/useCases/getAllCarrriers/getManyCarriers';
+import { GetCarrier } from 'src/domain/carrier/useCases/getCarrier/getCarrier';
 
 @Module({
   controllers: [CarrierController],

@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Param, Post } from "@nestjs/common";
-import { CreateAxle } from "src/modules/axle/useCases/createAxle";
 import { CreateAxleBody } from "./dtos/createAxleBody";
-import { GetAxle } from "src/modules/axle/useCases/getAxle";
-import { ListAxles } from "src/modules/axle/useCases/listAxles";
+import { CreateAxle } from "src/domain/axle/useCases/createAxle";
+import { GetAxle } from "src/domain/axle/useCases/getAxle";
+import { ListAxles } from "src/domain/axle/useCases/listAxles";
 
 @Controller("axles")
 export class AxleController {

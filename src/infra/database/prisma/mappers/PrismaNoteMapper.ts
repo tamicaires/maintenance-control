@@ -1,5 +1,5 @@
 import { Note as NoteRaw } from '@prisma/client';
-import { Note } from 'src/modules/note/entities/Note';
+import { Note } from 'src/domain/note/entities/Note';
 
 export class PrismaNoteMapper {
   static toPrisma({

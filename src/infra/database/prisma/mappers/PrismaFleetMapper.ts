@@ -1,5 +1,5 @@
 import { Fleet as FleetRaw } from '@prisma/client';
-import { Fleet } from 'src/modules/fleet/entities/Fleet';
+import { Fleet } from 'src/domain/fleet/entities/Fleet';
 
 export class PrismaFleetMapper {
   static toPrisma(fleetRaw: Fleet): FleetRaw {

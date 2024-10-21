@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 import { SignInBody } from '../dtos/SignInBody';
 import { validate } from 'class-validator';
 import { IncorrectValuesException } from 'src/core/exceptions/IncorrectValuesExceptions';
-import { mapperClassValidationErrorToAppException } from 'src/utils/mappers';
+import { mapperClassValidationErrorToAppException } from 'src/shared/utils/mappers';
 
 @Injectable()
 export class signInDTOValidateMiddleware implements NestMiddleware {

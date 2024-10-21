@@ -1,10 +1,11 @@
 import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
-import { CreateTire } from "src/modules/tire/useCases/createTire";
-import { CreateTireBody } from "./dtos/createTireBody";
-import { GetTire } from "src/modules/tire/useCases/getTire";
 import { TireViewModel } from "./viewModel/tireViewModel";
-import { UpdateTire } from "src/modules/tire/useCases/updateTire";
+import { CreateTireBody } from "./dtos/createTireBody";
 import { UpdateTireBody } from "./dtos/updateTireBody";
+import { CreateTire } from "src/domain/tire/useCases/createTire";
+import { GetTire } from "src/domain/tire/useCases/getTire";
+import { UpdateTire } from "src/domain/tire/useCases/updateTire";
+
 
 @Controller("tires")
 export class TireController {

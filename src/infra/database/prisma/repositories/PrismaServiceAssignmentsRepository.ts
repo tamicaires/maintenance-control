@@ -1,14 +1,13 @@
-import { ServiceAssignment } from 'src/modules/serviceAssignment/entities/ServiceAssignment';
-import { ServiceAssignmentRepository } from 'src/modules/serviceAssignment/repositories/serviceAssignmentRepository';
 import { PrismaService } from '../prisma.service';
 import { PrismaServiceAssignmentMapper } from '../mappers/PrismaServiceAssignmentMapper';
 import { Injectable } from '@nestjs/common';
+import { ServiceAssignmentRepository } from 'src/domain/serviceAssignment/repositories/serviceAssignmentRepository';
+import { ServiceAssignment } from 'src/domain/serviceAssignment/entities/ServiceAssignment';
 
 @Injectable()
 export class PrismaServiceAssignmentsRepository
-  implements ServiceAssignmentRepository
-{
-  constructor(private prisma: PrismaService) {}
+  implements ServiceAssignmentRepository {
+  constructor(private prisma: PrismaService) { }
 
   async create(serviceAssignment: ServiceAssignment): Promise<void> {
     const serviceAssignmentRaw =

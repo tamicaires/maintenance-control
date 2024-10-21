@@ -9,15 +9,15 @@ import {
   Query,
 } from '@nestjs/common';
 import { CreateServiceBody } from './dtos/createServiceBody';
-import { CreateService } from 'src/modules/service/useCases/createService/createService';
 import { UpdateServiceBody } from './dtos/updateServiceBody';
-import { UpdateService } from 'src/modules/service/useCases/updateService/updateService';
-import { DeleteService } from 'src/modules/service/useCases/deleteService/deleteService';
-import { GetService } from 'src/modules/service/useCases/getService/getService';
 import { ServiceViewModel } from './viewModels/ServiceViewModel';
-import { GetManyServices } from 'src/modules/service/useCases/getManyServices/getManyServices';
-import { GetServicesByWorkOrder } from 'src/modules/service/useCases/getServicesByWorkOrder/getServicesByWorkOrder.use-case';
 import { ServiceWithEmployeeViewModel } from './viewModels/ServiceWithEmployee';
+import { CreateService } from 'src/domain/service/useCases/createService/createService';
+import { DeleteService } from 'src/domain/service/useCases/deleteService/deleteService';
+import { GetManyServices } from 'src/domain/service/useCases/getManyServices/getManyServices';
+import { GetService } from 'src/domain/service/useCases/getService/getService';
+import { GetServicesByWorkOrder } from 'src/domain/service/useCases/getServicesByWorkOrder/getServicesByWorkOrder.use-case';
+import { UpdateService } from 'src/domain/service/useCases/updateService/updateService';
 
 @Controller('services')
 export class ServiceController {

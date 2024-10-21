@@ -1,9 +1,9 @@
 import { Body, Controller, Get, Param, Post } from "@nestjs/common";
 import { CreatePartCategoryBody } from "./dtos/createPartCategoryBody";
-import { CreatePartCategory } from "src/modules/partCategory/useCases/createPartCategory";
-import { GetPartCategory } from "src/modules/partCategory/useCases/getPartCategory";
-import { ListPartCategories } from "src/modules/partCategory/useCases/listPartCategories";
 import { PartCategoryViewModel } from "./viewModel/PartCategoryViewModel";
+import { CreatePartCategory } from "src/domain/partCategory/useCases/createPartCategory";
+import { GetPartCategory } from "src/domain/partCategory/useCases/getPartCategory";
+import { ListPartCategories } from "src/domain/partCategory/useCases/listPartCategories";
 
 @Controller("part-categories")
 export class PartCategoryController {

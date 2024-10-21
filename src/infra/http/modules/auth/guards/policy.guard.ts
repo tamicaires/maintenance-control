@@ -7,9 +7,9 @@ import { PERMISSION_KEY } from '../decorators/permissions.decorator';
 import { defineAbilitiesForUser } from '../../ability/permissions';
 import { TSubject } from '../../ability/enums/subject.enum';
 import { UserHasNoCompanyException } from 'src/core/exceptions/UserHasNoCompanyException';
-import { CheckUserMembership } from 'src/modules/memberShip/useCases/checkUserMembership';
-import { Membership } from 'src/modules/memberShip/entity/Membership';
-import { UserNotFoundException } from 'src/modules/user/exceptions/UserNotFountException';
+import { CheckUserMembership } from 'src/domain/memberShip/useCases/checkUserMembership';
+import { UserNotFoundException } from 'src/domain/user/exceptions/UserNotFountException';
+import { Membership } from 'src/domain/memberShip/entity/Membership';
 
 @Injectable()
 export class PolicyGuard implements CanActivate {

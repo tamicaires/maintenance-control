@@ -9,15 +9,15 @@ import {
   Query,
   Request,
 } from '@nestjs/common';
-import { CreateNote } from 'src/modules/note/useCases/createNote/createNote';
 import { AuthenticatedRequestModel } from '../auth/models/authenticateRequestModel';
 import { CreateNoteBody } from './dtos/createNoteBody';
 import { NoteViewModel } from './viewModels/NoteViewModel';
-import { EditNote } from 'src/modules/note/useCases/editNote/editNote';
 import { EditNoteBody } from './dtos/editNoteBody';
-import { DeleteNote } from 'src/modules/note/useCases/deleteNote/deleteNote';
-import { GetNote } from 'src/modules/note/useCases/getNote/getNote';
-import { GetManyNotes } from 'src/modules/note/useCases/getManyNote/getManyNotes';
+import { CreateNote } from 'src/domain/note/useCases/createNote/createNote';
+import { DeleteNote } from 'src/domain/note/useCases/deleteNote/deleteNote';
+import { EditNote } from 'src/domain/note/useCases/editNote/editNote';
+import { GetManyNotes } from 'src/domain/note/useCases/getManyNote/getManyNotes';
+import { GetNote } from 'src/domain/note/useCases/getNote/getNote';
 
 @Controller('notes')
 export class NoteController {
