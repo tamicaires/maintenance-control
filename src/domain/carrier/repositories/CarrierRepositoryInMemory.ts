@@ -1,3 +1,4 @@
+import { CompanyInstance } from 'src/core/company/company-instance';
 import { Carrier } from '../entities/Carrier';
 import { CarrierRepository } from './CarrierRepository';
 
@@ -28,7 +29,7 @@ export class CarrierRepositoryInMemory implements CarrierRepository {
     if (carrierIndex >= 0) this.carriers[carrierIndex] = carrier;
   }
 
-  async findMany(page: number, perPage: number): Promise<Carrier[] | null> {
+  async findMany(companyInstance: CompanyInstance, page: number, perPage: number): Promise<Carrier[] | null> {
     return this.carriers.slice((page - 1) * perPage, page * perPage);
   }
 

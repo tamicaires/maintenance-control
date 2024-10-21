@@ -78,8 +78,8 @@ export class CarrierController {
     @Query('perPage') perPage: string,
     @Cookies(CookiesEnum.CompanyId) companyId: string
   ) {
-    console.log("companyId", companyId);
     const carriers = await this.getManyCarriersUseCase.execute({
+      companyId,
       page,
       perPage,
     });

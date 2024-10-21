@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { CarrierRepository } from '../../repositories/CarrierRepository';
+import { CompanyInstance } from 'src/core/company/company-instance';
 
 interface GetAllCarriersRequest {
+  companyId: string;
   status?: string | null;
   page?: string;
   perPage?: string;
@@ -11,14 +13,17 @@ interface GetAllCarriersRequest {
 export class GetManyCarriers {
   constructor(private carrierRepository: CarrierRepository) {}
 
-  async execute({ page, perPage }: GetAllCarriersRequest) {
+  async execute({ companyId, page, perPage }: GetAllCarriersRequest) {
+    const companyInstance = new CompanyInstance(companyId);
+
     const DEFAULT_PAGE = 1;
     const DEFAULT_PER_PAGE = 20;
 
     const currentPage = Number(page) || DEFAULT_PAGE;
     const currentPerPage = Number(perPage) || DEFAULT_PER_PAGE;
-
+    
     const carriers = await this.carrierRepository.findMany(
+      companyInstance,
       currentPage,
       currentPerPage,
     );

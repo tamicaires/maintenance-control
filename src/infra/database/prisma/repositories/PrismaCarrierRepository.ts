@@ -3,10 +3,11 @@ import { Carrier } from "src/domain/carrier/entities/Carrier";
 import { PrismaCarrierMapper } from '../mappers/PrismaCarrierMapper';
 import { Injectable } from '@nestjs/common';
 import { CarrierRepository } from 'src/domain/carrier/repositories/CarrierRepository';
+import { CompanyInstance } from 'src/core/company/company-instance';
 
 @Injectable()
 export class PrismaCarrierRepository implements CarrierRepository {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async create(carrier: Carrier): Promise<void> {
     const carrierRaw = PrismaCarrierMapper.toPrisma(carrier);
@@ -40,8 +41,11 @@ export class PrismaCarrierRepository implements CarrierRepository {
     });
   }
 
-  async findMany(page: number, perPage: number): Promise<Carrier[] | null> {
+  async findMany(companyInstance: CompanyInstance, page: number, perPage: number): Promise<Carrier[] | null> {
     const carriers = await this.prisma.carrier.findMany({
+      where: {
+        companyId: companyInstance.getCompanyId(),
+      },
       take: perPage,
       skip: (page - 1) * perPage,
     });
