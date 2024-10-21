@@ -5,6 +5,7 @@ import { GetTrailer } from "src/domain/trailer/useCases/getTrailer";
 import { ListTrailers } from "src/domain/trailer/useCases/listTrailers";
 import { Cookies } from "src/infra/http/auth/decorators/cookies.decorator";
 import { CookiesEnum } from "src/core/enum/cookies";
+import { TrailerViewModel } from "./viewModel/trailerViewModel";
 
 @Controller("trailers")
 export class TrailerController {
@@ -19,10 +20,12 @@ export class TrailerController {
     @Body() trailer: CreateTrailerBody,
     @Cookies(CookiesEnum.CompanyId) companyId: string,
   ) {
-    return await this.createTrailer.execute({
+    const createdTrailer = await this.createTrailer.execute({
       ...trailer,
       companyId
     });
+
+    return TrailerViewModel.toHttp(createdTrailer);
   }
 
   @Get(":id")
@@ -34,6 +37,7 @@ export class TrailerController {
   async list(
     @Cookies(CookiesEnum.CompanyId) companyId: string
   ) {
-    return await this.listTrailers.execute(companyId);
+    const trailers = await this.listTrailers.execute(companyId);
+    return trailers.map(TrailerViewModel.toHttp);
   }
 }
