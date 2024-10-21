@@ -1,7 +1,14 @@
+import { CompanyInstance } from 'src/core/company/company-instance';
 import { Fleet } from '../entities/Fleet';
 import { FleetRepository } from './FleetRepository';
 
 export class FleetRepositoryInMemory implements FleetRepository {
+  findByPlate(companyInstance: CompanyInstance, plate: string): Promise<Fleet | null> {
+    throw new Error('Method not implemented.');
+  }
+  findByNumber(companyInstance: CompanyInstance, fleetNumber: string): Promise<Fleet | null> {
+    throw new Error('Method not implemented.');
+  }
   public fleets: Fleet[] = [];
 
   async create(fleet: Fleet): Promise<void> {

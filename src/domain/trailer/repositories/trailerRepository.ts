@@ -1,3 +1,4 @@
+import { CompanyInstance } from "src/core/company/company-instance";
 import { Trailer } from "../entities/Trailer";
 
 export abstract class TrailerRepository {
@@ -5,5 +6,5 @@ export abstract class TrailerRepository {
   abstract findByPlate(plate: string): Promise<Trailer | null>;
   abstract findById(trailerId: string): Promise<Trailer | null>;
   abstract save(trailer: Trailer): Promise<void>;
-  abstract list(): Promise<Trailer[]>;
+  abstract list(companyInstance: CompanyInstance): Promise<Trailer[]>;
 }

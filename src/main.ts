@@ -5,7 +5,7 @@ import { ValidationError } from 'class-validator';
 import { IncorrectValuesException } from './core/exceptions/IncorrectValuesExceptions';
 import { mapperClassValidationErrorToAppException } from './shared/utils/mappers';
 import * as session from 'express-session';
-import { cookiesKeys, sessionKeys } from './core/config/constants';
+import { sessionKeys } from './core/config/constants';
 import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {

@@ -3,6 +3,7 @@ import { PrismaService } from '../prisma.service';
 import { PrismaFleetMapper } from '../mappers/PrismaFleetMapper';
 import { FleetRepository } from 'src/domain/fleet/repositories/FleetRepository';
 import { Fleet } from 'src/domain/fleet/entities/Fleet';
+import { CompanyInstance } from 'src/core/company/company-instance';
 
 @Injectable()
 export class PrismaFleetRepository implements FleetRepository {
@@ -61,5 +62,31 @@ export class PrismaFleetRepository implements FleetRepository {
     });
 
     return fleets;
+  }
+
+  async findByPlate(companyInstance: CompanyInstance, plate: string): Promise<Fleet | null> {
+    const fleetRaw = await this.prisma.fleet.findUnique({
+      where: {
+        companyId: companyInstance.getCompanyId(),
+        plate,
+      },
+    })
+
+    if (!fleetRaw) return null;
+
+    return PrismaFleetMapper.toDomain(fleetRaw);
+  }
+
+  async findByNumber(companyInstance: CompanyInstance, fleetNumber: string): Promise<Fleet | null> {
+    const fleetRaw = await this.prisma.fleet.findUnique({
+      where: {
+        companyId: companyInstance.getCompanyId(),
+        fleetNumber,
+      },
+    });
+
+    if (!fleetRaw) return null;
+
+    return PrismaFleetMapper.toDomain(fleetRaw);
   }
 }

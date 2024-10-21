@@ -10,6 +10,7 @@ import { CheckUserMembership } from 'src/domain/memberShip/useCases/checkUserMem
 import { UserNotFoundException } from 'src/domain/user/exceptions/UserNotFountException';
 import { Membership } from 'src/domain/memberShip/entity/Membership';
 import { TSubject } from 'src/core/enum/subject.enum';
+import { CookiesEnum } from 'src/core/enum/cookies';
 
 @Injectable()
 export class PolicyGuard implements CanActivate {
@@ -35,7 +36,7 @@ export class PolicyGuard implements CanActivate {
     if (!user) {
       throw new UserNotFoundException();
     }
-    const companyId = request.cookies.companyId;
+    const companyId = request.cookies[CookiesEnum.CompanyId];
     console.log('companyId', companyId);
     console.log('userId no guard', user);
     if (!companyId) {

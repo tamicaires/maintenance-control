@@ -1,11 +1,13 @@
 import { Injectable } from "@nestjs/common";
 import { TrailerRepository } from "../repositories/trailerRepository";
+import { CompanyInstance } from "src/core/company/company-instance";
 
 @Injectable()
 export class ListTrailers {
   constructor(private readonly trailerRepository: TrailerRepository) { }
 
-  async execute() {
-    return await this.trailerRepository.list();
+  async execute(companyId: string) {
+    const companyInstance = new CompanyInstance(companyId);
+    return await this.trailerRepository.list(companyInstance);
   }
 }

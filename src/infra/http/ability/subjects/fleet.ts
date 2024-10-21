@@ -6,6 +6,7 @@ export const defineFleetAbilities = (builder: AbilityBuilder, companyId: string,
   if (userRoles.includes(RoleEnum.ADMIN)) {
     builder.can(Action.Manage, 'Fleet', { companyId });
     builder.can(Action.Read, 'Fleet', { companyId });
+    builder.can(Action.Create, 'Fleet', { companyId });
   }
 
   if (userRoles.includes(RoleEnum.GENERAL_VIEWER)) {

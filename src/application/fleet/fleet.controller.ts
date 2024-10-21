@@ -24,6 +24,7 @@ import { PolicyGuard } from 'src/infra/http/auth/guards/policy.guard';
 import { Permission } from 'src/infra/http/auth/decorators/permissions.decorator';
 import { Action } from 'src/infra/http/ability/ability';
 import { Cookies } from 'src/infra/http/auth/decorators/cookies.decorator';
+import { CookiesEnum } from 'src/core/enum/cookies';
 
 @Controller('fleets')
 @UseGuards(PolicyGuard)
@@ -37,16 +38,16 @@ export class FleetController {
   ) { }
 
   @Post()
-  @Permission(Action.Read, 'Fleet')
+  @Permission(Action.Create, 'Fleet')
   async createFleet(
     @Body() createFleetBody: CreateFleetBody,
-    @Req() request: Request,
-    @Cookies('companyId') companyId: string
+    @Cookies(CookiesEnum.CompanyId) companyId: string
   ) {
-    return await this.createFleetUseCase.execute({
+    const fleet = await this.createFleetUseCase.execute(companyId, {
       ...createFleetBody,
-      companyId,
     });
+
+    return FleetViewModel.toHttp(fleet);
   }
 
   @Put(':id')
