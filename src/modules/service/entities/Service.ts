@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { ServiceCategory } from '../enum/service-category.enum';
+import { ServiceCategory } from '../../../core/enum/service-category.enum';
 
 interface ServiceProps {
   serviceName: string;

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ServiceCategory } from '../../enum/service-category.enum';
+import { ServiceCategory } from '../../../../core/enum/service-category.enum';
 import { ServiceNotFoundExcetion } from '../../exceptions/serviceNotFoundException';
 import { ServiceRepository } from '../../repositories/serviceRepository';
 

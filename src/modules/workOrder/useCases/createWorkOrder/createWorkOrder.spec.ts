@@ -1,9 +1,9 @@
 import { makeFleet } from 'src/modules/fleet/factories/fleetFactory';
 import { WorkOrderRepositoryInMemory } from '../../repositories/workOrderRepositoryInMemory';
 import { CreateWorkOrder } from './createWorkOrder';
-import { MaintenanceStatus } from '../../enum/maitenance-status.enum';
-import { Box } from '../../enum/box.enum';
-import { TypeOfMaintenance } from '../../enum/type-of-maintenance.enum';
+import { MaintenanceStatus } from '../../../../core/enum/maitenance-status.enum';
+import { Box } from '../../../../core/enum/box.enum';
+import { TypeOfMaintenance } from '../../../../core/enum/type-of-maintenance.enum';
 import { makeUser } from 'src/modules/user/factories/userFactory';
 
 let workOrderRepositoryInMemory: WorkOrderRepositoryInMemory;

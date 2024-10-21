@@ -1,6 +1,6 @@
 import { Filters } from 'src/types/filters.interface';
 import { WorkOrder } from '../entities/WorkOrder';
-import { TypeOfMaintenance } from '../enum/type-of-maintenance.enum';
+import { TypeOfMaintenance } from '../../../core/enum/type-of-maintenance.enum';
 
 export abstract class WorkOrderRepository {
   abstract create(workOrder: WorkOrder): Promise<void>;

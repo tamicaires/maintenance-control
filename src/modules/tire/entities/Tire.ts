@@ -1,5 +1,5 @@
 import { Replace } from "src/utils/replace";
-import { TTireCondition, TTireLocation } from "../enum/tire.enum";
+import { TTireCondition, TTireLocation } from "../../../core/enum/tire.enum";
 import { randomUUID } from "crypto";
 
 interface TireSchema {

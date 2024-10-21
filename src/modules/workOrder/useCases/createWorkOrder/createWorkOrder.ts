@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { MaintenanceStatus } from '../../enum/maitenance-status.enum';
-import { TypeOfMaintenance } from '../../enum/type-of-maintenance.enum';
-import { Box } from '../../enum/box.enum';
+import { MaintenanceStatus } from '../../../../core/enum/maitenance-status.enum';
+import { TypeOfMaintenance } from '../../../../core/enum/type-of-maintenance.enum';
+import { Box } from '../../../../core/enum/box.enum';
 import { WorkOrder } from '../../entities/WorkOrder';
 import { WorkOrderRepository } from '../../repositories/workOrderRepository';
 import { generateNextDisplayId, getPrefix } from 'src/utils/workOrderUtils';

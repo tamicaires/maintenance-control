@@ -1,5 +1,5 @@
 import { Service } from '../entities/Service';
-import { ServiceCategory } from '../enum/service-category.enum';
+import { ServiceCategory } from '../../../core/enum/service-category.enum';
 
 type Override = Partial<Service>;
 

@@ -1,7 +1,7 @@
 import { IsNumber, IsOptional } from "class-validator";
 import { IsNotEmptyCustom } from "src/infra/http/classValidator/decorators/IsNotEmptyCustom";
 import { IsStringCustom } from "src/infra/http/classValidator/decorators/IsStringCustom";
-import { TPartLocation, TPartStatus } from "src/modules/part/enums/part.enum";
+import { TPartLocation, TPartStatus } from "src/core/enum/part.enum";
 
 export class CreatePartBody {
   @IsStringCustom()

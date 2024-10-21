@@ -1,8 +1,8 @@
 import { makeUser } from 'src/modules/user/factories/userFactory';
 import { WorkOrder } from '../entities/WorkOrder';
-import { Box } from '../enum/box.enum';
-import { MaintenanceStatus } from '../enum/maitenance-status.enum';
-import { TypeOfMaintenance } from '../enum/type-of-maintenance.enum';
+import { Box } from '../../../core/enum/box.enum';
+import { MaintenanceStatus } from '../../../core/enum/maitenance-status.enum';
+import { TypeOfMaintenance } from '../../../core/enum/type-of-maintenance.enum';
 
 type Override = Partial<WorkOrder>;
 

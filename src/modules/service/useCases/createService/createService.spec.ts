@@ -1,4 +1,4 @@
-import { ServiceCategory } from '../../enum/service-category.enum';
+import { ServiceCategory } from '../../../../core/enum/service-category.enum';
 import { ServiceWithSameNameException } from '../../exceptions/serviceWithSameNameException';
 import { makeService } from '../../factories/serviceFactory';
 import { ServiceRepositoryInMemory } from '../../repositories/serviceRepositoryInMemory';

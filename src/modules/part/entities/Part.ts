@@ -1,5 +1,5 @@
 import { Replace } from "src/utils/replace";
-import { TPartLocation, TPartStatus } from "../enums/part.enum";
+import { TPartLocation, TPartStatus } from "../../../core/enum/part.enum";
 import { randomUUID } from "crypto";
 
 interface PartSchema {

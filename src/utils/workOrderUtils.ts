@@ -1,7 +1,7 @@
 import { CreateWorkOrderBody } from 'src/infra/http/modules/workOrder/dtos/createWorkOrderBody';
 import { UpdateWorkOrderBody } from 'src/infra/http/modules/workOrder/dtos/updateWorkOrderBody';
 import { WorkOrder } from 'src/modules/workOrder/entities/WorkOrder';
-import { TypeOfMaintenance } from 'src/modules/workOrder/enum/type-of-maintenance.enum';
+import { TypeOfMaintenance } from 'src/core/enum/type-of-maintenance.enum';
 
 export const updateWorkOrderProperties = (
   workOrder: WorkOrder,

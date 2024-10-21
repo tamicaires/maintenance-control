@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { PartRepository } from "../repositories/partRepository";
 import { PartAlreadyExistsException } from "../exceptions/PartAlreadyExistsException";
 import { Part } from "../entities/Part";
-import { TPartLocation, TPartStatus } from "../enums/part.enum";
+import { TPartLocation, TPartStatus } from "../../../core/enum/part.enum";
 
 interface ICreatePartRequest {
   name: string;

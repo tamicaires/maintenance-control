@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { TireRepository } from "../repositories/TireRepository";
-import { TTireCondition, TTireLocation } from "../enum/tire.enum";
+import { TTireCondition, TTireLocation } from "../../../core/enum/tire.enum";
 import { Tire } from "../entities/Tire";
 import { TireNotFoundException } from "../exceptions/TireNotFoundException";
 import { updateTireProperties } from "src/utils/tireUtils";

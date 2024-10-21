@@ -1,5 +1,5 @@
 import { WorkOrder } from '../entities/WorkOrder';
-import { TypeOfMaintenance } from '../enum/type-of-maintenance.enum';
+import { TypeOfMaintenance } from '../../../core/enum/type-of-maintenance.enum';
 import { WorkOrderRepository } from './workOrderRepository';
 
 export class WorkOrderRepositoryInMemory implements WorkOrderRepository {

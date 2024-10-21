@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { PartRepository } from "../repositories/partRepository";
-import { TPartLocation, TPartStatus } from "../enums/part.enum";
+import { TPartLocation, TPartStatus } from "../../../core/enum/part.enum";
 import { PartNotFoundException } from "../exceptions/PartNotFoundExceptions";
 import { updatePartProperties } from "src/utils/partUtils";
 

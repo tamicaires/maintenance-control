@@ -1,8 +1,8 @@
 import { WorkOrder as WorkOrderRaw } from '@prisma/client';
 import { WorkOrder } from 'src/modules/workOrder/entities/WorkOrder';
-import { Box } from 'src/modules/workOrder/enum/box.enum';
-import { MaintenanceStatus } from 'src/modules/workOrder/enum/maitenance-status.enum';
-import { TypeOfMaintenance } from 'src/modules/workOrder/enum/type-of-maintenance.enum';
+import { Box } from 'src/core/enum/box.enum';
+import { MaintenanceStatus } from 'src/core/enum/maitenance-status.enum';
+import { TypeOfMaintenance } from 'src/core/enum/type-of-maintenance.enum';
 
 export class PrismaWorkOrderMapper {
   static toPrisma({

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Service } from '../../entities/Service';
-import { ServiceCategory } from '../../enum/service-category.enum';
+import { ServiceCategory } from '../../../../core/enum/service-category.enum';
 import { ServiceRepository } from '../../repositories/serviceRepository';
 import { ServiceWithSameNameException } from '../../exceptions/serviceWithSameNameException';
 

@@ -5,8 +5,8 @@ import { WorkOrder } from 'src/modules/workOrder/entities/WorkOrder';
 import { PrismaWorkOrderMapper } from '../mappers/PrismaWorkOrderMapper';
 import { Filters } from 'src/types/filters.interface';
 import { Prisma } from '@prisma/client';
-import { MaintenanceStatus } from 'src/modules/workOrder/enum/maitenance-status.enum';
-import { TypeOfMaintenance } from 'src/modules/workOrder/enum/type-of-maintenance.enum';
+import { MaintenanceStatus } from 'src/core/enum/maitenance-status.enum';
+import { TypeOfMaintenance } from 'src/core/enum/type-of-maintenance.enum';
 
 @Injectable()
 export class PrismaWorkOrderRepository implements WorkOrderRepository {
