@@ -1,7 +1,5 @@
 import { IsBoolean, IsOptional } from 'class-validator';
 import { IsStringCustom } from 'src/infra/http/classValidator/decorators/IsStringCustom';
-import { FleetStatus } from 'src/modules/fleet/enum/fleet-status.enum';
-
 export class EditFleetBody {
   @IsStringCustom()
   @IsOptional()
