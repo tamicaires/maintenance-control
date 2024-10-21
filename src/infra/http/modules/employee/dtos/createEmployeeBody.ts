@@ -1,7 +1,6 @@
 import { IsBoolean } from 'class-validator';
 import { IsNotEmptyCustom } from 'src/infra/http/classValidator/decorators/IsNotEmptyCustom';
 import { IsStringCustom } from 'src/infra/http/classValidator/decorators/IsStringCustom';
-import { EmployeeStatus } from 'src/modules/employee/enum/employee-status.enum';
 
 export class CreateEmployeeBody {
   @IsNotEmptyCustom()

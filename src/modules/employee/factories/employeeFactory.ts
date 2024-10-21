@@ -1,5 +1,4 @@
 import { Employee } from '../entities/Employee';
-import { EmployeeStatus } from '../enum/employee-status.enum';
 
 type Override = Partial<Employee>;
 

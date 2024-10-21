@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { EmployeeStatus } from '../../enum/employee-status.enum';
 import { EmployeeRepository } from '../../repositories/EmployeeRepository';
 import { EmployeeNotFoundException } from '../../exceptions/EmployeeNotFoundException';
 import { updateEmployeeProperties } from 'src/utils/employeeUtils';

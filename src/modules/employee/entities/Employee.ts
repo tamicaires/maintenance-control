@@ -1,5 +1,4 @@
 import { Replace } from 'src/utils/replace';
-import { EmployeeStatus } from '../enum/employee-status.enum';
 import { randomUUID } from 'crypto';
 
 interface EmployeeSchema {

@@ -1,6 +1,5 @@
 import { IsOptional } from 'class-validator';
 import { IsStringCustom } from 'src/infra/http/classValidator/decorators/IsStringCustom';
-import { EmployeeStatus } from 'src/modules/employee/enum/employee-status.enum';
 
 export class EditEmployeeBody {
   @IsOptional()
@@ -17,5 +16,5 @@ export class EditEmployeeBody {
 
   @IsOptional()
   @IsStringCustom()
-  status: EmployeeStatus;
+  isActive: boolean;
 }

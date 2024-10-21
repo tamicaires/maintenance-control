@@ -1,6 +1,5 @@
 import { Employee as EmployeeRaw } from '@prisma/client';
 import { Employee } from 'src/modules/employee/entities/Employee';
-import { EmployeeStatus } from 'src/modules/employee/enum/employee-status.enum';
 
 export class PrismaEmployeeMapper {
   static toPrisma({
