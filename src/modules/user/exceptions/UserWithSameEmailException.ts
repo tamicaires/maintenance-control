@@ -1,5 +1,5 @@
 import { HttpStatus } from '@nestjs/common';
-import { AppException } from 'src/exceptions/appException';
+import { AppException } from 'src/core/exceptions/appException';
 
 export class UserWithSameEmailException extends AppException {
   constructor() {

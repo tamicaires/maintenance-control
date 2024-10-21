@@ -28,6 +28,8 @@ model Company {
   workOrders  WorkOrder[]
   ChecklistTemplates ChecklistTemplate[]
   MemberShip Membership[]
+  Trailer Trailer[]
+  Part Part[]
 }
 
 model User {
@@ -136,9 +138,11 @@ model Fleet {
 model Trailer {
   id          String      @id 
   plate       String      @unique
-  position    Int         
-  fleet       Fleet       @relation(fields: [fleetId], references: [id])
-  fleetId     String
+  position    Int?         
+  fleet       Fleet?       @relation(fields: [fleetId], references: [id])
+  fleetId     String?
+  company               Company  @relation(fields: [companyId], references: [id])
+  companyId             String
   isActive    Boolean     @default(true) @map("is_active")
 
   createdAt   DateTime    @default(now()) @map("created_at")
@@ -179,6 +183,7 @@ model Part {
   name              String    // Nome da peça
   description       String?   // Descrição da peça
   partNumber        String   @unique @map("part_number") // Número da peça
+  serialNumber      String   @unique @map("serial_number") // Número de série
   model             String?   // Modelo da peça
   brand             String?   // Marca da peça
   supplier          String?   // Fornecedor da peça
@@ -195,6 +200,9 @@ model Part {
   
   axle              Axle?     @relation(fields: [axleId], references: [id], onDelete: Cascade) // Peça associada a um eixo (opcional)
   axleId            String?   // Chave estrangeira opcional para associar a um eixo
+
+  company           Company   @relation(fields: [companyId], references: [id]) // Relação com a empresa
+  companyId         String    // Chave estrangeira para a empresa
 
   createdAt         DateTime  @default(now()) @map("created_at")
   updatedAt         DateTime  @updatedAt @map("updated_at")

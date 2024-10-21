@@ -7,7 +7,8 @@ import {
   Post,
   Put,
   Query,
-  Request,
+  Req,
+  
   UseGuards,
 } from '@nestjs/common';
 import { CreateFleetBody } from './dtos/createFleetBody';
@@ -23,6 +24,8 @@ import { AuthenticatedRequestModel } from '../auth/models/authenticateRequestMod
 import { PolicyGuard } from '../auth/guards/policy.guard';
 import { Permission } from '../auth/decorators/permissions.decorator';
 import { Action } from '../ability/ability';
+import { Cookies } from '../auth/decorators/cookies.decorator';
+import { Request } from 'express';
 
 @Controller('fleets')
 @UseGuards(PolicyGuard)
@@ -36,13 +39,15 @@ export class FleetController {
   ) { }
 
   @Post()
-  // @Permission(Action.Read, 'Fleet')
+  @Permission(Action.Read, 'Fleet')
   async createFleet(
     @Body() createFleetBody: CreateFleetBody,
-    @Request() request: AuthenticatedRequestModel,
+    @Req() request: Request,
+    @Cookies('companyId') companyId: string
   ) {
     return await this.createFleetUseCase.execute({
       ...createFleetBody,
+      companyId,
     });
   }
 
@@ -62,14 +67,17 @@ export class FleetController {
 
   @Get(':id')
   async getCarrier(@Param('id') fleetId: string) {
-    const fleet = await this.getFleetUseCase.execute({ fleetId });                                  
+    const fleet = await this.getFleetUseCase.execute({ fleetId });
   }
 
   @Get()
+  // @Permission(Action.Read, 'Fleet')
   async getManyCarriers(
     @Query('page') page: string,
     @Query('perPage') perPage: string,
+    @Req() request: Request,
   ) {
+    console.log('request', request.user);
     const fleets = await this.getManyFleetsUseCase.execute({ page, perPage });
     return fleets.map(FleetViewModel.toHttp);
   }

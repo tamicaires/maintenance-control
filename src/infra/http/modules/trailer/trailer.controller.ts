@@ -12,9 +12,15 @@ export class TrailerController {
     private readonly listTrailers: ListTrailers
   ) { }
 
-  @Post()
-  async create(@Body() trailer: CreateTrailerBody) {
-    return await this.createTrailer.execute(trailer);
+  @Post(":id")
+  async create(
+    @Param("id") companyId: string,
+    @Body() trailer: CreateTrailerBody
+  ) {
+    return await this.createTrailer.execute({
+      ...trailer,
+      companyId
+    });
   }
 
   @Get(":id")

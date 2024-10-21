@@ -4,7 +4,8 @@ import { Replace } from "src/utils/replace";
 interface TrailerSchema {
   plate: string;
   position: number;
-  fleetId: string;
+  companyId: string;
+  fleetId: string | null;
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -46,11 +47,18 @@ export class Trailer {
     this.props.position = position;
   }
 
-  get fleetId(): string {
+  get companyId(): string {
+    return this.props.companyId;
+  }
+
+  set companyId(companyId: string) {
+    this.props.companyId = companyId;
+  }
+  get fleetId(): string | null {
     return this.props.fleetId;
   }
 
-  set fleetId(fleetId: string) {
+  set fleetId(fleetId: string | null) {
     this.props.fleetId = fleetId;
   }
 

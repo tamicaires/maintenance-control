@@ -5,6 +5,7 @@ import { GetManyCompanies } from 'src/modules/company/useCases/getManyCompanies.
 import { Permission } from '../auth/decorators/permissions.decorator';
 import { Action } from '../ability/ability';
 import { PolicyGuard } from '../auth/guards/policy.guard';
+import { CompanyViewModel } from './viewModel/companyViewModel';
 
 @Controller('companies')
 @UseGuards(PolicyGuard)
@@ -17,12 +18,13 @@ export class CompanyController {
   @Post()
   async createCompany(@Body() body: CreateCompanyBody) {
     const company = await this.createCompanyUseCase.execute(body);
-    return company;
+    return CompanyViewModel.toHttp(company);
   }
 
   @Get()
-  @Permission(Action.Read, 'Company')
+  // @Permission(Action.Read, 'Company')
   async getCompanies(@Request() req: any) {
-    return await this.getManyCompanies.execute({});
+    const companies = await this.getManyCompanies.execute({});
+    return companies.map(company => CompanyViewModel.toHttp(company));
   }
 }

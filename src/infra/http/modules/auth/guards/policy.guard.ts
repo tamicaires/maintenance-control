@@ -6,14 +6,19 @@ import { Action } from '../../ability/ability';
 import { PERMISSION_KEY } from '../decorators/permissions.decorator';
 import { defineAbilitiesForUser } from '../../ability/permissions';
 import { TSubject } from '../../ability/enums/subject.enum';
-import { ForbiddenUserRoleException } from 'src/exceptions/ForbiddenUserRoleException';
-import { TRole } from '../../ability/enums/role.enum';
+import { UserHasNoCompanyException } from 'src/core/exceptions/UserHasNoCompanyException';
+import { CheckUserMembership } from 'src/modules/memberShip/useCases/checkUserMembership';
+import { Membership } from 'src/modules/memberShip/entity/Membership';
+import { UserNotFoundException } from 'src/modules/user/exceptions/UserNotFountException';
 
 @Injectable()
 export class PolicyGuard implements CanActivate {
   private readonly logger = new Logger(PolicyGuard.name);
 
-  constructor(private readonly reflector: Reflector) { }
+  constructor(
+    private readonly reflector: Reflector,
+    private readonly checkUserMembership: CheckUserMembership
+  ) { }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const permission = this.reflector.get<{ action: Action; subject: TSubject }>(
@@ -26,33 +31,36 @@ export class PolicyGuard implements CanActivate {
     }
 
     const request: Request = context.switchToHttp().getRequest();
-    const currentMembershipSession = request.session?.currentMembership;
-
-    if (!currentMembershipSession) {
-      this.logger.warn('Tentativa de acesso sem sessão válida ou dados incompletos na sessão');
-      throw new ForbiddenUserRoleException();
+    const user = request.user;
+    if (!user) {
+      throw new UserNotFoundException();
+    }
+    const companyId = request.cookies.companyId;
+    console.log('companyId', companyId);
+    console.log('userId no guard', user);
+    if (!companyId) {
+      this.logger.warn('Tentativa de acesso sem companyId');
+      throw new UserHasNoCompanyException();
     }
 
-    const { userId, companyId, roles: userRoles } = currentMembershipSession;
+    const membership = await this.checkUserMembership.execute(request.user.id, companyId);
 
     return this.checkPermissions(
-      userId,
-      companyId,
-      userRoles,
+      membership,
       permission
     );
   }
 
   private checkPermissions(
-    userId: string,
-    companyId: string,
-    userRoles: TRole[],
+    membership: Membership,
     permission: { action: Action; subject: TSubject }
   ): boolean {
-    const ability = defineAbilitiesForUser(userId, companyId, userRoles);
-
+    const ability = defineAbilitiesForUser(membership.userId, membership.companyId, membership.role);
+    const companyId = membership.companyId;
     if (!ability.can(permission.action, permission.subject, { companyId })) {
-      throw new ForbiddenException(`Ação ${permission.action} no recurso ${permission.subject} não permitida.`);
+      throw new ForbiddenException(
+        `Ação ${permission.action} no recurso ${permission.subject} não permitida.`
+      );
     }
 
     return true;

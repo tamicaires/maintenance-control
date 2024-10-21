@@ -1,13 +1,15 @@
 import { Module } from "@nestjs/common";
-// import { AbilityFactory } from "./ability.factory";
+import { CheckUserMembership } from "src/modules/memberShip/useCases/checkUserMembership";
+import { CompanyModule } from "../company/company.module";
+import { DatabaseModule } from "src/infra/database/database.module";
 
 @Module({
-  providers: [
-    // AbilityFactory
+  imports: [
+    DatabaseModule
   ],
-  exports: [
-    // AbilityFactory
-  ]
+  providers: [
+    CheckUserMembership,
+  ],
 })
 
-export class AbilityModule {}
+export class AbilityModule { }

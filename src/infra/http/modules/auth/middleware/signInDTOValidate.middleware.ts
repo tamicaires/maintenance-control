@@ -2,7 +2,7 @@ import { Injectable, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
 import { SignInBody } from '../dtos/SignInBody';
 import { validate } from 'class-validator';
-import { IncorrectValuesException } from 'src/exceptions/IncorrectValuesExceptions';
+import { IncorrectValuesException } from 'src/core/exceptions/IncorrectValuesExceptions';
 import { mapperClassValidationErrorToAppException } from 'src/utils/mappers';
 
 @Injectable()

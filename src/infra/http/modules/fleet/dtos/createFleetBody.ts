@@ -22,10 +22,6 @@ export class CreateFleetBody {
   @IsNotEmptyCustom()
   carrierId: string;
 
-  @IsStringCustom()
-  @IsNotEmptyCustom()
-  companyId: string;
-
   @IsBoolean()
   @IsNotEmptyCustom()
   isActive: boolean;

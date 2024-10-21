@@ -9,7 +9,7 @@ import { SignInUseCase } from 'src/modules/auth/useCases/signInUseCase/signInUse
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from 'src/modules/auth/strategies/jwtStrategy';
 import { PrismaService } from 'src/infra/database/prisma/prisma.service';
-import { jwtKeys } from 'src/config/constants';
+import { jwtKeys } from 'src/core/config/constants';
 
 @Module({
   imports: [

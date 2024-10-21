@@ -10,3 +10,8 @@ export const jwtKeys = {
 export const sessionKeys = {
   secret: process.env.SESSION_SECRET ?? ''
 }
+
+export const cookiesKeys = {
+  secret: process.env.COOKIE_SECRET ?? '',
+}
+

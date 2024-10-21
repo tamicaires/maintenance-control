@@ -15,10 +15,6 @@ export class CreateCarrierBody {
   @IsNotEmptyCustom()
   managerPhone: string;
 
-  @IsStringCustom()
-  @IsNotEmptyCustom()
-  companyId: string;
-
   @IsBoolean()
   @IsNotEmptyCustom()
   isActive: boolean;

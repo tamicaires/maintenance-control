@@ -7,6 +7,7 @@ export class PrismaTrailerMapper {
       id: trailer.id,
       plate: trailer.plate,
       position: trailer.position,
+      companyId: trailer.companyId,
       fleetId: trailer.fleetId,
       isActive: trailer.isActive,
       createdAt: trailer.createdAt,
@@ -18,8 +19,11 @@ export class PrismaTrailerMapper {
     return new Trailer({
       plate: trailer.plate,
       position: trailer.position,
+      companyId: trailer.companyId,
       fleetId: trailer.fleetId,
       isActive: trailer.isActive,
+      createdAt: trailer.createdAt,
+      updatedAt: trailer.updatedAt,
     }, trailer.id
     );
   }

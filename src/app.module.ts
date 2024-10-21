@@ -19,11 +19,14 @@ import { AxleModule } from './infra/http/modules/axle/axle.module';
 import { PartCategoryModule } from './infra/http/modules/partCategory/partCategory.module';
 import { PartModule } from './infra/http/modules/part/part.module';
 import { TireModule } from './infra/http/modules/tire/tire.module';
+import { CheckUserMembership } from './modules/memberShip/useCases/checkUserMembership';
+import { AbilityModule } from './infra/http/modules/ability/ability.module';
 
 @Module({
   imports: [
     DatabaseModule,
     AuthModule,
+    AbilityModule,
     CompanyModule,
     MembershipModule,
     UserModule,

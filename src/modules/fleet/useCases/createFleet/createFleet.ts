@@ -13,7 +13,7 @@ interface CreateFleetRequest {
 
 @Injectable()
 export class CreateFleet {
-  constructor(private fleetRepository: FleetRepository) {}
+  constructor(private fleetRepository: FleetRepository) { }
 
   async execute(data: CreateFleetRequest) {
     const fleet = new Fleet({
