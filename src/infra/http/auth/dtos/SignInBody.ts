@@ -1,21 +1,16 @@
-import { IsArray, IsOptional } from 'class-validator';
+
 import { IsEmailCustom } from 'src/core/classValidator/decorators/IsEmailCustom';
 import { IsNotEmptyCustom } from 'src/core/classValidator/decorators/IsNotEmptyCustom';
 import { IsStringCustom } from 'src/core/classValidator/decorators/IsStringCustom';
 import { MinLengthCustom } from 'src/core/classValidator/decorators/MinLengthCustom';
 
-export class CreateUserBody {
+export class SignInBody {
+  @IsNotEmptyCustom()
   @IsStringCustom()
   @IsEmailCustom()
-  @IsNotEmptyCustom()
   email: string;
 
-  @IsStringCustom()
   @IsNotEmptyCustom()
-  name: string;
-
-  @IsStringCustom()
-  @IsNotEmptyCustom()
-  @MinLengthCustom(6)
+  @MinLengthCustom(4)
   password: string;
 }

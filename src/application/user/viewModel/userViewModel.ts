@@ -1,5 +1,6 @@
 import { User } from 'src/domain/user/entities/User';
-import { TRole } from '../../ability/enums/role.enum';
+import { TRole } from 'src/core/enum/role.enum';
+
 
 interface UserWithRelationalInfo extends User {
   roles: TRole[];

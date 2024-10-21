@@ -1,4 +1,4 @@
-import { TRole } from 'src/infra/http/modules/ability/enums/role.enum';
+import { TRole } from 'src/core/enum/role.enum';
 import { AbilityBuilder } from './abilityBuilder';
 import { defineCompanyAbilities } from './subjects/company';
 import { defineUserAbilities } from './subjects/user';

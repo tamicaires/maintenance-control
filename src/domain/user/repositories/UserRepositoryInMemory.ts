@@ -1,4 +1,4 @@
-import { RoleEnum } from 'src/infra/http/modules/ability/enums/role.enum';
+import { RoleEnum } from 'src/core/enum/role.enum';
 import { User } from '../entities/User';
 import { UserRepository } from './UserRepository';
 

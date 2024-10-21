@@ -1,4 +1,4 @@
-import { TRole } from "../../ability/enums/role.enum";
+import { TRole } from "src/core/enum/role.enum";
 
 export interface SessionData {
   currentMembership?: {

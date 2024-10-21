@@ -1,6 +1,7 @@
+import { RoleEnum, TRole } from "src/core/enum/role.enum";
 import { Action } from "../ability";
 import { AbilityBuilder } from "../abilityBuilder";
-import { RoleEnum, TRole } from "../enums/role.enum";
+
 
 export const defineUserAbilities = (builder: AbilityBuilder, companyId: string, userRoles: TRole[]) => {
   if(userRoles.includes(RoleEnum.ADMIN)) {

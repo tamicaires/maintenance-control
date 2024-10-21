@@ -1,5 +1,5 @@
-import { CreateWorkOrderBody } from 'src/infra/http/modules/workOrder/dtos/createWorkOrderBody';
-import { UpdateWorkOrderBody } from 'src/infra/http/modules/workOrder/dtos/updateWorkOrderBody';
+import { CreateWorkOrderBody } from 'src/application/workOrder/dtos/createWorkOrderBody';
+import { UpdateWorkOrderBody } from 'src/application/workOrder/dtos/updateWorkOrderBody';
 import { TypeOfMaintenance } from 'src/core/enum/type-of-maintenance.enum';
 import { WorkOrder } from 'src/domain/workOrder/entities/WorkOrder';
 

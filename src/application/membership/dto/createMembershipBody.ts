@@ -1,7 +1,7 @@
 import { IsArray } from 'class-validator';
-import { IsNotEmptyCustom } from 'src/infra/http/classValidator/decorators/IsNotEmptyCustom';
-import { IsStringCustom } from 'src/infra/http/classValidator/decorators/IsStringCustom';
-import { TRole } from 'src/infra/http/modules/ability/enums/role.enum';
+import { IsNotEmptyCustom } from 'src/core/classValidator/decorators/IsNotEmptyCustom';
+import { IsStringCustom } from 'src/core/classValidator/decorators/IsStringCustom';
+import { TRole } from 'src/core/enum/role.enum';
 
 export class CreateMembershipBody {
   @IsStringCustom()

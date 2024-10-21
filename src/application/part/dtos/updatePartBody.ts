@@ -1,5 +1,5 @@
 import { IsNumber, IsOptional } from "class-validator";
-import { IsStringCustom } from "src/infra/http/classValidator/decorators/IsStringCustom";
+import { IsStringCustom } from "src/core/classValidator/decorators/IsStringCustom";
 import { TPartLocation, TPartStatus } from "src/core/enum/part.enum";
 
 export class UpdatePartBody {

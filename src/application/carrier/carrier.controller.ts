@@ -12,15 +12,15 @@ import {
 import { CreateCarrierBody } from './dtos/createCarrierBody';
 import { EditCarrierBody } from './dtos/editCarrierBody';
 import { CarrierViewModel } from './viewModels/CarrierViewModel';
-import { Cookies } from '../auth/decorators/cookies.decorator';
-import { Permission } from '../auth/decorators/permissions.decorator';
-import { Action } from '../ability/ability';
 import { CookiesEnum } from 'src/core/enum/cookies';
 import { CreateCarrier } from 'src/domain/carrier/useCases/createCarrier/createCarrier';
 import { DeleteCarrier } from 'src/domain/carrier/useCases/deleteCarrier/deleteCarrier';
 import { EditCarrier } from 'src/domain/carrier/useCases/editCarrier/editCarrier';
 import { GetManyCarriers } from 'src/domain/carrier/useCases/getAllCarrriers/getManyCarriers';
 import { GetCarrier } from 'src/domain/carrier/useCases/getCarrier/getCarrier';
+import { Permission } from 'src/infra/http/auth/decorators/permissions.decorator';
+import { Action } from 'src/infra/http/ability/ability';
+import { Cookies } from 'src/infra/http/auth/decorators/cookies.decorator';
 
 @Controller('carriers')
 export class CarrierController {

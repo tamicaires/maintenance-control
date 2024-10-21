@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { TRole } from "src/infra/http/modules/ability/enums/role.enum";
+import { TRole } from "src/core/enum/role.enum";
 import { MembershipRepository } from "../repositories/membershipRepository";
 import { Membership } from "../entity/Membership";
 import { MembershipAlreadyExists } from "../exceptions/MembershipAlreadyExists";

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { NotFoundException } from '@nestjs/common';
-import { SessionData } from 'src/infra/http/modules/auth/models/sessionModel';
+import { SessionData } from 'src/infra/http/auth/models/sessionModel';
 
 @Injectable()
 export class GetCurrentMembership {

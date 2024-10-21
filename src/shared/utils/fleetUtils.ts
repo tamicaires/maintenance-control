@@ -1,5 +1,5 @@
+import { EditFleetBody } from 'src/application/fleet/dtos/editFleetBody';
 import { Fleet } from 'src/domain/fleet/entities/Fleet';
-import { EditFleetBody } from 'src/infra/http/modules/fleet/dtos/editFleetBody';
 
 export function updateFleetProperties(fleet: Fleet, data: Partial<Fleet>) {
   if (data.fleetNumber !== undefined) {

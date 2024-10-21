@@ -1,5 +1,5 @@
 import 'express-session';
-import { TRole } from 'src/infra/http/modules/ability/enums/role.enum';
+import { TRole } from 'src/core/enum/role.enum';
 
 declare module 'express-session' {
   interface SessionData {

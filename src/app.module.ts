@@ -1,25 +1,25 @@
 import { Module } from '@nestjs/common';
-import { UserModule } from './infra/http/modules/user/user.module';
-import { DatabaseModule } from './infra/database/database.module';
-import { FleetModule } from './infra/http/modules/fleet/fleet.module';
-import { AuthModule } from './infra/http/modules/auth/auth.module';
-import { JwtAuthGuard } from './infra/http/modules/auth/guards/jwtAuth.guard';
 import { APP_GUARD } from '@nestjs/core';
-import { NoteModule } from './infra/http/modules/note/note.module';
-import { CarrierModule } from './infra/http/modules/carrier/carrier.module';
-import { JobModule } from './infra/http/modules/job/job.module';
-import { EmployeeModule } from './infra/http/modules/employee/employee.module';
-import { ServiceModule } from './infra/http/modules/service/service.module';
-import { WorkOrderModule } from './infra/http/modules/workOrder/workOrder.module';
-import { ServiceAssignmentModule } from './infra/http/modules/serviceAssignment/serviceAssignment.module';
-import { CompanyModule } from './infra/http/modules/company/company.module';
-import { MembershipModule } from './infra/http/modules/membership/membership.module';
-import { TrailerModule } from './infra/http/modules/trailer/trailer.module';
-import { AxleModule } from './infra/http/modules/axle/axle.module';
-import { PartCategoryModule } from './infra/http/modules/partCategory/partCategory.module';
-import { PartModule } from './infra/http/modules/part/part.module';
-import { TireModule } from './infra/http/modules/tire/tire.module';
-import { AbilityModule } from './infra/http/modules/ability/ability.module';
+import { DatabaseModule } from './infra/database/database.module';
+import { AxleModule } from './application/axle/axle.module';
+import { CarrierModule } from './application/carrier/carrier.module';
+import { CompanyModule } from './application/company/company.module';
+import { EmployeeModule } from './application/employee/employee.module';
+import { FleetModule } from './application/fleet/fleet.module';
+import { JobModule } from './application/job/job.module';
+import { MembershipModule } from './application/membership/membership.module';
+import { NoteModule } from './application/note/note.module';
+import { PartModule } from './application/part/part.module';
+import { PartCategoryModule } from './application/partCategory/partCategory.module';
+import { ServiceModule } from './application/service/service.module';
+import { ServiceAssignmentModule } from './application/serviceAssignment/serviceAssignment.module';
+import { TireModule } from './application/tire/tire.module';
+import { TrailerModule } from './application/trailer/trailer.module';
+import { UserModule } from './application/user/user.module';
+import { WorkOrderModule } from './application/workOrder/workOrder.module';
+import { AuthModule } from './infra/http/auth/auth.module';
+import { AbilityModule } from './infra/http/ability/ability.module';
+import { JwtAuthGuard } from './infra/http/auth/guards/jwtAuth.guard';
 
 @Module({
   imports: [

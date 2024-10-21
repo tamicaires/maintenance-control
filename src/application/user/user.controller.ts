@@ -1,10 +1,10 @@
-import { Body, Controller, Get, Param, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CreateUserBody } from './dtos/createUserBody';
 import { UserViewModel } from './viewModel/userViewModel';
-import { Public } from '../auth/decorators/is-public.decorator';
 import { CreateUser } from 'src/domain/user/useCases/createUser';
 import { ListUsers } from 'src/domain/user/useCases/listUsers';
 import { GetUserWithRoles } from 'src/domain/user/useCases/getUserWithRoles';
+import { Public } from 'src/infra/http/auth/decorators/is-public.decorator';
 
 @Controller('users')
 export class UserController {

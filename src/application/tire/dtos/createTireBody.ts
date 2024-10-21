@@ -1,6 +1,6 @@
 import { IsNumber, IsOptional } from "class-validator";
-import { IsNotEmptyCustom } from "src/infra/http/classValidator/decorators/IsNotEmptyCustom";
-import { IsStringCustom } from "src/infra/http/classValidator/decorators/IsStringCustom";
+import { IsNotEmptyCustom } from "src/core/classValidator/decorators/IsNotEmptyCustom";
+import { IsStringCustom } from "src/core/classValidator/decorators/IsStringCustom";
 import { TTireCondition, TTireLocation } from "src/core/enum/tire.enum";
 
 export class CreateTireBody {

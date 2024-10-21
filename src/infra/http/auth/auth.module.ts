@@ -1,6 +1,5 @@
 import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { AuthControler } from './auth.controller';
-import { UserModule } from '../user/user.module';
 import { DatabaseModule } from 'src/infra/database/database.module';
 import { signInDTOValidateMiddleware } from './middleware/signInDTOValidate.middleware';
 import { JwtModule } from '@nestjs/jwt';
@@ -10,6 +9,7 @@ import { LocalStrategy } from 'src/domain/auth/strategies/local.strategy';
 import { JwtStrategy } from 'src/domain/auth/strategies/jwtStrategy';
 import { SignInUseCase } from 'src/domain/auth/useCases/signInUseCase/signInUseCase';
 import { ValidateUserUseCase } from 'src/domain/auth/useCases/validateUser/validateUserUseCase';
+import { UserModule } from 'src/application/user/user.module';
 
 @Module({
   imports: [

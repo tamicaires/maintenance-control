@@ -1,5 +1,5 @@
 import { IsNumber, IsOptional } from "class-validator";
-import { IsStringCustom } from "src/infra/http/classValidator/decorators/IsStringCustom";
+import { IsStringCustom } from "src/core/classValidator/decorators/IsStringCustom";
 import { TTireCondition, TTireLocation } from "src/core/enum/tire.enum";
 
 export class UpdateTireBody {

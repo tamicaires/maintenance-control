@@ -1,5 +1,5 @@
+import { TSubject } from "src/core/enum/subject.enum";
 import { Ability, Action, Rule } from "./ability";
-import { TSubject } from "./enums/subject.enum";
 
 export class AbilityBuilder {
   private rules: Rule[] = [];

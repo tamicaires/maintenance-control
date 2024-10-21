@@ -15,12 +15,12 @@ import {
   mapCreateWorkOrderData,
   mapUpdateWorkOrderData,
 } from 'src/shared/utils/workOrderUtils';
-import { AuthenticatedRequestModel } from '../auth/models/authenticateRequestModel';
 import { WorkOrderViewModel } from './viewModels/workOrdersViewModel';
 import { CreateWorkOrder } from 'src/domain/workOrder/useCases/createWorkOrder/createWorkOrder';
 import { UpdateWorkOrder } from 'src/domain/workOrder/useCases/updateWorkOrder/updateWorkOrder';
 import { DeleteWorkOrder } from 'src/domain/workOrder/useCases/deleteWorkOrder/deleteWorkOrder';
 import { GetManyWorkOrders } from 'src/domain/workOrder/useCases/getManyWorkOrders/getManyWorkOrders';
+import { AuthenticatedRequestModel } from 'src/infra/http/auth/models/authenticateRequestModel';
 
 @Controller('work-orders')
 export class WorkOrderController {

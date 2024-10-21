@@ -1,10 +1,10 @@
 import { Body, Controller, Get, Param, Post, Request } from "@nestjs/common";
 import { CreateMembershipBody } from "./dto/createMembershipBody";
-import { AuthRequestModel } from "../auth/models/authRequestModel";
 import { CreateMembership } from "src/domain/memberShip/useCases/createMembership";
 import { GetCurrentMembership } from "src/domain/memberShip/useCases/getCurrentMembership";
 import { GetMembershipByUser } from "src/domain/memberShip/useCases/getMembershipByUser";
 import { SetCurrentMembership } from "src/domain/memberShip/useCases/setCurrentMembership";
+import { AuthRequestModel } from "src/infra/http/auth/models/authRequestModel";
 
 @Controller("memberships")
 export class MembershipController {

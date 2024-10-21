@@ -9,7 +9,6 @@ import {
   Query,
   Request,
 } from '@nestjs/common';
-import { AuthenticatedRequestModel } from '../auth/models/authenticateRequestModel';
 import { CreateNoteBody } from './dtos/createNoteBody';
 import { NoteViewModel } from './viewModels/NoteViewModel';
 import { EditNoteBody } from './dtos/editNoteBody';
@@ -18,6 +17,7 @@ import { DeleteNote } from 'src/domain/note/useCases/deleteNote/deleteNote';
 import { EditNote } from 'src/domain/note/useCases/editNote/editNote';
 import { GetManyNotes } from 'src/domain/note/useCases/getManyNote/getManyNotes';
 import { GetNote } from 'src/domain/note/useCases/getNote/getNote';
+import { AuthenticatedRequestModel } from 'src/infra/http/auth/models/authenticateRequestModel';
 
 @Controller('notes')
 export class NoteController {

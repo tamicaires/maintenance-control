@@ -1,8 +1,7 @@
 import { IsBoolean, IsDateString, IsOptional } from 'class-validator';
-import { IsDateCustom } from 'src/infra/http/classValidator/decorators/IsDateCustom';
-import { IsNotEmptyCustom } from 'src/infra/http/classValidator/decorators/IsNotEmptyCustom';
-import { IsStringCustom } from 'src/infra/http/classValidator/decorators/IsStringCustom';
-import { Box } from 'src/core/enum/box.enum';
+import { IsDateCustom } from 'src/core/classValidator/decorators/IsDateCustom';
+import { IsNotEmptyCustom } from 'src/core/classValidator/decorators/IsNotEmptyCustom';
+import { IsStringCustom } from 'src/core/classValidator/decorators/IsStringCustom';
 import { MaintenanceStatus } from 'src/core/enum/maitenance-status.enum';
 import { TypeOfMaintenance } from 'src/core/enum/type-of-maintenance.enum';
 

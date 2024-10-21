@@ -1,5 +1,5 @@
 import { IsOptional } from 'class-validator';
-import { IsStringCustom } from 'src/infra/http/classValidator/decorators/IsStringCustom';
+import { IsStringCustom } from 'src/core/classValidator/decorators/IsStringCustom';
 import { ServiceCategory } from 'src/core/enum/service-category.enum';
 
 export class UpdateServiceBody {

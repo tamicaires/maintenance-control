@@ -5,11 +5,11 @@ import { CanActivate, ExecutionContext, Injectable, ForbiddenException } from '@
 import { Action } from '../../ability/ability';
 import { PERMISSION_KEY } from '../decorators/permissions.decorator';
 import { defineAbilitiesForUser } from '../../ability/permissions';
-import { TSubject } from '../../ability/enums/subject.enum';
 import { UserHasNoCompanyException } from 'src/core/exceptions/UserHasNoCompanyException';
 import { CheckUserMembership } from 'src/domain/memberShip/useCases/checkUserMembership';
 import { UserNotFoundException } from 'src/domain/user/exceptions/UserNotFountException';
 import { Membership } from 'src/domain/memberShip/entity/Membership';
+import { TSubject } from 'src/core/enum/subject.enum';
 
 @Injectable()
 export class PolicyGuard implements CanActivate {

@@ -1,9 +1,9 @@
 import { Body, Controller, Get, Injectable, Post, Request, UseGuards } from '@nestjs/common';
 import { CreateCompanyBody } from './dto/createCompanyBody';
-import { PolicyGuard } from '../auth/guards/policy.guard';
 import { CompanyViewModel } from './viewModel/companyViewModel';
 import { CreateCompany } from 'src/domain/company/useCases/createCompany.use-case';
 import { GetManyCompanies } from 'src/domain/company/useCases/getManyCompanies.use-case';
+import { PolicyGuard } from 'src/infra/http/auth/guards/policy.guard';
 
 @Controller('companies')
 @UseGuards(PolicyGuard)

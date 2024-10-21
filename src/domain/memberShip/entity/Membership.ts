@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { TRole } from 'src/infra/http/modules/ability/enums/role.enum';
+import { TRole } from 'src/core/enum/role.enum';
 
 interface MembershipProps {
   userId: string;

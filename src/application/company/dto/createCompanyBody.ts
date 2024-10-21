@@ -1,7 +1,7 @@
 import { IsBoolean } from 'class-validator';
-import { IsEmailCustom } from 'src/infra/http/classValidator/decorators/IsEmailCustom';
-import { IsNotEmptyCustom } from 'src/infra/http/classValidator/decorators/IsNotEmptyCustom';
-import { IsStringCustom } from 'src/infra/http/classValidator/decorators/IsStringCustom';
+import { IsEmailCustom } from 'src/core/classValidator/decorators/IsEmailCustom';
+import { IsNotEmptyCustom } from 'src/core/classValidator/decorators/IsNotEmptyCustom';
+import { IsStringCustom } from 'src/core/classValidator/decorators/IsStringCustom';
 
 export class CreateCompanyBody {
   @IsStringCustom()

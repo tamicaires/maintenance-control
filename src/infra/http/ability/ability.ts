@@ -1,4 +1,4 @@
-import { TSubject } from "./enums/subject.enum";
+import { TSubject } from 'src/core/enum/subject.enum';
 
 export enum Action {
   Manage = 'manage',
