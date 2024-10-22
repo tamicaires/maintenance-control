@@ -13,6 +13,7 @@ export interface Rule {
   action: Action;
   subject: TSubject;
   conditions?: Record<string, any>;
+  inverted?: boolean;
 }
 
 export class Ability {
@@ -23,20 +24,21 @@ export class Ability {
   }
 
   can(action: Action, subject: TSubject, conditions?: Record<string, any>): boolean {
-    return this.rules.some(rule => {
-      const matchesAction = rule.action === action;
-      const matchesSubject = rule.subject === subject;
-
-      const matchesConditions = conditions ?
-        Object.entries(conditions).every(([key, value]) => rule.conditions?.[key] === value)
-        : true;
-
-      return matchesAction && matchesSubject && matchesConditions;
+    const denied = this.rules.some(rule => {
+      rule.inverted && rule.action === action && rule.subject === subject &&
+      (!conditions || Object.entries(conditions).every(([key, value]) => rule.conditions?.[key] === value))
     });
+
+    if (denied) {
+      return false; 
+    }
+
+    return this.rules.some(rule => !rule.inverted && rule.action === action && rule.subject === subject &&
+      (!conditions || Object.entries(conditions).every(([key, value]) => rule.conditions?.[key] === value)));
   }
 
   cannot(action: Action, subject: TSubject): boolean {
     return !this.can(action, subject);
   }
+  
 }
-

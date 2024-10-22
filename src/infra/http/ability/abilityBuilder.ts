@@ -9,11 +9,11 @@ export class AbilityBuilder {
   }
 
   cannot(action: Action, subject: TSubject, conditions?: Record<string, any>) {
-    this.rules.push({ action, subject, conditions });
+    this.rules.push({ action, subject, conditions, inverted: true });
   }
 
   build(): Ability {
     return new Ability(this.rules);
   }
 }
-  
+
