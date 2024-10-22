@@ -4,6 +4,7 @@ import { DatabaseModule } from "src/infra/database/database.module";
 import { CreateTrailer } from "src/domain/trailer/useCases/createTrailer";
 import { GetTrailer } from "src/domain/trailer/useCases/getTrailer";
 import { ListTrailers } from "src/domain/trailer/useCases/listTrailers";
+import { CheckUserMembership } from "src/domain/memberShip/useCases/checkUserMembership";
 
 @Module({
   controllers: [TrailerController],
@@ -12,6 +13,7 @@ import { ListTrailers } from "src/domain/trailer/useCases/listTrailers";
     CreateTrailer,
     GetTrailer,
     ListTrailers,
+    CheckUserMembership,
   ],
 })
 

@@ -7,10 +7,10 @@ import { CompanyNotFoundException } from "src/domain/company/exceptions/CompanyN
 import { CompanyRepository } from "src/domain/company/repositories/CompanyRepository";
 import { UserNotFoundException } from "src/domain/user/exceptions/UserNotFountException";
 import { UserRepository } from "src/domain/user/repositories/UserRepository";
+import { CompanyInstance } from "src/core/company/company-instance";
 
 interface CreateMembershipRequest {
   userId: string;
-  companyId: string;
   role: TRole[];
 }
 
@@ -22,26 +22,25 @@ export class CreateMembership {
     private readonly membershipRepository: MembershipRepository
   ) { }
 
-  async execute({ companyId, userId, role }: CreateMembershipRequest) {
-    const user = await this.userRepository.findById(userId);
+  async execute(companyInstance: CompanyInstance, data: CreateMembershipRequest) {
+    const user = await this.userRepository.findById(data.userId);
     if (!user) {
       throw new UserNotFoundException();
     }
 
-    const company = await this.companyRepository.findById(companyId);
+    const company = await this.companyRepository.findById(companyInstance);
     if (!company) {
       throw new CompanyNotFoundException();
     }
 
-    const membershipAlreadyExists = await this.membershipRepository.findByUserIdAndCompanyId(userId, companyId);
+    const membershipAlreadyExists = await this.membershipRepository.findByUserIdAndCompanyId(
+      companyInstance,
+      data.userId
+    );
     if (membershipAlreadyExists) {
       throw new MembershipAlreadyExists();
     }
-    const membership = new Membership({
-      companyId: company.id,
-      userId: user.id,
-      role: role
-    })
+    const membership = new Membership(companyInstance.addCompanyFilter(data));
 
     await this.membershipRepository.create(membership);
 

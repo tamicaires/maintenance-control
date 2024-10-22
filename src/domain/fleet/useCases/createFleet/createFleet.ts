@@ -16,9 +16,7 @@ interface CreateFleetRequest {
 export class CreateFleet {
   constructor(private fleetRepository: FleetRepository) { }
 
-  async execute(companyId: string, data: CreateFleetRequest) {
-    const companyInstance = new CompanyInstance(companyId);
-
+  async execute(companyInstance: CompanyInstance, data: CreateFleetRequest) {
     const fleetNumberExists = await this.fleetRepository.findByNumber(
       companyInstance,
       data.fleetNumber
@@ -29,21 +27,17 @@ export class CreateFleet {
       });
     }
 
-    const fleetPlateExists = await this.fleetRepository.findByPlate(companyInstance, data.plate);
+    const fleetPlateExists = await this.fleetRepository.findByPlate(
+      companyInstance, 
+      data.plate
+    );
     if (fleetPlateExists) {
       throw new FleetAlreadyExistsException({
         fields: { plate: 'Placa já cadastrada no sistema' },
       });
     }
 
-    const fleet = new Fleet({
-      fleetNumber: data.fleetNumber,
-      plate: data.plate,
-      km: data.km,
-      carrierId: data.carrierId,
-      isActive: data.isActive,
-      companyId: companyInstance.getCompanyId(),
-    });
+    const fleet = new Fleet(companyInstance.addCompanyFilter(data));
 
     await this.fleetRepository.create(fleet);
 

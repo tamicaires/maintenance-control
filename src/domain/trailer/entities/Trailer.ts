@@ -3,7 +3,7 @@ import { Replace } from "src/shared/utils/replace";
 
 interface TrailerSchema {
   plate: string;
-  position: number;
+  position: number | null;
   companyId: string;
   fleetId: string | null;
   isActive: boolean;
@@ -39,11 +39,11 @@ export class Trailer {
     this.props.plate = plate;
   }
 
-  get position(): number {
+  get position(): number | null{
     return this.props.position;
   }
 
-  set position(position: number) {
+  set position(position: number | null) {
     this.props.position = position;
   }
 

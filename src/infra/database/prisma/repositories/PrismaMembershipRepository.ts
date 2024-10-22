@@ -3,6 +3,7 @@ import { PrismaService } from "../prisma.service";
 import { PrismaMembershipMapper } from "../mappers/PrismaMembershipMapper";
 import { MembershipRepository } from "src/domain/memberShip/repositories/membershipRepository";
 import { Membership } from "src/domain/memberShip/entity/Membership";
+import { CompanyInstance } from "src/core/company/company-instance";
 
 @Injectable()
 export class PrismaMembershipRepository implements MembershipRepository {
@@ -17,9 +18,9 @@ export class PrismaMembershipRepository implements MembershipRepository {
 
   }
 
-  async findById(id: string): Promise<Membership | null> {
+  async findById(companyInstance: CompanyInstance): Promise<Membership | null> {
     const membershipRaw = await this.prisma.membership.findUnique({
-      where: { id },
+      where: { id: companyInstance.getCompanyId() },
     });
 
     if (!membershipRaw) {
@@ -29,9 +30,9 @@ export class PrismaMembershipRepository implements MembershipRepository {
     return PrismaMembershipMapper.toDomain(membershipRaw);
   }
 
-  async findByUserIdAndCompanyId(userId: string, companyId: string): Promise<Membership | null> {
+  async findByUserIdAndCompanyId(companyInstance: CompanyInstance, userId: string,): Promise<Membership | null> {
     const membershipRaw = await this.prisma.membership.findFirst({
-      where: { userId, companyId },
+      where: { userId, companyId: companyInstance.getCompanyId() },
       include: { company: true }
     });
 

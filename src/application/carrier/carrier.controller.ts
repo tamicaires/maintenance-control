@@ -8,6 +8,7 @@ import {
   Put,
   Query,
   Request,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateCarrierBody } from './dtos/createCarrierBody';
 import { EditCarrierBody } from './dtos/editCarrierBody';
@@ -21,8 +22,11 @@ import { GetCarrier } from 'src/domain/carrier/useCases/getCarrier/getCarrier';
 import { Permission } from 'src/infra/http/auth/decorators/permissions.decorator';
 import { Action } from 'src/infra/http/ability/ability';
 import { Cookies } from 'src/infra/http/auth/decorators/cookies.decorator';
+import { CompanyInstance } from 'src/core/company/company-instance';
+import { PolicyGuard } from 'src/infra/http/auth/guards/policy.guard';
 
 @Controller('carriers')
+@UseGuards(PolicyGuard)
 export class CarrierController {
   constructor(
     private createCarrierUseCase: CreateCarrier,
@@ -38,10 +42,8 @@ export class CarrierController {
     @Body() body: CreateCarrierBody,
     @Cookies(CookiesEnum.CompanyId) companyId: string
   ) {
-    const carrier = await this.createCarrierUseCase.execute({
-      ...body,
-      companyId,
-    });
+    const companyInstance = CompanyInstance.create(companyId);
+    const carrier = await this.createCarrierUseCase.execute(companyInstance, body);
 
     return CarrierViewModel.toHttp(carrier);
   }
@@ -72,14 +74,15 @@ export class CarrierController {
   }
 
   @Get()
-  @Permission(Action.Read, "Carrier")
+  @Permission(Action.Delete, "Carrier")
   async getManyCarriers(
     @Query('page') page: string,
     @Query('perPage') perPage: string,
     @Cookies(CookiesEnum.CompanyId) companyId: string
   ) {
+    const companyInstance = CompanyInstance.create(companyId);
     const carriers = await this.getManyCarriersUseCase.execute({
-      companyId,
+      companyInstance,
       page,
       perPage,
     });
@@ -87,3 +90,4 @@ export class CarrierController {
     return carriers?.map(CarrierViewModel.toHttp);
   }
 }
+ 

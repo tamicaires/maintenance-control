@@ -8,6 +8,7 @@ interface ICreatePartRequest {
   name: string;
   description: string | null;
   partNumber: string;
+  serialNumber: string;
   model: string | null;
   brand: string | null;
   supplier: string | null;
@@ -17,6 +18,7 @@ interface ICreatePartRequest {
   location: TPartLocation;
   status: TPartStatus;
   categoryId: string;
+  companyId: string;
   trailerId: string | null;
   axleId: string | null;
 }

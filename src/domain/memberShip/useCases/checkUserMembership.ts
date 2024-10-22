@@ -6,6 +6,7 @@ import { CompanyNotFoundException } from 'src/domain/company/exceptions/CompanyN
 import { CompanyRepository } from 'src/domain/company/repositories/CompanyRepository';
 import { UserNotFoundException } from 'src/domain/user/exceptions/UserNotFountException';
 import { UserRepository } from 'src/domain/user/repositories/UserRepository';
+import { CompanyInstance } from 'src/core/company/company-instance';
 
 
 @Injectable()
@@ -16,21 +17,22 @@ export class CheckUserMembership {
     private readonly membershipRepository: MembershipRepository
   ) { }
 
-  async execute(userId: string, companyId: string): Promise<Membership> {
+  async execute(companyInstance: CompanyInstance, userId: string): Promise<Membership> {
     const user = await this.userRepository.findById(userId);
     if (!user) {
       throw new UserNotFoundException();
     }
 
-    const company = await this.companyRepository.findById(companyId);
+    const company = await this.companyRepository.findById(companyInstance);
     if (!company) {
       throw new CompanyNotFoundException();
-    }
+    } 
+    console.log("companyInstance", company);
     const membership = await this.membershipRepository.findByUserIdAndCompanyId(
+      companyInstance,
       userId,
-      companyId
-    );
-
+      );
+    console.log("membership no use case", membership)
     if (!membership) {
       throw new UserHasNoCompanyException();
     }

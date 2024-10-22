@@ -7,7 +7,7 @@ export class ListTrailers {
   constructor(private readonly trailerRepository: TrailerRepository) { }
 
   async execute(companyId: string) {
-    const companyInstance = new CompanyInstance(companyId);
+    const companyInstance = CompanyInstance.create(companyId);
     return await this.trailerRepository.list(companyInstance);
   }
 }

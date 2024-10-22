@@ -20,6 +20,7 @@ import { WorkOrderModule } from './application/workOrder/workOrder.module';
 import { AuthModule } from './infra/http/auth/auth.module';
 import { AbilityModule } from './infra/http/ability/ability.module';
 import { JwtAuthGuard } from './infra/http/auth/guards/jwtAuth.guard';
+import { CheckUserMembership } from './domain/memberShip/useCases/checkUserMembership';
 
 @Module({
   imports: [

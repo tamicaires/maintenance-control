@@ -6,6 +6,7 @@ interface PartSchema {
   name: string;
   description: string | null;
   partNumber: string;
+  serialNumber: string;
   model: string | null;
   brand: string | null;
   supplier: string | null;
@@ -16,6 +17,7 @@ interface PartSchema {
   status: TPartStatus;
   categoryId: string;
   trailerId: string | null;
+  companyId: string;
   axleId: string | null;
   createdAt: Date;
   updatedAt: Date;
@@ -82,6 +84,14 @@ export class Part {
 
   set partNumber(partNumber: string) {
     this.props.partNumber = partNumber
+  }
+
+  get serialNumber(): string {
+    return this.props.serialNumber
+  }
+
+  set serialNumber(serialNumber: string) {
+    this.props.serialNumber = serialNumber
   }
 
   get model(): string | null {
@@ -154,6 +164,14 @@ export class Part {
 
   set categoryId(categoryId: string) {
     this.props.categoryId = categoryId
+  }
+
+  get companyId(): string {
+    return this.props.companyId
+  }
+
+  set companyId(companyId: string) {
+    this.props.companyId = companyId
   }
 
   get trailerId(): string | null {

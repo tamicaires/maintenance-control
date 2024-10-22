@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, UseGuards } from "@nestjs/common";
 import { CreateTrailerBody } from "./dtos/createTrailer.dto";
 import { CreateTrailer } from "src/domain/trailer/useCases/createTrailer";
 import { GetTrailer } from "src/domain/trailer/useCases/getTrailer";
@@ -6,8 +6,11 @@ import { ListTrailers } from "src/domain/trailer/useCases/listTrailers";
 import { Cookies } from "src/infra/http/auth/decorators/cookies.decorator";
 import { CookiesEnum } from "src/core/enum/cookies";
 import { TrailerViewModel } from "./viewModel/trailerViewModel";
+import { PolicyGuard } from "src/infra/http/auth/guards/policy.guard";
+import { CompanyInstance } from "src/core/company/company-instance";
 
 @Controller("trailers")
+@UseGuards(PolicyGuard)
 export class TrailerController {
   constructor(
     private readonly createTrailer: CreateTrailer,
@@ -20,11 +23,11 @@ export class TrailerController {
     @Body() trailer: CreateTrailerBody,
     @Cookies(CookiesEnum.CompanyId) companyId: string,
   ) {
-    const createdTrailer = await this.createTrailer.execute({
-      ...trailer,
-      companyId
-    });
-
+    const companyInstance = CompanyInstance.create(companyId);
+    const createdTrailer = await this.createTrailer.execute(
+      companyInstance, 
+      trailer
+    );
     return TrailerViewModel.toHttp(createdTrailer);
   }
 

@@ -6,6 +6,8 @@ import { CreatePart } from "src/domain/part/useCases/createPart";
 import { GetPart } from "src/domain/part/useCases/getPart";
 import { ListParts } from "src/domain/part/useCases/listParts";
 import { UpdatePart } from "src/domain/part/useCases/updatePart";
+import { Cookies } from "src/infra/http/auth/decorators/cookies.decorator";
+import { CookiesEnum } from "src/core/enum/cookies";
 
 @Controller("parts")
 export class PartController {
@@ -17,8 +19,14 @@ export class PartController {
   ) { }
 
   @Post()
-  async create(@Body() part: CreatePartBody) {
-    const partCreated = await this.createPart.execute(part);
+  async create(
+    @Body() part: CreatePartBody,
+    @Cookies(CookiesEnum.CompanyId) companyId: string
+  ) {
+    const partCreated = await this.createPart.execute({
+      ...part,
+      companyId
+    });
     return PartViewModel.toHttp(partCreated);
   }
 

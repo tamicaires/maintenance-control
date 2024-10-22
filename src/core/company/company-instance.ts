@@ -6,11 +6,15 @@ import { UserHasNoCompanyException } from "../exceptions/UserHasNoCompanyExcepti
 export class CompanyInstance {
   private companyId: string;
 
-  constructor(companyId: string) {
+  private constructor(companyId: string) {
     if (!companyId) {
       throw new CompanyNotFoundException();
     }
     this.companyId = companyId;
+  }
+
+  static create(companyId: string): CompanyInstance {
+    return new CompanyInstance(companyId);
   }
 
   getCompanyId(): string {

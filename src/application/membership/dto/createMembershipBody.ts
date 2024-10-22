@@ -10,5 +10,5 @@ export class CreateMembershipBody {
 
   @IsArray()
   @IsNotEmptyCustom()
-  roles: TRole[];
+  role: TRole[];
 }

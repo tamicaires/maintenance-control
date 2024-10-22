@@ -17,6 +17,10 @@ export class CreatePartBody {
   partNumber: string;
 
   @IsStringCustom()
+  @IsNotEmptyCustom()
+  serialNumber: string;
+
+  @IsStringCustom()
   @IsOptional()
   model: string | null;
 

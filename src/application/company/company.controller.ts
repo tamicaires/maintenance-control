@@ -4,6 +4,8 @@ import { CompanyViewModel } from './viewModel/companyViewModel';
 import { CreateCompany } from 'src/domain/company/useCases/createCompany.use-case';
 import { GetManyCompanies } from 'src/domain/company/useCases/getManyCompanies.use-case';
 import { PolicyGuard } from 'src/infra/http/auth/guards/policy.guard';
+import { Permission } from 'src/infra/http/auth/decorators/permissions.decorator';
+import { Action } from 'src/infra/http/ability/ability';
 
 @Controller('companies')
 @UseGuards(PolicyGuard)
@@ -20,7 +22,7 @@ export class CompanyController {
   }
 
   @Get()
-  // @Permission(Action.Read, 'Company')
+  @Permission(Action.Read, 'Company')
   async getCompanies(@Request() req: any) {
     const companies = await this.getManyCompanies.execute({});
     return companies.map(company => CompanyViewModel.toHttp(company));

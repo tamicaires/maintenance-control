@@ -4,7 +4,10 @@ import { AbilityBuilder } from "../abilityBuilder";
 
 export const defineCarrierAbilities = (builder: AbilityBuilder, userId: string, companyId: string, userRoles: TRole[]) => {
   if (userRoles.includes(RoleEnum.ADMIN)) {
-    builder.can(Action.Manage, 'Carrier', { companyId });
+    console.log("companyid", companyId);
+    builder.cannot(Action.Read, 'Carrier', { companyId });
+    builder.cannot(Action.Delete, 'Carrier', { companyId });
+    builder.cannot(Action.Read, 'Carrier', { companyId });
   }
 
   if (userRoles.includes(RoleEnum.GENERAL_VIEWER)) {
@@ -21,6 +24,13 @@ export const defineCarrierAbilities = (builder: AbilityBuilder, userId: string, 
     builder.can(Action.Read, 'Carrier', { companyId });
     builder.can(Action.Update, 'Carrier', { companyId });
     builder.can(Action.Delete, 'Carrier', { companyId });
+  }
+
+  if(userRoles.includes(RoleEnum.GUEST)) {
+  //   builder.cannot(Action.Read, 'Carrier', { companyId });
+    builder.cannot(Action.Delete, 'Carrier', { companyId });
+  //   builder.cannot(Action.Read, 'Carrier', { companyId });
+  //   // builder.can(Action.Read, 'Carrier', { companyId });
   }
 
 };

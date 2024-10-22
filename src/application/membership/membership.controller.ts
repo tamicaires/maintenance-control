@@ -5,6 +5,9 @@ import { GetCurrentMembership } from "src/domain/memberShip/useCases/getCurrentM
 import { GetMembershipByUser } from "src/domain/memberShip/useCases/getMembershipByUser";
 import { SetCurrentMembership } from "src/domain/memberShip/useCases/setCurrentMembership";
 import { AuthRequestModel } from "src/infra/http/auth/models/authRequestModel";
+import { Cookies } from "src/infra/http/auth/decorators/cookies.decorator";
+import { CookiesEnum } from "src/core/enum/cookies";
+import { CompanyInstance } from "src/core/company/company-instance";
 
 @Controller("memberships")
 export class MembershipController {
@@ -15,28 +18,26 @@ export class MembershipController {
     private readonly getMembershipByUserIdUseCase: GetMembershipByUser
   ) { }
 
-  @Post(":id")
+  @Post()
   async create(
-    @Param("id") companyId: string,
-    @Body() body: CreateMembershipBody
+    @Body() body: CreateMembershipBody,
+    @Cookies(CookiesEnum.CompanyId) companyId: string
   ) {
-    return await this.createMembership.execute({
-      companyId,
-      userId: body.userId,
-      role: body.roles
-    });
+    const companyInstance = CompanyInstance.create(companyId);
+    return await this.createMembership.execute(companyInstance, body);
   }
 
-  @Post(":companyId/set-current")
+  @Post("/set-current")
   async setCurrentMembership(
-    @Param('companyId') companyId: string,
     @Request() req: AuthRequestModel,
+    @Cookies(CookiesEnum.CompanyId) companyId: string
   ) {
+    const companyInstance = CompanyInstance.create(companyId);
     const userId = req.user.id
     const session = req.session
     return await this.setCurrentMembershipUseCase.execute(
+      companyInstance,
       userId,
-      companyId,
       session
     );
   }

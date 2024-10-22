@@ -25,6 +25,7 @@ import { Permission } from 'src/infra/http/auth/decorators/permissions.decorator
 import { Action } from 'src/infra/http/ability/ability';
 import { Cookies } from 'src/infra/http/auth/decorators/cookies.decorator';
 import { CookiesEnum } from 'src/core/enum/cookies';
+import { CompanyInstance } from 'src/core/company/company-instance';
 
 @Controller('fleets')
 @UseGuards(PolicyGuard)
@@ -43,9 +44,11 @@ export class FleetController {
     @Body() createFleetBody: CreateFleetBody,
     @Cookies(CookiesEnum.CompanyId) companyId: string
   ) {
-    const fleet = await this.createFleetUseCase.execute(companyId, {
-      ...createFleetBody,
-    });
+    const companyInstance = CompanyInstance.create(companyId);
+    const fleet = await this.createFleetUseCase.execute(
+      companyInstance,
+      createFleetBody
+    );
 
     return FleetViewModel.toHttp(fleet);
   }
@@ -65,18 +68,16 @@ export class FleetController {
   }
 
   @Get(':id')
-  async getCarrier(@Param('id') fleetId: string) {
+  async getFleet(@Param('id') fleetId: string) {
     const fleet = await this.getFleetUseCase.execute({ fleetId });
   }
 
   @Get()
-  // @Permission(Action.Read, 'Fleet')
-  async getManyCarriers(
+  @Permission(Action.Read, 'Fleet')
+  async getManyFleet(
     @Query('page') page: string,
     @Query('perPage') perPage: string,
-    @Req() request: Request,
   ) {
-    console.log('request', request.user);
     const fleets = await this.getManyFleetsUseCase.execute({ page, perPage });
     return fleets.map(FleetViewModel.toHttp);
   }

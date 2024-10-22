@@ -6,6 +6,7 @@ import { DeleteCarrier } from 'src/domain/carrier/useCases/deleteCarrier/deleteC
 import { EditCarrier } from 'src/domain/carrier/useCases/editCarrier/editCarrier';
 import { GetManyCarriers } from 'src/domain/carrier/useCases/getAllCarrriers/getManyCarriers';
 import { GetCarrier } from 'src/domain/carrier/useCases/getCarrier/getCarrier';
+import { CheckUserMembership } from 'src/domain/memberShip/useCases/checkUserMembership';
 
 @Module({
   controllers: [CarrierController],
@@ -16,6 +17,7 @@ import { GetCarrier } from 'src/domain/carrier/useCases/getCarrier/getCarrier';
     DeleteCarrier,
     GetCarrier,
     GetManyCarriers,
+    CheckUserMembership
   ],
 })
 export class CarrierModule {}

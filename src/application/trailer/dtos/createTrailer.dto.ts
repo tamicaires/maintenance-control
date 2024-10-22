@@ -8,8 +8,8 @@ export class CreateTrailerBody {
   plate: string;
 
   @IsNumber()
-  @IsNotEmptyCustom()
-  position: number;
+  @IsOptional()
+  position: number | null;
 
   @IsStringCustom()
   @IsOptional()

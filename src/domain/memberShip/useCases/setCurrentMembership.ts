@@ -1,15 +1,16 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { MembershipRepository } from '../repositories/membershipRepository';
 import { SessionData } from 'src/infra/http/auth/models/sessionModel';
+import { CompanyInstance } from 'src/core/company/company-instance';
 
 @Injectable()
 export class SetCurrentMembership {
   constructor(private readonly membershipRepository: MembershipRepository) { }
 
-  async execute(userId: string, companyId: string, session: SessionData) {
+  async execute(companyInstance: CompanyInstance, userId: string, session: SessionData) {
     const membership = await this.membershipRepository.findByUserIdAndCompanyId(
+      companyInstance,
       userId,
-      companyId
     );
 
     if (!membership) {
