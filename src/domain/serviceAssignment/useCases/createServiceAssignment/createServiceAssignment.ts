@@ -6,6 +6,8 @@ interface CreateServiceAssignmentRequest {
   workOrderId: string;
   serviceId: string;
   employeeId: string;
+  startAt: Date | null;
+  endAt: Date | null;
 }
 
 @Injectable()
@@ -18,11 +20,15 @@ export class CreateServiceAssignment {
     workOrderId,
     serviceId,
     employeeId,
+    startAt, 
+    endAt
   }: CreateServiceAssignmentRequest) {
     const serviceAssignment = new ServiceAssignment({
       workOrderId,
       serviceId,
       employeeId,
+      startAt, 
+      endAt
     });
 
     await this.serviceAssignmentRepository.create(serviceAssignment);

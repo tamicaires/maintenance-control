@@ -5,6 +5,8 @@ interface ServiceAssignmentProps {
   workOrderId: string;
   serviceId: string;
   employeeId: string;
+  startAt: Date | null;
+  endAt: Date | null;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -55,6 +57,22 @@ export class ServiceAssignment {
 
   set employeeId(employeeId: string) {
     this.props.employeeId = employeeId;
+  }
+
+  get startAt(): Date | null {
+    return this.props.startAt;
+  }
+
+  set startAt(startAt: Date | null) {
+    this.props.startAt = startAt;
+  }
+
+  get endAt(): Date | null {
+    return this.props.endAt;
+  }
+
+  set endAt(endAt: Date | null) {
+    this.props.endAt = endAt;
   }
 
   get createdAt(): Date {

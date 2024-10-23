@@ -25,16 +25,18 @@ export class ServiceAssignmentController {
     private deleteServiceAssignment: DeleteServiceAssignment,
     private getServiceAssignment: GetServiceAssignment,
     private getManyServiceAssignment: GetManyServiceAssignments,
-  ) {}
+  ) { }
 
   @Post()
   async create(@Body() body: CreateServiceAssignmentBody) {
-    const { workOrderId, serviceId, employeeId } = body;
+    const { workOrderId, serviceId, employeeId, startAt, endAt } = body;
 
     const serviceAssignment = await this.createServiceAssignment.execute({
       workOrderId,
       serviceId,
       employeeId,
+      startAt,
+      endAt
     });
 
     return serviceAssignment;
@@ -45,13 +47,15 @@ export class ServiceAssignmentController {
     @Param('id') serviceAssignmentId: string,
     @Body() body: UpdateServiceAssignmentBody,
   ) {
-    const { workOrderId, serviceId, employeeId } = body;
+    const { workOrderId, serviceId, employeeId, startAt, endAt } = body;
 
     const serviceAssignment = await this.updateServiceAssignment.execute({
       serviceAssignmentId: serviceAssignmentId,
       workOrderId,
       serviceId,
       employeeId,
+      startAt, 
+      endAt
     });
 
     return serviceAssignment;

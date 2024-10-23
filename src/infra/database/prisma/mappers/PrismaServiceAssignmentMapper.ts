@@ -7,6 +7,8 @@ export class PrismaServiceAssignmentMapper {
     workOrderId,
     serviceId,
     employeeId,
+    startAt,
+    endAt,
     createdAt,
     updatedAt,
   }: ServiceAssignment): ServiceAssignmentRaw {
@@ -15,6 +17,8 @@ export class PrismaServiceAssignmentMapper {
       workOrderId,
       serviceId,
       employeeId,
+      startAt,
+      endAt,
       createdAt,
       updatedAt,
     };
@@ -25,6 +29,8 @@ export class PrismaServiceAssignmentMapper {
     workOrderId,
     serviceId,
     employeeId,
+    startAt,
+    endAt,
     createdAt,
     updatedAt,
   }: ServiceAssignmentRaw): ServiceAssignment {
@@ -33,6 +39,8 @@ export class PrismaServiceAssignmentMapper {
         workOrderId,
         serviceId,
         employeeId,
+        startAt,
+        endAt,
         createdAt,
         updatedAt,
       },

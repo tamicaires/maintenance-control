@@ -15,4 +15,12 @@ export const mapUpdateServiceAssignment = (
   if (data.employeeId !== undefined) {
     serviceAssignment.employeeId = data.employeeId;
   }
+
+  if (data.startAt !== undefined) {
+    serviceAssignment.startAt = data.startAt;
+  }
+
+  if (data.endAt !== undefined) {
+    serviceAssignment.endAt = data.endAt;
+  }
 };

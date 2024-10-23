@@ -8,6 +8,8 @@ export const makeServiceAssignment = ({ id, ...override }: Override) => {
       workOrderId: '123456',
       employeeId: '1234567',
       serviceId: '12345678',
+      startAt: new Date(),
+      endAt: null,
       ...override,
     },
     id,

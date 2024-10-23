@@ -13,4 +13,12 @@ export class UpdateServiceAssignmentBody {
   @IsStringCustom()
   @IsOptional()
   employeeId: string;
+
+  @IsStringCustom()
+  @IsOptional()
+  startAt: Date | null;
+
+  @IsStringCustom()
+  @IsOptional()
+  endAt: Date | null;
 }

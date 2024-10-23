@@ -8,6 +8,8 @@ interface UpdateServiceAssignmentRequest {
   workOrderId?: string;
   serviceId?: string;
   employeeId?: string;
+  startAt?: Date | null;
+  endAt?: Date | null;
 }
 
 @Injectable()
@@ -21,6 +23,8 @@ export class UpdateServiceAssignment {
     workOrderId,
     serviceId,
     employeeId,
+    startAt,
+    endAt
   }: UpdateServiceAssignmentRequest) {
     const serviceAssignment =
       await this.serviceAssignmentRepository.findById(serviceAssignmentId);
@@ -31,6 +35,8 @@ export class UpdateServiceAssignment {
       workOrderId,
       serviceId,
       employeeId,
+      startAt,
+      endAt
     });
 
     await this.serviceAssignmentRepository.save(serviceAssignment);

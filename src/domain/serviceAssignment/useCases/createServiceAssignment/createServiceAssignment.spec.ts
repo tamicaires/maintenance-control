@@ -20,6 +20,8 @@ describe('Create Service Assignment', () => {
       employeeId: '123456',
       serviceId: '1234567',
       workOrderId: '12345678',
+      startAt: new Date(),
+      endAt: null
     });
 
     expect(serviceAssignmentRepositoryInMemory.serviceAssignments).toEqual([
