@@ -73,7 +73,6 @@ export class PrismaWorkOrderRepository implements WorkOrderRepository {
         fleet: {
           select: {
             fleetNumber: true,
-            plate: true,
             carrier: {
               select: {
                 carrierName: true,

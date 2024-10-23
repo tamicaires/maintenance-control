@@ -26,10 +26,11 @@ model Company {
   carriers    Carrier[]
   fleets      Fleet[]
   workOrders  WorkOrder[]
-  ChecklistTemplates ChecklistTemplate[]
-  MemberShip Membership[]
-  Trailer Trailer[]
-  Part Part[]
+  checklistTemplates ChecklistTemplate[]
+  memberShip Membership[]
+  trailer Trailer[]
+  part Part[]
+  vehicle Vehicle[]
 }
 
 model User {
@@ -40,13 +41,11 @@ model User {
 
   createdAt   DateTime  @map("created_at")
   updatedAt   DateTime  @map("updated_at")
-
   @@map("users")
   @@index([email]) 
   notes        Note[]
   workOrder    WorkOrder[]
-  Memberhip    Membership[]
-
+  membership    Membership[]
   partRequests  PartRequest[] @relation("PartRequestRequestedBy")
   partHandledBy  PartRequest[] @relation("PartRequestHandledBy")
   tireRequests   TireRequest[]  @relation("TireRequestRequestedBy")
@@ -55,11 +54,9 @@ model User {
 
 model Membership {
   id           String @id
-  role         RoleType[]
-
+  role        RoleType[]
   company      Company @relation(fields: [companyId], references: [id])
   companyId    String
-
   user         User @relation(fields: [userId], references: [id])
   userId       String
 
@@ -87,9 +84,9 @@ model Note {
   title         String    
   description   String?
   user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId        String
-  workOrder     WorkOrder @relation(fields: [workOrderId], references: [id], onDelete: Cascade)
-  workOrderId   String
+  userId        String    @map("user_id")
+  workOrder     WorkOrder @relation(fields: [workOrderId], references: [id], onDelete: Cascade) 
+  workOrderId   String    @map("work_order_id")
 
   createdAt   DateTime  @map("created_at")
   updatedAt   DateTime  @map("updated_at")
@@ -100,12 +97,12 @@ model Note {
 
 model Carrier {
   id                    String   @id
-  carrierName           String   @unique 
-  managerName           String
-  managerPhone          String
+  carrierName           String   @unique @map("carrier_name")
+  managerName           String   @map("manager_name")
+  managerPhone          String   @map("manager_phone")
   isActive              Boolean @map("is_active") @default(true)
   company               Company  @relation(fields: [companyId], references: [id])
-  companyId             String
+  companyId             String   @map("company_id")
 
   createdAt   DateTime  @map("created_at")
   updatedAt   DateTime  @map("updated_at")
@@ -115,16 +112,34 @@ model Carrier {
   fleets                Fleet[]   
 }
 
+model Vehicle {
+  id          String    @id
+  plate       String    @unique
+  model       String
+  brand       String
+  year        String
+  color       String?
+  km          String
+  power       Float    // Potência do veículo
+  isActive    Boolean  @default(true) @map("is_active")
+  fleet       Fleet?   @relation(fields: [fleetId], references: [id])
+  fleetId     String?   @map("fleet_id")
+  company     Company   @relation(fields: [companyId], references: [id])
+  companyId   String    @map("company_id")
+
+  @@map("vehicles")
+  @@index([companyId])
+  @@index([plate])
+}
+
 model Fleet {
   id                    String  @id
-  fleetNumber           String  @unique
-  plate                 String  @unique
-  km                    String
+  fleetNumber           String  @unique @map("fleet_number")
   isActive              Boolean  @map("is_active") @default(true) 
   carrier               Carrier  @relation(fields: [carrierId], references: [id])
   carrierId             String   @map("carrier_id") 
   company               Company  @relation(fields: [companyId], references: [id])
-  companyId             String
+  companyId             String   @map("company_id")
 
   createdAt   DateTime  @map("created_at")
   updatedAt   DateTime  @map("updated_at")
@@ -133,21 +148,21 @@ model Fleet {
   @@index([companyId])
   work_orders           WorkOrder[]
   trailers              Trailer[] 
+  vehicle Vehicle[]
 }
 
 model Trailer {
   id          String      @id 
   plate       String      @unique
   position    Int?         
-  fleet       Fleet?       @relation(fields: [fleetId], references: [id])
-  fleetId     String?
-  company               Company  @relation(fields: [companyId], references: [id])
-  companyId             String
+  fleet       Fleet?      @relation(fields: [fleetId], references: [id])
+  fleetId     String?     @map("fleet_id")
+  company     Company     @relation(fields: [companyId], references: [id])
+  companyId   String      @map("company_id")
   isActive    Boolean     @default(true) @map("is_active")
 
   createdAt   DateTime    @default(now()) @map("created_at")
   updatedAt   DateTime    @updatedAt @map("updated_at")
-
   @@map("trailers")
   @@index([fleetId])
   parts       Part[]    // Peças associadas ao reboque
@@ -160,16 +175,15 @@ model Axle {
   capacity          Float?    // Capacidade de carga do eixo
   type              AxleType  // Tipo de eixo (tracionado, livre, etc.)
   trailer           Trailer   @relation(fields: [trailerId], references: [id], onDelete: Cascade)
-  trailerId         String
-  tires             Tire[]    // Pneus específicos deste eixo
-  parts             Part[]    // Peças específicas deste eixo
-  maintenanceHistory AxleHistory[] // Histórico de manutenção
+  trailerId         String    @map("trailer_id")
 
   createdAt         DateTime  @map("created_at")
   updatedAt         DateTime  @map("updated_at")
-
   @@map("axles")
   @@index([trailerId]) 
+  tires             Tire[]    // Pneus específicos deste eixo
+  parts             Part[]    // Peças específicas deste eixo
+  maintenanceHistory AxleHistory[] // Histórico de manutenção
 }
 
 enum AxleType {
@@ -187,31 +201,26 @@ model Part {
   model             String?   // Modelo da peça
   brand             String?   // Marca da peça
   supplier          String?   // Fornecedor da peça
-  costPrice         Float     // Preço de custo da peça
-  sellingPrice      Float?     // Preço de venda da peça
-  stockQuantity     Int       @default(0) // Quantidade em estoque
-  location          PartLocation // Localização da peça (estoque, em uso, etc.)
-  status            PartStatus @default(NOVO) // Status da peça (novo, recuperado, etc.)
-  category          PartCategory  @relation(fields: [categoryId], references: [id]) // Relação com categoria
-  categoryId        String    // Campo de chave estrangeira para a categoria
-
-  trailer           Trailer?   @relation(fields: [trailerId], references: [id], onDelete: Cascade) // Peça associada a um reboque
-  trailerId         String?    // Relacionamento obrigatório com o reboque
-  
-  axle              Axle?     @relation(fields: [axleId], references: [id], onDelete: Cascade) // Peça associada a um eixo (opcional)
-  axleId            String?   // Chave estrangeira opcional para associar a um eixo
-
-  company           Company   @relation(fields: [companyId], references: [id]) // Relação com a empresa
-  companyId         String    // Chave estrangeira para a empresa
+  costPrice         Float     @map("cost_price") // Preço de custo da peça 
+  sellingPrice      Float?    @map("selling_price") // Preço de venda da peça
+  stockQuantity     Int       @default(0) @map("stock_quantity")
+  location          PartLocation 
+  status            PartStatus @default(NOVO)
+  category          PartCategory  @relation(fields: [categoryId], references: [id]) 
+  categoryId        String     @map("category_id")
+  trailer           Trailer?   @relation(fields: [trailerId], references: [id], onDelete: Cascade) 
+  trailerId         String?    @map("trailer_id") 
+  axle              Axle?     @relation(fields: [axleId], references: [id], onDelete: Cascade) 
+  axleId            String?   @map("axle_id") 
+  company           Company   @relation(fields: [companyId], references: [id])
+  companyId         String    @map("company_id") 
 
   createdAt         DateTime  @default(now()) @map("created_at")
   updatedAt         DateTime  @updatedAt @map("updated_at")
-
   @@map("parts")
   @@index([trailerId]) 
   @@index([categoryId])
-  
-  PartRequest PartRequest[] 
+  partRequest PartRequest[] 
 }
 
 model PartCategory {
@@ -224,28 +233,29 @@ model PartCategory {
 
   @@map("part_categories")
   @@index([name])
-  parts       Part[]    // Relação com várias peças
+  parts       Part[]   
 }
 
 model PartRequest {
   id                    String      @id 
   part                  Part     @relation(fields: [partId], references: [id])
-  partId                String
+  partId                String   @map("part_id")
   requestedBy           User     @relation("PartRequestRequestedBy", fields: [requestedById], references: [id])
-  requestedById         String
-  requestedFor          Employee?   @relation("EmployeePartRequest", fields: [requestedForEmployeeId], references: [id])
-  requestedForEmployeeId String?
+  requestedById         String   @map("requested_by_id") 
+  requestedFor          Employee?   @relation("EmployeePartRequest", fields: [requestedForEmployeeId], references: [id]) 
+  requestedForEmployeeId String? @map("requested_for_employee_id")
   handledBy             User?    @relation("PartRequestHandledBy", fields: [handledById], references: [id]) // Nome alterado
-  handledById           String?
+  handledById           String?  @map("handled_by_id")
   quantity              Int
-  approvedQuantity      Int?      // Quantidade aprovada (pode ser diferente da solicitada)
+  approvedQuantity      Int?     @map("approved_quantity")  // Quantidade aprovada (pode ser diferente da solicitada)
   status                RequestStatus  @default(PENDING)
-  rejectionReason       String?       // Justificativa de rejeição (opcional)
+  isRejected            Boolean? @map("is_rejected") // Indica se a solicitação foi rejeitada
+  rejectionReason       String?       @map("rejection_reason")// Justificativa de rejeição (opcional)
   requestedAt           DateTime @default(now())
-  approvedAt            DateTime? 
-  deliveredAt           DateTime?
+  approvedAt            DateTime? @map("approved_at") 
+  deliveredAt           DateTime? @map("delivered_at")
   workOrder             WorkOrder? @relation(fields: [workOrderId], references: [id])
-  workOrderId           String?
+  workOrderId           String?  @map("work_order_id")
   updatedAt             DateTime  @updatedAt @map("updated_at")
 
   @@map("part_requests")
@@ -274,44 +284,42 @@ model Tire {
   brand            String
   serialNumber     String   @unique @map("serial_number")
   axle             Axle?    @relation(fields: [axleId], references: [id], onDelete: Cascade)
-  axleId           String?
+  axleId           String?  @map("axle_id")
   status           TireCondition @default(NOVO)
-
   treadDepth       Int?     @map("tread_depth")  // Profundidade do sulco em milímetros
   treadPattern     String?   @map("tread_pattern") // Padrão de sulco (ex: radial, diagonal)
-  wearRating       Int?      // Classificação de desgaste, de 1 a 10, por exemplo
+  wearRating       Int?      @map("wear_rating") // Classificação de desgaste, de 1 a 10, por exemplo
   fireNumber       String?   @unique @map("fire_number") // Número de fogo para identificação
   location         TireLocation // Localização do pneu
 
   createdAt        DateTime  @default(now()) @map("created_at")
   updatedAt        DateTime  @updatedAt @map("updated_at")
-
   @@map("tires")
   @@index([axleId])
   maintenanceHistory TireHistory[] // Histórico de manutenção
-  TireRequest TireRequest[]
+  tireRequest TireRequest[]
 }
 
 model TireRequest {
   id                    String      @id 
   tire                  Tire?        @relation(fields: [tireId], references: [id])
-  tireId                String?
+  tireId                String?     @map("tire_id")
   requestedBy           User        @relation("TireRequestRequestedBy", fields: [requestedById], references: [id])
-  requestedById         String
+  requestedById         String      @map("requested_by_id")
   requestedFor          Employee?   @relation("EmployeeTireRequest", fields: [requestedForEmployeeId], references: [id])
-  requestedForEmployeeId String?
+  requestedForEmployeeId String?     @map("requested_for_employee_id")
   handledBy             User?    @relation("TireRequestHandledBy", fields: [handledById], references: [id]) // Nome alterado
-  handledById           String?
+  handledById           String?   @map("handled_by_id")
   quantity              Int       // Quantidade solicitada
-  approvedQuantity      Int?      // Quantidade aprovada (pode ser diferente da solicitada)
-  status                RequestStatus   @default(PENDING)  // Ex: PENDING, APPROVED, REJECTED
-  rejectionReason       String? 
-  requestedAt           DateTime @default(now())
-  approvedAt            DateTime? // Data de aprovação
-  deliveredAt           DateTime?
+  approvedQuantity      Int?      @map("approved_quantity") 
+  status                RequestStatus   @default(PENDING)  
+  rejectionReason       String?   @map("rejection_reason") 
+  requestedAt           DateTime @default(now()) @map("requested_at")
+  approvedAt            DateTime?  @map("approved_at")
+  deliveredAt           DateTime?  @map("delivered_at")
   workOrder             WorkOrder? @relation(fields: [workOrderId], references: [id])
-  workOrderId           String?
-  updatedAt             DateTime  @updatedAt
+  workOrderId           String?    @map("work_order_id")
+  updatedAt             DateTime  @updatedAt @map("updated_at")
 }
 
 enum TireCondition {
@@ -330,11 +338,11 @@ enum TireLocation {
 model AxleHistory {
   id              String     @id
   axle            Axle       @relation(fields: [axleId], references: [id], onDelete: Cascade)
-  axleId          String
+  axleId          String     @map("axle_id")
   workOrder       WorkOrder  @relation(fields: [workOrderId], references: [id], onDelete: Cascade)
-  workOrderId     String
+  workOrderId     String     @map("work_order_id")
   description     String?
-  performedAt     DateTime    // Data da manutenção/inspeção
+  performedAt     DateTime   @map("perfomed_at")  // Data da manutenção/inspeção
 
   createdAt       DateTime   @map("created_at")
   updatedAt       DateTime   @map("updated_at")
@@ -347,11 +355,11 @@ model AxleHistory {
 model TireHistory {
   id              String     @id
   tire            Tire       @relation(fields: [tireId], references: [id], onDelete: Cascade)
-  tireId          String
+  tireId          String     @map("tire_id")
   workOrder       WorkOrder  @relation(fields: [workOrderId], references: [id], onDelete: Cascade)
-  workOrderId     String
+  workOrderId     String     @map("work_order_id")
   description     String?
-  performedAt     DateTime    // Data da manutenção/inspeção
+  performedAt     DateTime   @map("perfomed_at") // Data da manutenção/inspeção
 
   createdAt       DateTime   @map("created_at")
   updatedAt       DateTime   @map("updated_at")
@@ -362,10 +370,10 @@ model TireHistory {
 model Employee {
   id          String      @id
   name        String      @unique
-  workShift   String  
+  workShift   String      @map("work_shift")
   isActive    Boolean     @map("is_active") @default(true)
   job         Job         @relation(fields: [jobTitleId], references: [id]) 
-  jobTitleId  String
+  jobTitleId  String      @map("job_title_id")
 
   createdAt   DateTime  @map("created_at")
   updatedAt   DateTime  @map("updated_at")
@@ -373,8 +381,8 @@ model Employee {
   @@map("employees")
   @@index([jobTitleId]) 
   serviceAssignments    ServiceAssignment[]
-  PartRequest PartRequest[] @relation("EmployeePartRequest")
-  TireRequest TireRequest[] @relation("EmployeeTireRequest")
+  partRequest PartRequest[] @relation("EmployeePartRequest")
+  tireRequest TireRequest[] @relation("EmployeeTireRequest")
 }
 
 model Job {
@@ -419,13 +427,13 @@ model WorkOrder {
   exitSupervisor        String?    @map("exit_supervisor")
   status                MaintenanceStatus
   fleet                 Fleet      @relation(fields: [fleetId], references: [id])
-  fleetId               String
+  fleetId               String     @map("fleet_id")
   user                  User       @relation(fields: [userId], references: [id])
-  userId                String     
-  company               Company   @relation(fields: [companyId], references: [id])
-  companyId             String
+  userId                String     @map("user_id")
+  company               Company    @relation(fields: [companyId], references: [id])
+  companyId             String     @map("company_id")
   typeOfMaintenance     TypeOfMaintenance
-  boxId                 String?     
+  boxId                 String?    @map("box_id")
   box                   Box?       @relation(fields: [boxId], references: [id]) 
   isCancelled           Boolean    @default(false) @map("is_cancelled")
   createdBy             String?    @map("created_by")
@@ -441,9 +449,9 @@ model WorkOrder {
   tireHistories         TireHistory[]
   axleHistories         AxleHistory[]
   checklists Checklist[] // Relacionamento com os checklists
-  Note Note[]
-  PartRequest PartRequest[]
-  TireRequest TireRequest[]
+  note Note[]
+  partRequest PartRequest[]
+  tireRequest TireRequest[]
 }
 
 model ServiceAssignment {
@@ -451,9 +459,11 @@ model ServiceAssignment {
   workOrder       WorkOrder  @relation(fields: [workOrderId], references: [id])
   workOrderId     String     @map("word_order_id")
   service         Service    @relation(fields: [serviceId], references: [id])
-  serviceId       String  
+  serviceId       String     @map("service_id")
   employee        Employee   @relation(fields: [employeeId], references: [id])
   employeeId      String     @map("employee_id")
+  startAt         DateTime?   @map("start_at")
+  endAt           DateTime?   @map("end_at")
 
   createdAt       DateTime   @map("created_at")
   updatedAt       DateTime   @map("updated_at")
@@ -467,7 +477,7 @@ model ChecklistTemplate {
   id          String    @id 
   name        String    // Nome do checklist (ex: "Checklist de Manutenção Padrão")
   company     Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  companyId   String
+  companyId   String    @map("company_id")
   items       ChecklistItemTemplate[] // Itens do checklist
 
   createdAt   DateTime  @default(now()) @map("created_at")
@@ -475,28 +485,28 @@ model ChecklistTemplate {
 
   @@map("checklist_templates")
   @@index([companyId])
-  Checklist Checklist[]
+  checklist Checklist[]
 }
 
 model ChecklistItemTemplate {
   id          String    @id 
   description String    // Descrição do item (ex: "Verificar nível de óleo")
   template    ChecklistTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
-  templateId  String
+  templateId  String    @map("template_id")
 
   createdAt   DateTime  @default(now()) @map("created_at")
   updatedAt   DateTime  @updatedAt @map("updated_at")
 
   @@map("checklist_item_templates")
-  ChecklistItem ChecklistItem[]
+  checklistItem ChecklistItem[]
 }
 
 model Checklist {
   id            String      @id 
   workOrder     WorkOrder   @relation(fields: [workOrderId], references: [id], onDelete: Cascade)
-  workOrderId   String
+  workOrderId   String      @map("work_order_id")
   template      ChecklistTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
-  templateId    String
+  templateId    String      @map("template_id")
   items         ChecklistItem[]   // Itens verificados com o status conforme/não conforme
 
   createdAt     DateTime    @default(now()) @map("created_at")
@@ -510,11 +520,10 @@ model Checklist {
 model ChecklistItem {
   id          String    @id 
   checklist   Checklist @relation(fields: [checklistId], references: [id], onDelete: Cascade)
-  checklistId String
+  checklistId String    @map("checklist_id")
   itemTemplate ChecklistItemTemplate @relation(fields: [itemTemplateId], references: [id], onDelete: Cascade)
-  itemTemplateId String
-  isConform   Boolean   // Status booleano: conforme ou não
-
+  itemTemplateId String  @map("item_template_id")
+  isConform   Boolean    @map("is_conform")
   createdAt   DateTime  @default(now()) @map("created_at")
   updatedAt   DateTime  @updatedAt @map("updated_at")
 
@@ -540,7 +549,7 @@ model Box {
   id            String        @id
   name          String        @unique   
   description   String?                 
-  isActive      Boolean       @default(true) 
+  isActive      Boolean       @default(true) @map("is_active")
 
   @@map("boxes")
   workOrder     WorkOrder[]  

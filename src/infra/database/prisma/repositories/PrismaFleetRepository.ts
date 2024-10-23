@@ -64,19 +64,6 @@ export class PrismaFleetRepository implements FleetRepository {
     return fleets;
   }
 
-  async findByPlate(companyInstance: CompanyInstance, plate: string): Promise<Fleet | null> {
-    const fleetRaw = await this.prisma.fleet.findUnique({
-      where: {
-        companyId: companyInstance.getCompanyId(),
-        plate,
-      },
-    })
-
-    if (!fleetRaw) return null;
-
-    return PrismaFleetMapper.toDomain(fleetRaw);
-  }
-
   async findByNumber(companyInstance: CompanyInstance, fleetNumber: string): Promise<Fleet | null> {
     const fleetRaw = await this.prisma.fleet.findUnique({
       where: {

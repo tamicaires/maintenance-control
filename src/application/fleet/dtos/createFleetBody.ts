@@ -11,14 +11,6 @@ export class CreateFleetBody {
 
   @IsStringCustom()
   @IsNotEmptyCustom()
-  plate: string;
-
-  @IsStringCustom()
-  @IsNotEmptyCustom()
-  km: string;
-
-  @IsStringCustom()
-  @IsNotEmptyCustom()
   carrierId: string;
 
   @IsBoolean()

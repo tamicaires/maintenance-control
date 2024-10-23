@@ -5,26 +5,23 @@ export function updateFleetProperties(fleet: Fleet, data: Partial<Fleet>) {
   if (data.fleetNumber !== undefined) {
     fleet.fleetNumber = data.fleetNumber;
   }
-  if (data.plate !== undefined) {
-    fleet.plate = data.plate;
-  }
 
-  if (data.km !== undefined) {
-    fleet.km = data.km;
-  }
   if (data.isActive !== undefined) {
     fleet.isActive = data.isActive;
+
+  }
+  if (data.carrierId !== undefined) {
+    fleet.carrierId = data.carrierId;
   }
 }
 
 export function mapEditFleetData(body: EditFleetBody, fleetId: string) {
-  const { fleetNumber, plate, km, isActive } = body;
+  const { fleetNumber, isActive, carrierId } = body;
 
   return {
     fleetId,
+    carrierId,
     fleetNumber,
-    plate,
-    km,
     isActive,
   };
 }

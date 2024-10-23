@@ -3,11 +3,9 @@ import { Replace } from 'src/shared/utils/replace';
 
 interface FleetSchema {
   fleetNumber: string;
-  plate: string;
-  km: string;
+  isActive: boolean;
   carrierId: string;
   companyId: string;
-  isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -38,22 +36,6 @@ export class Fleet {
 
   set fleetNumber(fleetNumber: string) {
     this.props.fleetNumber = fleetNumber;
-  }
-
-  get plate(): string {
-    return this.props.plate;
-  }
-
-  set plate(plate: string) {
-    this.props.plate = plate;
-  }
-
-  get km(): string {
-    return this.props.km;
-  }
-
-  set km(km: string) {
-    this.props.km = km;
   }
 
   get carrierId(): string {

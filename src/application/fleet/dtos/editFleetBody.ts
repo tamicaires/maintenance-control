@@ -7,26 +7,6 @@ export class EditFleetBody {
 
   @IsStringCustom()
   @IsOptional()
-  plate: string;
-
-  @IsStringCustom()
-  @IsOptional()
-  firstTrailerPlate: string;
-
-  @IsStringCustom()
-  @IsOptional()
-  secondTrailerPlate: string;
-
-  @IsStringCustom()
-  @IsOptional()
-  thirdTrailerPlate: string;
-
-  @IsStringCustom()
-  @IsOptional()
-  km: string;
-
-  @IsStringCustom()
-  @IsOptional()
   carrierId: string;
 
   @IsBoolean()

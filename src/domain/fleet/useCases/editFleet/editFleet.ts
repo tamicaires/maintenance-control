@@ -5,12 +5,8 @@ import { FleetNotFoundException } from '../../exceptions/FleetNotFoundException'
 
 interface EditFleetRequest {
   fleetId: string;
+  carrierId: string;
   fleetNumber?: string;
-  plate?: string;
-  firstTrailerPlate?: string;
-  secondTrailerPlate?: string;
-  thirdTrailerPlate?: string;
-  km?: string;
   isActive?: boolean;
 }
 

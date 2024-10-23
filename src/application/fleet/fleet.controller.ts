@@ -7,14 +7,12 @@ import {
   Post,
   Put,
   Query,
-  Req,
   UseGuards,
 } from '@nestjs/common';
 import { CreateFleetBody } from './dtos/createFleetBody';
 import { EditFleetBody } from './dtos/editFleetBody';
 import { mapEditFleetData } from 'src/shared/utils/fleetUtils';
 import { FleetViewModel } from './viewModel/FleetViewModel';
-import { Request } from 'express';
 import { CreateFleet } from 'src/domain/fleet/useCases/createFleet/createFleet';
 import { DeleteFleet } from 'src/domain/fleet/useCases/deleteFleet/deleteFleet';
 import { EditFleet } from 'src/domain/fleet/useCases/editFleet/editFleet';
