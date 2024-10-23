@@ -9,10 +9,8 @@ export class FleetViewModel {
     return {
       id: fleet.id,
       fleetNumber: fleet.fleetNumber,
-      plate: fleet.plate,
       carrierId: fleet.carrierId,
       carrierName,
-      km: fleet.km,
       isActive: fleet.isActive,
       createdAt: fleet.createdAt,
       updatedAt: fleet.updatedAt,
