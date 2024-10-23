@@ -26,19 +26,24 @@ export class Ability {
   can(action: Action, subject: TSubject, conditions?: Record<string, any>): boolean {
     const denied = this.rules.some(rule => {
       rule.inverted && rule.action === action && rule.subject === subject &&
-      (!conditions || Object.entries(conditions).every(([key, value]) => rule.conditions?.[key] === value))
+        (!conditions || this.checkConditions(conditions, rule));
     });
 
     if (denied) {
-      return false; 
+      return false;
     }
 
     return this.rules.some(rule => !rule.inverted && rule.action === action && rule.subject === subject &&
-      (!conditions || Object.entries(conditions).every(([key, value]) => rule.conditions?.[key] === value)));
+      (!conditions || this.checkConditions(conditions, rule)));
   }
 
   cannot(action: Action, subject: TSubject): boolean {
     return !this.can(action, subject);
   }
-  
+
+  private checkConditions(conditions: Record<string, any>, rule: { conditions?: Record<string, any> }): boolean {
+    return Object.entries(conditions).every(([key, value]) => rule.conditions?.[key] === value
+    );
+  }
+
 }
