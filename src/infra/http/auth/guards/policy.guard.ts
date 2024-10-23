@@ -43,11 +43,14 @@ export class PolicyGuard implements CanActivate {
     membership: Membership,
     permission: { action: Action; subject: TSubject }
   ): boolean {
-    console.log("membership", membership);
-    console.log("permission", permission);
-    const ability = defineAbilitiesForUser(membership.userId, membership.companyId, membership.role);
+    const ability = defineAbilitiesForUser(
+      membership.userId, 
+      membership.companyId, 
+      membership.role
+    );
+    
     const companyId = membership.companyId;
-    console.log("ability", ability);
+
     if (!ability.can(permission.action, permission.subject, { companyId })) {
       throw new ForbiddenException(
         `Ação ${permission.action} no recurso ${permission.subject} não permitida.`

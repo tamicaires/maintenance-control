@@ -27,12 +27,11 @@ export class CheckUserMembership {
     if (!company) {
       throw new CompanyNotFoundException();
     } 
-    console.log("companyInstance", company);
+
     const membership = await this.membershipRepository.findByUserIdAndCompanyId(
       companyInstance,
       userId,
       );
-    console.log("membership no use case", membership)
     if (!membership) {
       throw new UserHasNoCompanyException();
     }
