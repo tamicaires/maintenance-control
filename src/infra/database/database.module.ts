@@ -33,7 +33,7 @@ import { PrismaPartRepository } from './prisma/repositories/PrismaPartRepository
 import { TireRepository } from 'src/domain/tire/repositories/TireRepository';
 import { PrismaTireRepository } from './prisma/repositories/PrismaTireRepository';
 import { UserRepository } from 'src/domain/user/repositories/UserRepository';
-import { VehicleRepository } from 'src/domain/vehicle/repositories/VechicleRepository';
+import { VehicleRepository } from 'src/core/domain/repositories/vechicle-repository';
 import { PrismaVehicleRepository } from './prisma/repositories/PrismaVehicleRepository';
 
 @Module({

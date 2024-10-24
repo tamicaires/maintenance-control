@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma.service";
-import { VehicleRepository } from "src/domain/vehicle/repositories/VechicleRepository";
+import { VehicleRepository } from "src/core/domain/repositories/vechicle-repository";
 import { CompanyInstance } from "src/core/company/company-instance";
-import { Vehicle } from "src/domain/vehicle/entitiy/Vehicle";
 import { PrismaVehicleMapper } from "../mappers/PrismaVehicleMapper";
+import { Vehicle } from "src/core/domain/entities/vehicle";
 
 @Injectable()
 export class PrismaVehicleRepository implements VehicleRepository {
@@ -18,7 +18,7 @@ export class PrismaVehicleRepository implements VehicleRepository {
 
     return PrismaVehicleMapper.toDomain(createdVehicle);
   }
-  
+
   async findByPlate(companyInstance: CompanyInstance, plate: string): Promise<Vehicle | null> {
     const vehicle = await this.prisma.vehicle.findFirst({
       where: {
@@ -34,5 +34,14 @@ export class PrismaVehicleRepository implements VehicleRepository {
     return PrismaVehicleMapper.toDomain(vehicle);
   }
 
+  async list(companyInstance: CompanyInstance): Promise<Vehicle[]> {
+    const vehicles = await this.prisma.vehicle.findMany({
+      where: {
+        companyId: companyInstance.getCompanyId(),
+      },
+    });
+
+    return vehicles.map((vehicle) => PrismaVehicleMapper.toDomain(vehicle));
+  }
 
 }

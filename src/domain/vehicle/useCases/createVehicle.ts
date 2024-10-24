@@ -1,8 +1,8 @@
 import { HttpStatus, Injectable } from "@nestjs/common";
 import { CompanyInstance } from "src/core/company/company-instance";
-import { VehicleRepository } from "../repositories/VechicleRepository";
+import { VehicleRepository } from "../../../core/domain/repositories/vechicle-repository";
 import { ExceptionHandler } from "src/core/exceptions/ExceptionHandler";
-import { Vehicle } from "../entitiy/Vehicle";
+import { Vehicle } from "../../../core/domain/entities/vehicle";
 
 interface CreateVehicleRequest {
   plate: string;

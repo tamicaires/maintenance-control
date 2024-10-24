@@ -1,5 +1,5 @@
 import { Vehicle as VehicleRaw } from "@prisma/client";
-import { Vehicle } from "src/domain/vehicle/entitiy/Vehicle";
+import { Vehicle } from "src/core/domain/entities/vehicle";
 
 export class PrismaVehicleMapper {
   static toPrisma(vehicle: Vehicle): VehicleRaw {
