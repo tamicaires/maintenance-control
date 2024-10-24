@@ -12,6 +12,7 @@ export const defineCarrierAbilities = (
     builder.can(Action.Read, 'Carrier', { companyId });
     builder.can(Action.Create, 'Carrier', { companyId });
     builder.can(Action.Update, 'Carrier', { companyId });
+    builder.can(Action.Delete, 'Carrier', { companyId });
     builder.can(Action.View_Report, 'Carrier', { companyId });
   }
 
