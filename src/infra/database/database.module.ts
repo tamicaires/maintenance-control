@@ -33,6 +33,8 @@ import { PrismaPartRepository } from './prisma/repositories/PrismaPartRepository
 import { TireRepository } from 'src/domain/tire/repositories/TireRepository';
 import { PrismaTireRepository } from './prisma/repositories/PrismaTireRepository';
 import { UserRepository } from 'src/domain/user/repositories/UserRepository';
+import { VehicleRepository } from 'src/domain/vehicle/repositories/VechicleRepository';
+import { PrismaVehicleRepository } from './prisma/repositories/PrismaVehicleRepository';
 
 @Module({
   providers: [
@@ -52,6 +54,10 @@ import { UserRepository } from 'src/domain/user/repositories/UserRepository';
     {
       provide: NoteRepository,
       useClass: PrismaNoteRepository,
+    },
+    {
+      provide: VehicleRepository,
+      useClass: PrismaVehicleRepository,
     },
     {
       provide: CarrierRepository,
@@ -107,6 +113,7 @@ import { UserRepository } from 'src/domain/user/repositories/UserRepository';
     UserRepository,
     MembershipRepository,
     NoteRepository,
+    VehicleRepository, 
     CarrierRepository,
     FleetRepository,
     TrailerRepository,

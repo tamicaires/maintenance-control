@@ -119,7 +119,7 @@ model Vehicle {
   brand       String
   year        String
   color       String?
-  km          String
+  km          Float
   power       Float    // Potência do veículo
   isActive    Boolean  @default(true) @map("is_active")
   fleet       Fleet?   @relation(fields: [fleetId], references: [id])
@@ -127,6 +127,8 @@ model Vehicle {
   company     Company   @relation(fields: [companyId], references: [id])
   companyId   String    @map("company_id")
 
+  createdAt   DateTime  @map("created_at")
+  updatedAt   DateTime  @map("updated_at")
   @@map("vehicles")
   @@index([companyId])
   @@index([plate])
@@ -162,7 +164,7 @@ model Trailer {
   isActive    Boolean     @default(true) @map("is_active")
 
   createdAt   DateTime    @default(now()) @map("created_at")
-  updatedAt   DateTime    @updatedAt @map("updated_at")
+  updatedAt   DateTime    @map("updated_at")
   @@map("trailers")
   @@index([fleetId])
   parts       Part[]    // Peças associadas ao reboque
@@ -216,7 +218,7 @@ model Part {
   companyId         String    @map("company_id") 
 
   createdAt         DateTime  @default(now()) @map("created_at")
-  updatedAt         DateTime  @updatedAt @map("updated_at")
+  updatedAt         DateTime  @map("updated_at")
   @@map("parts")
   @@index([trailerId]) 
   @@index([categoryId])
@@ -229,7 +231,7 @@ model PartCategory {
   description String?   // Descrição da categoria
 
   createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @updatedAt @map("updated_at")
+  updatedAt   DateTime  @map("updated_at")
 
   @@map("part_categories")
   @@index([name])
@@ -256,7 +258,7 @@ model PartRequest {
   deliveredAt           DateTime? @map("delivered_at")
   workOrder             WorkOrder? @relation(fields: [workOrderId], references: [id])
   workOrderId           String?  @map("work_order_id")
-  updatedAt             DateTime  @updatedAt @map("updated_at")
+  updatedAt             DateTime  @map("updated_at")
 
   @@map("part_requests")
 }
@@ -293,7 +295,7 @@ model Tire {
   location         TireLocation // Localização do pneu
 
   createdAt        DateTime  @default(now()) @map("created_at")
-  updatedAt        DateTime  @updatedAt @map("updated_at")
+  updatedAt        DateTime  @map("updated_at")
   @@map("tires")
   @@index([axleId])
   maintenanceHistory TireHistory[] // Histórico de manutenção
@@ -319,7 +321,7 @@ model TireRequest {
   deliveredAt           DateTime?  @map("delivered_at")
   workOrder             WorkOrder? @relation(fields: [workOrderId], references: [id])
   workOrderId           String?    @map("work_order_id")
-  updatedAt             DateTime  @updatedAt @map("updated_at")
+  updatedAt             DateTime  @map("updated_at")
 }
 
 enum TireCondition {
@@ -481,7 +483,7 @@ model ChecklistTemplate {
   items       ChecklistItemTemplate[] // Itens do checklist
 
   createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @updatedAt @map("updated_at")
+  updatedAt   DateTime  @map("updated_at")
 
   @@map("checklist_templates")
   @@index([companyId])
@@ -495,7 +497,7 @@ model ChecklistItemTemplate {
   templateId  String    @map("template_id")
 
   createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @updatedAt @map("updated_at")
+  updatedAt   DateTime  @map("updated_at")
 
   @@map("checklist_item_templates")
   checklistItem ChecklistItem[]

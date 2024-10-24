@@ -21,6 +21,7 @@ import { AuthModule } from './infra/http/auth/auth.module';
 import { AbilityModule } from './infra/http/ability/ability.module';
 import { JwtAuthGuard } from './infra/http/auth/guards/jwtAuth.guard';
 import { CheckUserMembership } from './domain/memberShip/useCases/checkUserMembership';
+import { VehicleModule } from './application/vehicle/vehicle.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { CheckUserMembership } from './domain/memberShip/useCases/checkUserMembe
     MembershipModule,
     UserModule,
     NoteModule,
+    VehicleModule,
     CarrierModule,
     FleetModule,
     TrailerModule,
