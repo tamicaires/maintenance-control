@@ -34,6 +34,8 @@ import { TireRepository } from 'src/core/domain/repositories/tire-repository';
 import { TrailerRepository } from 'src/core/domain/repositories/trailer-repository';
 import { UserRepository } from 'src/core/domain/repositories/user-repository';
 import { WorkOrderRepository } from 'src/core/domain/repositories/work-order-repository';
+import { BoxRepository } from 'src/core/domain/repositories/box-repository';
+import { PrismaBoxRepository } from './prisma/repositories/prisma-box-repository';
 
 @Module({
   providers: [
@@ -106,6 +108,10 @@ import { WorkOrderRepository } from 'src/core/domain/repositories/work-order-rep
       provide: ServiceAssignmentRepository,
       useClass: PrismaServiceAssignmentsRepository,
     },
+    {
+      provide: BoxRepository,
+      useClass: PrismaBoxRepository,
+    },
   ],
   exports: [
     CompanyRepository,
@@ -125,6 +131,7 @@ import { WorkOrderRepository } from 'src/core/domain/repositories/work-order-rep
     ServiceRepository,
     WorkOrderRepository,
     ServiceAssignmentRepository,
+    BoxRepository,
   ],
 })
 export class DatabaseModule { }

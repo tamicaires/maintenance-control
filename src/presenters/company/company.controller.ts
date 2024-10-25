@@ -8,7 +8,7 @@ import { CreateCompany } from 'src/application/company/useCases/createCompany.us
 import { GetManyCompanies } from 'src/application/company/useCases/getManyCompanies.use-case';
 
 @Controller('companies')
-@UseGuards(PolicyGuard)
+// @UseGuards(PolicyGuard)
 export class CompanyController {
   constructor(
     private readonly createCompanyUseCase: CreateCompany,

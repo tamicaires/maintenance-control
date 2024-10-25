@@ -21,6 +21,7 @@ import { AuthModule } from './infra/http/auth/auth.module';
 import { AbilityModule } from './infra/http/ability/ability.module';
 import { JwtAuthGuard } from './infra/http/auth/guards/jwtAuth.guard';
 import { VehicleModule } from './presenters/vehicle/vehicle.module';
+import { BoxModule } from './presenters/box/box.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { VehicleModule } from './presenters/vehicle/vehicle.module';
     UserModule,
     NoteModule,
     VehicleModule,
+    BoxModule,
     CarrierModule,
     FleetModule,
     TrailerModule,

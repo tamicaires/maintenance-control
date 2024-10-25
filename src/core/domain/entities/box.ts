@@ -2,7 +2,7 @@ import { randomUUID } from 'crypto';
 
 interface BoxProps {
   name: string;
-  description: string;
+  description: string | null;
   isActive: boolean;
   companyId: string;
 }
@@ -31,11 +31,11 @@ export class Box {
     this.props.name = name;
   }
 
-  get description(): string {
+  get description(): string | null {
     return this.props.description;
   }
 
-  set description(description: string) {
+  set description(description: string | null) {
     this.props.description = description;
   }
 
@@ -45,5 +45,13 @@ export class Box {
 
   set isActive(isActive: boolean) {
     this.props.isActive = isActive;
+  }
+
+  get companyId(): string {
+    return this.props.companyId;
+  }
+
+  set companyId(companyId: string) {
+    this.props.companyId = companyId;
   }
 }
