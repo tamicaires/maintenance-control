@@ -1,5 +1,5 @@
 import { Trailer as TrailerRaw } from "@prisma/client";
-import { Trailer } from "src/domain/trailer/entities/Trailer";
+import { Trailer } from "src/core/domain/entities/trailer";
 
 export class PrismaTrailerMapper {
   static toPrisma(trailer: Trailer): TrailerRaw {

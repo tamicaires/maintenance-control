@@ -1,27 +1,26 @@
 import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { DatabaseModule } from './infra/database/database.module';
-import { AxleModule } from './application/axle/axle.module';
-import { CarrierModule } from './application/carrier/carrier.module';
-import { CompanyModule } from './application/company/company.module';
-import { EmployeeModule } from './application/employee/employee.module';
-import { FleetModule } from './application/fleet/fleet.module';
-import { JobModule } from './application/job/job.module';
-import { MembershipModule } from './application/membership/membership.module';
-import { NoteModule } from './application/note/note.module';
-import { PartModule } from './application/part/part.module';
-import { PartCategoryModule } from './application/partCategory/partCategory.module';
-import { ServiceModule } from './application/service/service.module';
-import { ServiceAssignmentModule } from './application/serviceAssignment/serviceAssignment.module';
-import { TireModule } from './application/tire/tire.module';
-import { TrailerModule } from './application/trailer/trailer.module';
-import { UserModule } from './application/user/user.module';
-import { WorkOrderModule } from './application/workOrder/workOrder.module';
+import { AxleModule } from './presenters/axle/axle.module';
+import { CarrierModule } from './presenters/carrier/carrier.module';
+import { CompanyModule } from './presenters/company/company.module';
+import { EmployeeModule } from './presenters/employee/employee.module';
+import { FleetModule } from './presenters/fleet/fleet.module';
+import { JobModule } from './presenters/job/job.module';
+import { MembershipModule } from './presenters/membership/membership.module';
+import { NoteModule } from './presenters/note/note.module';
+import { PartModule } from './presenters/part/part.module';
+import { PartCategoryModule } from './presenters/partCategory/partCategory.module';
+import { ServiceModule } from './presenters/service/service.module';
+import { ServiceAssignmentModule } from './presenters/serviceAssignment/serviceAssignment.module';
+import { TireModule } from './presenters/tire/tire.module';
+import { TrailerModule } from './presenters/trailer/trailer.module';
+import { UserModule } from './presenters/user/user.module';
+import { WorkOrderModule } from './presenters/workOrder/workOrder.module';
 import { AuthModule } from './infra/http/auth/auth.module';
 import { AbilityModule } from './infra/http/ability/ability.module';
 import { JwtAuthGuard } from './infra/http/auth/guards/jwtAuth.guard';
-import { CheckUserMembership } from './domain/memberShip/useCases/checkUserMembership';
-import { VehicleModule } from './application/vehicle/vehicle.module';
+import { VehicleModule } from './presenters/vehicle/vehicle.module';
 
 @Module({
   imports: [

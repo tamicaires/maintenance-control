@@ -1,5 +1,5 @@
 import { ServiceAssignment as ServiceAssignmentRaw } from '@prisma/client';
-import { ServiceAssignment } from 'src/domain/serviceAssignment/entities/ServiceAssignment';
+import { ServiceAssignment } from 'src/core/domain/entities/service-assignment';
 
 export class PrismaServiceAssignmentMapper {
   static toPrisma({

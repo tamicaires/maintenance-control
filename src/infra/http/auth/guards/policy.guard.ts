@@ -4,11 +4,11 @@ import { CanActivate, ExecutionContext, Injectable, ForbiddenException } from '@
 import { Action } from '../../ability/ability';
 import { PERMISSION_KEY } from '../decorators/permissions.decorator';
 import { defineAbilitiesForUser } from '../../ability/permissions';
-import { CheckUserMembership } from 'src/domain/memberShip/useCases/checkUserMembership';
-import { Membership } from 'src/domain/memberShip/entity/Membership';
 import { TSubject } from 'src/core/enum/subject.enum';
 import { CookiesEnum } from 'src/core/enum/cookies';
 import { CompanyInstance } from 'src/core/company/company-instance';
+import { CheckUserMembership } from 'src/application/membership/useCases/checkUserMembership';
+import { Membership } from 'src/core/domain/entities/membership';
 
 @Injectable()
 export class PolicyGuard implements CanActivate {

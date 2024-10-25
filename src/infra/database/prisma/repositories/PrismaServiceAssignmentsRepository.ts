@@ -1,8 +1,8 @@
 import { PrismaService } from '../prisma.service';
 import { PrismaServiceAssignmentMapper } from '../mappers/PrismaServiceAssignmentMapper';
 import { Injectable } from '@nestjs/common';
-import { ServiceAssignmentRepository } from 'src/domain/serviceAssignment/repositories/serviceAssignmentRepository';
-import { ServiceAssignment } from 'src/domain/serviceAssignment/entities/ServiceAssignment';
+import { ServiceAssignmentRepository } from 'src/core/domain/repositories/service-assignment-repository';
+import { ServiceAssignment } from 'src/core/domain/entities/service-assignment';
 
 @Injectable()
 export class PrismaServiceAssignmentsRepository

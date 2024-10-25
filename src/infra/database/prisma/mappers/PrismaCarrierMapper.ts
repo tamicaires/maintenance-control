@@ -1,5 +1,5 @@
 import { Carrier as CarrierRaw } from '@prisma/client';
-import { Carrier } from "src/domain/carrier/entities/Carrier";
+import { Carrier } from "src/core/domain/entities/carrier";
 
 export class PrismaCarrierMapper {
   static toPrisma({

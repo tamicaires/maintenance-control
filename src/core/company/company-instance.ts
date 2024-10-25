@@ -1,6 +1,6 @@
-import { Injectable } from "@nestjs/common";
-import { CompanyNotFoundException } from "src/domain/company/exceptions/CompanyNotFoundException";
+import { HttpStatus, Injectable } from "@nestjs/common";
 import { UserHasNoCompanyException } from "../exceptions/UserHasNoCompanyException";
+import { ExceptionHandler } from "../exceptions/ExceptionHandler";
 
 @Injectable()
 export class CompanyInstance {
@@ -8,7 +8,10 @@ export class CompanyInstance {
 
   private constructor(companyId: string) {
     if (!companyId) {
-      throw new CompanyNotFoundException();
+      throw new ExceptionHandler({
+        message: "Empresa não informada",
+        status: HttpStatus.NOT_FOUND
+      })
     }
     this.companyId = companyId;
   }

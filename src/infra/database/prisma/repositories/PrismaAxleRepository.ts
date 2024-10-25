@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma.service";
 import { PrismaAxleMapper } from "../mappers/PrismaAxleMapper";
-import { AxleRepository } from "src/domain/axle/repositories/axleRepository";
-import { Axle } from "src/domain/axle/entities/axle";
+import { AxleRepository } from "src/core/domain/repositories/axle-repository";
+import { Axle } from "src/core/domain/entities/axle";
 
 @Injectable()
 export class PrismaAxleRepository implements AxleRepository {

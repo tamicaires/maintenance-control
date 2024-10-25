@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { PrismaFleetMapper } from '../mappers/PrismaFleetMapper';
-import { FleetRepository } from 'src/domain/fleet/repositories/FleetRepository';
-import { Fleet } from 'src/domain/fleet/entities/Fleet';
 import { CompanyInstance } from 'src/core/company/company-instance';
+import { FleetRepository } from 'src/core/domain/repositories/fleet-repository';
+import { Fleet } from 'src/core/domain/entities/fleet';
 
 @Injectable()
 export class PrismaFleetRepository implements FleetRepository {

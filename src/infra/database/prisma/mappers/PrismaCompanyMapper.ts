@@ -1,5 +1,5 @@
 import { Company as CompanyRaw } from '@prisma/client';
-import { Company } from 'src/domain/company/entities/Company';
+import { Company } from 'src/core/domain/entities/company';
 
 export class PrismaCompanyMapper {
   static toPrisma({

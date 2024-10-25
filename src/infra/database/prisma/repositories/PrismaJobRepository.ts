@@ -1,8 +1,8 @@
 import { PrismaService } from '../prisma.service';
 import { Injectable } from '@nestjs/common';
 import { PrismaJobMapper } from '../mappers/PrismaJobMapper';
-import { JobRepository } from 'src/domain/job/repositories/jobRepository';
-import { Job } from 'src/domain/job/entities/Job';
+import { JobRepository } from 'src/core/domain/repositories/job-repository';
+import { Job } from 'src/core/domain/entities/job';
 
 @Injectable()
 export class PrismaJobRepository implements JobRepository {

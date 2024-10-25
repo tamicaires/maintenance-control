@@ -1,4 +1,4 @@
-import { Tire } from "src/domain/tire/entities/Tire";
+import { Tire } from "src/core/domain/entities/tire";
 
 
 export function updateTireProperties(tire: Tire, data: Partial<Tire>) {

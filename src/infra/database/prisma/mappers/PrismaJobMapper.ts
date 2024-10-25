@@ -1,5 +1,5 @@
 import { Job as JobRaw } from '@prisma/client';
-import { Job } from 'src/domain/job/entities/Job';
+import { Job } from 'src/core/domain/entities/job';
 
 export class PrismaJobMapper {
   static toPrisma({ id, jobTitle }: Job): JobRaw {

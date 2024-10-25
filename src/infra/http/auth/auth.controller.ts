@@ -12,8 +12,8 @@ import { LocalAuthGuard } from './guards/localAuth.guard';
 import { Public } from './decorators/is-public.decorator';
 import { JwtAuthGuard } from './guards/jwtAuth.guard';
 import { CurrentUser } from './decorators/current-user.decorator';
-import { User } from 'src/domain/user/entities/User';
-import { SignInUseCase } from 'src/domain/auth/useCases/signInUseCase/signInUseCase';
+import { SignInUseCase } from 'src/application/auth/useCases/signInUseCase/signInUseCase';
+import { User } from 'src/core/domain/entities/user';
 
 @Controller()
 export class AuthControler {

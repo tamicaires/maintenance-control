@@ -1,6 +1,5 @@
 import { PartCategory as PartCategoryRaw } from '@prisma/client';
-import { PartCategory } from 'src/domain/partCategory/entities/partCategory';
-
+import { PartCategory } from 'src/core/domain/entities/part-category';
 
 export class PrismaPartCategoryMapper {
   static toPrisma(partCategory: PartCategory): PartCategoryRaw {

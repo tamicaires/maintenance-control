@@ -1,5 +1,5 @@
 import { Axle as AxleRaw } from "@prisma/client";
-import { Axle } from "src/domain/axle/entities/axle";
+import { Axle } from "src/core/domain/entities/axle";
 
 export class PrismaAxleMapper {
   static toPrisma(trailer: Axle): AxleRaw {

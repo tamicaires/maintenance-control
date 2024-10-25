@@ -1,40 +1,39 @@
 import { Module } from '@nestjs/common';
 import { PrismaService } from './prisma/prisma.service';
-
 import { PrismaUserRepository } from './prisma/repositories/PrismaUserRepository';
-import { FleetRepository } from 'src/domain/fleet/repositories/FleetRepository';
 import { PrismaFleetRepository } from './prisma/repositories/PrismaFleetRepository';
-import { NoteRepository } from 'src/domain/note/repositories/noteRepository';
 import { PrismaNoteRepository } from './prisma/repositories/PrismaNoteRepository';
-import { CarrierRepository } from 'src/domain/carrier/repositories/CarrierRepository';
 import { PrismaCarrierRepository } from './prisma/repositories/PrismaCarrierRepository';
-import { JobRepository } from 'src/domain/job/repositories/jobRepository';
 import { PrismaJobRepository } from './prisma/repositories/PrismaJobRepository';
-import { EmployeeRepository } from 'src/domain/employee/repositories/EmployeeRepository';
 import { PrismaEmployeeRepository } from './prisma/repositories/PrismaEmployeeRepository';
-import { ServiceRepository } from 'src/domain/service/repositories/serviceRepository';
 import { PrismaServiceRepository } from './prisma/repositories/PrismaServiceRepository';
-import { WorkOrderRepository } from 'src/domain/workOrder/repositories/workOrderRepository';
 import { PrismaWorkOrderRepository } from './prisma/repositories/PrismaWorkOrderRepository';
-import { ServiceAssignmentRepository } from 'src/domain/serviceAssignment/repositories/serviceAssignmentRepository';
 import { PrismaServiceAssignmentsRepository } from './prisma/repositories/PrismaServiceAssignmentsRepository';
-import { CompanyRepository } from 'src/domain/company/repositories/CompanyRepository';
 import { PrismaCompanyRepository } from './prisma/repositories/PrismaCompanyRepository';
-import { MembershipRepository } from 'src/domain/memberShip/repositories/membershipRepository';
 import { PrismaMembershipRepository } from './prisma/repositories/PrismaMembershipRepository';
-import { TrailerRepository } from 'src/domain/trailer/repositories/trailerRepository';
 import { PrismaTrailerRepository } from './prisma/repositories/PrismaTrailerRepository';
-import { AxleRepository } from 'src/domain/axle/repositories/axleRepository';
 import { PrismaAxleRepository } from './prisma/repositories/PrismaAxleRepository';
-import { PartCategoryRepository } from 'src/domain/partCategory/repositories/partCategoryRepository';
 import { PrismaPartCategoryRepository } from './prisma/repositories/PrismaPartCategoryRepository';
-import { PartRepository } from 'src/domain/part/repositories/partRepository';
 import { PrismaPartRepository } from './prisma/repositories/PrismaPartRepository';
-import { TireRepository } from 'src/domain/tire/repositories/TireRepository';
 import { PrismaTireRepository } from './prisma/repositories/PrismaTireRepository';
-import { UserRepository } from 'src/domain/user/repositories/UserRepository';
 import { VehicleRepository } from 'src/core/domain/repositories/vechicle-repository';
 import { PrismaVehicleRepository } from './prisma/repositories/PrismaVehicleRepository';
+import { AxleRepository } from 'src/core/domain/repositories/axle-repository';
+import { CarrierRepository } from 'src/core/domain/repositories/carrier-repository';
+import { CompanyRepository } from 'src/core/domain/repositories/company-repository';
+import { EmployeeRepository } from 'src/core/domain/repositories/employee-repository';
+import { FleetRepository } from 'src/core/domain/repositories/fleet-repository';
+import { JobRepository } from 'src/core/domain/repositories/job-repository';
+import { MembershipRepository } from 'src/core/domain/repositories/membership-repository';
+import { NoteRepository } from 'src/core/domain/repositories/note-repository';
+import { PartCategoryRepository } from 'src/core/domain/repositories/part-category-repository';
+import { PartRepository } from 'src/core/domain/repositories/part-repository';
+import { ServiceAssignmentRepository } from 'src/core/domain/repositories/service-assignment-repository';
+import { ServiceRepository } from 'src/core/domain/repositories/service-repository';
+import { TireRepository } from 'src/core/domain/repositories/tire-repository';
+import { TrailerRepository } from 'src/core/domain/repositories/trailer-repository';
+import { UserRepository } from 'src/core/domain/repositories/user-repository';
+import { WorkOrderRepository } from 'src/core/domain/repositories/work-order-repository';
 
 @Module({
   providers: [

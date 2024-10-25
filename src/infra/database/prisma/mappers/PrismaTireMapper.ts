@@ -1,6 +1,5 @@
 import { Tire as TireRaw} from "@prisma/client";
-import { Tire } from "src/domain/tire/entities/Tire";
-
+import { Tire } from "src/core/domain/entities/tire";
 
 export class PrismaTireMapper {
   static toPrisma(tire: Tire): TireRaw {

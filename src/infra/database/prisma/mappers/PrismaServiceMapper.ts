@@ -1,6 +1,6 @@
 import { Service as ServiceRaw } from '@prisma/client';
+import { Service } from 'src/core/domain/entities/service';
 import { ServiceCategory } from 'src/core/enum/service-category.enum';
-import { Service } from 'src/domain/service/entities/Service';
 
 export class PrismaServiceMapper {
   static toPrisma({ id, serviceName, serviceCategory }: Service): ServiceRaw {

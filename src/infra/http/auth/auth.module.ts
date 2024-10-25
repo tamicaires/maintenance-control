@@ -5,11 +5,11 @@ import { signInDTOValidateMiddleware } from './middleware/signInDTOValidate.midd
 import { JwtModule } from '@nestjs/jwt';
 import { PrismaService } from 'src/infra/database/prisma/prisma.service';
 import { jwtKeys } from 'src/core/config/constants';
-import { LocalStrategy } from 'src/domain/auth/strategies/local.strategy';
-import { JwtStrategy } from 'src/domain/auth/strategies/jwtStrategy';
-import { SignInUseCase } from 'src/domain/auth/useCases/signInUseCase/signInUseCase';
-import { ValidateUserUseCase } from 'src/domain/auth/useCases/validateUser/validateUserUseCase';
-import { UserModule } from 'src/application/user/user.module';
+import { UserModule } from 'src/presenters/user/user.module';
+import { LocalStrategy } from 'src/application/auth/strategies/local.strategy';
+import { JwtStrategy } from 'src/application/auth/strategies/jwtStrategy';
+import { SignInUseCase } from 'src/application/auth/useCases/signInUseCase/signInUseCase';
+import { ValidateUserUseCase } from 'src/application/auth/useCases/validateUser/validateUserUseCase';
 
 @Module({
   imports: [

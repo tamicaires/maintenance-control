@@ -1,5 +1,5 @@
 import { Part as PartRaw } from "@prisma/client";
-import { Part } from "src/domain/part/entities/Part";
+import { Part } from "src/core/domain/entities/part";
 
 export class PrismaPartMapper {
   static toPrisma(part: Part): PartRaw {

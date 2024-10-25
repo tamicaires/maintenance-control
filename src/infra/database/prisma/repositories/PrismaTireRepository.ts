@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma.service";
 import { PrismaTireMapper } from "../mappers/PrismaTireMapper";
-import { TireRepository } from "src/domain/tire/repositories/TireRepository";
-import { Tire } from "src/domain/tire/entities/Tire";
+import { TireRepository } from "src/core/domain/repositories/tire-repository";
+import { Tire } from "src/core/domain/entities/tire";
 
 @Injectable()
 export class PrismaTireRepository implements TireRepository {

@@ -1,4 +1,4 @@
-import { Part } from "src/domain/part/entities/Part";
+import { Part } from "src/core/domain/entities/part";
 
 export function updatePartProperties(part: Part, data: Partial<Part>) {
   if (data.name !== undefined) {

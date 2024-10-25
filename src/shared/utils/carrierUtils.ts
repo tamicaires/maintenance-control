@@ -1,4 +1,4 @@
-import { Carrier } from "src/domain/carrier/entities/Carrier";
+import { Carrier } from "src/core/domain/entities/carrier";
 
 export function updateCarrierProperties(
   carrier: Carrier,

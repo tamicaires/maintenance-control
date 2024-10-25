@@ -1,5 +1,4 @@
-
-import { User } from 'src/domain/user/entities/User';
+import { User } from 'src/core/domain/entities/user';
 import { SessionData } from './sessionModel';
 
 export class AuthRequestModel extends Request {

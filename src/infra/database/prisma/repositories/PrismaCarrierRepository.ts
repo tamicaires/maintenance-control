@@ -1,9 +1,9 @@
 import { PrismaService } from '../prisma.service';
-import { Carrier } from "src/domain/carrier/entities/Carrier";
+import { Carrier } from "src/core/domain/entities/carrier";
 import { PrismaCarrierMapper } from '../mappers/PrismaCarrierMapper';
 import { Injectable } from '@nestjs/common';
-import { CarrierRepository } from 'src/domain/carrier/repositories/CarrierRepository';
 import { CompanyInstance } from 'src/core/company/company-instance';
+import { CarrierRepository } from 'src/core/domain/repositories/carrier-repository';
 
 @Injectable()
 export class PrismaCarrierRepository implements CarrierRepository {
