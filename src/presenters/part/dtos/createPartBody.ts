@@ -36,7 +36,7 @@ export class CreatePartBody {
   @IsNotEmptyCustom()
   costPrice: number;
 
-  @IsStringCustom()
+  @IsNumber()
   @IsOptional()
   sellingPrice: number | null;
 
