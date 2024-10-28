@@ -252,7 +252,7 @@ model PartRequest {
   quantity              Int
   approvedQuantity      Int?     @map("approved_quantity")  // Quantidade aprovada (pode ser diferente da solicitada)
   status                RequestStatus  @default(PENDING)
-  isRejected            Boolean? @map("is_rejected") // Indica se a solicitação foi rejeitada
+  isRejected            Boolean @map("is_rejected") @default(false)// Indica se a solicitação foi rejeitada
   rejectionReason       String?       @map("rejection_reason")// Justificativa de rejeição (opcional)
   requestedAt           DateTime @default(now())
   approvedAt            DateTime? @map("approved_at") 

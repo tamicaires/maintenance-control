@@ -22,6 +22,7 @@ import { AbilityModule } from './infra/http/ability/ability.module';
 import { JwtAuthGuard } from './infra/http/auth/guards/jwtAuth.guard';
 import { VehicleModule } from './presenters/vehicle/vehicle.module';
 import { BoxModule } from './presenters/box/box.module';
+import { PartRequestModule } from './presenters/part-request/part-request.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { BoxModule } from './presenters/box/box.module';
     AxleModule,
     PartCategoryModule,
     PartModule,
+    PartRequestModule, 
     TireModule,
     JobModule,
     EmployeeModule,

@@ -36,6 +36,8 @@ import { UserRepository } from 'src/core/domain/repositories/user-repository';
 import { WorkOrderRepository } from 'src/core/domain/repositories/work-order-repository';
 import { BoxRepository } from 'src/core/domain/repositories/box-repository';
 import { PrismaBoxRepository } from './prisma/repositories/prisma-box-repository';
+import { PartRequestRepository } from 'src/core/domain/repositories/part-request-repository';
+import { PrismaPartRequestRepository } from './prisma/repositories/prisma-part-request-repository';
 
 @Module({
   providers: [
@@ -85,6 +87,10 @@ import { PrismaBoxRepository } from './prisma/repositories/prisma-box-repository
       useClass: PrismaPartRepository,
     },
     {
+      provide: PartRequestRepository,
+      useClass: PrismaPartRequestRepository,
+    },
+    {
       provide: TireRepository,
       useClass: PrismaTireRepository,
     },
@@ -125,6 +131,7 @@ import { PrismaBoxRepository } from './prisma/repositories/prisma-box-repository
     AxleRepository,
     PartCategoryRepository,
     PartRepository,
+    PartRequestRepository,
     TireRepository,
     JobRepository,
     EmployeeRepository,
