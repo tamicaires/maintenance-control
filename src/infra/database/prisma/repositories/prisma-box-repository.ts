@@ -40,4 +40,12 @@ export class PrismaBoxRepository implements BoxRepository {
 
     return PrismaBoxMapper.toDomain(boxRaw);
   }
+
+  async list(companyInstance: CompanyInstance): Promise<Box[]> {
+    const boxesRaw = await this.prisma.box.findMany({
+      where: { companyId: companyInstance.getCompanyId() },
+    });
+
+    return boxesRaw.map(PrismaBoxMapper.toDomain);
+  }
 }

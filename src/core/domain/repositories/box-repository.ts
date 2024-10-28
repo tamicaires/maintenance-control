@@ -5,4 +5,5 @@ export abstract class BoxRepository {
   abstract create(companyInstance: CompanyInstance, box: Box): Promise<void>;
   abstract findById(companyInstance: CompanyInstance, id: string): Promise<Box | null>;
   abstract findByName(companyInstance: CompanyInstance, name: string): Promise<Box | null>;
+  abstract list(companyInstance: CompanyInstance): Promise<Box[]>;
 }
