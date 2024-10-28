@@ -5,4 +5,5 @@ import { PartRequest } from "../entities/part-request";
 export abstract class PartRequestRepository {
   abstract create(companyInstance: CompanyInstance, data: PartRequest): Promise<void>;
   abstract findById(companyInstance: CompanyInstance, id: string): Promise<PartRequest | null>;
+  abstract list(companyInstance: CompanyInstance): Promise<PartRequest[]>;
 }

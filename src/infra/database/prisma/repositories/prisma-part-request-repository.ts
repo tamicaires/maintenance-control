@@ -30,4 +30,9 @@ export class PrismaPartRequestRepository implements PartRequestRepository {
     return PrismaPartRequestMapper.toDomain(partRequestRaw);
   }
 
+  async list(companyInstance: CompanyInstance): Promise<PartRequest[]> {
+    const partRequestsRaw = await this.prisma.partRequest.findMany({});
+
+    return partRequestsRaw.map(PrismaPartRequestMapper.toDomain);
+  }
 }
