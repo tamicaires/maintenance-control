@@ -33,6 +33,6 @@ export class PartRequestBody {
   isRejected: boolean;
 
   @IsStringCustom()
-  @IsOptional()
-  workOrderId: string | null;
+  @IsNotEmptyCustom()
+  workOrderId: string;
 }

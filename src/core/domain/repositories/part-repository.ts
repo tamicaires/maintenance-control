@@ -1,3 +1,4 @@
+import { CompanyInstance } from "src/core/company/company-instance";
 import { Part } from "../entities/part";
 
 export abstract class PartRepository {
@@ -6,4 +7,5 @@ export abstract class PartRepository {
   abstract findById(id: string): Promise<Part | null>;
   abstract list(): Promise<Part[]>;
   abstract save(part: Part): Promise<void>;
+  abstract updateStockQuantity(companyInstance: CompanyInstance, partId: string, stockQuantity: number): Promise<void>;
 }

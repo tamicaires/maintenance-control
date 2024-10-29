@@ -9,13 +9,16 @@ import { ListPartRequests } from "src/application/part-request/use-cases/list-pa
 import { PartRequestViewModel } from "./view-model/part-request-view-model";
 import { RejectPartRequest } from "src/application/part-request/use-cases/reject-part-request";
 import { RejectPartRequestBody } from "./dto/reject-part-request-body";
+import { ApprovePartRequest } from "src/application/part-request/use-cases/approve-part-request";
+import { ApprovePartRequestBody } from "./dto/approve-part-request";
 
 @Controller("part-requests")
 export class PartRequestController {
   constructor(
     private readonly createPartRequest: CreatePartRequest,
     private readonly listPartRequest: ListPartRequests,
-    private readonly rejectPartRequest: RejectPartRequest
+    private readonly rejectPartRequest: RejectPartRequest,
+    private readonly approvePartRequest: ApprovePartRequest
   ) { }
 
   @Post()
@@ -50,6 +53,21 @@ export class PartRequestController {
     return await this.rejectPartRequest.execute(companyInstance, {
       partRequestId,
       rejectionReason: body.rejectionReason,
+      handleById: req.user.id
+    });
+  }
+
+  @Post("approve/:id")
+  async approve(
+    @Body() body: ApprovePartRequestBody,
+    @Param("id") partRequestId: string,
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
+    @Request() req: AuthenticatedRequestModel
+  ) {
+    const companyInstance = CompanyInstance.create(companyId);
+    return await this.approvePartRequest.execute(companyInstance, {
+      partRequestId,
+      approvedQuantity: body.approvedQuantity,
       handleById: req.user.id
     });
   }

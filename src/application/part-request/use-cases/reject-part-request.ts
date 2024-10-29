@@ -3,7 +3,7 @@ import { RequestStatus } from "@prisma/client";
 import { CompanyInstance } from "src/core/company/company-instance";
 import { PartRequestRepository } from "src/core/domain/repositories/part-request-repository";
 import { ExceptionHandler } from "src/core/exceptions/ExceptionHandler";
-import { IRejectPartRequestInput } from "src/shared/types/reject-part-request";
+import { IRejectPartRequestInput } from "src/shared/types/part-request/reject-part-request";
 import { RejectPartRequestDTO } from "../dto/reject-part-request-dto";
 
 @Injectable()

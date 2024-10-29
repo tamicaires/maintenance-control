@@ -13,7 +13,7 @@ interface CreatePartRequestProps {
   approvedQuantity: number | null;
   status: TRequestStatus;
   isRejected: boolean;
-  workOrderId: string | null;
+  workOrderId: string;
 }
 
 @Injectable()

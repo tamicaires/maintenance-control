@@ -256,8 +256,8 @@ model PartRequest {
   requestedAt           DateTime @default(now())
   handledAt             DateTime?   @map("handled_at") 
   deliveredAt           DateTime? @map("delivered_at")
-  workOrder             WorkOrder? @relation(fields: [workOrderId], references: [id])
-  workOrderId           String?  @map("work_order_id")
+  workOrder             WorkOrder @relation(fields: [workOrderId], references: [id])
+  workOrderId           String  @map("work_order_id")
   updatedAt             DateTime  @map("updated_at")
 
   @@map("part_requests")

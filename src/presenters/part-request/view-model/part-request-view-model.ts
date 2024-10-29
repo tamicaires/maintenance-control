@@ -11,10 +11,15 @@ export interface PartRequestWithRelationalInfo extends PartRequest {
     id: string;
     name: string;
   };
+  handledBy: {
+    id: true,
+    name: true
+  } | null;
   workOrder: {
     id: string,
     displayId: string
-  } | null;
+  };
+
 }
 
 export class PartRequestViewModel {
@@ -50,6 +55,10 @@ export class PartRequestViewModel {
         id: partRequest.requestedBy.id,
         name: partRequest.requestedBy.name,
       },
+      handleBy: {
+        id: partRequest.handledBy?.id,
+        name: partRequest.handledBy?.name,
+      },
       requestedForEmployeeId: partRequest.requestedForEmployeeId,
       handledById: partRequest.handledById,
       quantity: partRequest.quantity,
@@ -60,8 +69,8 @@ export class PartRequestViewModel {
       handledAt: partRequest.handledAt,
       deliveredAt: partRequest.deliveredAt,
       workOrder: {
-        id: partRequest.workOrder?.id,
-        displayId: partRequest.workOrder?.displayId
+        id: partRequest.workOrder.id,
+        displayId: partRequest.workOrder.displayId
       },
       updatedAt: partRequest.updatedAt,
     }

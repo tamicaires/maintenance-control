@@ -3,6 +3,7 @@ import { PrismaService } from "../prisma.service";
 import { PrismaPartMapper } from "../mappers/PrismaPartMapper";
 import { PartRepository } from "src/core/domain/repositories/part-repository";
 import { Part } from "src/core/domain/entities/part";
+import { CompanyInstance } from "src/core/company/company-instance";
 
 @Injectable()
 export class PrismaPartRepository implements PartRepository {
@@ -53,6 +54,13 @@ export class PrismaPartRepository implements PartRepository {
     await this.prisma.part.update({
       where: { id: "e225bf53-4303-40f3-830e-30106c09b18b" },
       data: partRaw,
+    });
+  }
+
+  async updateStockQuantity(companyInstance: CompanyInstance, partId: string, stockQuantity: number): Promise<void> {
+    await this.prisma.part.update({
+      where: { id: partId, companyId: companyInstance.getCompanyId() },
+      data: { stockQuantity },
     });
   }
 }

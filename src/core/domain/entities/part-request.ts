@@ -14,7 +14,7 @@ interface PartRequestSchema {
   requestedAt: Date;
   handledAt: Date | null;
   deliveredAt: Date | null;
-  workOrderId: string | null;
+  workOrderId: string;
   updatedAt: Date;
 }
 export class PartRequest {
@@ -29,7 +29,6 @@ export class PartRequest {
       rejectionReason?: string | null,
       handledAt?: Date | null,
       deliveredAt?: Date | null,
-      workOrderId?: string | null,
       requestedAt?: Date,
       updatedAt?: Date,
     }>,
@@ -43,7 +42,6 @@ export class PartRequest {
       rejectionReason: props.rejectionReason ?? null,
       handledAt: props.handledAt ?? null,
       deliveredAt: props.deliveredAt ?? null,
-      workOrderId: props.workOrderId ?? null,
       requestedAt: props.requestedAt ?? new Date(),
       updatedAt: new Date(),
     };
@@ -143,11 +141,11 @@ export class PartRequest {
     this.props.deliveredAt = deliveredAt;
   }
 
-  get workOrderId(): string | null {
+  get workOrderId(): string {
     return this.props.workOrderId;
   }
 
-  set workOrderId(workOrderId: string | null) {
+  set workOrderId(workOrderId: string) {
     this.props.workOrderId = workOrderId;
   }
 

@@ -1,6 +1,6 @@
 import { RequestStatus } from "@prisma/client";
 import { TRequestStatus } from "src/core/enum/part-request";
-import { IRejectPartRequest } from "src/shared/types/reject-part-request";
+import { IRejectPartRequest } from "src/shared/types/part-request/reject-part-request";
 
 export class RejectPartRequestDTO {
   public partRequestId: string

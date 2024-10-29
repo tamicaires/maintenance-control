@@ -5,6 +5,7 @@ import { PartRequestRepository } from "src/core/domain/repositories/part-request
 import { PrismaService } from "../prisma.service";
 import { PrismaPartRequestMapper } from "../mappers/prisma-part-request-mapper";
 import { RejectPartRequestDTO } from "src/application/part-request/dto/reject-part-request-dto";
+import { ApprovePartRequestDTO } from "src/application/part-request/dto/approve-part-request-dto";
 
 @Injectable()
 export class PrismaPartRequestRepository implements PartRequestRepository {
@@ -33,6 +34,11 @@ export class PrismaPartRequestRepository implements PartRequestRepository {
 
   async list(companyInstance: CompanyInstance): Promise<any> {
     const partRequestsRaw = await this.prisma.partRequest.findMany({
+      where: {
+        part: {
+          companyId: companyInstance.getCompanyId()
+        }
+      },
       include: {
         part: {
           select: {
@@ -53,6 +59,12 @@ export class PrismaPartRequestRepository implements PartRequestRepository {
             id: true,
             displayId: true
           }
+        },
+        handledBy: {
+          select: {
+            id: true,
+            name: true
+          }
         }
       }
     });
@@ -63,7 +75,10 @@ export class PrismaPartRequestRepository implements PartRequestRepository {
   async reject(companyInstance: CompanyInstance, rejectData: RejectPartRequestDTO): Promise<void> {
     await this.prisma.partRequest.update({
       where: {
-        id: rejectData.partRequestId
+        id: rejectData.partRequestId,
+        part: {
+          companyId: companyInstance.getCompanyId()
+        }
       },
       data: {
         status: rejectData.status,
@@ -73,4 +88,44 @@ export class PrismaPartRequestRepository implements PartRequestRepository {
       }
     })
   }
+
+  async approve(companyInstance: CompanyInstance, approveData: ApprovePartRequestDTO): Promise<void> {
+    await this.prisma.$transaction(async (prisma) => {
+      await prisma.partRequest.update({
+        where: {
+          id: approveData.partRequestId,
+          part: {
+            companyId: companyInstance.getCompanyId()
+          }
+        },
+        data: {
+          status: approveData.status,
+          approvedQuantity: approveData.approvedQuantity,
+          handledById: approveData.handleById,
+          handledAt: approveData.handleAt,
+        }
+      });
+  
+      // // Verifique a quantidade em estoque antes da atualização
+      // const part = await prisma.part.findUnique({
+      //   where: {
+      //     id: approveData.partId,
+      //     companyId: companyInstance.getCompanyId()
+      //   }
+      // });
+  
+      // console.log(`Estoque antes do decremento: ${part?.stockQuantity}`);
+      // console.log(`Quantidade aprovada: ${approveData.approvedQuantity}`);
+  
+      // // Atualizando a quantidade em estoque
+      await prisma.part.update({
+        where: {
+          id: approveData.partId,
+          companyId: companyInstance.getCompanyId()
+        },
+        data: { stockQuantity: approveData.stockQuantity }
+      });
+    });
+  }
+  
 }
