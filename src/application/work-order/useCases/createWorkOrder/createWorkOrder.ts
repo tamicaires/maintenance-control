@@ -4,6 +4,7 @@ import { TypeOfMaintenance } from '../../../../core/enum/type-of-maintenance.enu
 import { WorkOrderRepository } from '../../../../core/domain/repositories/work-order-repository';
 import { generateNextDisplayId, getPrefix } from 'src/shared/utils/workOrderUtils';
 import { WorkOrder } from 'src/core/domain/entities/work-order';
+import { CompanyInstance } from 'src/core/company/company-instance';
 
 interface CreateWorkOrderRequest {
   displayId?: string | null;
@@ -19,7 +20,6 @@ interface CreateWorkOrderRequest {
   status: MaintenanceStatus;
   fleetId: string;
   userId: string;
-  companyId: string;
   typeOfMaintenance: TypeOfMaintenance;
   boxId: string | null;
   isCancelled: boolean;
@@ -28,9 +28,9 @@ interface CreateWorkOrderRequest {
 
 @Injectable()
 export class CreateWorkOrder {
-  constructor(private workOrderRepository: WorkOrderRepository) {}
+  constructor(private workOrderRepository: WorkOrderRepository) { }
 
-  async execute(data: CreateWorkOrderRequest) {
+  async execute(companyInstance: CompanyInstance, data: CreateWorkOrderRequest) {
     const prefix = getPrefix(data.typeOfMaintenance);
 
     const lastWorkOrder =
@@ -42,7 +42,9 @@ export class CreateWorkOrder {
 
     const workOrderWithDisplayId = { ...data, displayId };
 
-    const workOrder = new WorkOrder(workOrderWithDisplayId);
+    const workOrder = new WorkOrder(
+      companyInstance.addCompanyFilter(workOrderWithDisplayId),
+    );
 
     await this.workOrderRepository.create(workOrder);
 

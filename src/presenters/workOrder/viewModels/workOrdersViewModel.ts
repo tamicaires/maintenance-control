@@ -32,6 +32,7 @@ export class WorkOrderViewModel {
     boxId,
     createdBy,
     updatedBy,
+    isCancelled,
     createdAt,
     updatedAt,
   }: WorkOrderWithRelationalInfo) {
@@ -61,6 +62,7 @@ export class WorkOrderViewModel {
       boxId,
       createdBy,
       updatedBy,
+      isCancelled,
       createdAt,
       updatedAt,
     };

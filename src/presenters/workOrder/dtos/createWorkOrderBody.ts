@@ -36,7 +36,7 @@ export class CreateWorkOrderBody {
 
   @IsStringCustom()
   @IsOptional()
-  boxId: string;
+  boxId: string | null;
 
   @IsBoolean()
   @IsNotEmptyCustom()

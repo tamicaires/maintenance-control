@@ -21,6 +21,9 @@ import { UpdateWorkOrder } from 'src/application/work-order/useCases/updateWorkO
 import { DeleteWorkOrder } from 'src/application/work-order/useCases/deleteWorkOrder/deleteWorkOrder';
 import { GetManyWorkOrders } from 'src/application/work-order/useCases/getManyWorkOrders/getManyWorkOrders';
 import { AuthenticatedRequestModel } from 'src/infra/http/auth/models/authenticateRequestModel';
+import { CookiesEnum } from 'src/core/enum/cookies';
+import { CompanyInstance } from 'src/core/company/company-instance';
+import { Cookies } from 'src/infra/http/auth/decorators/cookies.decorator';
 
 @Controller('work-orders')
 export class WorkOrderController {
@@ -34,19 +37,16 @@ export class WorkOrderController {
   @Post()
   async create(
     @Request() request: AuthenticatedRequestModel,
-    @Body() createWorkOrderBody: CreateWorkOrderBody,
+    @Body() body: CreateWorkOrderBody,
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
   ) {
     const currentUser = request.user;
-    console.log(createWorkOrderBody);
-    const workOrderData = mapCreateWorkOrderData(
-      currentUser.id,
-      currentUser.name,
-      createWorkOrderBody,
-    );
 
-    const workOrder = await this.createWorkOrder.execute({
-      ...workOrderData,
-      companyId: currentUser.companyId,
+    const companyInstance = CompanyInstance.create(companyId);
+
+    const workOrder = await this.createWorkOrder.execute(companyInstance, {
+      ...body,
+      userId: currentUser.id,
     });
 
     return workOrder;
