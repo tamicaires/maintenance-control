@@ -252,10 +252,9 @@ model PartRequest {
   quantity              Int
   approvedQuantity      Int?     @map("approved_quantity")  // Quantidade aprovada (pode ser diferente da solicitada)
   status                RequestStatus  @default(PENDING)
-  isRejected            Boolean @map("is_rejected") @default(false)// Indica se a solicitação foi rejeitada
   rejectionReason       String?       @map("rejection_reason")// Justificativa de rejeição (opcional)
   requestedAt           DateTime @default(now())
-  approvedAt            DateTime? @map("approved_at") 
+  handledAt             DateTime?   @map("handled_at") 
   deliveredAt           DateTime? @map("delivered_at")
   workOrder             WorkOrder? @relation(fields: [workOrderId], references: [id])
   workOrderId           String?  @map("work_order_id")
@@ -318,7 +317,7 @@ model TireRequest {
   status                RequestStatus   @default(PENDING)  
   rejectionReason       String?   @map("rejection_reason") 
   requestedAt           DateTime @default(now()) @map("requested_at")
-  approvedAt            DateTime?  @map("approved_at")
+  handledAt            DateTime?  @map("approved_at")
   deliveredAt           DateTime?  @map("delivered_at")
   workOrder             WorkOrder? @relation(fields: [workOrderId], references: [id])
   workOrderId           String?    @map("work_order_id")

@@ -10,10 +10,9 @@ interface PartRequestSchema {
   quantity: number;
   approvedQuantity: number | null;
   status: TRequestStatus;
-  isRejected: boolean;
   rejectionReason: string | null;
   requestedAt: Date;
-  approvedAt: Date | null;
+  handledAt: Date | null;
   deliveredAt: Date | null;
   workOrderId: string | null;
   updatedAt: Date;
@@ -28,7 +27,7 @@ export class PartRequest {
       handledById?: string | null,
       approvedQuantity?: number | null,
       rejectionReason?: string | null,
-      approvedAt?: Date | null,
+      handledAt?: Date | null,
       deliveredAt?: Date | null,
       workOrderId?: string | null,
       requestedAt?: Date,
@@ -42,7 +41,7 @@ export class PartRequest {
       handledById: props.handledById ?? null,
       approvedQuantity: props.approvedQuantity ?? null,
       rejectionReason: props.rejectionReason ?? null,
-      approvedAt: props.approvedAt ?? null,
+      handledAt: props.handledAt ?? null,
       deliveredAt: props.deliveredAt ?? null,
       workOrderId: props.workOrderId ?? null,
       requestedAt: props.requestedAt ?? new Date(),
@@ -112,14 +111,6 @@ export class PartRequest {
     this.props.status = status;
   }
 
-  get isRejected(): boolean {
-    return this.props.isRejected;
-  }
-
-  set isRejected(isRejected: boolean) {
-    this.props.isRejected = isRejected;
-  }
-
   get rejectionReason(): string | null {
     return this.props.rejectionReason;
   }
@@ -136,12 +127,12 @@ export class PartRequest {
     this.props.requestedAt = requestedAt;
   }
 
-  get approvedAt(): Date | null {
-    return this.props.approvedAt;
+  get handledAt(): Date | null {
+    return this.props.handledAt;
   }
 
-  set approvedAt(approvedAt: Date | null) {
-    this.props.approvedAt = approvedAt;
+  set handledAt(handledAt: Date | null) {
+    this.props.handledAt = handledAt;
   }
 
   get deliveredAt(): Date | null {

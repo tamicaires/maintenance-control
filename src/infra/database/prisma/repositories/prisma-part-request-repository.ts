@@ -4,6 +4,7 @@ import { PartRequest } from "src/core/domain/entities/part-request";
 import { PartRequestRepository } from "src/core/domain/repositories/part-request-repository";
 import { PrismaService } from "../prisma.service";
 import { PrismaPartRequestMapper } from "../mappers/prisma-part-request-mapper";
+import { RejectPartRequestDTO } from "src/application/part-request/dto/reject-part-request-dto";
 
 @Injectable()
 export class PrismaPartRequestRepository implements PartRequestRepository {
@@ -30,9 +31,46 @@ export class PrismaPartRequestRepository implements PartRequestRepository {
     return PrismaPartRequestMapper.toDomain(partRequestRaw);
   }
 
-  async list(companyInstance: CompanyInstance): Promise<PartRequest[]> {
-    const partRequestsRaw = await this.prisma.partRequest.findMany({});
+  async list(companyInstance: CompanyInstance): Promise<any> {
+    const partRequestsRaw = await this.prisma.partRequest.findMany({
+      include: {
+        part: {
+          select: {
+            id: true,
+            name: true,
+            partNumber: true,
+            stockQuantity: true
+          }
+        },
+        requestedBy: {
+          select: {
+            id: true,
+            name: true
+          }
+        },
+        workOrder: {
+          select: {
+            id: true,
+            displayId: true
+          }
+        }
+      }
+    });
 
-    return partRequestsRaw.map(PrismaPartRequestMapper.toDomain);
+    return partRequestsRaw;
+  }
+
+  async reject(companyInstance: CompanyInstance, rejectData: RejectPartRequestDTO): Promise<void> {
+    await this.prisma.partRequest.update({
+      where: {
+        id: rejectData.partRequestId
+      },
+      data: {
+        status: rejectData.status,
+        rejectionReason: rejectData.rejectionReason,
+        handledById: rejectData.handleById,
+        handledAt: rejectData.handleAt
+      }
+    })
   }
 }
