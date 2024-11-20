@@ -9,6 +9,7 @@ import {
   validateMaintenanceDates,
 } from 'src/shared/utils/workOrderUtils';
 import { InvalidDateException } from '../../exceptions/invalidDatesException';
+import { CompanyInstance } from 'src/core/company/company-instance';
 
 interface UpdateWorkOrderRequest {
   workOrderId: string;
@@ -31,8 +32,8 @@ interface UpdateWorkOrderRequest {
 export class UpdateWorkOrder {
   constructor(private workOrderRepository: WorkOrderRepository) {}
 
-  async execute(data: UpdateWorkOrderRequest) {
-    const workOrder = await this.workOrderRepository.findById(data.workOrderId);
+  async execute(companyInstance: CompanyInstance, data: UpdateWorkOrderRequest) {
+    const workOrder = await this.workOrderRepository.findById(companyInstance, data.workOrderId);
 
     if (!workOrder) throw new WorkOrderNotFoundException();
 

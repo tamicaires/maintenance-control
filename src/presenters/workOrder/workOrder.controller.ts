@@ -57,7 +57,9 @@ export class WorkOrderController {
     @Request() request: AuthenticatedRequestModel,
     @Param('id') workOrderId: string,
     @Body() updateWorkOrderBody: UpdateWorkOrderBody,
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
   ) {
+    const companyInstance = CompanyInstance.create(companyId);
     const currentUser = request.user;
 
     const workOrderData = mapUpdateWorkOrderData(
@@ -67,14 +69,18 @@ export class WorkOrderController {
       updateWorkOrderBody,
     );
 
-    const workOrder = await this.updateWorkOrder.execute(workOrderData);
+    const workOrder = await this.updateWorkOrder.execute(companyInstance, workOrderData);
 
     return workOrder;
   }
 
   @Delete(':id')
-  async delete(@Param('id') workOrderId: string) {
-    await this.deleteWorkOrder.execute({ workOrderId });
+  async delete(
+    @Param('id') workOrderId: string,
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
+  ) {
+    const companyInstance = CompanyInstance.create(companyId);
+    await this.deleteWorkOrder.execute(companyInstance, workOrderId);
   }
 
   @Get()

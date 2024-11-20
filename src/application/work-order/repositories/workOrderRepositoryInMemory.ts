@@ -1,6 +1,7 @@
 import { TypeOfMaintenance } from '../../../core/enum/type-of-maintenance.enum';
 import { WorkOrderRepository } from '../../../core/domain/repositories/work-order-repository';
 import { WorkOrder } from 'src/core/domain/entities/work-order';
+import { CompanyInstance } from 'src/core/company/company-instance';
 
 export class WorkOrderRepositoryInMemory implements WorkOrderRepository {
   public workOrders: WorkOrder[] = [];
@@ -9,7 +10,7 @@ export class WorkOrderRepositoryInMemory implements WorkOrderRepository {
     this.workOrders.push(workOrder);
   }
 
-  async findById(id: string): Promise<WorkOrder | null> {
+  async findById(companyInstance: CompanyInstance, id: string): Promise<WorkOrder | null> {
     const workOrder = this.workOrders.find((workOrder) => workOrder.id === id);
 
     if (!workOrder) return null;

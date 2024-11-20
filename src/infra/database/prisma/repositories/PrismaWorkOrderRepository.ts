@@ -6,10 +6,11 @@ import { Prisma } from '@prisma/client';
 import { TypeOfMaintenance } from 'src/core/enum/type-of-maintenance.enum';
 import { WorkOrderRepository } from 'src/core/domain/repositories/work-order-repository';
 import { WorkOrder } from 'src/core/domain/entities/work-order';
+import { CompanyInstance } from 'src/core/company/company-instance';
 
 @Injectable()
 export class PrismaWorkOrderRepository implements WorkOrderRepository {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async create(workOrder: WorkOrder): Promise<void> {
     const workOrderRaw = PrismaWorkOrderMapper.toPrisma(workOrder);
@@ -19,9 +20,9 @@ export class PrismaWorkOrderRepository implements WorkOrderRepository {
     });
   }
 
-  async findById(id: string): Promise<WorkOrder | null> {
+  async findById(companyInstance: CompanyInstance, id: string): Promise<WorkOrder | null> {
     const workOrderRaw = await this.prisma.workOrder.findUnique({
-      where: { id },
+      where: { id, companyId: companyInstance.getCompanyId() },
     });
 
     if (!workOrderRaw) return null;
@@ -56,11 +57,11 @@ export class PrismaWorkOrderRepository implements WorkOrderRepository {
         status ? { status } : undefined,
         startDate && endDate
           ? {
-              createdAt: {
-                gte: startDate,
-                lte: endDate,
-              },
-            }
+            createdAt: {
+              gte: startDate,
+              lte: endDate,
+            },
+          }
           : undefined,
       ].filter(Boolean) as Prisma.WorkOrderWhereInput[],
     };
@@ -78,11 +79,23 @@ export class PrismaWorkOrderRepository implements WorkOrderRepository {
                 carrierName: true,
               },
             },
+            trailers: {
+              include: {
+                axles: {
+                  select: {
+                    id: true,
+                    position: true,
+
+                  }
+                }
+              }
+            },
+            
           },
         },
       },
     });
-
+    console.log("workorders", workOrders.map(wo => wo.fleet.trailers));
     return workOrders;
   }
 
