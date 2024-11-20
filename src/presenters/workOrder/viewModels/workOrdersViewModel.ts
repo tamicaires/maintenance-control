@@ -3,11 +3,21 @@ import { WorkOrder } from "src/core/domain/entities/work-order";
 interface WorkOrderWithRelationalInfo extends WorkOrder {
   fleet: {
     fleetNumber: string;
-    plate: string;
     carrier: {
       carrierName: string;
     };
+    trailers: {
+      id: string;
+      plate: string;
+      position: string;
+      isActive: boolean;
+      axles: {
+        id: string;
+        position: string;
+      }[]
+    }[] | null;
   };
+
 }
 
 export class WorkOrderViewModel {
@@ -38,14 +48,28 @@ export class WorkOrderViewModel {
   }: WorkOrderWithRelationalInfo) {
     const fleetNumber = fleet?.fleetNumber;
     const carrierName = fleet?.carrier?.carrierName;
-    const plate = fleet?.plate;
+
+    const trailersData = fleet.trailers?.map((trailer) => ({
+      id: trailer.id,
+      plate: trailer.plate,
+      position: trailer.position,
+      isActive: trailer.isActive,
+      axles: trailer.axles?.map((axle) => ({
+        id: axle.id,
+        position: axle.position,
+      })),
+    })) || [];
+
+    const fleetInfo = {
+      fleetNumber,
+      carrierName,
+      trailers: trailersData
+    }
+
     return {
       id,
       displayId,
-      fleetId,
-      fleetNumber,
-      plate,
-      carrierName,
+      fleetInfo,
       severityLevel,
       entryQueue,
       entryMaintenance,
