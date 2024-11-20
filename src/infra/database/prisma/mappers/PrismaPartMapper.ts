@@ -19,8 +19,6 @@ export class PrismaPartMapper {
       status: part.status,
       categoryId: part.categoryId,
       companyId: part.companyId,
-      trailerId: part.trailerId,
-      axleId: part.axleId,
       createdAt: part.createdAt,
       updatedAt: part.updatedAt,
     }
@@ -41,9 +39,7 @@ export class PrismaPartMapper {
       location: part.location,
       status: part.status,
       categoryId: part.categoryId,
-      trailerId: part.trailerId,
       companyId: part.companyId,
-      axleId: part.axleId,
       createdAt: part.createdAt,
       updatedAt: part.updatedAt,
     }, part.id,);

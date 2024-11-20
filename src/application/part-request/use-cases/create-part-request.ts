@@ -10,9 +10,9 @@ interface CreatePartRequestProps {
   requestedForEmployeeId: string | null;
   handledById: string | null;
   quantity: number;
-  approvedQuantity: number | null;
   status: TRequestStatus;
-  isRejected: boolean;
+  axleId: string | null;
+  trailerId: string | null;
   workOrderId: string;
 }
 

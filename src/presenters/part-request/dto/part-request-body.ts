@@ -20,17 +20,17 @@ export class PartRequestBody {
   @IsNotEmptyCustom()
   quantity: number;
 
-  @IsNumber()
-  @IsOptional()
-  approvedQuantity: number | null;
-
   @IsStringCustom()
   @IsNotEmptyCustom()
   status: TRequestStatus;
 
-  @IsBoolean()
-  @IsNotEmptyCustom()
-  isRejected: boolean;
+  @IsStringCustom()
+  @IsOptional()
+  axleId: string | null;
+
+  @IsStringCustom()
+  @IsOptional()
+  trailerId: string | null;
 
   @IsStringCustom()
   @IsNotEmptyCustom()

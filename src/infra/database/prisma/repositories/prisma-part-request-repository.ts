@@ -6,6 +6,7 @@ import { PrismaService } from "../prisma.service";
 import { PrismaPartRequestMapper } from "../mappers/prisma-part-request-mapper";
 import { RejectPartRequestDTO } from "src/application/part-request/dto/reject-part-request-dto";
 import { ApprovePartRequestDTO } from "src/application/part-request/dto/approve-part-request-dto";
+import { PartRequestWithRelationalInfo } from "src/presenters/part-request/view-model/part-request-view-model";
 
 @Injectable()
 export class PrismaPartRequestRepository implements PartRequestRepository {
@@ -18,19 +19,68 @@ export class PrismaPartRequestRepository implements PartRequestRepository {
       data: partRequestRaw
     })
   }
-  async findById(companyInstance: CompanyInstance, id: string): Promise<PartRequest | null> {
+
+  async createBatch(data: PartRequest[]): Promise<void> {
+    const partRequestsRaw = data.map(PrismaPartRequestMapper.toPrisma);
+    console.log('partRequestsRaw', partRequestsRaw);
+    await this.prisma.partRequest.createMany({
+      data: partRequestsRaw,
+    });
+  }
+
+  async findById(companyInstance: CompanyInstance, id: string): Promise<any> {
     const partRequestRaw = await this.prisma.partRequest.findUnique({
-      where: {
-        id
+      where: { id, part: { companyId: companyInstance.getCompanyId() } },
+      include: {
+        part: {
+          select: {
+            id: true,
+            name: true,
+            partNumber: true,
+            stockQuantity: true
+          }
+        },
+        requestedBy: {
+          select: {
+            id: true,
+            name: true
+          }
+        },
+        workOrder: {
+          select: {
+            id: true,
+            displayId: true
+          }
+        },
+        handledBy: {
+          select: {
+            id: true,
+            name: true
+          }
+        },
+        trailer: {
+          select: {
+            id: true,
+            plate: true,
+            position: true,
+            axles: {
+              select: {
+                id: true,
+                position: true
+              }
+            }
+          }
+        },
       }
     });
 
     if (!partRequestRaw) {
       return null;
     }
-
-    return PrismaPartRequestMapper.toDomain(partRequestRaw);
+    console.log("partRequestRaw", partRequestRaw);
+    return partRequestRaw;
   }
+
 
   async list(companyInstance: CompanyInstance): Promise<any> {
     const partRequestsRaw = await this.prisma.partRequest.findMany({
@@ -65,10 +115,77 @@ export class PrismaPartRequestRepository implements PartRequestRepository {
             id: true,
             name: true
           }
-        }
+        },
+        trailer: {
+          select: {
+            id: true,
+            plate: true,
+            position: true,
+            axles: {
+              select: {
+                id: true,
+                position: true
+              }
+            }
+          }
+        },
+      },
+      orderBy: {
+        requestedAt: 'desc'
       }
     });
 
+    return partRequestsRaw;
+  }
+
+  async listByWorkOrder(companyInstance: CompanyInstance, workOrderId: string): Promise<any[]> {
+    const partRequestsRaw = await this.prisma.partRequest.findMany({
+      where: {
+        workOrderId: workOrderId,
+        part: { companyId: companyInstance.getCompanyId() }
+      },
+      include: {
+        part: {
+          select: {
+            id: true,
+            name: true,
+            partNumber: true,
+            stockQuantity: true
+          }
+        },
+        requestedBy: {
+          select: {
+            id: true,
+            name: true
+          }
+        },
+        workOrder: {
+          select: {
+            id: true,
+            displayId: true
+          }
+        },
+        handledBy: {
+          select: {
+            id: true,
+            name: true
+          }
+        },
+        trailer: {
+          select: {
+            id: true,
+            plate: true,
+            position: true,
+            axles: {
+              select: {
+                id: true,
+                position: true
+              }
+            }
+          }
+        },
+      }
+    });
     return partRequestsRaw;
   }
 
@@ -105,19 +222,7 @@ export class PrismaPartRequestRepository implements PartRequestRepository {
           handledAt: approveData.handleAt,
         }
       });
-  
-      // // Verifique a quantidade em estoque antes da atualização
-      // const part = await prisma.part.findUnique({
-      //   where: {
-      //     id: approveData.partId,
-      //     companyId: companyInstance.getCompanyId()
-      //   }
-      // });
-  
-      // console.log(`Estoque antes do decremento: ${part?.stockQuantity}`);
-      // console.log(`Quantidade aprovada: ${approveData.approvedQuantity}`);
-  
-      // // Atualizando a quantidade em estoque
+
       await prisma.part.update({
         where: {
           id: approveData.partId,
@@ -127,5 +232,5 @@ export class PrismaPartRequestRepository implements PartRequestRepository {
       });
     });
   }
-  
+
 }

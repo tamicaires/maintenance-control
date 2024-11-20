@@ -168,8 +168,8 @@ model Trailer {
   updatedAt   DateTime    @map("updated_at")
   @@map("trailers")
   @@index([fleetId])
-  parts       Part[]    // Peças associadas ao reboque
   axles       Axle[]    // Eixos do reboque
+  partRequest PartRequest[]
 }
 
 model Axle {
@@ -185,8 +185,8 @@ model Axle {
   @@map("axles")
   @@index([trailerId]) 
   tires             Tire[]    // Pneus específicos deste eixo
-  parts             Part[]    // Peças específicas deste eixo
   maintenanceHistory AxleHistory[] // Histórico de manutenção
+  partRequest PartRequest[]
 }
 
 enum AxleType {
@@ -211,17 +211,12 @@ model Part {
   status            PartStatus @default(NOVO)
   category          PartCategory  @relation(fields: [categoryId], references: [id]) 
   categoryId        String     @map("category_id")
-  trailer           Trailer?   @relation(fields: [trailerId], references: [id], onDelete: Cascade) 
-  trailerId         String?    @map("trailer_id") 
-  axle              Axle?     @relation(fields: [axleId], references: [id], onDelete: Cascade) 
-  axleId            String?   @map("axle_id") 
   company           Company   @relation(fields: [companyId], references: [id])
   companyId         String    @map("company_id") 
 
   createdAt         DateTime  @default(now()) @map("created_at")
   updatedAt         DateTime  @map("updated_at")
   @@map("parts")
-  @@index([trailerId]) 
   @@index([categoryId])
   partRequest PartRequest[] 
 }
@@ -256,6 +251,10 @@ model PartRequest {
   requestedAt           DateTime @default(now())
   handledAt             DateTime?   @map("handled_at") 
   deliveredAt           DateTime? @map("delivered_at")
+  trailerId             String?  @map("trailer_id")
+  trailer               Trailer? @relation(fields: [trailerId], references: [id])
+  axleId                String?  @map("axle_id") 
+  axle                  Axle?    @relation(fields: [axleId], references: [id])
   workOrder             WorkOrder @relation(fields: [workOrderId], references: [id])
   workOrderId           String  @map("work_order_id")
   updatedAt             DateTime  @map("updated_at")

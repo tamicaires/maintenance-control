@@ -19,6 +19,15 @@ export interface PartRequestWithRelationalInfo extends PartRequest {
     id: string,
     displayId: string
   };
+  trailer: {
+    id: string;
+    plate: string;
+    position: string;
+    axles: {
+      id: string;
+      position: string;
+    }
+  } | null
 
 }
 
@@ -43,6 +52,7 @@ export class PartRequestViewModel {
   }
 
   static toHttpWithRelationalInfo(partRequest: PartRequestWithRelationalInfo) {
+    console.log('partRequest', partRequest);
     return {
       id: partRequest.id,
       part: {
@@ -58,6 +68,15 @@ export class PartRequestViewModel {
       handleBy: {
         id: partRequest.handledBy?.id,
         name: partRequest.handledBy?.name,
+      },
+      trailer: {
+        id: partRequest.trailer?.id,
+        plate: partRequest.trailer?.plate,
+        position: partRequest.trailer?.position,
+        axles: {
+          id: partRequest.trailer?.axles.id,
+          position: partRequest.trailer?.axles.position
+        }
       },
       requestedForEmployeeId: partRequest.requestedForEmployeeId,
       handledById: partRequest.handledById,

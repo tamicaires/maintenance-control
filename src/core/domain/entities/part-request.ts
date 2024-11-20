@@ -14,6 +14,8 @@ interface PartRequestSchema {
   requestedAt: Date;
   handledAt: Date | null;
   deliveredAt: Date | null;
+  axleId: string | null;
+  trailerId: string | null;
   workOrderId: string;
   updatedAt: Date;
 }
@@ -141,6 +143,22 @@ export class PartRequest {
     this.props.deliveredAt = deliveredAt;
   }
 
+  get axleId(): string | null {
+    return this.props.axleId;
+  }
+
+  set axleId(axleId: string | null) {
+    this.props.axleId = axleId;
+  }
+
+  get trailerId(): string | null {
+    return this.props.trailerId;
+  }
+
+  set trailerId(trailerId: string | null) {
+    this.props.trailerId = trailerId;
+  }
+  
   get workOrderId(): string {
     return this.props.workOrderId;
   }
