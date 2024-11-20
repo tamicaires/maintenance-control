@@ -18,6 +18,8 @@ import { GetManyServices } from 'src/application/service/useCases/getManyService
 import { GetService } from 'src/application/service/useCases/getService/getService';
 import { GetServicesByWorkOrder } from 'src/application/service/useCases/getServicesByWorkOrder/getServicesByWorkOrder.use-case';
 import { UpdateService } from 'src/application/service/useCases/updateService/updateService';
+import { Cookies } from 'src/infra/http/auth/decorators/cookies.decorator';
+import { CompanyInstance } from 'src/core/company/company-instance';
 
 @Controller('services')
 export class ServiceController {
@@ -90,8 +92,15 @@ export class ServiceController {
   }
 
   @Get(':workOrderId/services')
-  async getWorkOrderServices(@Param('workOrderId') workOrderId: string) {
-    const services = await this._getServicesByWorkOrder.execute(workOrderId);
+  async getWorkOrderServices(
+    @Param('workOrderId') workOrderId: string,
+    @Cookies('companyId') companyId: string,
+  ) {
+    const companyInstance = CompanyInstance.create(companyId);
+    const services = await this._getServicesByWorkOrder.execute(
+      companyInstance,
+      workOrderId
+    );
 
     return services.map(ServiceWithEmployeeViewModel.toHttp);
   }
