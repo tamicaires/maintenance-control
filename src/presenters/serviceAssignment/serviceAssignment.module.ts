@@ -6,6 +6,7 @@ import { DeleteServiceAssignment } from 'src/application/service-assignment/useC
 import { GetManyServiceAssignments } from 'src/application/service-assignment/useCases/getManyServiceAssignments/getManyServiceAssignments';
 import { GetServiceAssignment } from 'src/application/service-assignment/useCases/getServiceAssignment/getServiceAssignment';
 import { UpdateServiceAssignment } from 'src/application/service-assignment/useCases/updateServiceAssignment/updateServiceAssignment';
+import { GetServiceAssigmentByWorkOrder } from 'src/application/service-assignment/useCases/getServiceAssignmentByWorkOrder';
 
 @Module({
   controllers: [ServiceAssignmentController],
@@ -16,6 +17,7 @@ import { UpdateServiceAssignment } from 'src/application/service-assignment/useC
     DeleteServiceAssignment,
     GetServiceAssignment,
     GetManyServiceAssignments,
+    GetServiceAssigmentByWorkOrder,
   ],
 })
 export class ServiceAssignmentModule {}

@@ -8,7 +8,8 @@ interface UpdateServiceAssignmentRequest {
   serviceAssignmentId: string;
   workOrderId?: string;
   serviceId?: string;
-  employeeId?: string;
+  employeeId?: string | null;
+  trailerId: string;
   status: TServiceAssigmentStatus
   startAt?: Date | null;
   endAt?: Date | null;
@@ -25,6 +26,7 @@ export class UpdateServiceAssignment {
     workOrderId,
     serviceId,
     employeeId,
+    trailerId,
     status,
     startAt,
     endAt
@@ -38,6 +40,7 @@ export class UpdateServiceAssignment {
       workOrderId,
       serviceId,
       employeeId,
+      trailerId,
       status,
       startAt,
       endAt

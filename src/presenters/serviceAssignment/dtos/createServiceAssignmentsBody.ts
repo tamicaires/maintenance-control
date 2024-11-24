@@ -13,9 +13,13 @@ export class CreateServiceAssignmentBody {
   serviceId: string;
 
   @IsStringCustom()
-  @IsNotEmptyCustom()
-  employeeId: string;
+  @IsOptional()
+  employeeId: string | null;
 
+  @IsStringCustom()
+  @IsNotEmptyCustom()
+  trailerId: string;
+  
   @IsStringCustom()
   @IsOptional()
   status: TServiceAssigmentStatus;

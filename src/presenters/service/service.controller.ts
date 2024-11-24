@@ -20,6 +20,7 @@ import { GetServicesByWorkOrder } from 'src/application/service/useCases/getServ
 import { UpdateService } from 'src/application/service/useCases/updateService/updateService';
 import { Cookies } from 'src/infra/http/auth/decorators/cookies.decorator';
 import { CompanyInstance } from 'src/core/company/company-instance';
+import { CookiesEnum } from 'src/core/enum/cookies';
 
 @Controller('services')
 export class ServiceController {
@@ -30,7 +31,7 @@ export class ServiceController {
     private getService: GetService,
     private getManyServices: GetManyServices,
     private _getServicesByWorkOrder: GetServicesByWorkOrder,
-  ) {}
+  ) { }
 
   @Post()
   async create(@Body() createServiceBody: CreateServiceBody) {
@@ -94,9 +95,10 @@ export class ServiceController {
   @Get(':workOrderId/services')
   async getWorkOrderServices(
     @Param('workOrderId') workOrderId: string,
-    @Cookies('companyId') companyId: string,
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
   ) {
     const companyInstance = CompanyInstance.create(companyId);
+
     const services = await this._getServicesByWorkOrder.execute(
       companyInstance,
       workOrderId

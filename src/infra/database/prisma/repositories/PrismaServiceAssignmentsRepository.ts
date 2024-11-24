@@ -61,8 +61,8 @@ export class PrismaServiceAssignmentsRepository
       where: {
         workOrder: {
           id: workOrderId,
-          companyId
-        }
+          companyId,
+        },
       },
       include: {
         service: {
@@ -82,8 +82,16 @@ export class PrismaServiceAssignmentsRepository
               }
             }
           }
+        },
+        trailer: {
+          select: {
+            id: true,
+            position: true,
+            plate: true,
+          }
         }
       }
     })
+    return serviceAssignment
   }
 }

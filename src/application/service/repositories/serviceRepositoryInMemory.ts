@@ -1,6 +1,7 @@
 import { ServiceWithEmployee } from 'src/shared/types/service.interface';
 import { Service } from '../../../core/domain/entities/service';
 import { ServiceRepository } from '../../../core/domain/repositories/service-repository';
+import { CompanyInstance } from 'src/core/company/company-instance';
 
 export class ServiceRepositoryInMemory implements ServiceRepository {
   public services: Service[] = [];
@@ -49,7 +50,7 @@ export class ServiceRepositoryInMemory implements ServiceRepository {
     return job;
   }
 
-  findByWorkOrder(workOrderId: string): Promise<[]> {
+  findByWorkOrder(companyInstance: CompanyInstance, workOrderId: string): Promise<[]> {
     throw new Error('Method not implemented.');
   }
 }

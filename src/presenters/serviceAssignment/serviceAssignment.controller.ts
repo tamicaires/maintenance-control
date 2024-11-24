@@ -16,6 +16,10 @@ import { DeleteServiceAssignment } from 'src/application/service-assignment/useC
 import { GetManyServiceAssignments } from 'src/application/service-assignment/useCases/getManyServiceAssignments/getManyServiceAssignments';
 import { GetServiceAssignment } from 'src/application/service-assignment/useCases/getServiceAssignment/getServiceAssignment';
 import { UpdateServiceAssignment } from 'src/application/service-assignment/useCases/updateServiceAssignment/updateServiceAssignment';
+import { GetServiceAssigmentByWorkOrder } from 'src/application/service-assignment/useCases/getServiceAssignmentByWorkOrder';
+import { Cookies } from 'src/infra/http/auth/decorators/cookies.decorator';
+import { CookiesEnum } from 'src/core/enum/cookies';
+import { CompanyInstance } from 'src/core/company/company-instance';
 
 @Controller('service-assignments')
 export class ServiceAssignmentController {
@@ -25,6 +29,7 @@ export class ServiceAssignmentController {
     private deleteServiceAssignment: DeleteServiceAssignment,
     private getServiceAssignment: GetServiceAssignment,
     private getManyServiceAssignment: GetManyServiceAssignments,
+    private readonly getServiceAssigmentByWorkOrder: GetServiceAssigmentByWorkOrder
   ) { }
 
   @Post()
@@ -70,5 +75,18 @@ export class ServiceAssignmentController {
     });
 
     return serviceAssignments.map(ServiceAssignmentViewModel.toHttp);
+  }
+
+  @Get("work-order/:id")
+  async getByWorkOrder(
+    @Param('id') workOrderId: string,
+    @Cookies(CookiesEnum.CompanyId) companyId: string
+  ) {
+    const companyInstance = CompanyInstance.create(companyId)
+    const serviceAssigments = await this.getServiceAssigmentByWorkOrder.execute(
+      companyInstance,
+      workOrderId
+    )
+    return serviceAssigments.map(ServiceAssignmentViewModel.toHttpWithRelationalInfo)
   }
 }

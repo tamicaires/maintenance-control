@@ -6,7 +6,8 @@ import { TServiceAssigmentStatus } from 'src/core/enum/service-assigment-status'
 interface CreateServiceAssignmentRequest {
   workOrderId: string;
   serviceId: string;
-  employeeId: string;
+  employeeId: string | null;
+  trailerId: string;
   status: TServiceAssigmentStatus
   startAt: Date | null;
   endAt: Date | null;
@@ -22,6 +23,7 @@ export class CreateServiceAssignment {
     workOrderId,
     serviceId,
     employeeId,
+    trailerId,
     status,
     startAt,
     endAt
@@ -30,6 +32,7 @@ export class CreateServiceAssignment {
       workOrderId,
       serviceId,
       employeeId,
+      trailerId,
       status,
       startAt,
       endAt

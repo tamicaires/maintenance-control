@@ -3,10 +3,11 @@ import { PrismaServiceMapper } from '../mappers/PrismaServiceMapper';
 import { PrismaService } from '../prisma.service';
 import { Injectable } from '@nestjs/common';
 import { ServiceRepository } from 'src/core/domain/repositories/service-repository';
+import { CompanyInstance } from 'src/core/company/company-instance';
 
 @Injectable()
 export class PrismaServiceRepository implements ServiceRepository {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async create(service: Service): Promise<void> {
     const serviceRaw = PrismaServiceMapper.toPrisma(service);
@@ -67,9 +68,18 @@ export class PrismaServiceRepository implements ServiceRepository {
     return PrismaServiceMapper.toDomain(service);
   }
 
-  async findByWorkOrder(workOrderId: string): Promise<any> {
+  async findByWorkOrder(companyInstance: CompanyInstance, workOrderId: string): Promise<any> {
+    const companyId = companyInstance.getCompanyId();
+
     const services = await this.prisma.service.findMany({
-      where: { serviceAssignmets: { some: { workOrderId } } },
+      where: {
+        serviceAssignmets: {
+          some: {
+            workOrderId,
+            workOrder: { companyId }
+          },
+        }
+      },
       include: {
         serviceAssignmets: {
           select: {
@@ -88,7 +98,7 @@ export class PrismaServiceRepository implements ServiceRepository {
         },
       },
     });
-
+    console.log("services", services)
     return services;
   }
 }

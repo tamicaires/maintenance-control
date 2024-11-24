@@ -9,7 +9,7 @@ export class GetServicesByWorkOrder {
   constructor(
     private workOrderRepository: WorkOrderRepository,
     private serviceRepository: ServiceRepository,
-  ) {}
+  ) { }
 
   async execute(companyInstance: CompanyInstance, workOrderId: string) {
     const workOrder = await this.workOrderRepository.findById(
@@ -21,6 +21,6 @@ export class GetServicesByWorkOrder {
       throw new WorkOrderNotFoundException();
     }
 
-    return await this.serviceRepository.findByWorkOrder(workOrderId);
+    return await this.serviceRepository.findByWorkOrder(companyInstance, workOrderId);
   }
 }
