@@ -170,6 +170,7 @@ model Trailer {
   @@index([fleetId])
   axles       Axle[]    // Eixos do reboque
   partRequest PartRequest[]
+  ServiceAssignment ServiceAssignment[]
 }
 
 model Axle {
@@ -461,9 +462,11 @@ model ServiceAssignment {
   workOrderId     String     @map("word_order_id")
   service         Service    @relation(fields: [serviceId], references: [id])
   serviceId       String     @map("service_id")
-  employee        Employee   @relation(fields: [employeeId], references: [id])
-  employeeId      String     @map("employee_id")
+  employee        Employee?   @relation(fields: [employeeId], references: [id])
+  employeeId      String?     @map("employee_id")
   status          ServiceAssignmentStatus @default(PENDING)
+  trailerId       String   @map("trailer_id")
+  trailer         Trailer  @relation(fields: [trailerId], references: [id])      
   startAt         DateTime?   @map("start_at")
   endAt           DateTime?   @map("end_at")
 
