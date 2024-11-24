@@ -1,10 +1,12 @@
 import { randomUUID } from 'crypto';
+import { TServiceAssigmentStatus } from 'src/core/enum/service-assigment-status';
 import { Replace } from 'src/shared/utils/replace';
 
 interface ServiceAssignmentProps {
   workOrderId: string;
   serviceId: string;
   employeeId: string;
+  status: TServiceAssigmentStatus
   startAt: Date | null;
   endAt: Date | null;
   createdAt: Date;
@@ -57,6 +59,14 @@ export class ServiceAssignment {
 
   set employeeId(employeeId: string) {
     this.props.employeeId = employeeId;
+  }
+
+  get status(): TServiceAssigmentStatus {
+    return this.props.status;
+  }
+
+  set status(status: TServiceAssigmentStatus) {
+    this.props.status = status;
   }
 
   get startAt(): Date | null {

@@ -29,17 +29,7 @@ export class ServiceAssignmentController {
 
   @Post()
   async create(@Body() body: CreateServiceAssignmentBody) {
-    const { workOrderId, serviceId, employeeId, startAt, endAt } = body;
-
-    const serviceAssignment = await this.createServiceAssignment.execute({
-      workOrderId,
-      serviceId,
-      employeeId,
-      startAt,
-      endAt
-    });
-
-    return serviceAssignment;
+    return await this.createServiceAssignment.execute(body);
   }
 
   @Put(':id')
@@ -47,18 +37,10 @@ export class ServiceAssignmentController {
     @Param('id') serviceAssignmentId: string,
     @Body() body: UpdateServiceAssignmentBody,
   ) {
-    const { workOrderId, serviceId, employeeId, startAt, endAt } = body;
-
-    const serviceAssignment = await this.updateServiceAssignment.execute({
-      serviceAssignmentId: serviceAssignmentId,
-      workOrderId,
-      serviceId,
-      employeeId,
-      startAt, 
-      endAt
+    return await this.updateServiceAssignment.execute({
+      ...body,
+      serviceAssignmentId,
     });
-
-    return serviceAssignment;
   }
 
   @Delete(':id')

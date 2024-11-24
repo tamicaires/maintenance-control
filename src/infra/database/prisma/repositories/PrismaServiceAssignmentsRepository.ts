@@ -3,6 +3,7 @@ import { PrismaServiceAssignmentMapper } from '../mappers/PrismaServiceAssignmen
 import { Injectable } from '@nestjs/common';
 import { ServiceAssignmentRepository } from 'src/core/domain/repositories/service-assignment-repository';
 import { ServiceAssignment } from 'src/core/domain/entities/service-assignment';
+import { CompanyInstance } from 'src/core/company/company-instance';
 
 @Injectable()
 export class PrismaServiceAssignmentsRepository
@@ -51,5 +52,38 @@ export class PrismaServiceAssignmentsRepository
     });
 
     return serviceAssignments.map(PrismaServiceAssignmentMapper.toDomain);
+  }
+
+  async findByWorkOrder(companyInstance: CompanyInstance, workOrderId: string): Promise<any> {
+    const companyId = companyInstance.getCompanyId()
+
+    const serviceAssignment = await this.prisma.serviceAssignment.findMany({
+      where: {
+        workOrder: {
+          id: workOrderId,
+          companyId
+        }
+      },
+      include: {
+        service: {
+          select: {
+            id: true,
+            serviceName: true,
+            serviceCategory: true
+          }
+        },
+        employee: {
+          select: {
+            id: true,
+            name: true,
+            job: {
+              select: {
+                jobTitle: true
+              }
+            }
+          }
+        }
+      }
+    })
   }
 }

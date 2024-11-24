@@ -1,9 +1,9 @@
 import { ServiceAssignmentRepository } from 'src/core/domain/repositories/service-assignment-repository';
 import { ServiceAssignment } from '../../../core/domain/entities/service-assignment';
+import { CompanyInstance } from 'src/core/company/company-instance';
 
 export class ServiceAssignmentRepositoryInMemory
-  implements ServiceAssignmentRepository
-{
+  implements ServiceAssignmentRepository {
   public serviceAssignments: ServiceAssignment[] = [];
 
   async create(serviceAssignment: ServiceAssignment): Promise<void> {
@@ -39,5 +39,9 @@ export class ServiceAssignmentRepositoryInMemory
 
   async findMany(page: number, perPage: number): Promise<ServiceAssignment[]> {
     return this.serviceAssignments.slice((page - 1) * perPage, page * perPage);
+  }
+
+  findByWorkOrder(companyInstance: CompanyInstance, workOrderId: string): Promise<any> {
+    throw new Error('Method not implemented.');
   }
 }

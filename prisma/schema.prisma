@@ -463,6 +463,7 @@ model ServiceAssignment {
   serviceId       String     @map("service_id")
   employee        Employee   @relation(fields: [employeeId], references: [id])
   employeeId      String     @map("employee_id")
+  status          ServiceAssignmentStatus @default(PENDING)
   startAt         DateTime?   @map("start_at")
   endAt           DateTime?   @map("end_at")
 
@@ -472,6 +473,12 @@ model ServiceAssignment {
   @@index([workOrderId]) 
   @@index([employeeId]) 
   @@index([serviceId])
+}
+
+enum ServiceAssignmentStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
 }
 
 model ChecklistTemplate {

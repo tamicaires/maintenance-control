@@ -2,12 +2,14 @@ import { ServiceAssignmentRepository } from 'src/core/domain/repositories/servic
 import { ServiceAssignmentNotFoundException } from '../../exceptions/serviceAssignmentNotFoundException';
 import { Injectable } from '@nestjs/common';
 import { mapUpdateServiceAssignment } from 'src/shared/utils/service-assignment-utils';
+import { TServiceAssigmentStatus } from 'src/core/enum/service-assigment-status';
 
 interface UpdateServiceAssignmentRequest {
   serviceAssignmentId: string;
   workOrderId?: string;
   serviceId?: string;
   employeeId?: string;
+  status: TServiceAssigmentStatus
   startAt?: Date | null;
   endAt?: Date | null;
 }
@@ -16,13 +18,14 @@ interface UpdateServiceAssignmentRequest {
 export class UpdateServiceAssignment {
   constructor(
     private serviceAssignmentRepository: ServiceAssignmentRepository,
-  ) {}
+  ) { }
 
   async execute({
     serviceAssignmentId,
     workOrderId,
     serviceId,
     employeeId,
+    status,
     startAt,
     endAt
   }: UpdateServiceAssignmentRequest) {
@@ -35,6 +38,7 @@ export class UpdateServiceAssignment {
       workOrderId,
       serviceId,
       employeeId,
+      status,
       startAt,
       endAt
     });

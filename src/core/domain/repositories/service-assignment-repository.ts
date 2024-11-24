@@ -1,3 +1,4 @@
+import { CompanyInstance } from "src/core/company/company-instance";
 import { ServiceAssignment } from "../entities/service-assignment";
 
 export abstract class ServiceAssignmentRepository {
@@ -9,4 +10,5 @@ export abstract class ServiceAssignmentRepository {
     page: number,
     perPage: number,
   ): Promise<ServiceAssignment[]>;
+  abstract findByWorkOrder(companyInstance: CompanyInstance, workOrderId: string): Promise<any>
 }

@@ -1,6 +1,7 @@
 import { IsOptional } from 'class-validator';
 import { IsNotEmptyCustom } from 'src/core/classValidator/decorators/IsNotEmptyCustom';
 import { IsStringCustom } from 'src/core/classValidator/decorators/IsStringCustom';
+import { TServiceAssigmentStatus } from 'src/core/enum/service-assigment-status';
 
 export class CreateServiceAssignmentBody {
   @IsStringCustom()
@@ -14,6 +15,10 @@ export class CreateServiceAssignmentBody {
   @IsStringCustom()
   @IsNotEmptyCustom()
   employeeId: string;
+
+  @IsStringCustom()
+  @IsOptional()
+  status: TServiceAssigmentStatus;
 
   @IsStringCustom()
   @IsOptional()
