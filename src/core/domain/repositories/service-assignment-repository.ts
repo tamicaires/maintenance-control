@@ -12,5 +12,4 @@ export abstract class ServiceAssignmentRepository {
     perPage: number,
   ): Promise<ServiceAssignment[]>;
   abstract findByWorkOrder(companyInstance: CompanyInstance, workOrderId: string): Promise<any>;
-  abstract addResponsible(companyInstance: CompanyInstance, data: IAddServiceResponsible);
 }
