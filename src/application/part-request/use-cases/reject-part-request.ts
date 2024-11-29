@@ -12,7 +12,7 @@ export class RejectPartRequest {
 
   async execute(companyInstance: CompanyInstance, data: IRejectPartRequestInput) {
     const partRequest = await this.partRequestRepository.findById(companyInstance, data.partRequestId);
-    console.log("partRequest", partRequest)
+
     if (!partRequest) {
       throw new ExceptionHandler({
         message: "Solicitação de peça não encontrada",
