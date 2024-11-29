@@ -52,7 +52,6 @@ export class PartRequestViewModel {
   }
 
   static toHttpWithRelationalInfo(partRequest: PartRequestWithRelationalInfo) {
-    console.log('partRequest', partRequest);
     return {
       id: partRequest.id,
       part: {

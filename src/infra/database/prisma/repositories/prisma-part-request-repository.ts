@@ -22,7 +22,7 @@ export class PrismaPartRequestRepository implements PartRequestRepository {
 
   async createBatch(data: PartRequest[]): Promise<void> {
     const partRequestsRaw = data.map(PrismaPartRequestMapper.toPrisma);
-    console.log('partRequestsRaw', partRequestsRaw);
+
     await this.prisma.partRequest.createMany({
       data: partRequestsRaw,
     });
