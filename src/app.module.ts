@@ -23,6 +23,7 @@ import { JwtAuthGuard } from './infra/http/auth/guards/jwtAuth.guard';
 import { VehicleModule } from './presenters/vehicle/vehicle.module';
 import { BoxModule } from './presenters/box/box.module';
 import { PartRequestModule } from './presenters/part-request/part-request.module';
+import { EmployeeServiceAssigmentModule } from './presenters/employee-service-assigment/employee-service-assignment.module';
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { PartRequestModule } from './presenters/part-request/part-request.module
     ServiceModule,
     WorkOrderModule,
     ServiceAssignmentModule,
+    EmployeeServiceAssigmentModule,
   ],
   controllers: [],
   providers: [
