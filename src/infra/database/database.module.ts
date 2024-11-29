@@ -38,6 +38,8 @@ import { BoxRepository } from 'src/core/domain/repositories/box-repository';
 import { PrismaBoxRepository } from './prisma/repositories/prisma-box-repository';
 import { PartRequestRepository } from 'src/core/domain/repositories/part-request-repository';
 import { PrismaPartRequestRepository } from './prisma/repositories/prisma-part-request-repository';
+import { PrismaEmployeeServiceAssigmentRepository } from './prisma/repositories/prisma-employee-service-assigment';
+import { EmployeeServiceAssigmentRepository } from 'src/core/domain/repositories/employee-service-assigment-repository';
 
 @Module({
   providers: [
@@ -115,6 +117,10 @@ import { PrismaPartRequestRepository } from './prisma/repositories/prisma-part-r
       useClass: PrismaServiceAssignmentsRepository,
     },
     {
+      provide: EmployeeServiceAssigmentRepository,
+      useClass: PrismaEmployeeServiceAssigmentRepository,
+    },
+    {
       provide: BoxRepository,
       useClass: PrismaBoxRepository,
     },
@@ -138,6 +144,7 @@ import { PrismaPartRequestRepository } from './prisma/repositories/prisma-part-r
     ServiceRepository,
     WorkOrderRepository,
     ServiceAssignmentRepository,
+    EmployeeServiceAssigmentRepository, 
     BoxRepository,
   ],
 })
