@@ -5,7 +5,6 @@ import { Replace } from 'src/shared/utils/replace';
 interface ServiceAssignmentProps {
   workOrderId: string;
   serviceId: string;
-  employeeId: string | null;
   trailerId: string;
   status: TServiceAssigmentStatus
   startAt: Date | null;
@@ -52,14 +51,6 @@ export class ServiceAssignment {
 
   set serviceId(serviceId: string) {
     this.props.serviceId = serviceId;
-  }
-
-  get employeeId(): string | null {
-    return this.props.employeeId;
-  }
-
-  set employeeId(employeeId: string | null) {
-    this.props.employeeId = employeeId;
   }
 
   get trailerId(): string {
