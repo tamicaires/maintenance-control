@@ -4,6 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { ServiceAssignmentRepository } from 'src/core/domain/repositories/service-assignment-repository';
 import { ServiceAssignment } from 'src/core/domain/entities/service-assignment';
 import { CompanyInstance } from 'src/core/company/company-instance';
+import { IAddServiceResponsible } from 'src/shared/types/service-assigment/add-service-responsibe';
 
 @Injectable()
 export class PrismaServiceAssignmentsRepository
@@ -72,17 +73,17 @@ export class PrismaServiceAssignmentsRepository
             serviceCategory: true
           }
         },
-        employee: {
-          select: {
-            id: true,
-            name: true,
-            job: {
-              select: {
-                jobTitle: true
-              }
-            }
-          }
-        },
+        // employee: {
+        //   select: {
+        //     id: true,
+        //     name: true,
+        //     job: {
+        //       select: {
+        //         jobTitle: true
+        //       }
+        //     }
+        //   }
+        // },
         trailer: {
           select: {
             id: true,
@@ -92,6 +93,11 @@ export class PrismaServiceAssignmentsRepository
         }
       }
     })
+
     return serviceAssignment
+  }
+
+  async addResponsible(companyInstance: CompanyInstance, data: IAddServiceResponsible) {
+  //
   }
 }

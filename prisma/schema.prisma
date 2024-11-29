@@ -382,9 +382,9 @@ model Employee {
 
   @@map("employees")
   @@index([jobTitleId]) 
-  serviceAssignments    ServiceAssignment[]
   partRequest PartRequest[] @relation("EmployeePartRequest")
   tireRequest TireRequest[] @relation("EmployeeTireRequest")
+  serviceAssignmentEmployee ServiceAssignmentEmployee[]
 }
 
 model Job {
@@ -456,14 +456,27 @@ model WorkOrder {
   tireRequest TireRequest[]
 }
 
+model ServiceAssignmentEmployee {
+  id                  String           @id @default(uuid())
+  serviceAssignment   ServiceAssignment @relation(fields: [serviceAssignmentId], references: [id], onDelete: Cascade)
+  serviceAssignmentId String           @map("service_assignment_id")
+  employee            Employee         @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  employeeId          String           @map("employee_id")
+
+  createdAt           DateTime         @default(now()) @map("created_at")
+  updatedAt           DateTime         @default(now()) @map("updated_at")
+
+  @@map("service_assignment_employee")
+  @@index([serviceAssignmentId])
+  @@index([employeeId])
+} 
+
 model ServiceAssignment {
   id              String     @id
   workOrder       WorkOrder  @relation(fields: [workOrderId], references: [id])
   workOrderId     String     @map("word_order_id")
   service         Service    @relation(fields: [serviceId], references: [id])
   serviceId       String     @map("service_id")
-  employee        Employee?   @relation(fields: [employeeId], references: [id])
-  employeeId      String?     @map("employee_id")
   status          ServiceAssignmentStatus @default(PENDING)
   trailerId       String   @map("trailer_id")
   trailer         Trailer  @relation(fields: [trailerId], references: [id])      
@@ -474,8 +487,8 @@ model ServiceAssignment {
   updatedAt       DateTime   @map("updated_at")
   @@map("service_assignments")
   @@index([workOrderId]) 
-  @@index([employeeId]) 
   @@index([serviceId])
+  serviceAssignmentEmployee ServiceAssignmentEmployee[]
 }
 
 enum ServiceAssignmentStatus {

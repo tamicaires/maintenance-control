@@ -13,10 +13,6 @@ export class UpdateServiceAssignmentBody {
   serviceId: string;
 
   @IsStringCustom()
-  @IsOptional()
-  employeeId: string | null;
-
-  @IsStringCustom()
   @IsNotEmptyCustom()
   trailerId: string;
 

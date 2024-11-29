@@ -2,6 +2,11 @@ import { ServiceAssignment } from "src/core/domain/entities/service-assignment";
 import { ServiceCategory } from "src/core/enum/service-category.enum";
 import { EmployeeBasicInfo } from "src/shared/types/employee.type";
 
+interface ITrailer {
+  id: string;
+  position: number;
+  plate: string;
+}
 interface IServiceAssigmentWithRelationalInfo extends ServiceAssignment {
   service: {
     id: string;
@@ -15,20 +20,15 @@ interface IServiceAssigmentWithRelationalInfo extends ServiceAssignment {
       jobTitle: string;
     };
   }[] | null;
-  trailers: {
-    id: string;
-    position: number;
-    plate: string;
-  }[] | null;
+  trailer: ITrailer;
 }
 
 export class ServiceAssignmentViewModel {
-  static toHttp({ id, workOrderId, serviceId, employeeId }: ServiceAssignment) {
+  static toHttp({ id, workOrderId, serviceId }: ServiceAssignment) {
     return {
       id,
       workOrderId,
       serviceId,
-      employeeId,
     };
   }
 
@@ -41,20 +41,12 @@ export class ServiceAssignmentViewModel {
         jobTitle: employee.job.jobTitle
       }
     })
-    const trailersRaw = serviceAssigment.trailers || [];
-    const trailers = trailersRaw.map((trailer) => {
-      return {
-        id: trailer.id,
-        position: trailer.position,
-        licensePlate: trailer.plate
-      }
-    })
     return {
       id: serviceAssigment.id,
       workOrderId: serviceAssigment.workOrderId,
       service: serviceAssigment.service,
       employee: employees,
-      trailers: trailers,
+      trailer: serviceAssigment.trailer,
       status: serviceAssigment.status,
       startAt: serviceAssigment.startAt,
       endAt: serviceAssigment.endAt,

@@ -81,11 +81,11 @@ export class PrismaEmployeeRepository implements EmployeeRepository {
     const employeeServices = await this.prisma.employee.findUnique({
       where: { id },
       select: {
-        serviceAssignments: {
-          select: {
-            service: true,
-          },
-        },
+        // serviceAssignments: {
+        //   select: {
+        //     service: true,
+        //   },
+        // },
       },
     });
 

@@ -12,13 +12,10 @@ export const mapUpdateServiceAssignment = (
     serviceAssignment.serviceId = data.serviceId;
   }
 
-  if (data.employeeId !== undefined) {
-    serviceAssignment.employeeId = data.employeeId;
-  }
   if (data.trailerId !== undefined) {
     serviceAssignment.trailerId = data.trailerId;
   }
-  
+
   if (data.status !== undefined) {
     serviceAssignment.status = data.status;
   }

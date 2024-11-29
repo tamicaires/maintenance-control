@@ -83,17 +83,17 @@ export class PrismaServiceRepository implements ServiceRepository {
       include: {
         serviceAssignmets: {
           select: {
-            employee: {
-              select: {
-                id: true,
-                name: true,
-                job: {
-                  select: {
-                    jobTitle: true,
-                  },
-                },
-              },
-            },
+            // employee: {
+            //   select: {
+            //     id: true,
+            //     name: true,
+            //     job: {
+            //       select: {
+            //         jobTitle: true,
+            //       },
+            //     },
+            //   },
+            // },
           },
         },
       },
