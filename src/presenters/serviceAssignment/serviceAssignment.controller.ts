@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   Put,
   Query,
@@ -20,6 +21,8 @@ import { GetServiceAssigmentByWorkOrder } from 'src/application/service-assignme
 import { Cookies } from 'src/infra/http/auth/decorators/cookies.decorator';
 import { CookiesEnum } from 'src/core/enum/cookies';
 import { CompanyInstance } from 'src/core/company/company-instance';
+import { ChangeStatusDto } from './dtos/change-status';
+import { ChangeStatus } from 'src/application/service-assignment/useCases/change-status';
 
 @Controller('service-assignments')
 export class ServiceAssignmentController {
@@ -29,7 +32,8 @@ export class ServiceAssignmentController {
     private deleteServiceAssignment: DeleteServiceAssignment,
     private getServiceAssignment: GetServiceAssignment,
     private getManyServiceAssignment: GetManyServiceAssignments,
-    private readonly getServiceAssigmentByWorkOrder: GetServiceAssigmentByWorkOrder
+    private readonly getServiceAssigmentByWorkOrder: GetServiceAssigmentByWorkOrder,
+    private readonly _changeStatus: ChangeStatus,
   ) { }
 
   @Post()
@@ -88,5 +92,19 @@ export class ServiceAssignmentController {
       workOrderId
     )
     return serviceAssigments.map(ServiceAssignmentViewModel.toHttpWithRelationalInfo)
+  }
+
+  @Patch("change-status/:id")
+  async changeStatus(
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
+    @Param('id') serviceAssignmentId: string,
+    @Body() body: ChangeStatusDto,
+  ) {
+    const companyInstance = CompanyInstance.create(companyId);
+    console.log("body", body)
+    return this._changeStatus.execute(companyInstance, {
+      serviceAssignmentId,
+      ...body
+    })
   }
 }

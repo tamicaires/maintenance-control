@@ -1,6 +1,6 @@
 import { CompanyInstance } from "src/core/company/company-instance";
 import { ServiceAssignment } from "../entities/service-assignment";
-import { IAddServiceResponsible } from "src/shared/types/service-assigment/add-service-responsibe";
+import { ChangeStatusResponseType, ChangeStatusType } from "src/shared/types/chance-service-assigment-status";
 
 export abstract class ServiceAssignmentRepository {
   abstract create(serviceAssignment: ServiceAssignment): Promise<void>;
@@ -12,4 +12,9 @@ export abstract class ServiceAssignmentRepository {
     perPage: number,
   ): Promise<ServiceAssignment[]>;
   abstract findByWorkOrder(companyInstance: CompanyInstance, workOrderId: string): Promise<any>;
+  abstract changeStatus(
+    companyInstance: CompanyInstance,
+    serviceAssigmentId: string,
+    data: ChangeStatusType
+  ): Promise<ChangeStatusResponseType>;
 }

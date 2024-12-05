@@ -1,9 +1,13 @@
 import { ServiceAssignmentRepository } from 'src/core/domain/repositories/service-assignment-repository';
 import { ServiceAssignment } from '../../../core/domain/entities/service-assignment';
 import { CompanyInstance } from 'src/core/company/company-instance';
+import { ChangeStatusType, ChangeStatusResponseType } from 'src/shared/types/chance-service-assigment-status';
 
 export class ServiceAssignmentRepositoryInMemory
   implements ServiceAssignmentRepository {
+  changeStatus(companyInstance: CompanyInstance, serviceAssigmentId: string, data: ChangeStatusType): Promise<ChangeStatusResponseType> {
+    throw new Error('Method not implemented.');
+  }
   public serviceAssignments: ServiceAssignment[] = [];
 
   async create(serviceAssignment: ServiceAssignment): Promise<void> {

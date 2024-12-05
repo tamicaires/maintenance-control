@@ -5,6 +5,7 @@ import { ServiceAssignmentRepository } from 'src/core/domain/repositories/servic
 import { ServiceAssignment } from 'src/core/domain/entities/service-assignment';
 import { CompanyInstance } from 'src/core/company/company-instance';
 import { IAddServiceResponsible } from 'src/shared/types/service-assigment/add-service-responsibe';
+import { ChangeStatusType, ChangeStatusResponseType } from 'src/shared/types/chance-service-assigment-status';
 
 @Injectable()
 export class PrismaServiceAssignmentsRepository
@@ -73,17 +74,21 @@ export class PrismaServiceAssignmentsRepository
             serviceCategory: true
           }
         },
-        // employee: {
-        //   select: {
-        //     id: true,
-        //     name: true,
-        //     job: {
-        //       select: {
-        //         jobTitle: true
-        //       }
-        //     }
-        //   }
-        // },
+        serviceAssignmentEmployee: {
+          select: {
+            employee: {
+              select: {
+                id: true,
+                name: true,
+                job: {
+                  select: {
+                    jobTitle: true
+                  }
+                }
+              }
+            }
+          }
+        },
         trailer: {
           select: {
             id: true,
@@ -93,11 +98,27 @@ export class PrismaServiceAssignmentsRepository
         }
       }
     })
-
     return serviceAssignment
   }
 
   async addResponsible(companyInstance: CompanyInstance, data: IAddServiceResponsible) {
-  //
+    //
+  }
+
+  async changeStatus(companyInstance: CompanyInstance, serviceAssigmentId: string, data: ChangeStatusType): Promise<ChangeStatusResponseType> {
+    const companyId = companyInstance.getCompanyId()
+    console.log("serviceAssigmentid", serviceAssigmentId)
+    console.log("data", data)
+    const serviceAssignment = await this.prisma.serviceAssignment.update({
+      where: { id: serviceAssigmentId, workOrder: { companyId } },
+      data: { status: data.status, startAt: data.startAt, endAt: data.endAt }
+    })
+
+    return {
+      serviceAssignmentId: serviceAssignment.id,
+      status: serviceAssignment.status,
+      startAt: serviceAssignment.startAt,
+      endAt: serviceAssignment.endAt
+    }
   }
 }
