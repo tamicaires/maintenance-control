@@ -37,8 +37,12 @@ export class ServiceAssignmentController {
   ) { }
 
   @Post()
-  async create(@Body() body: CreateServiceAssignmentBody) {
-    return await this.createServiceAssignment.execute(body);
+  async create(
+    @Body() body: CreateServiceAssignmentBody,
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
+  ) {
+    const companyInstance = CompanyInstance.create(companyId);
+    return await this.createServiceAssignment.execute(companyInstance, body);
   }
 
   @Put(':id')
