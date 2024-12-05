@@ -21,9 +21,22 @@ export class PrismaEmployeeServiceAssigmentRepository implements EmployeeService
     return employeeServiceAssigment;
   }
 
-  findById(companyInstance: CompanyInstance, id: string): Promise<EmployeeServiceAssigment> {
+  async findById(companyInstance: CompanyInstance, id: string): Promise<EmployeeServiceAssigment> {
     throw new Error("Method not implemented.");
   }
 
+  async findByEmployeeIdAndServiceAssigmentId(companyInstance: CompanyInstance, employeeId: string, serviceAssigmentId: string): Promise<EmployeeServiceAssigment | null> {
+    const employeeServiceAssigment = await this._prisma.serviceAssignmentEmployee.findFirst({
+      where: {
+        employeeId,
+        serviceAssignmentId: serviceAssigmentId
+      }
+    });
 
+    if (!employeeServiceAssigment) {
+      return null;
+    }
+
+    return employeeServiceAssigment;
+  }
 }

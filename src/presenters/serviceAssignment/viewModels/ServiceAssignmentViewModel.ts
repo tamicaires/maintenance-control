@@ -13,13 +13,16 @@ interface IServiceAssigmentWithRelationalInfo extends ServiceAssignment {
     serviceName: string;
     serviceCategory: ServiceCategory;
   };
-  employees: {
-    id: string;
-    name: string;
-    job: {
-      jobTitle: string;
+  serviceAssignmentEmployee: {
+    employee: {
+      id: string;
+      name: string;
+      job: {
+        jobTitle: string;
+      };
     };
-  }[] | null;
+  }[]
+
   trailer: ITrailer;
 }
 
@@ -33,19 +36,19 @@ export class ServiceAssignmentViewModel {
   }
 
   static toHttpWithRelationalInfo(serviceAssigment: IServiceAssigmentWithRelationalInfo) {
-    const employeesRaw = serviceAssigment.employees || [];
-    const employees: EmployeeBasicInfo[] = employeesRaw.map((employee) => {
+    const employees: EmployeeBasicInfo[] = serviceAssigment.serviceAssignmentEmployee.map((serviceEmployee) => {
       return {
-        id: employee.id,
-        name: employee.name,
-        jobTitle: employee.job.jobTitle
+        id: serviceEmployee.employee.id,
+        name: serviceEmployee.employee.name,
+        jobTitle: serviceEmployee.employee.job.jobTitle
+
       }
-    })
+    }) || [];
     return {
       id: serviceAssigment.id,
       workOrderId: serviceAssigment.workOrderId,
       service: serviceAssigment.service,
-      employee: employees,
+      employees: employees,
       trailer: serviceAssigment.trailer,
       status: serviceAssigment.status,
       startAt: serviceAssigment.startAt,
