@@ -9,6 +9,7 @@ interface UpdateServiceAssignmentRequest {
   workOrderId?: string;
   serviceId?: string;
   trailerId: string;
+  axleId: string | null;
   status: TServiceAssigmentStatus
   startAt?: Date | null;
   endAt?: Date | null;

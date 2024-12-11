@@ -15,7 +15,11 @@ export class CreateServiceAssignmentBody {
   @IsStringCustom()
   @IsNotEmptyCustom()
   trailerId: string;
-  
+
+  @IsStringCustom()
+  @IsOptional()
+  axleId: string;
+
   @IsStringCustom()
   @IsOptional()
   status: TServiceAssigmentStatus;

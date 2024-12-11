@@ -11,6 +11,7 @@ interface CreateServiceAssignmentRequest {
   workOrderId: string;
   serviceId: string;
   trailerId: string;
+  axleId: string | null;
   status: TServiceAssigmentStatus
   startAt: Date | null;
   endAt: Date | null;
@@ -47,12 +48,8 @@ export class CreateServiceAssignment {
     }
 
     const serviceAssignment = new ServiceAssignment({
+      ...data,
       workOrderId: workOrder.id,
-      serviceId: data.serviceId,
-      trailerId: data.trailerId,
-      status: data.status,
-      startAt: data.startAt,
-      endAt: data.endAt,
     });
 
     await this.serviceAssignmentRepository.create(serviceAssignment);

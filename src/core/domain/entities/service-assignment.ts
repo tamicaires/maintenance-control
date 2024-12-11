@@ -6,6 +6,7 @@ interface ServiceAssignmentProps {
   workOrderId: string;
   serviceId: string;
   trailerId: string;
+  axleId: string | null;
   status: TServiceAssigmentStatus
   startAt: Date | null;
   endAt: Date | null;
@@ -59,6 +60,14 @@ export class ServiceAssignment {
 
   set trailerId(trailerId: string) {
     this.props.trailerId = trailerId;
+  }
+
+  get axleId(): string | null {
+    return this.props.axleId;
+  }
+
+  set axleId(axleId: string | null) {
+    this.props.axleId = axleId;
   }
 
   get status(): TServiceAssigmentStatus {

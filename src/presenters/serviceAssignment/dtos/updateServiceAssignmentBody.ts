@@ -18,6 +18,10 @@ export class UpdateServiceAssignmentBody {
 
   @IsStringCustom()
   @IsOptional()
+  axleId: string;
+
+  @IsStringCustom()
+  @IsOptional()
   status: TServiceAssigmentStatus;
 
   @IsStringCustom()

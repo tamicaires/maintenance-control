@@ -188,6 +188,7 @@ model Axle {
   tires             Tire[]    // Pneus específicos deste eixo
   maintenanceHistory AxleHistory[] // Histórico de manutenção
   partRequest PartRequest[]
+  ServiceAssignment ServiceAssignment[]
 }
 
 enum AxleType {
@@ -479,7 +480,9 @@ model ServiceAssignment {
   serviceId       String     @map("service_id")
   status          ServiceAssignmentStatus @default(PENDING)
   trailerId       String   @map("trailer_id")
-  trailer         Trailer  @relation(fields: [trailerId], references: [id])      
+  trailer         Trailer  @relation(fields: [trailerId], references: [id])    
+  axleId          String?   @map("axle_id")
+  axle            Axle?     @relation(fields: [axleId], references: [id])  
   startAt         DateTime?   @map("start_at")
   endAt           DateTime?   @map("end_at")
 
@@ -561,7 +564,8 @@ enum MaintenanceStatus {
   Fila
   Manutencao 
   AguardandoPeca
-  Finalizada
+  Finalizada 
+  Cancelada
 }
 
 enum TypeOfMaintenance {
