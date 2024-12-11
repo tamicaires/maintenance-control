@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   Put,
   Query,
@@ -24,6 +25,7 @@ import { AuthenticatedRequestModel } from 'src/infra/http/auth/models/authentica
 import { CookiesEnum } from 'src/core/enum/cookies';
 import { CompanyInstance } from 'src/core/company/company-instance';
 import { Cookies } from 'src/infra/http/auth/decorators/cookies.decorator';
+import { CancelWorkOrder } from 'src/application/work-order/useCases/cancel-work-order';
 
 @Controller('work-orders')
 export class WorkOrderController {
@@ -32,6 +34,7 @@ export class WorkOrderController {
     private updateWorkOrder: UpdateWorkOrder,
     private deleteWorkOrder: DeleteWorkOrder,
     private getManyWorkOrder: GetManyWorkOrders,
+    private readonly cancelWorkOrder: CancelWorkOrder,
   ) { }
 
   @Post()
@@ -100,5 +103,14 @@ export class WorkOrderController {
     });
 
     return workOrders.map(WorkOrderViewModel.toHttp);
+  }
+
+  @Patch(':id/cancel')
+  async cancel(
+    @Param('id') workOrderId: string,
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
+  ) {
+    const companyInstance = CompanyInstance.create(companyId);
+    return await this.cancelWorkOrder.execute(companyInstance, workOrderId);
   }
 }

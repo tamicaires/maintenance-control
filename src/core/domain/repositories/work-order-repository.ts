@@ -2,6 +2,7 @@ import { Filters } from 'src/shared/types/filters.interface';
 import { WorkOrder } from '../entities/work-order';
 import { TypeOfMaintenance } from '../../enum/type-of-maintenance.enum';
 import { CompanyInstance } from 'src/core/company/company-instance';
+import { ICancelWorkOrder } from 'src/shared/types/work-order';
 
 export abstract class WorkOrderRepository {
   abstract create(workOrder: WorkOrder): Promise<void>;
@@ -16,4 +17,5 @@ export abstract class WorkOrderRepository {
   abstract findLastWorkOrderByType(
     typeOfMaintenance: TypeOfMaintenance,
   ): Promise<WorkOrder | null>;
+  abstract cancelWorkOrder(companyInstance: CompanyInstance, data: ICancelWorkOrder): Promise<void>;
 }

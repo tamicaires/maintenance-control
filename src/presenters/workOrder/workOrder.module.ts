@@ -5,6 +5,7 @@ import { CreateWorkOrder } from 'src/application/work-order/useCases/createWorkO
 import { DeleteWorkOrder } from 'src/application/work-order/useCases/deleteWorkOrder/deleteWorkOrder';
 import { GetManyWorkOrders } from 'src/application/work-order/useCases/getManyWorkOrders/getManyWorkOrders';
 import { UpdateWorkOrder } from 'src/application/work-order/useCases/updateWorkOrder/updateWorkOrder';
+import { CancelWorkOrder } from 'src/application/work-order/useCases/cancel-work-order';
 
 @Module({
   controllers: [WorkOrderController],
@@ -14,6 +15,7 @@ import { UpdateWorkOrder } from 'src/application/work-order/useCases/updateWorkO
     UpdateWorkOrder,
     DeleteWorkOrder,
     GetManyWorkOrders,
+    CancelWorkOrder
   ],
 })
-export class WorkOrderModule {}
+export class WorkOrderModule { }

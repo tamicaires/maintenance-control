@@ -3,4 +3,5 @@ export enum MaintenanceStatus {
   Manutencao = 'Manutencao',
   AguardandoPeca = 'AguardandoPeca',
   Finalizada = 'Finalizada',
+  Cancelada = 'Cancelada',
 }
