@@ -7,7 +7,7 @@ import { TypeOfMaintenance } from 'src/core/enum/type-of-maintenance.enum';
 import { WorkOrderRepository } from 'src/core/domain/repositories/work-order-repository';
 import { WorkOrder } from 'src/core/domain/entities/work-order';
 import { CompanyInstance } from 'src/core/company/company-instance';
-import { ICancelWorkOrder, IStartMaintenance } from 'src/shared/types/work-order';
+import { ICancelWorkOrder, IFinishMaintenance, IStartMaintenance } from 'src/shared/types/work-order';
 
 @Injectable()
 export class PrismaWorkOrderRepository implements WorkOrderRepository {
@@ -139,6 +139,22 @@ export class PrismaWorkOrderRepository implements WorkOrderRepository {
         status: data.status,
         entryMaintenance: data.entryMaintenance,
         boxId: data.boxId,
+      },
+    });
+  }
+
+  async finishMaintenance(companyInstance: CompanyInstance, workOrderId: string, data: IFinishMaintenance): Promise<void> {
+    const companyId = companyInstance.getCompanyId();
+
+    await this.prisma.workOrder.update({
+      where: {
+        id: workOrderId,
+        companyId
+      },
+      data: {
+        status: data.status,
+        exitMaintenance: data.exitMaintenance,
+        exitSupervisor: data.exitSupervisor,
       },
     });
   }

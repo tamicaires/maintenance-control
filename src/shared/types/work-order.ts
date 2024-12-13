@@ -11,3 +11,9 @@ export interface IStartMaintenance {
   entryMaintenance: Date;
   boxId: string;
 }
+
+export interface IFinishMaintenance {
+  status: MaintenanceStatus;
+  exitMaintenance: Date;
+  exitSupervisor: string;
+}

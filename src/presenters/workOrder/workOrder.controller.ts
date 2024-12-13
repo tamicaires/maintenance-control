@@ -13,7 +13,6 @@ import {
 import { CreateWorkOrderBody } from './dtos/createWorkOrderBody';
 import { UpdateWorkOrderBody } from './dtos/updateWorkOrderBody';
 import {
-  mapCreateWorkOrderData,
   mapUpdateWorkOrderData,
 } from 'src/shared/utils/workOrderUtils';
 import { WorkOrderViewModel } from './viewModels/workOrdersViewModel';
@@ -28,6 +27,8 @@ import { Cookies } from 'src/infra/http/auth/decorators/cookies.decorator';
 import { CancelWorkOrder } from 'src/application/work-order/useCases/cancel-work-order';
 import { StartMaintenanceWorkOrder } from 'src/application/work-order/useCases/start-maintenance';
 import { StartMaintenanceDto } from './dtos/start-maintenance';
+import { FinishMaintenanceWorkOrder } from 'src/application/work-order/useCases/finish-maintenance';
+import { FinishMaintenanceDto } from './dtos/finish-maintenance';
 
 @Controller('work-orders')
 export class WorkOrderController {
@@ -38,6 +39,7 @@ export class WorkOrderController {
     private getManyWorkOrder: GetManyWorkOrders,
     private readonly cancelWorkOrder: CancelWorkOrder,
     private readonly startMaintenanceWorkOrder: StartMaintenanceWorkOrder,
+    private readonly finishMaintenanceWorkOrder: FinishMaintenanceWorkOrder,
   ) { }
 
   @Post()
@@ -125,5 +127,19 @@ export class WorkOrderController {
   ) {
     const companyInstance = CompanyInstance.create(companyId);
     return await this.startMaintenanceWorkOrder.execute(companyInstance, workOrderId, data);
+  }
+
+  @Patch(':id/finish-maintenance')
+  async finishMaintenance(
+    @Param('id') workOrderId: string,
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
+    @Body() data: FinishMaintenanceDto,
+  ) {
+    const companyInstance = CompanyInstance.create(companyId);
+    return await this.finishMaintenanceWorkOrder.execute(
+      companyInstance,
+      workOrderId,
+      data
+    );
   }
 }

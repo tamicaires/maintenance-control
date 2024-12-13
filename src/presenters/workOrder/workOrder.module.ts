@@ -7,6 +7,7 @@ import { GetManyWorkOrders } from 'src/application/work-order/useCases/getManyWo
 import { UpdateWorkOrder } from 'src/application/work-order/useCases/updateWorkOrder/updateWorkOrder';
 import { CancelWorkOrder } from 'src/application/work-order/useCases/cancel-work-order';
 import { StartMaintenanceWorkOrder } from 'src/application/work-order/useCases/start-maintenance';
+import { FinishMaintenanceWorkOrder } from 'src/application/work-order/useCases/finish-maintenance';
 
 @Module({
   controllers: [WorkOrderController],
@@ -17,7 +18,8 @@ import { StartMaintenanceWorkOrder } from 'src/application/work-order/useCases/s
     DeleteWorkOrder,
     GetManyWorkOrders,
     CancelWorkOrder,
-    StartMaintenanceWorkOrder
+    StartMaintenanceWorkOrder,
+    FinishMaintenanceWorkOrder,
   ],
 })
 export class WorkOrderModule { }
