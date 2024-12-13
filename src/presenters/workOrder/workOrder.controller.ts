@@ -26,6 +26,8 @@ import { CookiesEnum } from 'src/core/enum/cookies';
 import { CompanyInstance } from 'src/core/company/company-instance';
 import { Cookies } from 'src/infra/http/auth/decorators/cookies.decorator';
 import { CancelWorkOrder } from 'src/application/work-order/useCases/cancel-work-order';
+import { StartMaintenanceWorkOrder } from 'src/application/work-order/useCases/start-maintenance';
+import { StartMaintenanceDto } from './dtos/start-maintenance';
 
 @Controller('work-orders')
 export class WorkOrderController {
@@ -35,6 +37,7 @@ export class WorkOrderController {
     private deleteWorkOrder: DeleteWorkOrder,
     private getManyWorkOrder: GetManyWorkOrders,
     private readonly cancelWorkOrder: CancelWorkOrder,
+    private readonly startMaintenanceWorkOrder: StartMaintenanceWorkOrder,
   ) { }
 
   @Post()
@@ -112,5 +115,15 @@ export class WorkOrderController {
   ) {
     const companyInstance = CompanyInstance.create(companyId);
     return await this.cancelWorkOrder.execute(companyInstance, workOrderId);
+  }
+
+  @Patch(':id/start-maintenance')
+  async startMaintenance(
+    @Param('id') workOrderId: string,
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
+    @Body() data: StartMaintenanceDto,
+  ) {
+    const companyInstance = CompanyInstance.create(companyId);
+    return await this.startMaintenanceWorkOrder.execute(companyInstance, workOrderId, data);
   }
 }

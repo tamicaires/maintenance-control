@@ -5,3 +5,9 @@ export interface ICancelWorkOrder {
   isCancelled: boolean;
   status: MaintenanceStatus;
 }
+
+export interface IStartMaintenance {
+  status: MaintenanceStatus;
+  entryMaintenance: Date;
+  boxId: string;
+}
