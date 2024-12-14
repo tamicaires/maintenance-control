@@ -29,6 +29,9 @@ import { StartMaintenanceWorkOrder } from 'src/application/work-order/useCases/s
 import { StartMaintenanceDto } from './dtos/start-maintenance';
 import { FinishMaintenanceWorkOrder } from 'src/application/work-order/useCases/finish-maintenance';
 import { FinishMaintenanceDto } from './dtos/finish-maintenance';
+import { BackToQueueWorkOrder } from 'src/application/work-order/useCases/back-to-queue';
+import { StartWaitingParts } from 'src/application/work-order/useCases/start-waiting-parts';
+import { StartWaitingPartsDto } from './dtos/start-waiting-parts';
 
 @Controller('work-orders')
 export class WorkOrderController {
@@ -40,6 +43,8 @@ export class WorkOrderController {
     private readonly cancelWorkOrder: CancelWorkOrder,
     private readonly startMaintenanceWorkOrder: StartMaintenanceWorkOrder,
     private readonly finishMaintenanceWorkOrder: FinishMaintenanceWorkOrder,
+    private readonly backToQueueWorkOrder: BackToQueueWorkOrder,
+    private readonly startWaitingPartsWorkOrder: StartWaitingParts,
   ) { }
 
   @Post()
@@ -137,6 +142,32 @@ export class WorkOrderController {
   ) {
     const companyInstance = CompanyInstance.create(companyId);
     return await this.finishMaintenanceWorkOrder.execute(
+      companyInstance,
+      workOrderId,
+      data
+    );
+  }
+
+  @Patch(':id/back-to-queue')
+  async backToQueue(
+    @Param('id') workOrderId: string,
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
+  ) {
+    const companyInstance = CompanyInstance.create(companyId);
+    return await this.backToQueueWorkOrder.execute(
+      companyInstance,
+      workOrderId,
+    );
+  }
+
+  @Patch(':id/start-waiting-parts')
+  async startWaitingParts(
+    @Param('id') workOrderId: string,
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
+    @Body() data: StartWaitingPartsDto,
+  ) {
+    const companyInstance = CompanyInstance.create(companyId);
+    return await this.startWaitingPartsWorkOrder.execute(
       companyInstance,
       workOrderId,
       data
