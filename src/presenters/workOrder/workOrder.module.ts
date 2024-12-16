@@ -10,6 +10,7 @@ import { StartMaintenanceWorkOrder } from 'src/application/work-order/useCases/s
 import { FinishMaintenanceWorkOrder } from 'src/application/work-order/useCases/finish-maintenance';
 import { BackToQueueWorkOrder } from 'src/application/work-order/useCases/back-to-queue';
 import { StartWaitingParts } from 'src/application/work-order/useCases/start-waiting-parts';
+import { FinishWaitingParts } from 'src/application/work-order/useCases/finish-waiting-parts';
 
 @Module({
   controllers: [WorkOrderController],
@@ -24,6 +25,7 @@ import { StartWaitingParts } from 'src/application/work-order/useCases/start-wai
     FinishMaintenanceWorkOrder,
     BackToQueueWorkOrder,
     StartWaitingParts,
+    FinishWaitingParts, 
   ],
 })
 export class WorkOrderModule { }

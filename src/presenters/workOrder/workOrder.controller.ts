@@ -32,6 +32,8 @@ import { FinishMaintenanceDto } from './dtos/finish-maintenance';
 import { BackToQueueWorkOrder } from 'src/application/work-order/useCases/back-to-queue';
 import { StartWaitingParts } from 'src/application/work-order/useCases/start-waiting-parts';
 import { StartWaitingPartsDto } from './dtos/start-waiting-parts';
+import { FinishWaitingParts } from 'src/application/work-order/useCases/finish-waiting-parts';
+import { FinishWaitingPartsDto } from './dtos/finish-waiting-parts';
 
 @Controller('work-orders')
 export class WorkOrderController {
@@ -45,6 +47,7 @@ export class WorkOrderController {
     private readonly finishMaintenanceWorkOrder: FinishMaintenanceWorkOrder,
     private readonly backToQueueWorkOrder: BackToQueueWorkOrder,
     private readonly startWaitingPartsWorkOrder: StartWaitingParts,
+    private readonly finishWaitingPartsWorkOrder: FinishWaitingParts,
   ) { }
 
   @Post()
@@ -167,7 +170,26 @@ export class WorkOrderController {
     @Body() data: StartWaitingPartsDto,
   ) {
     const companyInstance = CompanyInstance.create(companyId);
-    return await this.startWaitingPartsWorkOrder.execute(
+    const response = await this.startWaitingPartsWorkOrder.execute(
+      companyInstance,
+      workOrderId,
+      data
+    );
+
+    return {
+      message: "Ordem de serviço retornada para fila com sucesso",
+      data: response,
+    }
+  }
+
+  @Patch(':id/finish-waiting-parts')
+  async finishWaitingParts(
+    @Param('id') workOrderId: string,
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
+    @Body() data: FinishWaitingPartsDto,
+  ) {
+    const companyInstance = CompanyInstance.create(companyId);
+    return await this.finishWaitingPartsWorkOrder.execute(
       companyInstance,
       workOrderId,
       data

@@ -2,9 +2,15 @@ import { TypeOfMaintenance } from '../../../core/enum/type-of-maintenance.enum';
 import { WorkOrderRepository } from '../../../core/domain/repositories/work-order-repository';
 import { WorkOrder } from 'src/core/domain/entities/work-order';
 import { CompanyInstance } from 'src/core/company/company-instance';
-import { IBackToQueue, ICancelWorkOrder, IFinishMaintenance, IStartMaintenance, IStartWaitingParts } from 'src/shared/types/work-order';
+import { IBackToQueue, ICancelWorkOrder, IFinishMaintenance, IFinishWaitingParts, IStartMaintenance, IStartWaitingParts } from 'src/shared/types/work-order';
 
 export class WorkOrderRepositoryInMemory implements WorkOrderRepository {
+  getWorkOrderWithRelationalData(companyInstance: CompanyInstance, workOrderId: string): Promise<any> {
+    throw new Error('Method not implemented.');
+  }
+  finishWaitingParts(companyInstance: CompanyInstance, workOrderId: string, status: IFinishWaitingParts): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
   startWaitingParts(companyInstance: CompanyInstance, workOrderId: string, data: IStartWaitingParts): Promise<void> {
     throw new Error('Method not implemented.');
   }
@@ -61,7 +67,7 @@ export class WorkOrderRepositoryInMemory implements WorkOrderRepository {
     throw new Error('Method not implemented.');
   }
 
-  backToQueue(companyInstance: CompanyInstance, workOrderId: string, data: IBackToQueue): Promise<void> {
+  backToQueue(companyInstance: CompanyInstance, workOrderId: string): Promise<void> {
     throw new Error('Method not implemented.');
   }
 }
