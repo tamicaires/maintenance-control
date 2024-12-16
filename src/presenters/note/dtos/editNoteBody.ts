@@ -5,7 +5,7 @@ import { IsStringCustom } from 'src/core/classValidator/decorators/IsStringCusto
 export class EditNoteBody {
   @IsStringCustom()
   @IsNotEmptyCustom()
-  title: string;
+  content: string;
 
   @IsStringCustom()
   @IsOptional()

@@ -4,19 +4,19 @@ import { Note } from 'src/core/domain/entities/note';
 export class PrismaNoteMapper {
   static toPrisma({
     id,
-    title,
+    content,
     description,
     userId,
     workOrderId,
     createdAt,
     updatedAt,
   }: Note): NoteRaw {
-    return { id, title, description, userId, workOrderId, createdAt, updatedAt };
+    return { id, content, description, userId, workOrderId, createdAt, updatedAt };
   }
 
   static toDomain({
     id,
-    title,
+    content,
     description,
     userId,
     workOrderId,
@@ -25,7 +25,7 @@ export class PrismaNoteMapper {
   }: NoteRaw): Note {
     return new Note(
       {
-        title,
+        content,
         description,
         userId,
         workOrderId,

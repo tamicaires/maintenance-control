@@ -5,9 +5,13 @@ import { IsStringCustom } from 'src/core/classValidator/decorators/IsStringCusto
 export class CreateNoteBody {
   @IsStringCustom()
   @IsNotEmptyCustom()
-  title: string;
+  content: string;
 
   @IsStringCustom()
   @IsOptional()
-  description: string;
+  description?: string;
+
+  @IsStringCustom()
+  @IsNotEmptyCustom()
+  workOrderId: string
 }

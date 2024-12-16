@@ -4,7 +4,7 @@ import { NoteWithoutPermissionException } from '../../exceptions/NoteWithoudPerm
 import { NoteNotFoundException } from '../../exceptions/NoteNotFoundException';
 
 interface EditNoteRequest {
-  title: string;
+  content: string;
   description?: string;
   noteId: string;
   userId: string;
@@ -13,7 +13,7 @@ interface EditNoteRequest {
 export class EditNote {
   constructor(private noteRepository: NoteRepository) {}
 
-  async execute({ description, noteId, title, userId }: EditNoteRequest) {
+  async execute({ description, noteId, content, userId }: EditNoteRequest) {
     const note = await this.noteRepository.findById(noteId);
 
     if (!note) throw new NoteNotFoundException();
@@ -23,7 +23,7 @@ export class EditNote {
         actionName: 'editar',
       });
 
-    note.title = title;
+    note.content = content;
     note.description = description ?? null;
 
     await this.noteRepository.save(note);

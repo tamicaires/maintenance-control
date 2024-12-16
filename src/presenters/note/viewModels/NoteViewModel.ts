@@ -1,10 +1,10 @@
 import { Note } from "src/core/domain/entities/note";
 
 export class NoteViewModel {
-  static toHttp({ id, title, description, createdAt, updatedAt }: Note) {
+  static toHttp({ id, content, description, createdAt, updatedAt }: Note) {
     return {
       id,
-      title,
+      content,
       description,
       createdAt,
       updatedAt,

@@ -2,7 +2,7 @@ import { randomUUID } from 'crypto';
 import { Replace } from 'src/shared/utils/replace';
 
 interface NoteProps {
-  title: string;
+  content: string;
   description: string | null;
   userId: string;
   workOrderId: string;
@@ -34,12 +34,12 @@ export class Note {
     return this._id;
   }
 
-  get title(): string {
-    return this.props.title;
+  get content(): string {
+    return this.props.content;
   }
 
-  set title(title: string) {
-    this.props.title = title;
+  set content(content: string) {
+    this.props.content = content;
   }
 
   get description(): string | null {
