@@ -11,6 +11,7 @@ import { FinishMaintenanceWorkOrder } from 'src/application/work-order/useCases/
 import { BackToQueueWorkOrder } from 'src/application/work-order/useCases/back-to-queue';
 import { StartWaitingParts } from 'src/application/work-order/useCases/start-waiting-parts';
 import { FinishWaitingParts } from 'src/application/work-order/useCases/finish-waiting-parts';
+import { GetWorkOrderById } from 'src/application/work-order/useCases/get-work-order-by-id';
 
 @Module({
   controllers: [WorkOrderController],
@@ -19,6 +20,7 @@ import { FinishWaitingParts } from 'src/application/work-order/useCases/finish-w
     CreateWorkOrder,
     UpdateWorkOrder,
     DeleteWorkOrder,
+    GetWorkOrderById,
     GetManyWorkOrders,
     CancelWorkOrder,
     StartMaintenanceWorkOrder,

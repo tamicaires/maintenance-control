@@ -34,6 +34,7 @@ import { StartWaitingParts } from 'src/application/work-order/useCases/start-wai
 import { StartWaitingPartsDto } from './dtos/start-waiting-parts';
 import { FinishWaitingParts } from 'src/application/work-order/useCases/finish-waiting-parts';
 import { FinishWaitingPartsDto } from './dtos/finish-waiting-parts';
+import { GetWorkOrderById } from 'src/application/work-order/useCases/get-work-order-by-id';
 
 @Controller('work-orders')
 export class WorkOrderController {
@@ -48,6 +49,7 @@ export class WorkOrderController {
     private readonly backToQueueWorkOrder: BackToQueueWorkOrder,
     private readonly startWaitingPartsWorkOrder: StartWaitingParts,
     private readonly finishWaitingPartsWorkOrder: FinishWaitingParts,
+    private readonly getWorkOrderById: GetWorkOrderById
   ) { }
 
   @Post()
@@ -97,6 +99,16 @@ export class WorkOrderController {
   ) {
     const companyInstance = CompanyInstance.create(companyId);
     await this.deleteWorkOrder.execute(companyInstance, workOrderId);
+  }
+
+  @Get(':id/order')
+  async getWithRelationalData(
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
+    @Param('id') workOrderId: string,
+  ) {
+    const companyInstance = CompanyInstance.create(companyId);
+    const workOrder = await this.getWorkOrderById.execute(companyInstance, workOrderId);
+    return WorkOrderViewModel.toHttp(workOrder);
   }
 
   @Get()

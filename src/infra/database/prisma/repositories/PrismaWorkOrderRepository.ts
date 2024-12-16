@@ -97,7 +97,7 @@ export class PrismaWorkOrderRepository implements WorkOrderRepository {
         },
       },
     });
-    console.log("workorders", workOrders.map(wo => wo.fleet.trailers));
+
     return workOrders;
   }
 
@@ -111,6 +111,58 @@ export class PrismaWorkOrderRepository implements WorkOrderRepository {
     if (!workOrderRaw) return null;
 
     return PrismaWorkOrderMapper.toDomain(workOrderRaw);
+  }
+
+  async getWorkOrderWithRelationalData(companyInstance: CompanyInstance, workOrderId: string): Promise<any> {
+    const companyId = companyInstance.getCompanyId();
+
+    const workOrderRaw = await this.prisma.workOrder.findUnique({
+      where: { id: workOrderId, companyId },
+      include: {
+        serviceAssignments: {
+          select: {
+            service: {
+              select: {
+                _count: true
+              }
+            },
+
+
+          }
+        },
+        box: {
+          select: {
+            id: true,
+            name: true,
+            isActive: true,
+            _count: true
+          }
+        },
+        fleet: {
+          select: {
+            fleetNumber: true,
+            carrier: {
+              select: {
+                carrierName: true,
+              },
+            },
+            trailers: {
+              include: {
+                axles: {
+                  select: {
+                    id: true,
+                    position: true,
+
+                  }
+                }
+              }
+            },
+          }
+        },
+      },
+    })
+
+    return workOrderRaw;
   }
 
   async cancelWorkOrder(companyInstance: CompanyInstance, data: ICancelWorkOrder): Promise<void> {

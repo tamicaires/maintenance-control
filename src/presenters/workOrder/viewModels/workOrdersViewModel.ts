@@ -1,24 +1,4 @@
-import { WorkOrder } from "src/core/domain/entities/work-order";
-
-interface WorkOrderWithRelationalInfo extends WorkOrder {
-  fleet: {
-    fleetNumber: string;
-    carrier: {
-      carrierName: string;
-    };
-    trailers: {
-      id: string;
-      plate: string;
-      position: string;
-      isActive: boolean;
-      axles: {
-        id: string;
-        position: string;
-      }[]
-    }[] | null;
-  };
-
-}
+import { WorkOrderWithRelationalInfo } from "src/shared/types/work-order";
 
 export class WorkOrderViewModel {
   static toHttp({
@@ -45,6 +25,7 @@ export class WorkOrderViewModel {
     isCancelled,
     createdAt,
     updatedAt,
+    box,
   }: WorkOrderWithRelationalInfo) {
     const fleetNumber = fleet?.fleetNumber;
     const carrierName = fleet?.carrier?.carrierName;
@@ -69,6 +50,7 @@ export class WorkOrderViewModel {
     return {
       id,
       displayId,
+      box,
       fleetInfo,
       severityLevel,
       entryQueue,

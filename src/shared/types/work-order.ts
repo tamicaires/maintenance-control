@@ -50,5 +50,9 @@ export interface WorkOrderWithRelationalInfo extends WorkOrder {
       }[]
     }[] | null;
   };
-
+  box: {
+    id: string;
+    name: string;
+    isActive: boolean
+  }
 }
