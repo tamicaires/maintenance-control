@@ -8,7 +8,7 @@ import { ExceptionHandler } from "src/core/exceptions/ExceptionHandler";
 export class BackToQueueWorkOrder {
   constructor(private readonly _workOrderRepository: WorkOrderRepository) { }
 
-  async execute(companyInstance: CompanyInstance, workOrderId: string): Promise<void> {
+  async execute(companyInstance: CompanyInstance, workOrderId: string) {
     const workOrder = await this._workOrderRepository.findById(companyInstance, workOrderId);
     if (!workOrder) {
       throw new ExceptionHandler({
@@ -31,6 +31,13 @@ export class BackToQueueWorkOrder {
       })
     }
 
+    const workOrderUpdated = {
+      status: MaintenanceStatus.Fila,
+      message: "Ordem de Serviço retornada para fila"
+    }
     await this._workOrderRepository.backToQueue(companyInstance, workOrderId);
+
+    return workOrderUpdated
+
   }
 }

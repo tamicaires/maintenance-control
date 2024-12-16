@@ -1,3 +1,4 @@
+import { WorkOrder } from "src/core/domain/entities/work-order";
 import { MaintenanceStatus } from "src/core/enum/maitenance-status.enum";
 
 export interface ICancelWorkOrder {
@@ -25,4 +26,29 @@ export interface IBackToQueue {
 export interface IStartWaitingParts {
   status: MaintenanceStatus;
   startWaitingParts: Date;
+}
+
+export interface IFinishWaitingParts {
+  status: MaintenanceStatus;
+  endWaitingParts: Date;
+}
+
+export interface WorkOrderWithRelationalInfo extends WorkOrder {
+  fleet: {
+    fleetNumber: string;
+    carrier: {
+      carrierName: string;
+    };
+    trailers: {
+      id: string;
+      plate: string;
+      position: string;
+      isActive: boolean;
+      axles: {
+        id: string;
+        position: string;
+      }[]
+    }[] | null;
+  };
+
 }
