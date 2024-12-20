@@ -24,7 +24,8 @@ import { VehicleModule } from './presenters/vehicle/vehicle.module';
 import { BoxModule } from './presenters/box/box.module';
 import { PartRequestModule } from './presenters/part-request/part-request.module';
 import { EmployeeServiceAssigmentModule } from './presenters/employee-service-assigment/employee-service-assignment.module';
-import { ChecklistCategoryModule } from './presenters/checklist-category/checklist-category.module';
+import { ChecklistCategoryModule } from './presenters/checklist/checklist-category/checklist-category.module';
+import { ChecklistTemplateModule } from './presenters/checklist/checklist-template/checklist-template.module';
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { ChecklistCategoryModule } from './presenters/checklist-category/checkli
     ServiceAssignmentModule,
     EmployeeServiceAssigmentModule,
     ChecklistCategoryModule,
+    ChecklistTemplateModule
   ],
   controllers: [],
   providers: [

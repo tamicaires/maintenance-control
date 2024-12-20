@@ -42,6 +42,8 @@ import { PrismaEmployeeServiceAssigmentRepository } from './prisma/repositories/
 import { EmployeeServiceAssigmentRepository } from 'src/core/domain/repositories/employee-service-assigment-repository';
 import { ChecklistCategoryRepository } from 'src/core/domain/repositories/checklist/checklist-category-repository';
 import { PrismaChecklistCategoryRepository } from './prisma/repositories/prisma-checklist-category';
+import { ChecklistTemplateRepository } from 'src/core/domain/repositories/checklist/checklist-template-repository';
+import { PrismaChecklistTemplateRepository } from './prisma/repositories/prisma-checklist-template';
 
 @Module({
   providers: [
@@ -130,13 +132,17 @@ import { PrismaChecklistCategoryRepository } from './prisma/repositories/prisma-
       provide: ChecklistCategoryRepository,
       useClass: PrismaChecklistCategoryRepository,
     },
+    {
+      provide: ChecklistTemplateRepository,
+      useClass: PrismaChecklistTemplateRepository,
+    },
   ],
   exports: [
     CompanyRepository,
     UserRepository,
     MembershipRepository,
     NoteRepository,
-    VehicleRepository, 
+    VehicleRepository,
     CarrierRepository,
     FleetRepository,
     TrailerRepository,
@@ -150,9 +156,10 @@ import { PrismaChecklistCategoryRepository } from './prisma/repositories/prisma-
     ServiceRepository,
     WorkOrderRepository,
     ServiceAssignmentRepository,
-    EmployeeServiceAssigmentRepository, 
+    EmployeeServiceAssigmentRepository,
     BoxRepository,
     ChecklistCategoryRepository,
+    ChecklistTemplateRepository,
   ],
 })
 export class DatabaseModule { }
