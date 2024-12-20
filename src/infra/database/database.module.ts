@@ -46,6 +46,8 @@ import { ChecklistTemplateRepository } from 'src/core/domain/repositories/checkl
 import { PrismaChecklistTemplateRepository } from './prisma/repositories/prisma-checklist-template';
 import { ChecklistTemplateItemRepository } from 'src/core/domain/repositories/checklist/checklist-template-item-repository';
 import { PrismaChecklistTemplateItemRepository } from './prisma/repositories/prisma-checklist-template-item';
+import { ChecklistItemRepository } from 'src/core/domain/repositories/checklist/checklist-item-repository';
+import { PrismaChecklistItemRepository } from './prisma/repositories/prisma-checklist-item';
 
 @Module({
   providers: [
@@ -142,6 +144,10 @@ import { PrismaChecklistTemplateItemRepository } from './prisma/repositories/pri
       provide: ChecklistTemplateItemRepository,
       useClass: PrismaChecklistTemplateItemRepository,
     },
+    {
+      provide: ChecklistItemRepository,
+      useClass: PrismaChecklistItemRepository,
+    },
   ],
   exports: [
     CompanyRepository,
@@ -167,6 +173,7 @@ import { PrismaChecklistTemplateItemRepository } from './prisma/repositories/pri
     ChecklistCategoryRepository,
     ChecklistTemplateRepository,
     ChecklistTemplateItemRepository,
+    ChecklistItemRepository,
   ],
 })
 export class DatabaseModule { }

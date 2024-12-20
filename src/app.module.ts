@@ -27,6 +27,7 @@ import { EmployeeServiceAssigmentModule } from './presenters/employee-service-as
 import { ChecklistCategoryModule } from './presenters/checklist/checklist-category/checklist-category.module';
 import { ChecklistTemplateModule } from './presenters/checklist/checklist-template/checklist-template.module';
 import { ChecklistTemplateItemModule } from './presenters/checklist/checklist-template-item/checklist-template-item.module';
+import { ChecklistItemModule } from './presenters/checklist/checklist-item/checklist-item.module';
 
 @Module({
   imports: [
@@ -56,6 +57,7 @@ import { ChecklistTemplateItemModule } from './presenters/checklist/checklist-te
     ChecklistCategoryModule,
     ChecklistTemplateModule,
     ChecklistTemplateItemModule,
+    ChecklistItemModule,
   ],
   controllers: [],
   providers: [

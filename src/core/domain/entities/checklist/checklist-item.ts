@@ -3,7 +3,6 @@ import { randomUUID } from "crypto";
 
 export class ChecklistItem implements ChecklistItemType {
   id: string;
-  name: string;
   checklistId: string;
   itemTemplateId: string;
   checklistCategoryId: string;
@@ -19,7 +18,6 @@ export class ChecklistItem implements ChecklistItemType {
 
 const schema = z.object({
   id: z.string().uuid().optional(),
-  name: z.string(),
   checklistId: z.string().uuid(),
   itemTemplateId: z.string().uuid(),
   checklistCategoryId: z.string().uuid(),

@@ -4,8 +4,8 @@ import { ChecklistItem } from "../../entities/checklist/checklist-item";
 export abstract class ChecklistItemRepository {
   abstract create(
     companyInstance: CompanyInstance,
-    data: ChecklistItem
+    item: ChecklistItem
   ): Promise<ChecklistItem>;
-  abstract findByName(companyInstance: CompanyInstance, name: string): Promise<ChecklistItem | null>;
   abstract findById(companyInstance: CompanyInstance, id: string): Promise<ChecklistItem | null>;
+  abstract findByChecklistId(companyInstance: CompanyInstance, checklistId: string): Promise<ChecklistItem[]>;
 }
