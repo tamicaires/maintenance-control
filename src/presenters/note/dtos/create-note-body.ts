@@ -11,7 +11,4 @@ export class CreateNoteBody {
   @IsOptional()
   description?: string;
 
-  @IsStringCustom()
-  @IsNotEmptyCustom()
-  workOrderId: string
 }

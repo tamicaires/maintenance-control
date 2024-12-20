@@ -25,6 +25,7 @@ export class WorkOrderViewModel {
     isCancelled,
     createdAt,
     updatedAt,
+    note,
     box,
   }: WorkOrderWithRelationalInfo) {
     const fleetNumber = fleet?.fleetNumber;
@@ -65,6 +66,7 @@ export class WorkOrderViewModel {
       userId,
       typeOfMaintenance,
       status,
+      notes: note,
       boxId,
       createdBy,
       updatedBy,

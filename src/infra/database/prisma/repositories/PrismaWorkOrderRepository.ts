@@ -72,6 +72,9 @@ export class PrismaWorkOrderRepository implements WorkOrderRepository {
       where,
       take: perPage,
       skip: (page - 1) * perPage,
+      orderBy: {
+        createdAt: 'desc',
+      },
       include: {
         fleet: {
           select: {
@@ -119,23 +122,11 @@ export class PrismaWorkOrderRepository implements WorkOrderRepository {
     const workOrderRaw = await this.prisma.workOrder.findUnique({
       where: { id: workOrderId, companyId },
       include: {
-        serviceAssignments: {
-          select: {
-            service: {
-              select: {
-                _count: true
-              }
-            },
-
-
-          }
-        },
         box: {
           select: {
             id: true,
             name: true,
             isActive: true,
-            _count: true
           }
         },
         fleet: {
@@ -159,6 +150,22 @@ export class PrismaWorkOrderRepository implements WorkOrderRepository {
             },
           }
         },
+        note: {
+          select: {
+            id: true,
+            content: true,
+            createdAt: true,
+            user: {
+              select: {
+                id: true,
+                name: true,
+              }
+            }
+          },
+          orderBy: {
+            createdAt: 'desc'
+          }
+        }
       },
     })
 

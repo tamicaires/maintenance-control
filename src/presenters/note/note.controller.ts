@@ -9,7 +9,7 @@ import {
   Query,
   Request,
 } from '@nestjs/common';
-import { CreateNoteBody } from './dtos/createNoteBody';
+import { CreateNoteBody } from './dtos/create-note-body';
 import { NoteViewModel } from './viewModels/NoteViewModel';
 import { EditNoteBody } from './dtos/editNoteBody';
 import { AuthenticatedRequestModel } from 'src/infra/http/auth/models/authenticateRequestModel';
@@ -32,13 +32,14 @@ export class NoteController {
     private getManyNoteUseCase: GetManyNotes,
   ) { }
 
-  @Post()
+  @Post(':id')
   async createNote(
     @Request() request: AuthenticatedRequestModel,
+    @Param('id') workOrderId: string,
     @Cookies(CookiesEnum.CompanyId) companyId: string,
     @Body() body: CreateNoteBody,
   ) {
-    const { content, description, workOrderId } = body;
+    const { content, description } = body;
     const companyInstance = CompanyInstance.create(companyId);
 
     const note = await this.createNoteUseCase.execute(companyInstance, {

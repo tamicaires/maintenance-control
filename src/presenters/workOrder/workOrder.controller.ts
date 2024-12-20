@@ -15,7 +15,7 @@ import { UpdateWorkOrderBody } from './dtos/updateWorkOrderBody';
 import {
   mapUpdateWorkOrderData,
 } from 'src/shared/utils/workOrderUtils';
-import { WorkOrderViewModel } from './viewModels/workOrdersViewModel';
+import { WorkOrderViewModel } from './view-models/work-order-view-model';
 import { CreateWorkOrder } from 'src/application/work-order/useCases/createWorkOrder/createWorkOrder';
 import { UpdateWorkOrder } from 'src/application/work-order/useCases/updateWorkOrder/updateWorkOrder';
 import { DeleteWorkOrder } from 'src/application/work-order/useCases/deleteWorkOrder/deleteWorkOrder';
