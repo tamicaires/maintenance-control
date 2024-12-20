@@ -34,8 +34,10 @@ export class PrismaChecklistCategoryRepository implements ChecklistCategoryRepos
   }
 
   async findById(companyInstance: CompanyInstance, id: string): Promise<ChecklistCategory | null> {
+    const companyId = companyInstance.getCompanyId();
+
     const checklistCategory = await this._prisma.checklistCategory.findUnique({
-      where: { id }
+      where: { id, companyId }
     });
 
     if (!checklistCategory) {
@@ -46,7 +48,10 @@ export class PrismaChecklistCategoryRepository implements ChecklistCategoryRepos
   }
 
   async findAll(companyInstance: CompanyInstance): Promise<ChecklistCategory[]> {
+    const companyId = companyInstance.getCompanyId();
+
     const checklistCategories = await this._prisma.checklistCategory.findMany({
+      where: { companyId }
     })
 
     return checklistCategories;
