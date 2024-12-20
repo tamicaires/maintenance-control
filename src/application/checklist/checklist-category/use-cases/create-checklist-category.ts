@@ -28,6 +28,7 @@ export class CreateChecklistCategory {
     const checklistCategory = new ChecklistCategory({
       name: data.name,
       description: data.description,
+      companyId: companyInstance.getCompanyId(),
       createdAt: new Date(),
       updatedAt: new Date()
     })

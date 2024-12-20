@@ -10,22 +10,19 @@ export class PrismaChecklistCategoryRepository implements ChecklistCategoryRepos
 
   async create(companyInstance: CompanyInstance, checklistCategory: ChecklistCategory): Promise<ChecklistCategory> {
     await this._prisma.checklistCategory.create({
-      data: {
-        id: checklistCategory.id,
-        name: checklistCategory.name,
-        description: checklistCategory.description,
-        createdAt: checklistCategory.createdAt,
-        updatedAt: checklistCategory.updatedAt
-      }
+      data: checklistCategory
     })
 
     return checklistCategory;
   }
 
   async findByName(companyInstance: CompanyInstance, name: string): Promise<ChecklistCategory | null> {
+    const companyId = companyInstance.getCompanyId();
+
     const checklistCategory = await this._prisma.checklistCategory.findFirst({
       where: {
-        name
+        name,
+        companyId,
       }
     });
 
@@ -53,5 +50,13 @@ export class PrismaChecklistCategoryRepository implements ChecklistCategoryRepos
     })
 
     return checklistCategories;
+  }
+
+  async delete(companyInstance: CompanyInstance, id: string): Promise<void> {
+    const companyId = companyInstance.getCompanyId();
+
+    await this._prisma.checklistCategory.delete({
+      where: { id, companyId }
+    });
   }
 }

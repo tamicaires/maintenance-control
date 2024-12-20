@@ -4,6 +4,7 @@ import { DatabaseModule } from "src/infra/database/database.module";
 import { CreateChecklistCategory } from "src/application/checklist/checklist-category/use-cases/create-checklist-category";
 import { GetChecklistCategoryById } from "src/application/checklist/checklist-category/use-cases/get-by-id";
 import { ListChecklistCategories } from "src/application/checklist/checklist-category/use-cases/list-checklist-categories";
+import { DeleteChecklistCategory } from "src/application/checklist/checklist-category/use-cases/delete-checklist-category";
 
 @Module({
   controllers: [ChecklistCategoryController],
@@ -12,6 +13,7 @@ import { ListChecklistCategories } from "src/application/checklist/checklist-cat
     CreateChecklistCategory,
     GetChecklistCategoryById,
     ListChecklistCategories,
+    DeleteChecklistCategory,
   ]
 })
 
