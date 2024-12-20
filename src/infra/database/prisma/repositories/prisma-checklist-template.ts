@@ -27,4 +27,13 @@ export class PrismaChecklistTemplateRepository implements ChecklistTemplateRepos
     return checklistTemplate;
   }
 
+  async list(companyInstance: CompanyInstance): Promise<ChecklistTemplate[]> {
+    const companyId = companyInstance.getCompanyId();
+
+    const checklistTemplates = await this._prisma.checklistTemplate.findMany({
+      where: { companyId }
+    })
+
+    return checklistTemplates;
+  }
 }

@@ -4,5 +4,6 @@ import { ChecklistTemplate } from "../../entities/checklist/checklist-template/c
 export abstract class ChecklistTemplateRepository {
   abstract create(companyInstance: CompanyInstance, template: ChecklistTemplate): Promise<ChecklistTemplate>;
   abstract findById(companyInstance: CompanyInstance, id: string): Promise<ChecklistTemplate | null>;
+  abstract list(companyInstance: CompanyInstance): Promise<ChecklistTemplate[]>;
 }
 
