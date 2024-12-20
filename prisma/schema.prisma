@@ -32,6 +32,7 @@ model Company {
   part Part[]
   vehicle Vehicle[]
   box Box[]
+  checklistCategory ChecklistCategory[]
 }
 
 model User {
@@ -565,6 +566,8 @@ model ChecklistCategory {
   id          String    @id 
   name        String    @unique
   description String?
+  companyId  String    @map("company_id")
+  company    Company   @relation(fields: [companyId], references: [id])
 
   createdAt   DateTime  @default(now()) @map("created_at")
   updatedAt   DateTime  @map("updated_at")

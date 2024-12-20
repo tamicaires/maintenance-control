@@ -8,5 +8,5 @@ export abstract class ChecklistCategoryRepository {
   ): Promise<ChecklistCategory>;
   abstract findByName(companyInstance: CompanyInstance, name: string): Promise<ChecklistCategory | null>;
   abstract findById(companyInstance: CompanyInstance, id: string): Promise<ChecklistCategory | null>;
-  abstract findAll(): Promise<ChecklistCategoryType[]>;
+  abstract findAll(companyInstance: CompanyInstance): Promise<ChecklistCategory[]>;
 }

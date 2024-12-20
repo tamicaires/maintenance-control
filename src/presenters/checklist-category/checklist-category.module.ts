@@ -3,6 +3,7 @@ import { ChecklistCategoryController } from "./checklist-category.controller";
 import { DatabaseModule } from "src/infra/database/database.module";
 import { CreateChecklistCategory } from "src/application/checklist/checklist-category/use-cases/create-checklist-category";
 import { GetChecklistCategoryById } from "src/application/checklist/checklist-category/use-cases/get-by-id";
+import { ListChecklistCategories } from "src/application/checklist/checklist-category/use-cases/list-checklist-categories";
 
 @Module({
   controllers: [ChecklistCategoryController],
@@ -10,6 +11,7 @@ import { GetChecklistCategoryById } from "src/application/checklist/checklist-ca
   providers: [
     CreateChecklistCategory,
     GetChecklistCategoryById,
+    ListChecklistCategories,
   ]
 })
 

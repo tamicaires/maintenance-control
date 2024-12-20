@@ -48,7 +48,10 @@ export class PrismaChecklistCategoryRepository implements ChecklistCategoryRepos
     return checklistCategory;
   }
 
-  findAll(): Promise<ChecklistCategoryType[]> {
-    throw new Error("Method not implemented.");
+  async findAll(companyInstance: CompanyInstance): Promise<ChecklistCategory[]> {
+    const checklistCategories = await this._prisma.checklistCategory.findMany({
+    })
+
+    return checklistCategories;
   }
 }
