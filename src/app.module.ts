@@ -24,6 +24,7 @@ import { VehicleModule } from './presenters/vehicle/vehicle.module';
 import { BoxModule } from './presenters/box/box.module';
 import { PartRequestModule } from './presenters/part-request/part-request.module';
 import { EmployeeServiceAssigmentModule } from './presenters/employee-service-assigment/employee-service-assignment.module';
+import { ChecklistCategoryModule } from './presenters/checklist-category/checklist-category.module';
 
 @Module({
   imports: [
@@ -42,7 +43,7 @@ import { EmployeeServiceAssigmentModule } from './presenters/employee-service-as
     AxleModule,
     PartCategoryModule,
     PartModule,
-    PartRequestModule, 
+    PartRequestModule,
     TireModule,
     JobModule,
     EmployeeModule,
@@ -50,6 +51,7 @@ import { EmployeeServiceAssigmentModule } from './presenters/employee-service-as
     WorkOrderModule,
     ServiceAssignmentModule,
     EmployeeServiceAssigmentModule,
+    ChecklistCategoryModule,
   ],
   controllers: [],
   providers: [

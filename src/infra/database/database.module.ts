@@ -40,6 +40,8 @@ import { PartRequestRepository } from 'src/core/domain/repositories/part-request
 import { PrismaPartRequestRepository } from './prisma/repositories/prisma-part-request-repository';
 import { PrismaEmployeeServiceAssigmentRepository } from './prisma/repositories/prisma-employee-service-assigment';
 import { EmployeeServiceAssigmentRepository } from 'src/core/domain/repositories/employee-service-assigment-repository';
+import { ChecklistCategoryRepository } from 'src/core/domain/repositories/checklist/checklist-category-repository';
+import { PrismaChecklistCategoryRepository } from './prisma/repositories/prisma-checklist-category';
 
 @Module({
   providers: [
@@ -124,6 +126,10 @@ import { EmployeeServiceAssigmentRepository } from 'src/core/domain/repositories
       provide: BoxRepository,
       useClass: PrismaBoxRepository,
     },
+    {
+      provide: ChecklistCategoryRepository,
+      useClass: PrismaChecklistCategoryRepository,
+    },
   ],
   exports: [
     CompanyRepository,
@@ -146,6 +152,7 @@ import { EmployeeServiceAssigmentRepository } from 'src/core/domain/repositories
     ServiceAssignmentRepository,
     EmployeeServiceAssigmentRepository, 
     BoxRepository,
+    ChecklistCategoryRepository,
   ],
 })
 export class DatabaseModule { }

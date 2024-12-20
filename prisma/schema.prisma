@@ -506,7 +506,8 @@ model ChecklistTemplate {
   name        String    // Nome do checklist (ex: "Checklist de Manutenção Padrão")
   company     Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
   companyId   String    @map("company_id")
-  items       ChecklistItemTemplate[] // Itens do checklist
+  items       ChecklistItemTemplate[]
+  icon        String?
 
   createdAt   DateTime  @default(now()) @map("created_at")
   updatedAt   DateTime  @map("updated_at")
@@ -552,13 +553,26 @@ model ChecklistItem {
   itemTemplate ChecklistItemTemplate @relation(fields: [itemTemplateId], references: [id], onDelete: Cascade)
   itemTemplateId String  @map("item_template_id")
   isConform   Boolean    @map("is_conform")
+  checklistCategoryId String @map("checklist_category_id")
+  checklistCategory ChecklistCategory @relation(fields: [checklistCategoryId], references: [id])
   createdAt   DateTime  @default(now()) @map("created_at")
   updatedAt   DateTime  @updatedAt @map("updated_at")
-
   @@map("checklist_items")
   @@index([checklistId])
 }
 
+model ChecklistCategory {
+  id          String    @id 
+  name        String    @unique
+  description String?
+
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @map("updated_at")
+
+  @@map("checklist_categories")
+  @@index([name])
+  checklistItem ChecklistItem[]
+}
 
 enum MaintenanceStatus {
   Fila
