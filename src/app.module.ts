@@ -28,6 +28,7 @@ import { ChecklistCategoryModule } from './presenters/checklist/checklist-catego
 import { ChecklistTemplateModule } from './presenters/checklist/checklist-template/checklist-template.module';
 import { ChecklistTemplateItemModule } from './presenters/checklist/checklist-template-item/checklist-template-item.module';
 import { ChecklistItemModule } from './presenters/checklist/checklist-item/checklist-item.module';
+import { ChecklistModule } from './presenters/checklist/checklist/checklist.module';
 
 @Module({
   imports: [
@@ -58,6 +59,7 @@ import { ChecklistItemModule } from './presenters/checklist/checklist-item/check
     ChecklistTemplateModule,
     ChecklistTemplateItemModule,
     ChecklistItemModule,
+    ChecklistModule,
   ],
   controllers: [],
   providers: [
