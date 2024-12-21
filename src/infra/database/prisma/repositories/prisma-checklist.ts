@@ -30,4 +30,18 @@ export class PrismaChecklistRepository implements ChecklistRepository {
 
     return checklist;
   }
+
+  async list(companyInstance: CompanyInstance): Promise<Checklist[]> {
+    const companyId = companyInstance.getCompanyId();
+
+    const checklists = await this._prisma.checklist.findMany({
+      where: {
+        workOrder: {
+          companyId
+        }
+      }
+    })
+
+    return checklists;
+  }
 }

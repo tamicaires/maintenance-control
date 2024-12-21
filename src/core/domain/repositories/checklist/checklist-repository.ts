@@ -7,4 +7,5 @@ export abstract class ChecklistRepository {
     item: Checklist
   ): Promise<Checklist>;
   abstract findById(companyInstance: CompanyInstance, id: string): Promise<Checklist | null>;
+  abstract list(companyInstance: CompanyInstance): Promise<Checklist[]>;
 }
