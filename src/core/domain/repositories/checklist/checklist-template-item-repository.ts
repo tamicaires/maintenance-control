@@ -4,4 +4,5 @@ import { ChecklistTemplateItem } from "../../entities/checklist/checklist-templa
 export abstract class ChecklistTemplateItemRepository {
   abstract create(companyInstance: CompanyInstance, templateItem: ChecklistTemplateItem): Promise<ChecklistTemplateItem>;
   abstract findById(companyInstance: CompanyInstance, id: string): Promise<ChecklistTemplateItem | null>;
+  abstract list(companyInstance: CompanyInstance): Promise<ChecklistTemplateItem[]>;
 }
