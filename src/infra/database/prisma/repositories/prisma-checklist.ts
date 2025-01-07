@@ -39,6 +39,23 @@ export class PrismaChecklistRepository implements ChecklistRepository {
         workOrder: {
           companyId
         }
+      },
+      include: {
+        template: {
+          select: {
+            id: true,
+            name: true,
+            icon: true
+          }
+        },
+        workOrder: {
+          select: {
+            id: true,
+            displayId: true,
+          }
+        }
+        ,
+        items: true
       }
     })
 
