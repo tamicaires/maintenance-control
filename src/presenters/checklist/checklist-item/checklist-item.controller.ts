@@ -1,13 +1,17 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Param, Post } from "@nestjs/common";
 import { CreateChecklistItem } from "src/application/checklist/checklist-item/use-cases/create-checklist-item";
 import { Cookies } from "src/infra/http/auth/decorators/cookies.decorator";
 import { CreateChecklistItemDTO } from "./dtos/create-checklist-item";
 import { CompanyInstance } from "src/core/company/company-instance";
 import { CookiesEnum } from "src/core/enum/cookies";
+import { DeleteChecklistItem } from "src/application/checklist/checklist-item/use-cases/delete-checklist-item";
 
 @Controller('checklist-item')
 export class ChecklistItemController {
-  constructor(private readonly _createChecklistItem: CreateChecklistItem) { }
+  constructor(
+    private readonly _createChecklistItem: CreateChecklistItem,
+    private readonly _deleteChecklistItem: DeleteChecklistItem
+  ) { }
 
   @Post()
   async create(
@@ -17,5 +21,15 @@ export class ChecklistItemController {
     const companyInstance = CompanyInstance.create(companyId);
 
     return this._createChecklistItem.execute(companyInstance, body);
+  }
+
+  @Delete(':id')
+  async delete(
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
+    @Param('id') checklistItemId: string
+  ) {
+    const companyInstance = CompanyInstance.create(companyId);
+
+    return this._deleteChecklistItem.execute(companyInstance, checklistItemId);
   }
 }

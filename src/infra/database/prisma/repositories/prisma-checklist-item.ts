@@ -46,4 +46,17 @@ export class PrismaChecklistItemRepository implements ChecklistItemRepository {
 
     return checklistItems;
   }
+
+  async delete(companyInstance: CompanyInstance, itemId: string): Promise<void> {
+    await this._prisma.checklistItem.delete({
+      where: {
+        id: itemId,
+        checklist: {
+          template: {
+            companyId: companyInstance.getCompanyId()
+          }
+        }
+      }
+    });
+  }
 }

@@ -8,4 +8,5 @@ export abstract class ChecklistItemRepository {
   ): Promise<ChecklistItem>;
   abstract findById(companyInstance: CompanyInstance, id: string): Promise<ChecklistItem | null>;
   abstract findByChecklistId(companyInstance: CompanyInstance, checklistId: string): Promise<ChecklistItem[]>;
+  abstract delete(companyInstance: CompanyInstance, itemId: string): Promise<void>;
 }
