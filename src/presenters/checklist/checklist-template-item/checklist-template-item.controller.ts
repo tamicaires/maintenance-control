@@ -5,7 +5,7 @@ import { CreateChecklistTemplateItemDTO } from "./dtos/create-checklist-template
 import { CompanyInstance } from "src/core/company/company-instance";
 import { CreateChecklistTemplateItem } from "src/application/checklist/checklist-item-template/use-cases/create-checklist-item-template";
 import { ListChecklistTemplateItem } from "src/application/checklist/checklist-item-template/use-cases/list-checklist-item-template";
-import { GetChecklistTemplateItemsByTemplateId } from "src/application/checklist/checklist-item-template/use-cases/get-checklist-item-by-id";
+import { GetChecklistTemplateItemsByTemplateId } from "src/application/checklist/checklist-item-template/use-cases/get-checklist-item-by-template-id";
 
 @Controller("checklist-template-item")
 export class ChecklistTemplateItemController {
