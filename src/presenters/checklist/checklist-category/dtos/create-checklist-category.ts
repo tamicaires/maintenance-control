@@ -10,4 +10,8 @@ export class ChecklistCategoryDto {
   @IsStringCustom()
   @IsOptional()
   description: string | null;
+
+  @IsStringCustom()
+  @IsNotEmptyCustom()
+  templateId: string;
 }

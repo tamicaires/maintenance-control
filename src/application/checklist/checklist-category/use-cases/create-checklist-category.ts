@@ -7,6 +7,7 @@ import { ExceptionHandler } from "src/core/exceptions/ExceptionHandler";
 interface CreateChecklistCategoryRequest {
   name: string;
   description: string | null;
+  templateId: string;
 }
 
 @Injectable()
@@ -29,6 +30,7 @@ export class CreateChecklistCategory {
       name: data.name,
       description: data.description,
       companyId: companyInstance.getCompanyId(),
+      templateId: data.templateId,
       createdAt: new Date(),
       updatedAt: new Date()
     })

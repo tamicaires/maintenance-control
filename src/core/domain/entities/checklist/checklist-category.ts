@@ -6,6 +6,7 @@ export class ChecklistCategory implements ChecklistCategoryType {
   name: string;
   description: string | null;
   companyId: string;
+  templateId: string;
   createdAt: Date
   updatedAt: Date
 
@@ -19,6 +20,7 @@ export const schema = z.object({
   name: z.string(),
   description: z.string().nullable(),
   companyId: z.string().uuid(),
+  templateId: z.string().uuid(),
   createdAt: z.date().default(() => new Date()),
   updatedAt: z.date().default(() => new Date())
 })

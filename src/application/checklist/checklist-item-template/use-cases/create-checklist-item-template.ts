@@ -7,7 +7,9 @@ import { ExceptionHandler } from "src/core/exceptions/ExceptionHandler";
 
 interface IRequest {
   description: string;
+  weight: number;
   templateId: string;
+  checklistCategoryId: string;
 }
 
 @Injectable()
@@ -31,6 +33,8 @@ export class CreateChecklistTemplateItem {
 
     const checklistItem = new ChecklistTemplateItem({
       description: item.description,
+      weight: item.weight,
+      checklistCategoryId: item.checklistCategoryId,
       templateId: item.templateId,
       createdAt: new Date(),
       updatedAt: new Date()

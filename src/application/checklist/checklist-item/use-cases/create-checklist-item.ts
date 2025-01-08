@@ -6,7 +6,6 @@ import { ChecklistItemRepository } from "src/core/domain/repositories/checklist/
 interface IRequest {
   checklistId: string;
   itemTemplateId: string;
-  checklistCategoryId: string;
   isConform: boolean;
 }
 
@@ -17,7 +16,6 @@ export class CreateChecklistItem {
   async execute(companyInstance: CompanyInstance, item: IRequest): Promise<ChecklistItem> {
     const checklistItem = new ChecklistItem({
       checklistId: item.checklistId,
-      checklistCategoryId: item.checklistCategoryId,
       itemTemplateId: item.itemTemplateId,
       isConform: item.isConform,
       createdAt: new Date(),

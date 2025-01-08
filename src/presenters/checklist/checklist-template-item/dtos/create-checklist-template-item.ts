@@ -9,4 +9,12 @@ export class CreateChecklistTemplateItemDTO {
   @IsStringCustom()
   @IsNotEmptyCustom()
   templateId: string;
+
+  @IsStringCustom()
+  @IsNotEmptyCustom()
+  weight: number;
+
+  @IsStringCustom()
+  @IsNotEmptyCustom()
+  checklistCategoryId: string;
 }

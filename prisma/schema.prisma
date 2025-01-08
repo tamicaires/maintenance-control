@@ -516,6 +516,7 @@ model ChecklistTemplate {
   @@map("checklist_templates")
   @@index([companyId])
   checklist Checklist[]
+  checklistCategories ChecklistCategory[]
 }
 
 model ChecklistItemTemplate {
@@ -523,7 +524,10 @@ model ChecklistItemTemplate {
   description String    // Descrição do item (ex: "Verificar nível de óleo")
   template    ChecklistTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
   templateId  String    @map("template_id")
-
+  weight      Int       // Peso do item no checklist
+  checklistCategoryId String @map("checklist_category_id")
+  checklistCategory ChecklistCategory @relation(fields: [checklistCategoryId], references: [id])
+  
   createdAt   DateTime  @default(now()) @map("created_at")
   updatedAt   DateTime  @map("updated_at")
 
@@ -554,8 +558,7 @@ model ChecklistItem {
   itemTemplate ChecklistItemTemplate @relation(fields: [itemTemplateId], references: [id], onDelete: Cascade)
   itemTemplateId String  @map("item_template_id")
   isConform   Boolean    @map("is_conform")
-  checklistCategoryId String @map("checklist_category_id")
-  checklistCategory ChecklistCategory @relation(fields: [checklistCategoryId], references: [id])
+
   createdAt   DateTime  @default(now()) @map("created_at")
   updatedAt   DateTime  @updatedAt @map("updated_at")
   @@map("checklist_items")
@@ -568,13 +571,15 @@ model ChecklistCategory {
   description String?
   companyId  String    @map("company_id")
   company    Company   @relation(fields: [companyId], references: [id])
+  templateId String    @map("template_id")
+  template    ChecklistTemplate @relation(fields: [templateId], references: [id])
 
   createdAt   DateTime  @default(now()) @map("created_at")
   updatedAt   DateTime  @map("updated_at")
 
   @@map("checklist_categories")
   @@index([name])
-  checklistItem ChecklistItem[]
+  ChecklistItemTemplate ChecklistItemTemplate[]
 }
 
 enum MaintenanceStatus {
