@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
 import { CookiesEnum } from "src/core/enum/cookies";
 import { Cookies } from "src/infra/http/auth/decorators/cookies.decorator";
 import { CreateChecklistTemplateItemDTO } from "./dtos/create-checklist-template-item";
@@ -6,6 +6,7 @@ import { CompanyInstance } from "src/core/company/company-instance";
 import { CreateChecklistTemplateItem } from "src/application/checklist/checklist-item-template/use-cases/create-checklist-item-template";
 import { ListChecklistTemplateItem } from "src/application/checklist/checklist-item-template/use-cases/list-checklist-item-template";
 import { GetChecklistTemplateItemsByTemplateId } from "src/application/checklist/checklist-item-template/use-cases/get-checklist-item-by-template-id";
+import { DeleteChecklistTemplateItem } from "src/application/checklist/checklist-item-template/use-cases/delete-checklist-template-item";
 
 @Controller("checklist-template-item")
 export class ChecklistTemplateItemController {
@@ -13,6 +14,7 @@ export class ChecklistTemplateItemController {
     private readonly _createChecklistTemplateItem: CreateChecklistTemplateItem,
     private readonly _listChecklistTemplateItem: ListChecklistTemplateItem,
     private readonly _getChecklistTemplateItemsByTemplateId: GetChecklistTemplateItemsByTemplateId,
+    private readonly _deleteChecklistTemplateItem: DeleteChecklistTemplateItem
   ) { }
 
   @Post()
@@ -42,5 +44,15 @@ export class ChecklistTemplateItemController {
     const companyInstance = CompanyInstance.create(companyId);
 
     return await this._getChecklistTemplateItemsByTemplateId.execute(companyInstance, templateId);
+  }
+
+  @Delete(":id")
+  async delete(
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
+    @Param("id") templateItemId: string
+  ) {
+    const companyInstance = CompanyInstance.create(companyId);
+
+    return await this._deleteChecklistTemplateItem.execute(companyInstance, templateItemId);
   }
 }
