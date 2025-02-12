@@ -1,7 +1,8 @@
 import { randomUUID } from "crypto";
-import { Replace } from "src/shared/utils/replace";
+import { z } from "zod";
 
-interface TrailerSchema {
+export class Trailer implements TrailerType {
+  id: string;
   plate: string;
   position: number | null;
   companyId: string;
@@ -9,76 +10,22 @@ interface TrailerSchema {
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
-}
 
-export class Trailer {
-  private _id: string;
-  private props: TrailerSchema;
-
-  constructor(props: Replace<
-    TrailerSchema,
-    { createdAt?: Date; updatedAt?: Date; description?: string | null }
-  >, id?: string) {
-    this._id = id || randomUUID();
-    this.props = {
-      ...props,
-      createdAt: props.createdAt ?? new Date(),
-      updatedAt: new Date(),
-    };
-  }
-
-  get id(): string {
-    return this._id;
-  }
-
-  get plate(): string {
-    return this.props.plate;
-  }
-
-  set plate(plate: string) {
-    this.props.plate = plate;
-  }
-
-  get position(): number | null{
-    return this.props.position;
-  }
-
-  set position(position: number | null) {
-    this.props.position = position;
-  }
-
-  get companyId(): string {
-    return this.props.companyId;
-  }
-
-  set companyId(companyId: string) {
-    this.props.companyId = companyId;
-  }
-  get fleetId(): string | null {
-    return this.props.fleetId;
-  }
-
-  set fleetId(fleetId: string | null) {
-    this.props.fleetId = fleetId;
-  }
-
-  get isActive(): boolean {
-    return this.props.isActive;
-  }
-
-  set isActive(isActive: boolean) {
-    this.props.isActive = isActive;
-  }
-
-  get createdAt(): Date {
-    return this.props.createdAt;
-  }
-
-  get updatedAt(): Date {
-    return this.props.updatedAt;
-  }
-
-  set updatedAt(updatedAt: Date) {
-    this.props.updatedAt = updatedAt;
+  constructor(data: TrailerType) {
+    this.id = data.id ?? randomUUID();
+    Object.assign(this, data);
   }
 }
+
+export const schema = z.object({
+  id: z.string().uuid().optional(),
+  plate: z.string(),
+  position: z.number().nullable(),
+  companyId: z.string().uuid(),
+  fleetId: z.string().uuid().nullable(),
+  isActive: z.boolean().optional().default(true),
+  createdAt: z.date().default(() => new Date()).optional(),
+  updatedAt: z.date().default(() => new Date()).optional()
+})
+
+export type TrailerType = z.infer<typeof schema>;

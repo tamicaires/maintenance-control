@@ -5,6 +5,7 @@ import { CheckUserMembership } from "src/application/membership/useCases/checkUs
 import { CreateTrailer } from "src/application/trailer/useCases/createTrailer";
 import { GetTrailer } from "src/application/trailer/useCases/getTrailer";
 import { ListTrailers } from "src/application/trailer/useCases/listTrailers";
+import { GetTrailersByWorkOrder } from "src/application/trailer/useCases/get-trailers-by-work-order";
 
 @Module({
   controllers: [TrailerController],
@@ -13,6 +14,7 @@ import { ListTrailers } from "src/application/trailer/useCases/listTrailers";
     CreateTrailer,
     GetTrailer,
     ListTrailers,
+    GetTrailersByWorkOrder,
     CheckUserMembership,
   ],
 })

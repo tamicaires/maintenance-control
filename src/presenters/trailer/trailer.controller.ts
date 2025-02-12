@@ -2,12 +2,12 @@ import { Body, Controller, Get, Param, Post, UseGuards } from "@nestjs/common";
 import { CreateTrailerBody } from "./dtos/createTrailer.dto";
 import { Cookies } from "src/infra/http/auth/decorators/cookies.decorator";
 import { CookiesEnum } from "src/core/enum/cookies";
-import { TrailerViewModel } from "./viewModel/trailerViewModel";
 import { PolicyGuard } from "src/infra/http/auth/guards/policy.guard";
 import { CompanyInstance } from "src/core/company/company-instance";
 import { CreateTrailer } from "src/application/trailer/useCases/createTrailer";
 import { GetTrailer } from "src/application/trailer/useCases/getTrailer";
 import { ListTrailers } from "src/application/trailer/useCases/listTrailers";
+import { GetTrailersByWorkOrder } from "src/application/trailer/useCases/get-trailers-by-work-order";
 
 @Controller("trailers")
 @UseGuards(PolicyGuard)
@@ -16,6 +16,7 @@ export class TrailerController {
     private readonly createTrailer: CreateTrailer,
     private readonly getTrailer: GetTrailer,
     private readonly listTrailers: ListTrailers,
+    private readonly listTrailersByWorkOrder: GetTrailersByWorkOrder
   ) { }
 
   @Post()
@@ -25,15 +26,18 @@ export class TrailerController {
   ) {
     const companyInstance = CompanyInstance.create(companyId);
     const createdTrailer = await this.createTrailer.execute(
-      companyInstance, 
+      companyInstance,
       trailer
     );
-    return TrailerViewModel.toHttp(createdTrailer);
+    return createdTrailer;
   }
 
   @Get(":id")
-  async get(@Param('id') trailerId: string) {
-    return await this.getTrailer.execute(trailerId);
+  async get(@Param('id') trailerId: string,
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
+  ) {
+    const companyInstance = CompanyInstance.create(companyId);
+    return await this.getTrailer.execute(companyInstance, trailerId);
   }
 
   @Get()
@@ -41,6 +45,18 @@ export class TrailerController {
     @Cookies(CookiesEnum.CompanyId) companyId: string
   ) {
     const trailers = await this.listTrailers.execute(companyId);
-    return trailers.map(TrailerViewModel.toHttp);
+    return trailers
+  }
+
+  @Get("work-order/:id")
+  async listByFleet(
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
+    @Param("id") workOrderId: string
+  ) {
+
+    const companyInstance = CompanyInstance.create(companyId);
+
+    const trailers = await this.listTrailersByWorkOrder.execute(companyInstance, workOrderId);
+    return trailers;
   }
 }

@@ -11,7 +11,7 @@ import { PrismaWorkOrderRepository } from './prisma/repositories/PrismaWorkOrder
 import { PrismaServiceAssignmentsRepository } from './prisma/repositories/PrismaServiceAssignmentsRepository';
 import { PrismaCompanyRepository } from './prisma/repositories/PrismaCompanyRepository';
 import { PrismaMembershipRepository } from './prisma/repositories/PrismaMembershipRepository';
-import { PrismaTrailerRepository } from './prisma/repositories/PrismaTrailerRepository';
+import { PrismaTrailerRepository } from './prisma/repositories/prisma-trailer-repository';
 import { PrismaAxleRepository } from './prisma/repositories/PrismaAxleRepository';
 import { PrismaPartCategoryRepository } from './prisma/repositories/PrismaPartCategoryRepository';
 import { PrismaPartRepository } from './prisma/repositories/PrismaPartRepository';
@@ -50,6 +50,8 @@ import { ChecklistItemRepository } from 'src/core/domain/repositories/checklist/
 import { PrismaChecklistItemRepository } from './prisma/repositories/prisma-checklist-item';
 import { ChecklistRepository } from 'src/core/domain/repositories/checklist/checklist-repository';
 import { PrismaChecklistRepository } from './prisma/repositories/prisma-checklist';
+import { PrismaEventRepository } from './prisma/repositories/prisma-event-repository';
+import { EventRepository } from 'src/core/domain/repositories/event';
 
 @Module({
   providers: [
@@ -65,6 +67,10 @@ import { PrismaChecklistRepository } from './prisma/repositories/prisma-checklis
     {
       provide: MembershipRepository,
       useClass: PrismaMembershipRepository,
+    },
+    {
+      provide: EventRepository,
+      useClass: PrismaEventRepository,
     },
     {
       provide: NoteRepository,
@@ -181,6 +187,7 @@ import { PrismaChecklistRepository } from './prisma/repositories/prisma-checklis
     ChecklistTemplateItemRepository,
     ChecklistItemRepository,
     ChecklistRepository,
+    EventRepository
   ],
 })
 export class DatabaseModule { }
