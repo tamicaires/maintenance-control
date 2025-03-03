@@ -6,6 +6,7 @@ import { MaintenanceStatus } from "src/core/enum/maitenance-status.enum"
 import { TypeOfMaintenance } from "src/core/enum/type-of-maintenance.enum"
 import { IUseCase } from "src/shared/protocols/use-case"
 import { Filters } from "src/shared/types/filters.interface"
+import { WorkOrderDailyView } from "src/shared/types/work-order"
 import { calculateDuration } from "src/shared/utils/workOrderUtils"
 
 export interface IRequest {
@@ -20,7 +21,7 @@ interface Metric {
 }
 
 export interface DailyWorkOrdersData {
-  workOrders: WorkOrder[]
+  workOrders: WorkOrderDailyView[]
   statistics: {
     countFrotasEmFila: number
     countFrotasEmManutencao: number

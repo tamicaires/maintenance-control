@@ -335,6 +335,9 @@ export class PrismaWorkOrderRepository implements WorkOrderRepository {
           },
         ],
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
       include: {
         fleet: {
           select: {

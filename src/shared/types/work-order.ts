@@ -70,3 +70,15 @@ export interface WorkOrderWithRelationalInfo extends WorkOrder {
   }
 };
 
+export interface WorkOrderDailyView extends WorkOrder {
+  fleet: {
+    fleetNumber: string;
+    carrier: {
+      carrierName: string;
+    };
+  };
+  user: {
+    id: string;
+    name: string;
+  };
+}
