@@ -2,9 +2,18 @@ import { TypeOfMaintenance } from '../../../core/enum/type-of-maintenance.enum';
 import { WorkOrderRepository } from '../../../core/domain/repositories/work-order-repository';
 import { WorkOrder } from 'src/core/domain/entities/work-order';
 import { CompanyInstance } from 'src/core/company/company-instance';
-import { IBackToQueue, ICancelWorkOrder, IFinishMaintenance, IFinishWaitingParts, IStartMaintenance, IStartWaitingParts } from 'src/shared/types/work-order';
+import { ICancelWorkOrder, IFinishMaintenance, IFinishWaitingParts, IStartMaintenance, IStartWaitingParts } from 'src/shared/types/work-order';
 
 export class WorkOrderRepositoryInMemory implements WorkOrderRepository {
+  getQueueChartData(companyInstance: CompanyInstance, startDate: Date, endDate: Date): Promise<any[]> {
+    throw new Error('Method not implemented.');
+  }
+  getTypeMaintenanceChartData(companyInstance: CompanyInstance, date: Date): Promise<any[]> {
+    throw new Error('Method not implemented.');
+  }
+  getDaily(companyInstance: CompanyInstance, date: Date): Promise<WorkOrder[]> {
+    throw new Error('Method not implemented.');
+  }
   getWorkOrderWithRelationalData(companyInstance: CompanyInstance, workOrderId: string): Promise<any> {
     throw new Error('Method not implemented.');
   }
@@ -43,7 +52,7 @@ export class WorkOrderRepositoryInMemory implements WorkOrderRepository {
     );
   }
 
-  async findMany(page: number, perPage: number): Promise<WorkOrder[]> {
+  async findMany(companyInstance: CompanyInstance, page: number, perPage: number): Promise<WorkOrder[]> {
     return this.workOrders.slice((page - 1) * perPage, page * perPage);
   }
 

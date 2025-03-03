@@ -1,13 +1,19 @@
 import { HttpStatus, Injectable } from "@nestjs/common";
+import { EventService } from "src/application/event/service/event.service";
 import { CompanyInstance } from "src/core/company/company-instance";
 import { WorkOrderRepository } from "src/core/domain/repositories/work-order-repository";
+import { EventActionEnum, EventDescriptionEnum } from "src/core/enum/event";
 import { MaintenanceStatus } from "src/core/enum/maitenance-status.enum";
+import { SubjectEnum } from "src/core/enum/subject.enum";
 import { ExceptionHandler } from "src/core/exceptions/ExceptionHandler";
 import { IStartWaitingParts } from "src/shared/types/work-order";
 
 @Injectable()
 export class StartWaitingParts {
-  constructor(private readonly _workOrderRepository: WorkOrderRepository) { }
+  constructor(
+    private readonly _workOrderRepository: WorkOrderRepository,
+    private readonly _eventService: EventService,
+  ) { }
 
   async execute(companyInstance: CompanyInstance, workOrderId: string, data: IStartWaitingParts): Promise<IStartWaitingParts> {
     const workOrder = await this._workOrderRepository.findById(companyInstance, workOrderId);
@@ -43,6 +49,16 @@ export class StartWaitingParts {
 
     await this._workOrderRepository.startWaitingParts(companyInstance, workOrderId, waitingPartsData);
 
+    const event = {
+      event: EventActionEnum.Started,
+      description: EventDescriptionEnum.Started_Waiting_Parts,
+      subject: SubjectEnum.Maintenance,
+      handledById: workOrder.userId,
+      handledAt: new Date(),
+      workOrderId: workOrder.id,
+    }
+
+    this._eventService.registerEvent(companyInstance, event);
     return waitingPartsData;
   }
 }

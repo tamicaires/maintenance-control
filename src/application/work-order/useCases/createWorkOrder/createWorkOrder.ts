@@ -5,6 +5,10 @@ import { WorkOrderRepository } from '../../../../core/domain/repositories/work-o
 import { generateNextDisplayId, getPrefix } from 'src/shared/utils/workOrderUtils';
 import { WorkOrder } from 'src/core/domain/entities/work-order';
 import { CompanyInstance } from 'src/core/company/company-instance';
+import { EventService } from 'src/application/event/service/event.service';
+import { EventActionEnum, EventDescriptionEnum } from 'src/core/enum/event';
+import { SubjectEnum } from 'src/core/enum/subject.enum';
+import { Event } from 'src/core/domain/entities/event';
 
 interface CreateWorkOrderRequest {
   displayId?: string | null;
@@ -28,7 +32,10 @@ interface CreateWorkOrderRequest {
 
 @Injectable()
 export class CreateWorkOrder {
-  constructor(private workOrderRepository: WorkOrderRepository) { }
+  constructor(
+    private workOrderRepository: WorkOrderRepository,
+    private readonly _eventService: EventService,
+  ) { }
 
   async execute(companyInstance: CompanyInstance, data: CreateWorkOrderRequest) {
     const prefix = getPrefix(data.typeOfMaintenance);
@@ -47,6 +54,17 @@ export class CreateWorkOrder {
     );
 
     await this.workOrderRepository.create(workOrder);
+
+    const event = {
+      event: EventActionEnum.Queued,
+      subject: SubjectEnum.Work_Order,
+      description: EventDescriptionEnum.Queue,
+      handledById: workOrder.userId,
+      handledAt: new Date(),
+      workOrderId: workOrder.id,
+    }
+
+    this._eventService.registerEvent(companyInstance, event);
 
     return workOrder;
   }
