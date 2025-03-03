@@ -1,8 +1,9 @@
-import { Filters } from 'src/shared/types/filters.interface';
+import { MaintenanceFilters } from 'src/shared/types/filters.interface';
 import { WorkOrder } from '../entities/work-order';
 import { TypeOfMaintenance } from '../../enum/type-of-maintenance.enum';
 import { CompanyInstance } from 'src/core/company/company-instance';
 import { ICancelWorkOrder, IFinishMaintenance, IFinishWaitingParts, IStartMaintenance, IStartWaitingParts } from 'src/shared/types/work-order';
+import { MaintenanceStatus } from 'src/core/enum/maitenance-status.enum';
 
 export abstract class WorkOrderRepository {
   abstract create(workOrder: WorkOrder): Promise<void>;
@@ -10,9 +11,10 @@ export abstract class WorkOrderRepository {
   abstract save(workOrder: WorkOrder): Promise<void>;
   abstract delete(id: string): Promise<void>;
   abstract findMany(
+    companyInstance: CompanyInstance,
     page: number,
     perPage: number,
-    filters?: Filters,
+    filters?: MaintenanceFilters,
   ): Promise<WorkOrder[]>;
   abstract findLastWorkOrderByType(
     typeOfMaintenance: TypeOfMaintenance,
@@ -24,4 +26,7 @@ export abstract class WorkOrderRepository {
   abstract startWaitingParts(companyInstance: CompanyInstance, workOrderId: string, status: IStartWaitingParts): Promise<void>;
   abstract finishWaitingParts(companyInstance: CompanyInstance, workOrderId: string, status: IFinishWaitingParts): Promise<void>;
   abstract getWorkOrderWithRelationalData(companyInstance: CompanyInstance, workOrderId: string): Promise<any>;
+  abstract getDaily(companyInstance: CompanyInstance, startOfDay: Date, endOfDay: Date, status?: MaintenanceStatus): Promise<any[]>;
+  abstract getQueueChartData(companyInstance: CompanyInstance, startDate: Date, endDate: Date): Promise<any[]>;
+  abstract getTypeMaintenanceChartData(companyInstance: CompanyInstance, date: Date): Promise<any[]>;
 }

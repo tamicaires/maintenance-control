@@ -7,5 +7,5 @@ export abstract class FleetRepository {
   abstract findByNumber(companyInstance: CompanyInstance, fleetNumber: string): Promise<Fleet | null>;
   abstract delete(id: string): Promise<void>;
   abstract save(fleet: Fleet): Promise<void>;
-  abstract findMany(page: number, perPage: number): Promise<Fleet[]>;
+  abstract findMany(companyInstance: CompanyInstance, page: number, perPage: number): Promise<Fleet[]>;
 }

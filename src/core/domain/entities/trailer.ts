@@ -13,6 +13,8 @@ export class Trailer implements TrailerType {
 
   constructor(data: TrailerType) {
     this.id = data.id ?? randomUUID();
+    this.createdAt = data.createdAt ?? new Date();
+    this.updatedAt = new Date();
     Object.assign(this, data);
   }
 }

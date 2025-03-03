@@ -5,7 +5,8 @@ export class ChecklistItem implements ChecklistItemType {
   id: string;
   checklistId: string;
   itemTemplateId: string;
-  isConform: boolean;
+  trailerId: string | null;
+  isConform: boolean | null;
   createdAt: Date
   updatedAt: Date
 
@@ -19,7 +20,8 @@ const schema = z.object({
   id: z.string().uuid().optional(),
   checklistId: z.string().uuid(),
   itemTemplateId: z.string().uuid(),
-  isConform: z.boolean().default(false),
+  trailerId: z.string().nullable(),
+  isConform: z.boolean().nullable(),
   createdAt: z.date().default(() => new Date()),
   updatedAt: z.date().default(() => new Date())
 })

@@ -10,4 +10,5 @@ export abstract class ChecklistCategoryRepository {
   abstract findById(companyInstance: CompanyInstance, id: string): Promise<ChecklistCategory | null>;
   abstract findAll(companyInstance: CompanyInstance): Promise<ChecklistCategory[]>;
   abstract delete(companyInstance: CompanyInstance, id: string): Promise<void>;
+  abstract findByTemplateId(companyInstance: CompanyInstance, templateId: string): Promise<any>;
 }

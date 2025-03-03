@@ -6,4 +6,6 @@ export abstract class BoxRepository {
   abstract findById(companyInstance: CompanyInstance, id: string): Promise<Box | null>;
   abstract findByName(companyInstance: CompanyInstance, name: string): Promise<Box | null>;
   abstract list(companyInstance: CompanyInstance): Promise<Box[]>;
+  abstract getWithRelationalData(companyInstance: CompanyInstance);
+  abstract delete(companyInstance: CompanyInstance, boxId: string): Promise<void>;
 }
