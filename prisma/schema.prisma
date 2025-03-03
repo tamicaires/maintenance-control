@@ -33,6 +33,7 @@ model Company {
   vehicle Vehicle[]
   box Box[]
   checklistCategory ChecklistCategory[]
+  Events Events[]
 }
 
 model User {
@@ -52,6 +53,7 @@ model User {
   partHandledBy  PartRequest[] @relation("PartRequestHandledBy")
   tireRequests   TireRequest[]  @relation("TireRequestRequestedBy")
   tireHandleBy TireRequest[] @relation("TireRequestHandledBy")
+  events Events[]
 }
 
 model Membership {
@@ -134,6 +136,7 @@ model Vehicle {
   @@map("vehicles")
   @@index([companyId])
   @@index([plate])
+  events Events[]
 }
 
 model Fleet {
@@ -153,6 +156,7 @@ model Fleet {
   work_orders           WorkOrder[]
   trailers              Trailer[] 
   vehicle Vehicle[]
+  events Events[]
 }
 
 model Trailer {
@@ -172,6 +176,8 @@ model Trailer {
   axles       Axle[]    // Eixos do reboque
   partRequest PartRequest[]
   ServiceAssignment ServiceAssignment[]
+  ChecklistItem ChecklistItem[]
+  events Events[]
 }
 
 model Axle {
@@ -263,6 +269,7 @@ model PartRequest {
   updatedAt             DateTime  @map("updated_at")
 
   @@map("part_requests")
+  events Events[]
 }
 
 enum PartLocation {
@@ -456,6 +463,7 @@ model WorkOrder {
   note Note[]
   partRequest PartRequest[]
   tireRequest TireRequest[]
+  events Events[]
 }
 
 model ServiceAssignmentEmployee {
@@ -541,14 +549,26 @@ model Checklist {
   workOrderId   String      @map("work_order_id")
   template      ChecklistTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
   templateId    String      @map("template_id")
-  items         ChecklistItem[]   // Itens verificados com o status conforme/não conforme
+  items         ChecklistItem[] 
+  startAt       DateTime?    @map("start_at")
+  endAt         DateTime?    @map("end_at")
+  isCanceled    Boolean      @default(false)
+  status        ChecklistStatus @default(PENDING)
 
   createdAt     DateTime    @default(now()) @map("created_at")
   updatedAt     DateTime    @updatedAt @map("updated_at")
 
   @@map("checklists")
-  @@index([workOrderId]) 
+  @@index([workOrderId])  
   @@index([templateId])
+  events Events[]
+}
+
+enum ChecklistStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELED
 }
 
 model ChecklistItem {
@@ -557,7 +577,9 @@ model ChecklistItem {
   checklistId String    @map("checklist_id")
   itemTemplate ChecklistItemTemplate @relation(fields: [itemTemplateId], references: [id], onDelete: Cascade)
   itemTemplateId String  @map("item_template_id")
-  isConform   Boolean    @map("is_conform")
+  isConform   Boolean?    @map("is_conform")
+  trailer    Trailer?  @relation(fields: [trailerId], references: [id])
+  trailerId  String?   @map("trailer_id")
 
   createdAt   DateTime  @default(now()) @map("created_at")
   updatedAt   DateTime  @updatedAt @map("updated_at")
@@ -599,11 +621,37 @@ enum TypeOfMaintenance {
 model Box {
   id            String        @id
   name          String        @unique   
-  description   String?                 
+  description   String?              
+  position      Int?          @unique
   isActive      Boolean       @default(true) @map("is_active")
   company       Company       @relation(fields: [companyId], references: [id])
   companyId     String        @map("company_id")
 
   @@map("boxes")
   workOrder     WorkOrder[]  
+} 
+
+model Events {
+  id                  String @id
+  event               String
+  subject             String
+  description         String?
+  company             Company       @relation(fields: [companyId], references: [id])
+  companyId           String        @map("company_id")
+  handledBy           User?      @relation(fields: [handledById], references: [id])
+  handledById         String?
+  handledAt           DateTime? @map("handled_at")
+           
+  fleet       Fleet?     @relation(fields: [fleetId], references: [id])
+  fleetId     String?
+  trailer     Trailer?   @relation(fields: [trailerId], references: [id])
+  trailerId   String?
+  vehicle     Vehicle?   @relation(fields: [vehicleId], references: [id])
+  vehicleId   String?
+  workOrder   WorkOrder? @relation(fields: [workOrderId], references: [id])
+  workOrderId String?
+  checklist   Checklist? @relation(fields: [checklistId], references: [id])
+  checklistId String?
+  partRequest PartRequest? @relation(fields: [partRequestId], references: [id])
+  partRequestId String?
 }
