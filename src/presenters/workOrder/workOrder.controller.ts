@@ -35,6 +35,14 @@ import { StartWaitingPartsDto } from './dtos/start-waiting-parts';
 import { FinishWaitingParts } from 'src/application/work-order/useCases/finish-waiting-parts';
 import { FinishWaitingPartsDto } from './dtos/finish-waiting-parts';
 import { GetWorkOrderById } from 'src/application/work-order/useCases/get-work-order-by-id';
+import { GetDailyWorkOrdersData } from 'src/application/work-order/useCases/get-daily-work-orders-data';
+import { GetDailyQueriesDTO } from './dtos/get-daily-dto';
+import { GetQueueChart } from 'src/application/work-order/useCases/dashboard/get-queue-chart';
+import { GetQueueChartQuery } from './dtos/get-queue-chart-dto';
+import { GetTypeMaintenanceChartData } from 'src/application/work-order/useCases/dashboard/get-type-maintenance-chart-data';
+import { MaintenanceStatus } from 'src/core/enum/maitenance-status.enum';
+import { TypeOfMaintenance } from 'src/core/enum/type-of-maintenance.enum';
+// import { GetQueueChartQuery } from './dtos/get-queue-chart-query';
 
 @Controller('work-orders')
 export class WorkOrderController {
@@ -49,7 +57,10 @@ export class WorkOrderController {
     private readonly backToQueueWorkOrder: BackToQueueWorkOrder,
     private readonly startWaitingPartsWorkOrder: StartWaitingParts,
     private readonly finishWaitingPartsWorkOrder: FinishWaitingParts,
-    private readonly getWorkOrderById: GetWorkOrderById
+    private readonly getWorkOrderById: GetWorkOrderById,
+    private readonly _getDailyWorkOrdersData: GetDailyWorkOrdersData,
+    private readonly _getQueueDataChart: GetQueueChart,
+    private readonly _getTypeMaintenanceChart: GetTypeMaintenanceChartData
   ) { }
 
   @Post()
@@ -101,6 +112,16 @@ export class WorkOrderController {
     await this.deleteWorkOrder.execute(companyInstance, workOrderId);
   }
 
+  @Get('daily')
+  async getDaily(
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
+    @Query() queries: GetDailyQueriesDTO,
+  ) {
+    const companyInstance = CompanyInstance.create(companyId);
+    const workOrders = await this._getDailyWorkOrdersData.execute(companyInstance, queries);
+    return workOrders;
+  }
+
   @Get(':id/order')
   async getWithRelationalData(
     @Cookies(CookiesEnum.CompanyId) companyId: string,
@@ -113,13 +134,23 @@ export class WorkOrderController {
 
   @Get()
   async getMany(
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
     @Query('page') page: string,
     @Query('perPage') perPage: string,
-    @Query('status') status?: string,
+    @Query('status') status?: MaintenanceStatus | MaintenanceStatus[],
+    @Query('displayId') displayId?: string,
+    @Query('fleetNumber') fleetNumber?: string,
+    @Query('severityLevel') severityLevel?: string | string[],
+    @Query('typeOfMaintenance') typeOfMaintenance?: TypeOfMaintenance | TypeOfMaintenance[],
     @Query('startDate') startDate?: string,
     @Query('endDate') endDate?: string,
   ) {
-    const workOrders = await this.getManyWorkOrder.execute({
+  const companyInstance = CompanyInstance.create(companyId);
+    const workOrders = await this.getManyWorkOrder.execute(companyInstance, {
+      displayId,
+      fleetNumber,
+      severityLevel,
+      typeOfMaintenance,
       page,
       perPage,
       status,
@@ -207,4 +238,30 @@ export class WorkOrderController {
       data
     );
   }
+
+
+  @Get('dashboard/type-maintenance-chart')
+  async getTypeMaintenanceChart(
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
+  ) {
+    const companyInstance = CompanyInstance.create(companyId);
+    return this._getTypeMaintenanceChart.execute(companyInstance)
+  }
+
+  @Get('dashboard/queue-charts')
+  async getQueueCharts(
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
+    // @Query('currentDate') currentDate: string
+  ) {
+    const companyInstance = CompanyInstance.create(companyId);
+    return this._getQueueDataChart.execute(companyInstance)
+  }
 }
+// @Get('dashboard/queue-chart')
+// async getQueuegetTypeMaintenanceChartsChart(
+//   @Cookies(CookiesEnum.CompanyId) companyId: string,
+//   @Query() queries: GetQueueChartQuery
+// ) {
+//   const companyInstance = CompanyInstance.create(companyId);
+//   return this._getQueueChartData.execute(companyInstance, queries.currentDate)
+// }

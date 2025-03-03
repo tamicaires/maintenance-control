@@ -43,15 +43,18 @@ export class ChecklistCategoryController {
     );
   }
 
-  @Get()
-  async list(
-    @Cookies(CookiesEnum.CompanyId) companyId: string
+  @Get('template/:id')
+  async listByTemplateId(
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
+    @Param("id") templateId: string
   ) {
     const companyInstance = CompanyInstance.create(companyId);
 
     return await this._listChecklistCategory.execute(
-      companyInstance
+      companyInstance,
+      templateId
     );
+
   }
 
   @Delete(':id')

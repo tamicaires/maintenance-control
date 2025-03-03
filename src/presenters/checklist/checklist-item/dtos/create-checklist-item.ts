@@ -11,11 +11,11 @@ export class CreateChecklistItemDTO {
   @IsNotEmptyCustom()
   itemTemplateId: string;
 
-  @IsStringCustom()
-  @IsNotEmptyCustom()
-  checklistCategoryId: string;
-
   @IsBoolean()
   @IsNotEmptyCustom()
   isConform: boolean;
+
+  @IsStringCustom()
+  @IsNotEmptyCustom()
+  trailerId: string;
 }

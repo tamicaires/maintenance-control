@@ -3,6 +3,7 @@ import { CompanyInstance } from "src/core/company/company-instance";
 import { ChecklistCategory, ChecklistCategoryType } from "src/core/domain/entities/checklist/checklist-category";
 import { ChecklistCategoryRepository } from "src/core/domain/repositories/checklist/checklist-category-repository";
 import { PrismaService } from "../prisma.service";
+import { IChecklistCategoryDto } from "src/application/checklist/checklist-category/use-cases/list-checklist-categories";
 
 @Injectable()
 export class PrismaChecklistCategoryRepository implements ChecklistCategoryRepository {
@@ -63,5 +64,21 @@ export class PrismaChecklistCategoryRepository implements ChecklistCategoryRepos
     await this._prisma.checklistCategory.delete({
       where: { id, companyId }
     });
+  }
+
+  async findByTemplateId(companyInstance: CompanyInstance, templateId: string): Promise<any> {
+    const companyId = companyInstance.getCompanyId();
+
+    const checklistCategories = await this._prisma.checklistCategory.findMany({
+      where: {
+        companyId,
+        templateId
+      },
+      include: {
+        ChecklistItemTemplate: true
+      }
+    });
+
+    return checklistCategories;
   }
 }

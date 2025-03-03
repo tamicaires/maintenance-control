@@ -1,3 +1,4 @@
+import { IsNumber } from "class-validator";
 import { IsNotEmptyCustom } from "src/core/classValidator/decorators/IsNotEmptyCustom";
 import { IsStringCustom } from "src/core/classValidator/decorators/IsStringCustom";
 
@@ -10,7 +11,7 @@ export class CreateChecklistTemplateItemDTO {
   @IsNotEmptyCustom()
   templateId: string;
 
-  @IsStringCustom()
+  @IsNumber()
   @IsNotEmptyCustom()
   weight: number;
 

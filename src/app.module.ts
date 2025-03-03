@@ -29,12 +29,17 @@ import { ChecklistTemplateModule } from './presenters/checklist/checklist-templa
 import { ChecklistTemplateItemModule } from './presenters/checklist/checklist-template-item/checklist-template-item.module';
 import { ChecklistItemModule } from './presenters/checklist/checklist-item/checklist-item.module';
 import { ChecklistModule } from './presenters/checklist/checklist/checklist.module';
+import { EventModule } from './presenters/event/event.module';
+import { EventService } from './application/event/service/event.service';
+import { GetDailyWorkOrdersData } from './application/work-order/useCases/get-daily-work-orders-data';
+import { RegisterEvent } from './application/event/use-cases/register-event';
 
 @Module({
   imports: [
     DatabaseModule,
     AuthModule,
     AbilityModule,
+    EventModule,
     CompanyModule,
     MembershipModule,
     UserModule,

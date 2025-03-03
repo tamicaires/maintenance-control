@@ -7,6 +7,9 @@ import { PrismaPartRequestMapper } from "../mappers/prisma-part-request-mapper";
 import { RejectPartRequestDTO } from "src/application/part-request/dto/reject-part-request-dto";
 import { ApprovePartRequestDTO } from "src/application/part-request/dto/approve-part-request-dto";
 import { PartRequestWithRelationalInfo } from "src/presenters/part-request/view-model/part-request-view-model";
+import { MaintenanceFilters, PartRequestFilters } from "src/shared/types/filters.interface";
+import { Prisma } from "@prisma/client";
+import { IPartRequestRelationalData, IPartRequestsRelationalDataList } from "src/shared/types/part-request/part-request-relational-data";
 
 @Injectable()
 export class PrismaPartRequestRepository implements PartRequestRepository {
@@ -20,12 +23,14 @@ export class PrismaPartRequestRepository implements PartRequestRepository {
     })
   }
 
-  async createBatch(data: PartRequest[]): Promise<void> {
+  async createBatch(data: PartRequest[]): Promise<PartRequest[]> {
     const partRequestsRaw = data.map(PrismaPartRequestMapper.toPrisma);
 
     await this.prisma.partRequest.createMany({
       data: partRequestsRaw,
     });
+
+    return data;
   }
 
   async findById(companyInstance: CompanyInstance, id: string): Promise<any> {
@@ -81,14 +86,26 @@ export class PrismaPartRequestRepository implements PartRequestRepository {
     return partRequestRaw;
   }
 
+  async list(companyInstance: CompanyInstance, page: number, perPage: number, filters?: PartRequestFilters): Promise<IPartRequestsRelationalDataList> {
+    const { status, startDate, endDate } = filters || {};
 
-  async list(companyInstance: CompanyInstance): Promise<any> {
+    const where: Prisma.PartRequestWhereInput = {
+      AND: [
+        { part: { companyId: companyInstance.getCompanyId() } },
+        status ? { status } : undefined,
+        startDate && endDate
+          ? {
+            createdAt: {
+              gte: startDate,
+              lte: endDate,
+            },
+          }
+          : undefined,
+      ].filter(Boolean) as Prisma.PartRequestWhereInput[],
+    };
+
     const partRequestsRaw = await this.prisma.partRequest.findMany({
-      where: {
-        part: {
-          companyId: companyInstance.getCompanyId()
-        }
-      },
+      where,
       include: {
         part: {
           select: {
@@ -130,15 +147,31 @@ export class PrismaPartRequestRepository implements PartRequestRepository {
           }
         },
       },
+      take: perPage,
+      skip: (page - 1) * perPage,
       orderBy: {
         requestedAt: 'desc'
-      }
+      },
     });
 
-    return partRequestsRaw;
+    const totalPartRequests = await this.prisma.partRequest.count({
+      where,
+    });
+
+    const response: IPartRequestsRelationalDataList = { partRequests: partRequestsRaw, total: totalPartRequests };
+    console.log("response", response)
+    response.partRequests.map((request) => {
+      console.log("axles", request.trailer)
+    })
+    return response;
   }
 
-  async listByWorkOrder(companyInstance: CompanyInstance, workOrderId: string): Promise<any[]> {
+  // async list(companyInstance: CompanyInstance): Promise<any> {
+
+
+  // }
+
+  async listByWorkOrder(companyInstance: CompanyInstance, workOrderId: string): Promise<IPartRequestRelationalData[]> {
     const partRequestsRaw = await this.prisma.partRequest.findMany({
       where: {
         workOrderId: workOrderId,
@@ -184,7 +217,7 @@ export class PrismaPartRequestRepository implements PartRequestRepository {
             }
           }
         },
-      }
+      },
     });
     return partRequestsRaw;
   }

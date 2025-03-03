@@ -40,8 +40,10 @@ export class PrismaChecklistItemRepository implements ChecklistItemRepository {
             companyId: companyInstance.getCompanyId()
           }
         }
+      },
+      orderBy: {
+        createdAt: 'asc'
       }
-
     })
 
     return checklistItems;
@@ -56,6 +58,28 @@ export class PrismaChecklistItemRepository implements ChecklistItemRepository {
             companyId: companyInstance.getCompanyId()
           }
         }
+      }
+    });
+  }
+
+  async createBatch(companyInstance: CompanyInstance, checklistItems: ChecklistItem[]) {
+    await this._prisma.checklistItem.createMany({
+      data: checklistItems,
+    })
+  }
+
+  async changeConformity(companyInstance: CompanyInstance, itemId: string, isConform: boolean): Promise<ChecklistItem> {
+    return await this._prisma.checklistItem.update({
+      where: {
+        id: itemId,
+        checklist: {
+          template: {
+            companyId: companyInstance.getCompanyId()
+          }
+        }
+      },
+      data: {
+        isConform
       }
     });
   }

@@ -64,5 +64,9 @@ export interface WorkOrderWithRelationalInfo extends WorkOrder {
       name: string;
     }
   } | null;
+  user: {
+    id: string;
+    name: string;
+  }
 };
 

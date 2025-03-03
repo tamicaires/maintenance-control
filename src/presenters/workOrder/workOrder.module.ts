@@ -12,6 +12,11 @@ import { BackToQueueWorkOrder } from 'src/application/work-order/useCases/back-t
 import { StartWaitingParts } from 'src/application/work-order/useCases/start-waiting-parts';
 import { FinishWaitingParts } from 'src/application/work-order/useCases/finish-waiting-parts';
 import { GetWorkOrderById } from 'src/application/work-order/useCases/get-work-order-by-id';
+import { GetDailyWorkOrdersData } from 'src/application/work-order/useCases/get-daily-work-orders-data';
+import { GetQueueChart } from 'src/application/work-order/useCases/dashboard/get-queue-chart';
+import { GetTypeMaintenanceChartData } from 'src/application/work-order/useCases/dashboard/get-type-maintenance-chart-data';
+import { EventService } from 'src/application/event/service/event.service';
+import { RegisterEvent } from 'src/application/event/use-cases/register-event';
 
 @Module({
   controllers: [WorkOrderController],
@@ -27,7 +32,12 @@ import { GetWorkOrderById } from 'src/application/work-order/useCases/get-work-o
     FinishMaintenanceWorkOrder,
     BackToQueueWorkOrder,
     StartWaitingParts,
-    FinishWaitingParts, 
+    FinishWaitingParts,
+    GetDailyWorkOrdersData,
+    GetTypeMaintenanceChartData,
+    GetQueueChart,
+    EventService,
+    RegisterEvent,
   ],
 })
 export class WorkOrderModule { }

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { PrismaWorkOrderMapper } from '../mappers/PrismaWorkOrderMapper';
-import { Filters } from 'src/shared/types/filters.interface';
+import { MaintenanceFilters } from 'src/shared/types/filters.interface';
 import { Prisma } from '@prisma/client';
 import { TypeOfMaintenance } from 'src/core/enum/type-of-maintenance.enum';
 import { WorkOrderRepository } from 'src/core/domain/repositories/work-order-repository';
@@ -9,6 +9,7 @@ import { WorkOrder } from 'src/core/domain/entities/work-order';
 import { CompanyInstance } from 'src/core/company/company-instance';
 import { ICancelWorkOrder, IFinishMaintenance, IFinishWaitingParts, IStartMaintenance, IStartWaitingParts } from 'src/shared/types/work-order';
 import { MaintenanceStatus } from 'src/core/enum/maitenance-status.enum';
+import { getEndOfDay, getStartOfDay } from 'src/shared/utils/date-utils';
 
 @Injectable()
 export class PrismaWorkOrderRepository implements WorkOrderRepository {
@@ -48,15 +49,53 @@ export class PrismaWorkOrderRepository implements WorkOrderRepository {
   }
 
   async findMany(
+    companyInstance: CompanyInstance,
     page: number,
     perPage: number,
-    filters?: Filters,
+    filters?: MaintenanceFilters,
   ): Promise<any> {
-    const { status, startDate, endDate } = filters || {};
-
+    const {
+      displayId,
+      fleetNumber,
+      severityLevel,
+      typeOfMaintenance,
+      status,
+      startDate,
+      endDate
+    } = filters || {};
+    console.log("filters", filters)
     const where: Prisma.WorkOrderWhereInput = {
+      companyId: companyInstance.getCompanyId(),
       AND: [
-        status ? { status } : undefined,
+        displayId ? { displayId } : undefined,
+        fleetNumber
+          ? {
+            fleet: {
+              some: { fleetNumber },
+            },
+          }
+          : undefined,
+        severityLevel
+          ? {
+            severityLevel: Array.isArray(severityLevel)
+              ? { in: severityLevel }
+              : severityLevel,
+          }
+          : undefined,
+        typeOfMaintenance
+          ? {
+            typeOfMaintenance: Array.isArray(typeOfMaintenance)
+              ? { in: typeOfMaintenance }
+              : typeOfMaintenance,
+          }
+          : undefined,
+        status
+          ? {
+            status: Array.isArray(status)
+              ? { in: status }
+              : { in: status.split(',') },
+          }
+          : undefined,
         startDate && endDate
           ? {
             createdAt: {
@@ -67,6 +106,8 @@ export class PrismaWorkOrderRepository implements WorkOrderRepository {
           : undefined,
       ].filter(Boolean) as Prisma.WorkOrderWhereInput[],
     };
+
+
 
     const workOrders = await this.prisma.workOrder.findMany({
       where,
@@ -98,9 +139,15 @@ export class PrismaWorkOrderRepository implements WorkOrderRepository {
 
           },
         },
+        user: {
+          select: {
+            id: true,
+            name: true
+          }
+        }
       },
     });
-
+    // console.log("workorders", workOrders)
     return workOrders;
   }
 
@@ -263,5 +310,120 @@ export class PrismaWorkOrderRepository implements WorkOrderRepository {
         endWaitingParts: status.endWaitingParts,
       },
     });
+  }
+
+  async getDaily(companyInstance: CompanyInstance, startOfDay: Date, endOfDay: Date): Promise<any[]> {
+    const companyId = companyInstance.getCompanyId()
+
+    return this.prisma.workOrder.findMany({
+      where: {
+        companyId,
+        OR: [
+          {
+            status: {
+              in: [MaintenanceStatus.Fila, MaintenanceStatus.Manutencao, MaintenanceStatus.AguardandoPeca],
+            },
+          },
+          {
+            status: {
+              in: [MaintenanceStatus.Finalizada, MaintenanceStatus.Cancelada],
+            },
+            createdAt: {
+              gte: startOfDay,
+              lt: endOfDay,
+            },
+          },
+        ],
+      },
+      include: {
+        fleet: {
+          select: {
+            id: true,
+            fleetNumber: true,
+            carrier: {
+              select: {
+                id: true,
+                carrierName: true,
+              },
+            },
+          },
+        },
+        user: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+    })
+  }
+
+  //TODO Separar work order chart repository
+  async getQueueChartData(companyInstance: CompanyInstance, startDate: Date, endDate: Date) {
+    const companyId = companyInstance.getCompanyId()
+
+    return this.prisma.workOrder.groupBy({
+      by: ["entryQueue"],
+      where: {
+        companyId,
+        status: MaintenanceStatus.Fila,
+        entryQueue: {
+          gte: startDate,
+          lte: endDate,
+        },
+      },
+      _count: {
+        id: true,
+      },
+    })
+  }
+
+  async getTypeMaintenanceChartData(companyInstance: CompanyInstance, date: Date) {
+    const companyId = companyInstance.getCompanyId()
+    const startOfDay = getStartOfDay(date)
+    const endOfDay = getEndOfDay(date)
+
+    return this.prisma.workOrder.groupBy({
+      by: ["typeOfMaintenance"],
+      where: {
+        companyId,
+        createdAt: {
+          gte: startOfDay,
+          lte: endOfDay,
+        },
+      },
+      _count: {
+        id: true,
+      },
+    })
+  }
+
+  async getServiceChartData(companyInstance: CompanyInstance, date: Date) {
+    return []
+    //   const companyId = companyInstance.getCompanyId()
+    //   const startOfDay = getStartOfDay(date)
+    //   const endOfDay = getEndOfDay(date)
+
+    //   return this.prisma.serviceAssignment.groupBy({
+    //     by: [""],
+    //     where: {
+    //       workOrder: {
+    //         companyId,
+    //         createdAt: {
+    //           gte: startOfDay,
+    //           lte: endOfDay,
+    //         },
+    //       },
+    //     },
+    //     _count: {
+    //       id: true,
+    //     },
+    //     orderBy: {
+    //       _count: {
+    //         id: "desc",
+    //       },
+    //     },
+    //     take: 5,
+    //   })
   }
 }

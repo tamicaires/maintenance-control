@@ -26,6 +26,7 @@ export class WorkOrderViewModel {
     createdAt,
     updatedAt,
     note,
+    user,
     box,
   }: WorkOrderWithRelationalInfo) {
     const fleetNumber = fleet?.fleetNumber;
@@ -47,12 +48,11 @@ export class WorkOrderViewModel {
       carrierName,
       trailers: trailersData
     }
-
     return {
       id,
       displayId,
       box,
-      fleetInfo,
+      fleet: fleetInfo,
       severityLevel,
       entryQueue,
       entryMaintenance,
@@ -71,6 +71,7 @@ export class WorkOrderViewModel {
       createdBy,
       updatedBy,
       isCancelled,
+      openedBy: user,
       createdAt,
       updatedAt,
     };

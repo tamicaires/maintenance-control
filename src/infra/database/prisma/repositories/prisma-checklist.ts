@@ -61,4 +61,152 @@ export class PrismaChecklistRepository implements ChecklistRepository {
 
     return checklists;
   }
+
+  async findByIdWithRelationalData(companyInstance: CompanyInstance, checklistId: string) {
+    return await this._prisma.checklist.findUnique({
+      where: {
+        id: checklistId,
+        template: {
+          companyId: companyInstance.getCompanyId()
+        }
+      },
+      include: {
+        template: {
+          select: {
+            id: true,
+            name: true,
+            icon: true,
+            checklistCategories: {
+              select: {
+                id: true,
+                name: true,
+                description: true,
+                ChecklistItemTemplate: {
+                  select: {
+                    id: true,
+                    description: true,
+                    weight: true
+                  }
+                }
+              }
+            }
+          }
+        },
+        workOrder: {
+          select: {
+            id: true,
+            displayId: true,
+            typeOfMaintenance: true,
+            fleet: {
+              select: {
+                id: true,
+                fleetNumber: true,
+                trailers: {
+                  select: {
+                    id: true,
+                    plate: true,
+                    position: true,
+                    axles: {
+                      select: {
+                        id: true,
+                        position: true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    })
+  }
+
+  async delete(companyInstance: CompanyInstance, checklist: Checklist): Promise<void> {
+    await this._prisma.checklist.delete({
+      where: {
+        id: checklist.id,
+        workOrder: {
+          companyId: companyInstance.getCompanyId()
+        }
+      }
+    })
+  }
+
+  async deleteMany(companyInstance: CompanyInstance, checklistIds: string[]): Promise<void> {
+    await this._prisma.checklist.deleteMany({
+      where: {
+        id: {
+          in: checklistIds
+        },
+        workOrder: {
+          companyId: companyInstance.getCompanyId()
+        }
+      },
+    })
+  }
+
+  async findChecklistByWorkOrder(companyInstance: CompanyInstance, workOrderId: string): Promise<Checklist | null> {
+    const companyId = companyInstance.getCompanyId();
+
+    const checklist = await this._prisma.checklist.findFirst({
+      where: {
+        workOrderId,
+        workOrder: {
+          companyId
+        }
+      },
+      include: {
+        template: {
+          select: {
+            id: true,
+            name: true,
+            icon: true,
+            checklistCategories: {
+              select: {
+                id: true,
+                name: true,
+                description: true,
+                ChecklistItemTemplate: {
+                  select: {
+                    id: true,
+                    description: true,
+                    weight: true
+                  }
+                }
+              }
+            }
+          }
+        },
+        workOrder: {
+          select: {
+            id: true,
+            displayId: true,
+            typeOfMaintenance: true,
+            fleet: {
+              select: {
+                id: true,
+                fleetNumber: true,
+                trailers: {
+                  select: {
+                    id: true,
+                    plate: true,
+                    position: true,
+                    axles: {
+                      select: {
+                        id: true,
+                        position: true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    })
+
+    return checklist;
+  }
 }

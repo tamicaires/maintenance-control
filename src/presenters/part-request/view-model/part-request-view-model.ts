@@ -1,4 +1,5 @@
 import { PartRequest } from "src/core/domain/entities/part-request";
+import { IPartRequestRelationalData, IPartRequestsRelationalDataList } from "src/shared/types/part-request/part-request-relational-data";
 
 export interface PartRequestWithRelationalInfo extends PartRequest {
   part: {
@@ -51,7 +52,7 @@ export class PartRequestViewModel {
     }
   }
 
-  static toHttpWithRelationalInfo(partRequest: PartRequestWithRelationalInfo) {
+  static toHttpWithRelationalInfo(partRequest: IPartRequestRelationalData) {
     return {
       id: partRequest.id,
       part: {
@@ -72,10 +73,12 @@ export class PartRequestViewModel {
         id: partRequest.trailer?.id,
         plate: partRequest.trailer?.plate,
         position: partRequest.trailer?.position,
-        axles: {
-          id: partRequest.trailer?.axles.id,
-          position: partRequest.trailer?.axles.position
-        }
+        axles: partRequest.trailer?.axles.map((axle) => {
+          return {
+            id: axle.id,
+            position: axle.position
+          }
+        })
       },
       requestedForEmployeeId: partRequest.requestedForEmployeeId,
       handledById: partRequest.handledById,
@@ -92,5 +95,6 @@ export class PartRequestViewModel {
       },
       updatedAt: partRequest.updatedAt,
     }
+
   }
 }

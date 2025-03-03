@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Request } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Query, Request } from "@nestjs/common";
 import { CreatePartRequest } from "src/application/part-request/use-cases/create-part-request";
 import { CookiesEnum } from "src/core/enum/cookies";
 import { Cookies } from "src/infra/http/auth/decorators/cookies.decorator";
@@ -15,6 +15,7 @@ import { CreatePartRequestBatch } from "src/application/part-request/use-cases/c
 import { CreatePartRequestBatchBody } from "./dto/create-part-request-batch";
 import { ListPartRequestByWorkOrder } from "src/application/part-request/use-cases/list-part-request-by-work-order";
 import { GetPartRequestById } from "src/application/part-request/use-cases/get-part-request-by-id";
+import { RequestStatus } from "src/core/enum/part-request";
 
 @Controller("part-requests")
 export class PartRequestController {
@@ -64,17 +65,36 @@ export class PartRequestController {
   ) {
     const companyInstance = CompanyInstance.create(companyId);
     const partRequest = await this.getPartRequestById.execute(
-      companyInstance, 
+      companyInstance,
       id
     );
     return PartRequestViewModel.toHttpWithRelationalInfo(partRequest);
   }
 
   @Get()
-  async list(@Cookies(CookiesEnum.CompanyId) companyId: string) {
+  async list(
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
+    @Query('status') status: RequestStatus,
+    @Query('page') page: string,
+    @Query('perPage') perPage: string,
+    @Query('startDate') startDate?: string,
+    @Query('endDate') endDate?: string,
+  ) {
     const companyInstance = CompanyInstance.create(companyId);
-    const partRequests = await this.listPartRequest.execute(companyInstance);
-    return partRequests.map(PartRequestViewModel.toHttpWithRelationalInfo);
+    const { partRequests, total } = await this.listPartRequest.execute(companyInstance, {
+      status,
+      page,
+      perPage,
+      startDate,
+      endDate
+    });
+
+    const dataToShow = {
+      partRequests: partRequests.map(PartRequestViewModel.toHttpWithRelationalInfo),
+      total
+    }
+    console.log("data toshow", dataToShow)
+    return dataToShow;
   }
 
   @Get("/work-order/:id")
@@ -87,7 +107,8 @@ export class PartRequestController {
       companyInstance,
       workOrderId
     );
-    return partRequests.map(PartRequestViewModel.toHttpWithRelationalInfo);
+    return partRequests.map(PartRequestViewModel.toHttpWithRelationalInfo)
+
   }
 
   @Post("reject/:id")
