@@ -4,6 +4,7 @@ import { PartRequest } from "src/core/domain/entities/part-request";
 import { PartRequestRepository } from "src/core/domain/repositories/part-request-repository";
 import { WorkOrderRepository } from "src/core/domain/repositories/work-order-repository";
 import { ExceptionHandler } from "src/core/exceptions/ExceptionHandler";
+import { IPartRequestRelationalData, IPartRequestsRelationalDataList } from "src/shared/types/part-request/part-request-relational-data";
 
 @Injectable()
 export class ListPartRequestByWorkOrder {
@@ -12,7 +13,7 @@ export class ListPartRequestByWorkOrder {
     private readonly workOrderRepository: WorkOrderRepository
   ) { }
 
-  async execute(companyInstance: CompanyInstance, workOrderId: string): Promise<PartRequest[]> {
+  async execute(companyInstance: CompanyInstance, workOrderId: string): Promise<IPartRequestRelationalData[]> {
     const workOrder = await this.workOrderRepository.findById(companyInstance, workOrderId);
     if (!workOrder) {
       throw new ExceptionHandler({
