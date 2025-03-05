@@ -103,7 +103,7 @@ export class ServiceController {
       queries
     );
 
-    return services.map(ServiceViewModel.toHttp);
+    return ServiceViewModel.toHttpWithCount(services);
   }
 
   @Get(':workOrderId/services')

@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { PrismaService } from './prisma/prisma.service';
 import { PrismaUserRepository } from './prisma/repositories/PrismaUserRepository';
-import { PrismaFleetRepository } from './prisma/repositories/PrismaFleetRepository';
+import { PrismaFleetRepository } from './prisma/repositories/prisma-fleet-repository';
 import { PrismaNoteRepository } from './prisma/repositories/PrismaNoteRepository';
 import { PrismaCarrierRepository } from './prisma/repositories/PrismaCarrierRepository';
 import { PrismaJobRepository } from './prisma/repositories/PrismaJobRepository';
 import { PrismaEmployeeRepository } from './prisma/repositories/PrismaEmployeeRepository';
-import { PrismaServiceRepository } from './prisma/repositories/PrismaServiceRepository';
+import { PrismaServiceRepository } from './prisma/repositories/prisma-service-repository';
 import { PrismaWorkOrderRepository } from './prisma/repositories/PrismaWorkOrderRepository';
 import { PrismaServiceAssignmentsRepository } from './prisma/repositories/PrismaServiceAssignmentsRepository';
 import { PrismaCompanyRepository } from './prisma/repositories/PrismaCompanyRepository';

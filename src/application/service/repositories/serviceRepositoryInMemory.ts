@@ -1,4 +1,4 @@
-import { ServiceWithEmployee } from 'src/shared/types/service.interface';
+import { IServiceWithCount, ServiceWithEmployee } from 'src/shared/types/service.interface';
 import { Service } from '../../../core/domain/entities/service';
 import { ServiceRepository } from '../../../core/domain/repositories/service-repository';
 import { CompanyInstance } from 'src/core/company/company-instance';
@@ -36,10 +36,8 @@ export class ServiceRepositoryInMemory implements ServiceRepository {
     page: number,
     perPage: number,
     filters: IServiceFilters
-  ): Promise<Service[]> {
-    return this.services
-      // .filter((service) => service.serviceName.includes(filter))
-      .slice((page - 1) * perPage, page * perPage);
+  ): Promise<IServiceWithCount> {
+    throw new Error('Method not implemented.');
   }
 
   async findOne(companyInstance: CompanyInstance, serviceName: string): Promise<Service | null> {

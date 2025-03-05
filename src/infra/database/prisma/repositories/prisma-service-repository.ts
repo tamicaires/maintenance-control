@@ -6,6 +6,7 @@ import { ServiceRepository } from 'src/core/domain/repositories/service-reposito
 import { CompanyInstance } from 'src/core/company/company-instance';
 import { IServiceFilters } from 'src/shared/types/filters.interface';
 import { Prisma } from '@prisma/client';
+import { IServiceWithCount } from 'src/shared/types/service.interface';
 
 @Injectable()
 export class PrismaServiceRepository implements ServiceRepository {
@@ -47,7 +48,7 @@ export class PrismaServiceRepository implements ServiceRepository {
     page: number,
     perPage: number,
     filters: IServiceFilters
-  ): Promise<Service[]> {
+  ): Promise<IServiceWithCount> {
     const { serviceName, serviceCategory } = filters;
 
     const where: Prisma.ServiceWhereInput = {
@@ -58,13 +59,19 @@ export class PrismaServiceRepository implements ServiceRepository {
       ].filter(Boolean) as Prisma.ServiceWhereInput[],
     };
 
+    const totalCount = await this.prisma.service.count({ where });
+
     const services = await this.prisma.service.findMany({
       where,
       take: perPage,
       skip: (page - 1) * perPage,
     });
 
-    return services.map(PrismaServiceMapper.toDomain);
+    return {
+      services: services.map(PrismaServiceMapper.toDomain),
+      totalCount
+    }
+
   }
 
   async findOne(companyInstance: CompanyInstance, serviceName: string): Promise<Service | null> {

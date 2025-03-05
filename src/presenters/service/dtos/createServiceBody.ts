@@ -1,3 +1,4 @@
+import { IsNumber } from 'class-validator';
 import { IsNotEmptyCustom } from 'src/core/classValidator/decorators/IsNotEmptyCustom';
 import { IsStringCustom } from 'src/core/classValidator/decorators/IsStringCustom';
 import { ServiceCategory } from 'src/core/enum/service-category.enum';
@@ -12,6 +13,6 @@ export class CreateServiceBody {
   serviceCategory: ServiceCategory;
 
   @IsNotEmptyCustom()
-  @IsStringCustom()
+  @IsNumber()
   weight: number;
 }

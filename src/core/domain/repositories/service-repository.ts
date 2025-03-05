@@ -1,4 +1,4 @@
-import { ServiceWithEmployee } from 'src/shared/types/service.interface';
+import { IServiceWithCount, ServiceWithEmployee } from 'src/shared/types/service.interface';
 import { Service } from '../entities/service';
 import { CompanyInstance } from 'src/core/company/company-instance';
 import { IServiceFilters } from 'src/shared/types/filters.interface';
@@ -14,6 +14,6 @@ export abstract class ServiceRepository {
     page: number,
     perPage: number,
     filters: IServiceFilters
-  ): Promise<Service[]>;
+  ): Promise<IServiceWithCount>;
   abstract findByWorkOrder(companyInstance: CompanyInstance, workOrderId: string): Promise<[]>;
 }
