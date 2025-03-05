@@ -39,3 +39,10 @@ export interface IEventFilters {
   startDate?: Date;
   endDate?: Date;
 }
+
+export interface IEmployeeFilters {
+  isActive?: boolean;
+  jobTitle?: string;
+  startDate?: string;
+  endDate?: string;
+}

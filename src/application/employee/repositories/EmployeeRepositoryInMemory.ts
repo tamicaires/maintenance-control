@@ -1,11 +1,15 @@
-import { Employee } from '../../../core/domain/entities/employee';
+import { CompanyInstance } from 'src/core/company/company-instance';
+import { Employee, Employees } from '../../../core/domain/entities/employee';
 import { EmployeeRepository } from '../../../core/domain/repositories/employee-repository';
+import { IEmployeeFilters } from 'src/shared/types/filters.interface';
 
 export class EmployeeRepositoryInMemory implements EmployeeRepository {
   public employees: Employee[] = [];
+  public employees2: Employees[] = [];
 
-  async create(employee: Employee): Promise<void> {
-    this.employees.push(employee);
+  async create(employee: Employees): Promise<Employees> {
+    // return this.employees2.push(employee);
+    throw new Error("mehtod not implement")
   }
 
   async findById(id: string): Promise<Employee | null> {
@@ -30,11 +34,11 @@ export class EmployeeRepositoryInMemory implements EmployeeRepository {
     this.employees = this.employees.filter((employee) => employee.id !== id);
   }
 
-  async getMany(page: number, perPage: number): Promise<Employee[]> {
+  async getMany(companyInstance: CompanyInstance, filters: IEmployeeFilters, page: number, perPage: number): Promise<Employee[]> {
     return this.employees.slice((page - 1) * perPage, page * perPage);
   }
 
-  async findOne(employeeName: string): Promise<Employee | null> {
+  async findOne(companyInstance: CompanyInstance, employeeName: string): Promise<Employees | null> {
     const employee = this.employees.find(
       (employee) => employee.name === employeeName,
     );

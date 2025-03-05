@@ -6,6 +6,7 @@ interface EmployeeSchema {
   workShift: string;
   jobTitleId: string;
   isActive: boolean;
+  companyId: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -62,6 +63,14 @@ export class Employee {
     this.props.isActive = isActive;
   }
 
+  get companyId(): string {
+    return this.props.companyId;
+  }
+
+  set companyId(companyId: string) {
+    this.props.companyId = companyId;
+  }
+
   get createdAt(): Date {
     return this.props.createdAt;
   }
@@ -74,3 +83,36 @@ export class Employee {
     this.props.updatedAt = updatedAt;
   }
 }
+
+import { z } from "zod";
+
+export class Employees implements EmployeesType {
+  id: string;
+  name: string;
+  workShift: string;
+  jobTitleId: string;
+  isActive: boolean;
+  companyId: string;
+  createdAt: Date;
+  updatedAt: Date;
+
+  constructor(data: EmployeesType) {
+    this.id = data.id ?? randomUUID();
+    this.createdAt = data.createdAt ?? new Date();
+    this.updatedAt = new Date();
+    Object.assign(this, data);
+  }
+}
+
+const schema = z.object({
+  id: z.string().uuid().optional(),
+  name: z.string(),
+  workShift: z.string(),
+  jobTitleId: z.string(),
+  isActive: z.boolean(),
+  companyId: z.string().uuid(),
+  createdAt: z.date().default(() => new Date()).optional(),
+  updatedAt: z.date().default(() => new Date()).optional()
+})
+
+export type EmployeesType = z.infer<typeof schema>;

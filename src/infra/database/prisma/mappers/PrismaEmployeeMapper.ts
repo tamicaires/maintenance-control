@@ -1,5 +1,7 @@
 import { Employee as EmployeeRaw } from '@prisma/client';
 import { Employee } from 'src/core/domain/entities/employee';
+import { IEmployeeWithJobRaw } from 'src/shared/types/employee.type';
+
 
 export class PrismaEmployeeMapper {
   static toPrisma({
@@ -8,6 +10,7 @@ export class PrismaEmployeeMapper {
     workShift,
     jobTitleId,
     isActive,
+    companyId,
     createdAt,
     updatedAt,
   }: Employee): EmployeeRaw {
@@ -17,6 +20,7 @@ export class PrismaEmployeeMapper {
       workShift,
       jobTitleId,
       isActive,
+      companyId,
       createdAt,
       updatedAt,
     };
@@ -28,15 +32,17 @@ export class PrismaEmployeeMapper {
     workShift,
     jobTitleId,
     isActive,
+    companyId,
     createdAt,
     updatedAt,
-  }: EmployeeRaw): Employee {
+  }: IEmployeeWithJobRaw) {
     return new Employee(
       {
         name,
         workShift,
         jobTitleId,
         isActive,
+        companyId,
         createdAt,
         updatedAt,
       },

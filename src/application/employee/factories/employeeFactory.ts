@@ -9,6 +9,7 @@ export const makeEmployee = ({ id, ...override }: Override) => {
       workShift: 'Manhã',
       jobTitleId: '12355',
       isActive: true,
+      companyId: 'dds',
       ...override,
     },
     id,

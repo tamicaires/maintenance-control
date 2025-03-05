@@ -2,18 +2,22 @@ import { EmployeeRepository } from 'src/core/domain/repositories/employee-reposi
 import { PrismaEmployeeMapper } from '../mappers/PrismaEmployeeMapper';
 import { PrismaService } from '../prisma.service';
 import { Injectable } from '@nestjs/common';
-import { Employee } from 'src/core/domain/entities/employee';
+import { Employee, Employees } from 'src/core/domain/entities/employee';
+import { CompanyInstance } from 'src/core/company/company-instance';
+import { IEmployeeFilters } from 'src/shared/types/filters.interface';
+import { Prisma } from '@prisma/client';
+import { IEmployeeWithCount } from 'src/shared/types/employee.type';
 
 @Injectable()
 export class PrismaEmployeeRepository implements EmployeeRepository {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
-  async create(employee: Employee): Promise<void> {
-    const employeeRaw = PrismaEmployeeMapper.toPrisma(employee);
-
+  async create(employee: Employees): Promise<Employees> {
     await this.prisma.employee.create({
-      data: employeeRaw,
+      data: employee,
     });
+
+    return employee;
   }
 
   async findById(id: string): Promise<any> {
@@ -40,7 +44,7 @@ export class PrismaEmployeeRepository implements EmployeeRepository {
       data: employeeRaw,
       where: { id: employeeRaw.id },
       include: {
-        job: true ,
+        job: true,
       },
     });
   }
@@ -51,8 +55,34 @@ export class PrismaEmployeeRepository implements EmployeeRepository {
     });
   }
 
-  async getMany(page: number, perPage: number): Promise<any> {
+  async getMany(
+    companyInstance: CompanyInstance,
+    filters: IEmployeeFilters,
+    page: number,
+    perPage: number
+  ): Promise<IEmployeeWithCount> {
+    const { isActive, jobTitle, startDate, endDate } = filters;
+
+    const where: Prisma.EmployeeWhereInput = {
+      companyId: companyInstance.getCompanyId(),
+      AND: [
+        isActive ? { isActive } : undefined,
+        jobTitle ? { job: { jobTitle } } : undefined,
+        startDate && endDate
+          ? {
+            createdAt: {
+              gte: startDate,
+              lte: endDate,
+            },
+          }
+          : undefined,
+      ].filter(Boolean) as Prisma.EmployeeWhereInput[],
+    };
+
+    const totalCount = await this.prisma.employee.count({ where });
+
     const employees = await this.prisma.employee.findMany({
+      where,
       include: {
         job: {
           select: {
@@ -64,17 +94,22 @@ export class PrismaEmployeeRepository implements EmployeeRepository {
       skip: (page - 1) * perPage,
     });
 
-    return employees;
+    return {
+      employees: employees,
+      totalCount
+    };
   }
 
-  async findOne(employeeName: string): Promise<Employee | null> {
+  async findOne(companyInstance: CompanyInstance, employeeName: string): Promise<Employees | null> {
+    const companyId = companyInstance.getCompanyId();
+
     const employeeRaw = await this.prisma.employee.findUnique({
-      where: { name: employeeName },
+      where: { name: employeeName, companyId },
     });
 
     if (!employeeRaw) return null;
 
-    return PrismaEmployeeMapper.toDomain(employeeRaw);
+    return employeeRaw
   }
 
   async getEmployeeServices(id: string): Promise<any> {

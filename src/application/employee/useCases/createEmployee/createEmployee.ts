@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { Employee } from '../../../../core/domain/entities/employee';
+import { Employee, Employees } from '../../../../core/domain/entities/employee';
 import { EmployeeRepository } from '../../../../core/domain/repositories/employee-repository';
 import { EmployeeWithSameNameException } from '../../exceptions/EmployeeWithSameNameException';
+import { CompanyInstance } from 'src/core/company/company-instance';
+import { IUseCase } from 'src/shared/protocols/use-case';
 
-interface CreateEmployeeRequest {
+interface IRequest {
   name: string;
   jobTitleId: string;
   workShift: string;
@@ -11,28 +13,16 @@ interface CreateEmployeeRequest {
 }
 
 @Injectable()
-export class CreateEmployee {
-  constructor(private employeeRepository: EmployeeRepository) {}
+export class CreateEmployee implements IUseCase<IRequest, Employees> {
+  constructor(private employeeRepository: EmployeeRepository) { }
 
-  async execute({
-    jobTitleId,
-    name,
-    workShift,
-    isActive,
-  }: CreateEmployeeRequest) {
-    const employeeAlreadyExists = await this.employeeRepository.findOne(name);
+  async execute(companyInstance: CompanyInstance, data: IRequest): Promise<Employees> {
+    const employeeAlreadyExists = await this.employeeRepository.findOne(companyInstance, data.name);
 
     if (employeeAlreadyExists) throw new EmployeeWithSameNameException();
 
-    const employee = new Employee({
-      name,
-      jobTitleId,
-      workShift,
-      isActive,
-    });
+    const employee = new Employees(companyInstance.addCompanyFilter(data));
 
-    await this.employeeRepository.create(employee);
-
-    return employee;
+    return await this.employeeRepository.create(employee);
   }
 }

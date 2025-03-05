@@ -17,6 +17,9 @@ import { EditEmployee } from 'src/application/employee/useCases/editEmployee/edi
 import { GetEmployee } from 'src/application/employee/useCases/getEmployee/getEmployee';
 import { GetEmployeeServices } from 'src/application/employee/useCases/getEmployeeServices/getEmployeeServices';
 import { GetManyEmployees } from 'src/application/employee/useCases/getManyEmployees/getManyEmployees';
+import { Cookies } from 'src/infra/http/auth/decorators/cookies.decorator';
+import { CookiesEnum } from 'src/core/enum/cookies';
+import { CompanyInstance } from 'src/core/company/company-instance';
 
 @Controller('employees')
 export class EmployeeController {
@@ -27,11 +30,15 @@ export class EmployeeController {
     private getEmployee: GetEmployee,
     private getEmployeeServices: GetEmployeeServices,
     private getManyEmployees: GetManyEmployees,
-  ) {}
+  ) { }
 
   @Post()
-  async create(@Body() createEmployeeBody: CreateEmployeeBody) {
-    return await this.createEmployee.execute(createEmployeeBody);
+  async create(
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
+    @Body() createEmployeeBody: CreateEmployeeBody
+  ) {
+    const companyInstance = CompanyInstance.create(companyId);
+    return await this.createEmployee.execute(companyInstance, createEmployeeBody);
   }
 
   @Put(':id')
@@ -47,8 +54,8 @@ export class EmployeeController {
     return EmployeeViewModel.toHttp(response);
   }
 
-  @Delete()
-  async delete(@Param() employeeId: string) {
+  @Delete(':id')
+  async delete(@Param('id') employeeId: string) {
     await this.deleteEmployee.execute({
       employeeId,
     });
@@ -74,14 +81,24 @@ export class EmployeeController {
 
   @Get()
   async getMany(
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
     @Query('page') page: string,
     @Query('perPage') perPage: string,
+    @Query('isActive') isActive: boolean,
+    @Query('jobTitle') jobTitle: string,
+    @Query('startDate') startDate: string,
+    @Query('endDate') endDate: string,
   ) {
-    const employees = await this.getManyEmployees.execute({
+    const companyInstance = CompanyInstance.create(companyId);
+    const queries = {
       page,
       perPage,
-    });
+      isActive,
+      jobTitle,
+      startDate,
+      endDate
+    }
 
-    return employees.map(EmployeeViewModel.toHttp);
+    return await this.getManyEmployees.execute(companyInstance, queries);
   }
 }
