@@ -34,6 +34,7 @@ model Company {
   box Box[]
   checklistCategory ChecklistCategory[]
   Events Events[]
+  service Service[]
 }
 
 model User {
@@ -409,6 +410,9 @@ model Service {
   id                String  @id
   serviceName       String  @unique @map("service_name")
   serviceCategory   ServiceCategory @map("service_category")
+  weight            Int? 
+  company           Company @relation(fields: [companyId], references: [id])
+  companyId         String  @map("company_id")
 
   @@map("services")
   serviceAssignmets    ServiceAssignment[]
