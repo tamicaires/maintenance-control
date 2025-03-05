@@ -8,6 +8,7 @@ export class PrismaBoxMapper {
       description: box.description,
       isActive: box.isActive,
       companyId: box.companyId,
+      position: box.position,
     }, box.id);
   }
 
@@ -18,6 +19,7 @@ export class PrismaBoxMapper {
       description: box.description,
       isActive: box.isActive,
       companyId: box.companyId,
+      position: box.position,
     };
   }
 }

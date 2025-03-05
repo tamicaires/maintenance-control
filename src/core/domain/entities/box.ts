@@ -5,6 +5,7 @@ interface BoxProps {
   description: string | null;
   isActive: boolean;
   companyId: string;
+  position: number | null;
 }
 
 export class Box {
@@ -53,5 +54,13 @@ export class Box {
 
   set companyId(companyId: string) {
     this.props.companyId = companyId;
+  }
+
+  get position(): number | null {
+    return this.props.position;
+  }
+
+  set position(position: number | null) {
+    this.props.position = position;
   }
 }

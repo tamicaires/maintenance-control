@@ -8,6 +8,7 @@ interface CreateBoxRequest {
   name: string;
   description: string | null;
   isActive: boolean;
+  position: number;
 }
 
 @Injectable()
