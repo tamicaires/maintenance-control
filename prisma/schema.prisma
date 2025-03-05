@@ -35,6 +35,7 @@ model Company {
   checklistCategory ChecklistCategory[]
   Events Events[]
   service Service[]
+  employees Employee[]
 }
 
 model User {
@@ -386,6 +387,9 @@ model Employee {
   isActive    Boolean     @map("is_active") @default(true)
   job         Job         @relation(fields: [jobTitleId], references: [id]) 
   jobTitleId  String      @map("job_title_id")
+
+  company           Company   @relation(fields: [companyId], references: [id])
+  companyId         String    @map("company_id")
 
   createdAt   DateTime  @map("created_at")
   updatedAt   DateTime  @map("updated_at")
