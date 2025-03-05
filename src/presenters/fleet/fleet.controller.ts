@@ -73,13 +73,23 @@ export class FleetController {
   @Get()
   @Permission(Action.Read, 'Fleet')
   async getManyFleet(
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
     @Query('page') page: string,
     @Query('perPage') perPage: string,
-    @Cookies(CookiesEnum.CompanyId) companyId: string
+    @Query('startDate') startDate?: string,
+    @Query('endDate') endDate?: string,
+    @Query('isActive') isActive?: boolean,
   ) {
     const companyInstance = CompanyInstance.create(companyId);
+    const queries = {
+      page,
+      perPage,
+      isActive,
+      startDate,
+      endDate,
+    }
 
-    const fleets = await this.getManyFleetsUseCase.execute(companyInstance, { page, perPage });
-    return fleets.map(FleetViewModel.toHttp);
+    const fleetsData = await this.getManyFleetsUseCase.execute(companyInstance, queries);
+    return FleetViewModel.toHttpWithCount(fleetsData);
   }
 }

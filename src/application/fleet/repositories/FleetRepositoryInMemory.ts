@@ -1,6 +1,7 @@
 import { CompanyInstance } from 'src/core/company/company-instance';
 import { Fleet } from '../../../core/domain/entities/fleet';
 import { FleetRepository } from '../../../core/domain/repositories/fleet-repository';
+import { IFleetWithCount } from 'src/presenters/fleet/viewModel/FleetViewModel';
 
 export class FleetRepositoryInMemory implements FleetRepository {
   findByPlate(companyInstance: CompanyInstance, plate: string): Promise<Fleet | null> {
@@ -35,7 +36,7 @@ export class FleetRepositoryInMemory implements FleetRepository {
     if (fleetIndex >= 0) this.fleets[fleetIndex] = fleet;
   }
 
-  async findMany(companyInstance: CompanyInstance, page: number, perPage: number): Promise<Fleet[]> {
-    return this.fleets.slice((page - 1) * perPage, page * perPage);
+  async findMany(companyInstance: CompanyInstance, page: number, perPage: number): Promise<IFleetWithCount> {
+    return "" as any
   }
 }

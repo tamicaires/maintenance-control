@@ -20,6 +20,12 @@ export interface PartRequestFilters {
   endDate?: Date;
 }
 
+export interface FleetFilters {
+  isActive?: boolean;
+  startDate?: Date;
+  endDate?: Date;
+}
+
 export interface IEventFilters {
   page?: number;
   perPage?: number;
