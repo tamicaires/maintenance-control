@@ -5,6 +5,9 @@ import { ChangeStatusType, ChangeStatusResponseType } from 'src/shared/types/cha
 
 export class ServiceAssignmentRepositoryInMemory
   implements ServiceAssignmentRepository {
+  deleteAll(): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
   changeStatus(companyInstance: CompanyInstance, serviceAssigmentId: string, data: ChangeStatusType): Promise<ChangeStatusResponseType> {
     throw new Error('Method not implemented.');
   }

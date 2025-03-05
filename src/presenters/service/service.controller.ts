@@ -21,6 +21,7 @@ import { UpdateService } from 'src/application/service/useCases/updateService/up
 import { Cookies } from 'src/infra/http/auth/decorators/cookies.decorator';
 import { CompanyInstance } from 'src/core/company/company-instance';
 import { CookiesEnum } from 'src/core/enum/cookies';
+import { ServiceCategory } from 'src/core/enum/service-category.enum';
 
 @Controller('services')
 export class ServiceController {
@@ -34,60 +35,73 @@ export class ServiceController {
   ) { }
 
   @Post()
-  async create(@Body() createServiceBody: CreateServiceBody) {
-    const { serviceCategory, serviceName } = createServiceBody;
+  async create(
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
+    @Body() createServiceBody: CreateServiceBody
+  ) {
+    const companyInstance = CompanyInstance.create(companyId);
 
-    const service = await this.createService.execute({
-      serviceCategory,
-      serviceName,
-    });
-
-    return service;
+    return await this.createService.execute(companyInstance, createServiceBody);
   }
 
   @Put(':id')
   async update(
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
     @Param('id') serviceId: string,
     @Body() updateServiceBody: UpdateServiceBody,
   ) {
-    const { serviceCategory, serviceName } = updateServiceBody;
-
-    const service = await this.updateService.execute({
-      serviceId: serviceId,
-      serviceCategory,
-      serviceName,
+    const companyInstance = CompanyInstance.create(companyId);
+    return await this.updateService.execute(companyInstance, {
+      ...updateServiceBody,
+      serviceId
     });
-
-    return service;
   }
 
   @Delete(':id')
-  async delete(@Param('id') serviceId: string) {
-    await this.deleteService.execute({
+  async delete(
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
+    @Param('id') serviceId: string
+  ) {
+    const companyInstance = CompanyInstance.create(companyId);
+    await this.deleteService.execute(
+      companyInstance,
       serviceId,
-    });
+    );
   }
 
   @Get(':id')
-  async getOne(@Param('id') serviceId: string) {
-    const service = await this.getService.execute({
-      serviceId: serviceId,
-    });
+  async getOne(
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
+    @Param('id') serviceId: string
+  ) {
+    const companyInstance = CompanyInstance.create(companyId);
 
-    return service;
+    return await this.getService.execute(
+      companyInstance,
+      serviceId
+    );
   }
 
   @Get()
   async getMany(
-    @Query('filter') filter: string,
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
     @Query('page') page: string,
     @Query('perPage') perPage: string,
+    @Query('serviceName') serviceName: string,
+    @Query('serviceCategory') serviceCategory: ServiceCategory,
   ) {
-    const services = await this.getManyServices.execute({
-      filter,
+    const companyInstance = CompanyInstance.create(companyId);
+    const queries = {
       page,
       perPage,
-    });
+      serviceCategory,
+      serviceName
+    }
+
+    const services = await this.getManyServices.execute(
+      companyInstance,
+      queries
+    );
 
     return services.map(ServiceViewModel.toHttp);
   }

@@ -63,7 +63,7 @@ export class PrismaWorkOrderRepository implements WorkOrderRepository {
       startDate,
       endDate
     } = filters || {};
-    console.log("filters", filters)
+
     const where: Prisma.WorkOrderWhereInput = {
       companyId: companyInstance.getCompanyId(),
       AND: [

@@ -8,6 +8,7 @@ import { GetServiceAssignment } from 'src/application/service-assignment/useCase
 import { UpdateServiceAssignment } from 'src/application/service-assignment/useCases/updateServiceAssignment/updateServiceAssignment';
 import { GetServiceAssigmentByWorkOrder } from 'src/application/service-assignment/useCases/getServiceAssignmentByWorkOrder';
 import { ChangeStatus } from 'src/application/service-assignment/useCases/change-status';
+import { DeleteAllAssigments } from 'src/application/service-assignment/useCases/delete-all-assigments/delete-all-assingments';
 
 @Module({
   controllers: [ServiceAssignmentController],
@@ -20,6 +21,7 @@ import { ChangeStatus } from 'src/application/service-assignment/useCases/change
     GetManyServiceAssignments,
     GetServiceAssigmentByWorkOrder,
     ChangeStatus,
+    DeleteAllAssigments
   ],
 })
 export class ServiceAssignmentModule { }

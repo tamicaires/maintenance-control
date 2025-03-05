@@ -23,6 +23,7 @@ import { CookiesEnum } from 'src/core/enum/cookies';
 import { CompanyInstance } from 'src/core/company/company-instance';
 import { ChangeStatusDto } from './dtos/change-status';
 import { ChangeStatus } from 'src/application/service-assignment/useCases/change-status';
+import { DeleteAllAssigments } from 'src/application/service-assignment/useCases/delete-all-assigments/delete-all-assingments';
 
 @Controller('service-assignments')
 export class ServiceAssignmentController {
@@ -34,6 +35,7 @@ export class ServiceAssignmentController {
     private getManyServiceAssignment: GetManyServiceAssignments,
     private readonly getServiceAssigmentByWorkOrder: GetServiceAssigmentByWorkOrder,
     private readonly _changeStatus: ChangeStatus,
+    private readonly _deleteAllAssigments: DeleteAllAssigments
   ) { }
 
   @Post()
@@ -61,6 +63,14 @@ export class ServiceAssignmentController {
     await this.deleteServiceAssignment.execute({
       serviceAssignmentId,
     });
+  }
+
+  @Delete()
+  async deleteAll(
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
+  ) {
+    const companyInstance = CompanyInstance.create(companyId);
+    await this._deleteAllAssigments.execute(companyInstance)
   }
 
   @Get(':id')

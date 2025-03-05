@@ -26,6 +26,11 @@ export interface FleetFilters {
   endDate?: Date;
 }
 
+export interface IServiceFilters {
+  serviceCategory?: string;
+  serviceName?: string;
+}
+
 export interface IEventFilters {
   page?: number;
   perPage?: number;

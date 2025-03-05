@@ -2,6 +2,7 @@ import { ServiceWithEmployee } from 'src/shared/types/service.interface';
 import { Service } from '../../../core/domain/entities/service';
 import { ServiceRepository } from '../../../core/domain/repositories/service-repository';
 import { CompanyInstance } from 'src/core/company/company-instance';
+import { IServiceFilters } from 'src/shared/types/filters.interface';
 
 export class ServiceRepositoryInMemory implements ServiceRepository {
   public services: Service[] = [];
@@ -10,7 +11,7 @@ export class ServiceRepositoryInMemory implements ServiceRepository {
     this.services.push(service);
   }
 
-  async findById(id: string): Promise<Service | null> {
+  async findById(companyInstance: CompanyInstance,id: string): Promise<Service | null> {
     const service = this.services.find((service) => service.id === id);
 
     if (!service) return null;
@@ -31,16 +32,17 @@ export class ServiceRepositoryInMemory implements ServiceRepository {
   }
 
   async findMany(
-    filter: string,
+    companyInstance: CompanyInstance,
     page: number,
     perPage: number,
+    filters: IServiceFilters
   ): Promise<Service[]> {
     return this.services
-      .filter((service) => service.serviceName.includes(filter))
+      // .filter((service) => service.serviceName.includes(filter))
       .slice((page - 1) * perPage, page * perPage);
   }
 
-  async findOne(serviceName: string): Promise<Service | null> {
+  async findOne(companyInstance: CompanyInstance, serviceName: string): Promise<Service | null> {
     const job = this.services.find(
       (service) => service.serviceName === serviceName,
     );

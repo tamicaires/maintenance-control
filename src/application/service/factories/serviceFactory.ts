@@ -8,6 +8,8 @@ export const makeService = ({ id, ...override }: Override) => {
     {
       serviceName: 'Troca de Lona',
       serviceCategory: ServiceCategory.Pneumatica,
+      weight: 1,
+      companyId: "1412",
       ...override,
     },
     id,

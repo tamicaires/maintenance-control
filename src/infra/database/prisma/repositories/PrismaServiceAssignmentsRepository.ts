@@ -107,8 +107,7 @@ export class PrismaServiceAssignmentsRepository
 
   async changeStatus(companyInstance: CompanyInstance, serviceAssigmentId: string, data: ChangeStatusType): Promise<ChangeStatusResponseType> {
     const companyId = companyInstance.getCompanyId()
-    console.log("serviceAssigmentid", serviceAssigmentId)
-    console.log("data", data)
+
     const serviceAssignment = await this.prisma.serviceAssignment.update({
       where: { id: serviceAssigmentId, workOrder: { companyId } },
       data: { status: data.status, startAt: data.startAt, endAt: data.endAt }
@@ -120,5 +119,16 @@ export class PrismaServiceAssignmentsRepository
       startAt: serviceAssignment.startAt,
       endAt: serviceAssignment.endAt
     }
+  }
+
+  async deleteAll(companyInstance: CompanyInstance): Promise<void> {
+    await this.prisma.serviceAssignment.deleteMany({
+      where: {
+        workOrder: {
+          companyId: companyInstance.getCompanyId()
+        },
+      },
+    })
+
   }
 }

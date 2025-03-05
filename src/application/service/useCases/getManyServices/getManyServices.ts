@@ -1,28 +1,38 @@
 import { Injectable } from '@nestjs/common';
 import { ServiceRepository } from '../../../../core/domain/repositories/service-repository';
+import { ServiceCategory } from 'src/core/enum/service-category.enum';
+import { IServiceFilters } from 'src/shared/types/filters.interface';
+import { IUseCase } from 'src/shared/protocols/use-case';
+import { CompanyInstance } from 'src/core/company/company-instance';
 
-interface GetManyServicesRequest {
-  filter?: string;
+interface IRequest {
   page?: string;
   perPage?: string;
+  serviceName?: string;
+  serviceCategory?: ServiceCategory;
 }
 
 @Injectable()
-export class GetManyServices {
-  constructor(private serviceRepository: ServiceRepository) {}
+export class GetManyServices implements IUseCase<IRequest, any> {
+  constructor(private serviceRepository: ServiceRepository) { }
 
-  async execute({ filter, page, perPage }: GetManyServicesRequest) {
+  async execute(companyInstance: CompanyInstance, data: IRequest) {
     const DEFAULT_PAGE = 1;
     const DEFAULT_PERPAGE = 20;
 
-    const currentFilter = filter ?? '';
-    const currentPage = Number(page) || DEFAULT_PAGE;
-    const currentPerPage = Number(perPage) || DEFAULT_PERPAGE;
+    const currentPage = Number(data.page) || DEFAULT_PAGE;
+    const currentPerPage = Number(data.perPage) || DEFAULT_PERPAGE;
+
+    const filters: IServiceFilters = {
+      serviceName: data.serviceName ?? undefined,
+      serviceCategory: data.serviceCategory ?? undefined,
+    };
 
     const services = await this.serviceRepository.findMany(
-      currentFilter,
+      companyInstance,
       currentPage,
       currentPerPage,
+      filters
     );
 
     return services;

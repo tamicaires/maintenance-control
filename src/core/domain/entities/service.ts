@@ -4,6 +4,8 @@ import { ServiceCategory } from '../../enum/service-category.enum';
 interface ServiceProps {
   serviceName: string;
   serviceCategory: ServiceCategory;
+  weight: number | null;
+  companyId: string;
 }
 
 export class Service {
@@ -35,5 +37,21 @@ export class Service {
 
   set serviceCategory(serviceCategory: ServiceCategory) {
     this.props.serviceCategory = serviceCategory;
+  }
+
+  get weight(): number | null {
+    return this.props.weight;
+  }
+
+  set weight(weight: number | null) {
+    this.props.weight = weight;
+  }
+
+  get companyId(): string {
+    return this.props.companyId;
+  }
+
+  set companyId(companyId: string) {
+    this.props.companyId = companyId;
   }
 }

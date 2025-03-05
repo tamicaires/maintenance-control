@@ -60,7 +60,7 @@ describe('Get Many Services', () => {
     serviceRepositoryInMemory.services = services;
 
     const result = await getManyServices.execute({
-      filter: 'Alin',
+      serviceName: 'Alin',
     });
 
     expect(result[0].serviceName).toEqual('Alinhamento');

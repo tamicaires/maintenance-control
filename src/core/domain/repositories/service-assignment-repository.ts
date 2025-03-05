@@ -17,4 +17,5 @@ export abstract class ServiceAssignmentRepository {
     serviceAssigmentId: string,
     data: ChangeStatusType
   ): Promise<ChangeStatusResponseType>;
+  abstract deleteAll(companyInstance: CompanyInstance): Promise<void>;
 }

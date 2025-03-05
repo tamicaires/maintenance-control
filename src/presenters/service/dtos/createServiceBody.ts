@@ -10,4 +10,8 @@ export class CreateServiceBody {
   @IsNotEmptyCustom()
   @IsStringCustom()
   serviceCategory: ServiceCategory;
+
+  @IsNotEmptyCustom()
+  @IsStringCustom()
+  weight: number;
 }

@@ -4,6 +4,8 @@ import { PrismaService } from '../prisma.service';
 import { Injectable } from '@nestjs/common';
 import { ServiceRepository } from 'src/core/domain/repositories/service-repository';
 import { CompanyInstance } from 'src/core/company/company-instance';
+import { IServiceFilters } from 'src/shared/types/filters.interface';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class PrismaServiceRepository implements ServiceRepository {
@@ -17,9 +19,9 @@ export class PrismaServiceRepository implements ServiceRepository {
     });
   }
 
-  async findById(id: string): Promise<Service | null> {
+  async findById(companyInstance: CompanyInstance, id: string): Promise<Service | null> {
     const serviceRaw = await this.prisma.service.findUnique({
-      where: { id },
+      where: { id, companyId: companyInstance.getCompanyId() },
     });
 
     if (!serviceRaw) return null;
@@ -41,16 +43,23 @@ export class PrismaServiceRepository implements ServiceRepository {
   }
 
   async findMany(
-    filter: string,
+    companyInstance: CompanyInstance,
     page: number,
     perPage: number,
+    filters: IServiceFilters
   ): Promise<Service[]> {
+    const { serviceName, serviceCategory } = filters;
+
+    const where: Prisma.ServiceWhereInput = {
+      companyId: companyInstance.getCompanyId(),
+      AND: [
+        serviceName ? { serviceName } : undefined,
+        serviceCategory ? { serviceCategory } : undefined,
+      ].filter(Boolean) as Prisma.ServiceWhereInput[],
+    };
+
     const services = await this.prisma.service.findMany({
-      where: {
-        serviceName: {
-          contains: filter,
-        },
-      },
+      where,
       take: perPage,
       skip: (page - 1) * perPage,
     });
@@ -58,9 +67,9 @@ export class PrismaServiceRepository implements ServiceRepository {
     return services.map(PrismaServiceMapper.toDomain);
   }
 
-  async findOne(serviceName: string): Promise<Service | null> {
+  async findOne(companyInstance: CompanyInstance, serviceName: string): Promise<Service | null> {
     const service = await this.prisma.service.findUnique({
-      where: { serviceName: serviceName },
+      where: { serviceName: serviceName, companyId: companyInstance.getCompanyId() },
     });
 
     if (!service) return null;

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ServiceCategory } from '../../../../core/enum/service-category.enum';
 import { ServiceNotFoundExcetion } from '../../exceptions/serviceNotFoundException';
 import { ServiceRepository } from '../../../../core/domain/repositories/service-repository';
+import { CompanyInstance } from 'src/core/company/company-instance';
 
 interface UpdateServiceRequest {
   serviceId: string;
@@ -11,20 +12,16 @@ interface UpdateServiceRequest {
 
 @Injectable()
 export class UpdateService {
-  constructor(private serviceRepository: ServiceRepository) {}
-  async execute({
-    serviceId,
-    serviceName,
-    serviceCategory,
-  }: UpdateServiceRequest) {
-    const service = await this.serviceRepository.findById(serviceId);
+  constructor(private serviceRepository: ServiceRepository) { }
+  async execute(companyInstance: CompanyInstance, data: UpdateServiceRequest) {
+    const service = await this.serviceRepository.findById(companyInstance, data.serviceId);
 
     if (!service) throw new ServiceNotFoundExcetion();
 
-    if (serviceName !== undefined) service.serviceName = serviceName;
+    if (data.serviceName !== undefined) service.serviceName = data.serviceName;
 
-    if (serviceCategory !== undefined)
-      service.serviceCategory = serviceCategory;
+    if (data.serviceCategory !== undefined)
+      service.serviceCategory = data.serviceCategory;
 
     await this.serviceRepository.save(service);
 
