@@ -1,6 +1,34 @@
 import { WorkOrder } from "src/core/domain/entities/work-order";
 import { MaintenanceStatus } from "src/core/enum/maitenance-status.enum";
+import { QueryCount } from "./query";
+import { Carrier } from "src/core/domain/entities/carrier";
+import { User } from "src/core/domain/entities/user";
+import { TypeOfMaintenance } from "@prisma/client";
 
+export interface IWorkOrder {
+  displayId: string | null;
+  severityLevel: string;
+  entryQueue: Date | null;
+  entryMaintenance: Date | null;
+  exitMaintenance: Date | null;
+  startWaitingParts: Date | null;
+  endWaitingParts: Date | null;
+  queueDuration: number | null;
+  maintenanceDuration: number | null;
+  waitingPartsDuration: number | null;
+  exitSupervisor: string | null;
+  status: MaintenanceStatus;
+  fleetId: string;
+  userId: string;
+  companyId: string;
+  typeOfMaintenance: TypeOfMaintenance;
+  boxId: string | null;
+  isCancelled: boolean;
+  createdBy: string | null;
+  updatedBy: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
 export interface ICancelWorkOrder {
   workOrderId: string;
   isCancelled: boolean;
@@ -73,12 +101,20 @@ export interface WorkOrderWithRelationalInfo extends WorkOrder {
 export interface WorkOrderDailyView extends WorkOrder {
   fleet: {
     fleetNumber: string;
-    carrier: {
-      carrierName: string;
-    };
+    carrier: Pick<Carrier, 'carrierName'>;
   };
-  user: {
-    id: string;
-    name: string;
-  };
+  user: Pick<User, 'id' | 'name'>;
 }
+
+export interface IWorkOrderWithFleetAndUser extends IWorkOrder {
+  openedBy?: Pick<User, 'id' | 'name'>;
+  fleet: {
+    fleetNumber: string;
+    carrier: Pick<Carrier, 'carrierName'>;
+  };
+  user: Pick<User, 'id' | 'name'>;
+}
+export interface IWorkOrderWithCount extends QueryCount {
+  workOrders: IWorkOrder[];
+}
+

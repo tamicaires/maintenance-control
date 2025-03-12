@@ -5,3 +5,5 @@ export enum MaintenanceStatus {
   Finalizada = 'Finalizada',
   Cancelada = 'Cancelada',
 }
+
+export type TMaintenanceStatus = typeof MaintenanceStatus[keyof typeof MaintenanceStatus]

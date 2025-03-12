@@ -1,5 +1,9 @@
-import { WorkOrderWithRelationalInfo } from "src/shared/types/work-order";
+import { QueryCount } from "src/shared/types/query";
+import { IWorkOrder, IWorkOrderWithCount, WorkOrderWithRelationalInfo } from "src/shared/types/work-order";
 
+// export interface IWorkOrderViewModel extends QueryCount {
+//   workOrders: IWorkOrder[];
+// }
 export class WorkOrderViewModel {
   static toHttp({
     id,
@@ -21,6 +25,7 @@ export class WorkOrderViewModel {
     status,
     boxId,
     createdBy,
+    companyId,
     updatedBy,
     isCancelled,
     createdAt,
@@ -53,6 +58,8 @@ export class WorkOrderViewModel {
       displayId,
       box,
       fleet: fleetInfo,
+      fleetId,
+      companyId,
       severityLevel,
       entryQueue,
       entryMaintenance,
@@ -74,6 +81,14 @@ export class WorkOrderViewModel {
       openedBy: user,
       createdAt,
       updatedAt,
+    };
+  }
+
+  static toHttpWithCount(data: IWorkOrderWithCount): IWorkOrderWithCount {
+    const workOrders = data.workOrders.map(WorkOrderViewModel.toHttp)
+    return {
+      workOrders: workOrders,
+      totalCount: data.totalCount,
     };
   }
 }

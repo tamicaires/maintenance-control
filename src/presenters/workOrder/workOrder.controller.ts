@@ -42,6 +42,7 @@ import { GetQueueChartQuery } from './dtos/get-queue-chart-dto';
 import { GetTypeMaintenanceChartData } from 'src/application/work-order/useCases/dashboard/get-type-maintenance-chart-data';
 import { MaintenanceStatus } from 'src/core/enum/maitenance-status.enum';
 import { TypeOfMaintenance } from 'src/core/enum/type-of-maintenance.enum';
+import { IWorkOrderWithCount } from 'src/shared/types/work-order';
 // import { GetQueueChartQuery } from './dtos/get-queue-chart-query';
 
 @Controller('work-orders')
@@ -144,9 +145,9 @@ export class WorkOrderController {
     @Query('typeOfMaintenance') typeOfMaintenance?: TypeOfMaintenance | TypeOfMaintenance[],
     @Query('startDate') startDate?: string,
     @Query('endDate') endDate?: string,
-  ) {
+  ): Promise<IWorkOrderWithCount> {
   const companyInstance = CompanyInstance.create(companyId);
-    const workOrders = await this.getManyWorkOrder.execute(companyInstance, {
+    const response = await this.getManyWorkOrder.execute(companyInstance, {
       displayId,
       fleetNumber,
       severityLevel,
@@ -158,7 +159,7 @@ export class WorkOrderController {
       endDate,
     });
 
-    return workOrders.map(WorkOrderViewModel.toHttp);
+    return WorkOrderViewModel.toHttpWithCount(response);
   }
 
   @Patch(':id/cancel')

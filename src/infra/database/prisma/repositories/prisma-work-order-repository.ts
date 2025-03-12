@@ -7,7 +7,7 @@ import { TypeOfMaintenance } from 'src/core/enum/type-of-maintenance.enum';
 import { WorkOrderRepository } from 'src/core/domain/repositories/work-order-repository';
 import { WorkOrder } from 'src/core/domain/entities/work-order';
 import { CompanyInstance } from 'src/core/company/company-instance';
-import { ICancelWorkOrder, IFinishMaintenance, IFinishWaitingParts, IStartMaintenance, IStartWaitingParts } from 'src/shared/types/work-order';
+import { ICancelWorkOrder, IFinishMaintenance, IFinishWaitingParts, IStartMaintenance, IStartWaitingParts, IWorkOrderWithCount } from 'src/shared/types/work-order';
 import { MaintenanceStatus } from 'src/core/enum/maitenance-status.enum';
 import { getEndOfDay, getStartOfDay } from 'src/shared/utils/date-utils';
 
@@ -15,12 +15,14 @@ import { getEndOfDay, getStartOfDay } from 'src/shared/utils/date-utils';
 export class PrismaWorkOrderRepository implements WorkOrderRepository {
   constructor(private prisma: PrismaService) { }
 
-  async create(workOrder: WorkOrder): Promise<void> {
+  async create(workOrder: WorkOrder): Promise<WorkOrder> {
     const workOrderRaw = PrismaWorkOrderMapper.toPrisma(workOrder);
 
     await this.prisma.workOrder.create({
       data: workOrderRaw,
     });
+
+    return workOrder;
   }
 
   async findById(companyInstance: CompanyInstance, id: string): Promise<WorkOrder | null> {
@@ -107,7 +109,7 @@ export class PrismaWorkOrderRepository implements WorkOrderRepository {
       ].filter(Boolean) as Prisma.WorkOrderWhereInput[],
     };
 
-
+    const totalCount = await this.prisma.workOrder.count({ where });
 
     const workOrders = await this.prisma.workOrder.findMany({
       where,
@@ -147,8 +149,11 @@ export class PrismaWorkOrderRepository implements WorkOrderRepository {
         }
       },
     });
-    // console.log("workorders", workOrders)
-    return workOrders;
+    console.log("workorders", workOrders)
+    return {
+      workOrders: workOrders,
+      totalCount,
+    };
   }
 
   async findLastWorkOrderByType(

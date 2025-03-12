@@ -7,7 +7,7 @@ import { PrismaCarrierRepository } from './prisma/repositories/PrismaCarrierRepo
 import { PrismaJobRepository } from './prisma/repositories/PrismaJobRepository';
 import { PrismaEmployeeRepository } from './prisma/repositories/PrismaEmployeeRepository';
 import { PrismaServiceRepository } from './prisma/repositories/prisma-service-repository';
-import { PrismaWorkOrderRepository } from './prisma/repositories/PrismaWorkOrderRepository';
+import { PrismaWorkOrderRepository } from './prisma/repositories/prisma-work-order-repository';
 import { PrismaServiceAssignmentsRepository } from './prisma/repositories/PrismaServiceAssignmentsRepository';
 import { PrismaCompanyRepository } from './prisma/repositories/PrismaCompanyRepository';
 import { PrismaMembershipRepository } from './prisma/repositories/PrismaMembershipRepository';
