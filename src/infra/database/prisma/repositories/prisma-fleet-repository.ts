@@ -71,7 +71,7 @@ export class PrismaFleetRepository implements FleetRepository {
           }
           : undefined,
       ].filter(Boolean) as Prisma.FleetWhereInput[],
-    };
+    }; 
 
     const totalCount = await this.prisma.fleet.count({ where });
 

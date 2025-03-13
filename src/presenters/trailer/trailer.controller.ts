@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Query, UseGuards } from "@nestjs/common";
 import { CreateTrailerBody } from "./dtos/createTrailer.dto";
 import { Cookies } from "src/infra/http/auth/decorators/cookies.decorator";
 import { CookiesEnum } from "src/core/enum/cookies";
@@ -42,10 +42,22 @@ export class TrailerController {
 
   @Get()
   async list(
-    @Cookies(CookiesEnum.CompanyId) companyId: string
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
+    @Query('isActive') isActive: boolean,
+    @Query('page') page: string,
+    @Query('perPage') perPage: string,
+    @Query('startDate') startDate?: string,
+    @Query('endDate') endDate?: string,
   ) {
-    const trailers = await this.listTrailers.execute(companyId);
-    return trailers
+    const companyInstance = CompanyInstance.create(companyId);
+    const queries = {
+      isActive,
+      page,
+      perPage,
+      startDate,
+      endDate
+    }
+    return await this.listTrailers.execute(companyInstance, queries);
   }
 
   @Get("work-order/:id")

@@ -46,3 +46,10 @@ export interface IEmployeeFilters {
   startDate?: string;
   endDate?: string;
 }
+
+export interface ITrailerFilters {
+  fleetNumber?: string;
+  isActive?: boolean;
+  startDate?: Date;
+  endDate?: Date;
+}

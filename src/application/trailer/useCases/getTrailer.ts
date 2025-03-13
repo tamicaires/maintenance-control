@@ -1,10 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { TrailerRepository } from "../../../core/domain/repositories/trailer-repository";
 import { TrailerNotFoundException } from "../exceptions/TrailerNotFoundException";
-import { Trailer } from "src/core/domain/entities/trailer";
-import { ITrailerWithRelationalData } from "src/shared/types/trailer-with-relational-data";
 import { IUseCase } from "src/shared/protocols/use-case";
 import { CompanyInstance } from "src/core/company/company-instance";
+import { ITrailerWithRelationalData } from "src/shared/types/part-request/trailer.type";
 
 @Injectable()
 export class GetTrailer implements IUseCase<string, ITrailerWithRelationalData | null> {

@@ -3,7 +3,9 @@ import { PrismaService } from "../prisma.service";
 import { CompanyInstance } from "src/core/company/company-instance";
 import { TrailerRepository } from "src/core/domain/repositories/trailer-repository";
 import { Trailer } from "src/core/domain/entities/trailer";
-import { ITrailerWithRelationalData } from "src/shared/types/trailer-with-relational-data";
+import { ITrailerFilters } from "src/shared/types/filters.interface";
+import { Prisma } from "@prisma/client";
+import { ITrailerWithCount, ITrailerWithRelationalData } from "src/shared/types/part-request/trailer.type";
 
 @Injectable()
 export class PrismaTrailerRepository implements TrailerRepository {
@@ -71,11 +73,39 @@ export class PrismaTrailerRepository implements TrailerRepository {
     throw new Error("Method not implemented.");
   }
 
-  async list(companyInstance: CompanyInstance): Promise<ITrailerWithRelationalData[]> {
+  async list(
+    companyInstance: CompanyInstance,
+    page: number,
+    perPage: number,
+    filters: ITrailerFilters,
+  ): Promise<ITrailerWithCount> {
+    const {
+      fleetNumber,
+      isActive,
+      startDate,
+      endDate
+    } = filters;
+
+    const where: Prisma.TrailerWhereInput = {
+      companyId: companyInstance.getCompanyId(),
+      AND: [
+        fleetNumber ? { fleet: { fleetNumber } } : undefined,
+        isActive ? { isActive } : undefined,
+        startDate && endDate
+          ? {
+            createdAt: {
+              gte: startDate,
+              lte: endDate,
+            },
+          }
+          : undefined,
+      ].filter(Boolean) as Prisma.TrailerWhereInput[],
+    };
+
+    const totalCount = await this.prisma.trailer.count({ where });
+
     const trailers = await this.prisma.trailer.findMany({
-      where: {
-        companyId: companyInstance.getCompanyId(),
-      },
+      where,
       include: {
         fleet: {
           select: {
@@ -83,10 +113,13 @@ export class PrismaTrailerRepository implements TrailerRepository {
             fleetNumber: true
           }
         }
-      }
+      },
+      take: perPage,
+      skip: (page - 1) * perPage,
     });
 
-    return trailers;
+    console.log('trailers', trailers);
+    return { trailers, totalCount };
   }
 
   async listByFleetId(companyInstance: CompanyInstance, fleetId: string): Promise<Trailer[]> {

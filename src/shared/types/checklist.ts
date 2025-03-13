@@ -1,5 +1,5 @@
 import { TypeOfMaintenance } from "src/core/enum/type-of-maintenance.enum";
-import { ITrailerWithRelationalData } from "src/shared/types/trailer-with-relational-data";
+import { ITrailerWithRelationalData } from "./part-request/trailer.type";
 
 export interface IChecklistRelationalDataPrismaResponse {
   id: string;
