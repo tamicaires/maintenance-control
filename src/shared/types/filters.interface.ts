@@ -53,3 +53,11 @@ export interface ITrailerFilters {
   startDate?: Date;
   endDate?: Date;
 }
+
+export interface IVehicleFilters {
+  plate?: string;
+  km?: string;
+  isActive?: boolean;
+  startDate?: Date;
+  endDate?: Date;
+}

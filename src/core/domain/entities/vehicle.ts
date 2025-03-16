@@ -129,3 +129,44 @@ export class Vehicle {
   }
 
 }
+
+import { z } from "zod";
+
+export class Vehicles implements VehicleType {
+  id: string;
+  plate: string;
+  model: string;
+  brand: string;
+  year: string;
+  color: string | null;
+  km: number;
+  power: number;
+  isActive: boolean;
+  fleetId: string | null;
+  companyId: string;
+  createdAt: Date;
+  updatedAt: Date;
+
+  constructor(data: VehicleType) {
+    this.id = data.id ?? randomUUID();
+    Object.assign(this, data);
+  }
+}
+
+const schema = z.object({
+  id: z.string().uuid().optional(),
+  plate: z.string(),
+  model: z.string(),
+  brand: z.string(),
+  year: z.string(),
+  color: z.string().nullable().optional(),
+  km: z.number(),
+  power: z.number(),
+  isActive: z.boolean(),
+  fleetId: z.string().uuid().nullable().optional(),
+  companyId: z.string().uuid(),
+  createdAt: z.date().default(() => new Date()),
+  updatedAt: z.date().default(() => new Date())
+});
+
+export type VehicleType = z.infer<typeof schema>;
