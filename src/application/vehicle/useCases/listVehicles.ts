@@ -19,19 +19,19 @@ interface IRequest {
 export class ListVehicles implements IUseCase<IRequest, IVehicleWithCount> {
   constructor(private readonly vehicleRepository: VehicleRepository) { }
 
-  async execute(companyInstance: CompanyInstance, data: IRequest): Promise<IVehicleWithCount> {
+  async execute(companyInstance: CompanyInstance, request: IRequest): Promise<IVehicleWithCount> {
     const DEFAULT_PAGE = 1;
     const DEFAULT_PERPAGE = 5;
 
-    const currentPage = Number(data.page) || DEFAULT_PAGE;
-    const currentPerPage = Number(data.perPage) || DEFAULT_PERPAGE;
+    const currentPage = Number(request.page) || DEFAULT_PAGE;
+    const currentPerPage = Number(request.perPage) || DEFAULT_PERPAGE;
 
     const filters: IVehicleFilters = {
-      isActive: data.isActive,
-      plate: data.plate,
-      km: data.km,
-      startDate: data.startDate ? new Date(data.startDate) : undefined,
-      endDate: data.endDate ? new Date(data.endDate) : undefined,
+      isActive: request.isActive,
+      plate: request.plate,
+      km: request.km,
+      startDate: request.startDate ? new Date(request.startDate) : undefined,
+      endDate: request.endDate ? new Date(request.endDate) : undefined,
     }
 
     return await this.vehicleRepository.list(
