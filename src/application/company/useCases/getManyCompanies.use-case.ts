@@ -4,13 +4,14 @@ import { CompanyRepository } from '../../../core/domain/repositories/company-rep
 interface GetManyCompanyRequest {
   page?: string;
   perPage?: string;
+  userId?: string;
 }
 
 @Injectable()
 export class GetManyCompanies {
-  constructor(private readonly companyRepository: CompanyRepository) {}
+  constructor(private readonly companyRepository: CompanyRepository) { }
 
-  async execute({ page, perPage }: GetManyCompanyRequest) {
+  async execute({ page, perPage, userId }: GetManyCompanyRequest) {
     const DEFAULT_PAGE = 1;
     const DEFAULT_PER_PAGE = 20;
 
@@ -20,6 +21,7 @@ export class GetManyCompanies {
     const companies = await this.companyRepository.findMany(
       currentPage,
       currentPerPage,
+      userId
     );
 
     return companies;

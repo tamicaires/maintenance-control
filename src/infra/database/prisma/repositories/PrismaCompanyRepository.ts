@@ -7,7 +7,7 @@ import { Company } from 'src/core/domain/entities/company';
 
 @Injectable()
 export class PrismaCompanyRepository implements CompanyRepository {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async create(company: Company): Promise<void> {
     const companyRaw = PrismaCompanyMapper.toPrisma(company);
@@ -35,8 +35,9 @@ export class PrismaCompanyRepository implements CompanyRepository {
     return PrismaCompanyMapper.toDomain(companyRaw);
   }
 
-  async findMany(page: number, perPage: number): Promise<Company[]> {
+  async findMany(page: number, perPage: number, userId?: string): Promise<Company[]> {
     const companiesRaw = await this.prisma.company.findMany({
+      where: { memberShip: { every: { userId } } },
       skip: (page - 1) * perPage,
       take: perPage,
     });
