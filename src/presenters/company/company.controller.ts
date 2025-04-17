@@ -6,6 +6,8 @@ import { Permission } from 'src/infra/http/auth/decorators/permissions.decorator
 import { Action } from 'src/infra/http/ability/ability';
 import { CreateCompany } from 'src/application/company/useCases/createCompany.use-case';
 import { GetManyCompanies } from 'src/application/company/useCases/getManyCompanies.use-case';
+import { AuthRequestModel } from 'src/infra/http/auth/models/authRequestModel';
+import { JwtAuthGuard } from 'src/infra/http/auth/guards/jwtAuth.guard';
 
 @Controller('companies')
 // @UseGuards(PolicyGuard)
@@ -22,8 +24,11 @@ export class CompanyController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   @Permission(Action.Read, 'Company')
-  async getCompanies(@Request() req: any) {
+  async getCompanies(
+    @Request() request: AuthRequestModel,
+  ) {
     const companies = await this.getManyCompanies.execute({});
     return companies.map(company => CompanyViewModel.toHttp(company));
   }
