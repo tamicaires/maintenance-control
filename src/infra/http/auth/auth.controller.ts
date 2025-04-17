@@ -15,7 +15,7 @@ import { CurrentUser } from './decorators/current-user.decorator';
 import { SignInUseCase } from 'src/application/auth/useCases/signInUseCase/signInUseCase';
 import { User } from 'src/core/domain/entities/user';
 
-@Controller()
+@Controller("auth")
 export class AuthControler {
   constructor(private signInUseCase: SignInUseCase) { }
 
@@ -29,7 +29,7 @@ export class AuthControler {
   ) {
     const user = request.user;
 
-    const access_token = await this.signInUseCase.execute({ user: request.user });
+    const access_token = await this.signInUseCase.execute({ user });
     return { access_token };
   }
 
