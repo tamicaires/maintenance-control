@@ -9,6 +9,8 @@ import { EventService } from "src/application/event/service/event.service";
 import { RegisterEvent } from "src/application/event/use-cases/register-event";
 import { DeleteChecklist } from "src/application/checklist/checklist/use-cases/delete-checklist";
 import { GetChecklistByWorkOrder } from "src/application/checklist/checklist/use-cases/get-checklist-by-work-order";
+import { CreateChecklistItemsBatch } from "src/application/checklist/checklist-item/use-cases/create-checklist-item-batch";
+import { GetChecklistTemplateItemsByTemplateId } from "src/application/checklist/checklist-item-template/use-cases/get-checklist-item-by-template-id";
 
 @Module({
   controllers: [ChecklistController],
@@ -21,7 +23,9 @@ import { GetChecklistByWorkOrder } from "src/application/checklist/checklist/use
     GetChecklistByWorkOrder,
     EventService,
     RegisterEvent,
-    DeleteChecklist
+    DeleteChecklist,
+    CreateChecklistItemsBatch,
+    GetChecklistTemplateItemsByTemplateId,
   ]
 })
 
