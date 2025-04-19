@@ -11,6 +11,7 @@ import { EventActionEnum } from "src/core/enum/event";
 import { SubjectEnum } from "src/core/enum/subject.enum";
 import { ExceptionHandler } from "src/core/exceptions/ExceptionHandler";
 import { IUseCase } from "src/shared/protocols/use-case";
+import { CreateChecklistItemsBatch } from "../../checklist-item/use-cases/create-checklist-item-batch";
 
 interface IRequest {
   workOrderId: string;
@@ -25,7 +26,8 @@ export class CreateChecklist implements IUseCase<IRequest, Checklist> {
     private readonly _checklistRepository: ChecklistRepository,
     private readonly _templateRepository: ChecklistTemplateRepository,
     private readonly _getTrailersByWorkOrder: GetTrailersByWorkOrder,
-    private readonly _eventService: EventService
+    private readonly _eventService: EventService,
+    private readonly _createChecklistItemBatch: CreateChecklistItemsBatch
   ) { }
 
   async execute(companyInstance: CompanyInstance, checklist: IRequest): Promise<Checklist> {
@@ -82,6 +84,11 @@ export class CreateChecklist implements IUseCase<IRequest, Checklist> {
       companyInstance,
       checklistToCreate
     )
+
+    await this._createChecklistItemBatch.execute(companyInstance, {
+      checklistId: createdChecklist.id,
+      templateId: template.id,
+    })
 
     const event = {
       event: EventActionEnum.Started,
