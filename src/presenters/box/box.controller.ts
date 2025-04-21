@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Query } from "@nestjs/common";
 import { CreateBox } from "src/application/box/useCases/create-box";
 import { CreateBoxBody } from "./dto/create-box-body";
 import { Cookies } from "src/infra/http/auth/decorators/cookies.decorator";
@@ -37,10 +37,29 @@ export class BoxController {
   }
 
   @Get()
-  async list(@Cookies(CookiesEnum.CompanyId) companyId: string) {
+  async list(
+    @Cookies(CookiesEnum.CompanyId) companyId: string,
+    @Query('page') page?: string,
+    @Query('perPage') perPage?: string,
+    @Query('boxName') boxName?: string,
+    @Query('isActive') isActive?: boolean,
+    @Query('startDate') startDate?: string,
+    @Query('endDate') endDate?: string,
+  ) {
+    const queries = {
+      page,
+      perPage,
+      boxName,
+      isActive,
+      startDate,
+      endDate,
+    }
     const companyInstance = CompanyInstance.create(companyId);
-    const boxes = await this._listBoxes.execute(companyInstance);
-    return boxes.map(BoxViewModel.tohttp)
+    const boxes = await this._listBoxes.execute(
+      companyInstance,
+      queries
+    );
+    return BoxViewModel.toHttpWithCount(boxes);
   }
 
   @Delete(":id")

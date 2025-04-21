@@ -61,3 +61,10 @@ export interface IVehicleFilters {
   startDate?: Date;
   endDate?: Date;
 }
+
+export interface IBoxFilters {
+  boxName?: string;
+  isActive?: boolean;
+  startDate?: Date;
+  endDate?: Date;
+}

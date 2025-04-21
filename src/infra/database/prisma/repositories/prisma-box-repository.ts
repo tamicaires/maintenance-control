@@ -5,6 +5,9 @@ import { CompanyInstance } from "src/core/company/company-instance";
 import { Box } from "src/core/domain/entities/box";
 import { PrismaBoxMapper } from "../mappers/prisma-box-mapper";
 import { MaintenanceStatus } from "src/core/enum/maitenance-status.enum";
+import { IBoxFilters } from "src/shared/types/filters.interface";
+import { Prisma } from "@prisma/client";
+import { IBoxWithCount } from "src/shared/types/box";
 
 @Injectable()
 export class PrismaBoxRepository implements BoxRepository {
@@ -42,12 +45,40 @@ export class PrismaBoxRepository implements BoxRepository {
     return PrismaBoxMapper.toDomain(boxRaw);
   }
 
-  async list(companyInstance: CompanyInstance): Promise<Box[]> {
+  async list(companyInstance: CompanyInstance, page: number, perPage: number, filters: IBoxFilters): Promise<IBoxWithCount> {
+    const {
+      boxName,
+      isActive,
+      startDate,
+      endDate
+    } = filters || {};
+
+    const where: Prisma.BoxWhereInput = {
+      companyId: companyInstance.getCompanyId(),
+      AND: [
+        boxName ? { name: { contains: boxName } } : undefined,
+        isActive ? isActive : undefined,
+        startDate && endDate
+          ? {
+            createdAt: {
+              gte: startDate,
+              lte: endDate,
+            },
+          }
+          : undefined,
+      ].filter(Boolean) as Prisma.BoxWhereInput[],
+    };
+
+    const totalCount = await this.prisma.box.count({ where });
+
     const boxesRaw = await this.prisma.box.findMany({
       where: { companyId: companyInstance.getCompanyId() },
     });
-
-    return boxesRaw.map(PrismaBoxMapper.toDomain);
+    return {
+      boxes: boxesRaw,
+      totalCount,
+    };
+    // return boxesRaw.map(PrismaBoxMapper.toDomain);
   }
 
   async getWithRelationalData(companyInstance: CompanyInstance) {
