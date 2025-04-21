@@ -92,7 +92,7 @@ export class ServiceAssignmentController {
       perPage,
     });
 
-    return serviceAssignments.map(ServiceAssignmentViewModel.toHttp);
+    return serviceAssignments.map(ServiceAssignmentViewModel.toHttpWithRelationalInfo);
   }
 
   @Get("work-order/:id")

@@ -10,7 +10,7 @@ export abstract class ServiceAssignmentRepository {
   abstract findMany(
     page: number,
     perPage: number,
-  ): Promise<ServiceAssignment[]>;
+  ): Promise<any>;
   abstract findByWorkOrder(companyInstance: CompanyInstance, workOrderId: string): Promise<any>;
   abstract changeStatus(
     companyInstance: CompanyInstance,

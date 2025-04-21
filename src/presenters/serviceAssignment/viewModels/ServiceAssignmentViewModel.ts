@@ -22,7 +22,6 @@ interface IServiceAssigmentWithRelationalInfo extends ServiceAssignment {
       };
     };
   }[]
-
   trailer: ITrailer;
 }
 
@@ -36,14 +35,14 @@ export class ServiceAssignmentViewModel {
   }
 
   static toHttpWithRelationalInfo(serviceAssigment: IServiceAssigmentWithRelationalInfo) {
-    const employees: EmployeeBasicInfo[] = serviceAssigment.serviceAssignmentEmployee.map((serviceEmployee) => {
+    const employees: EmployeeBasicInfo[] = serviceAssigment.serviceAssignmentEmployee ? serviceAssigment.serviceAssignmentEmployee.map((serviceEmployee) => {
       return {
         id: serviceEmployee.employee.id,
         name: serviceEmployee.employee.name,
         jobTitle: serviceEmployee.employee.job.jobTitle
 
       }
-    }) || [];
+    }) : [];
     return {
       id: serviceAssigment.id,
       workOrderId: serviceAssigment.workOrderId,

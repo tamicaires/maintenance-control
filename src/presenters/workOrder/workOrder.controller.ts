@@ -123,7 +123,7 @@ export class WorkOrderController {
     return workOrders;
   }
 
-  @Get(':id/order')
+  @Get(':id')
   async getWithRelationalData(
     @Cookies(CookiesEnum.CompanyId) companyId: string,
     @Param('id') workOrderId: string,

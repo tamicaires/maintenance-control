@@ -51,8 +51,39 @@ export class PrismaServiceAssignmentsRepository
     const serviceAssignments = await this.prisma.serviceAssignment.findMany({
       take: perPage,
       skip: (page - 1) * perPage,
+      include: {
+        service: {
+          select: {
+            id: true,
+            serviceName: true,
+            serviceCategory: true
+          }
+        },
+        serviceAssignmentEmployee: {
+          select: {
+            employee: {
+              select: {
+                id: true,
+                name: true,
+                job: {
+                  select: {
+                    jobTitle: true
+                  }
+                }
+              }
+            }
+          }
+        },
+        trailer: {
+          select: {
+            id: true,
+            position: true,
+            plate: true,
+          }
+        }
+      }
     });
-
+    console.log("serviceAssignments", serviceAssignments)
     return serviceAssignments.map(PrismaServiceAssignmentMapper.toDomain);
   }
 
