@@ -30,12 +30,11 @@ import { ChecklistTemplateItemModule } from './presenters/checklist/checklist-te
 import { ChecklistItemModule } from './presenters/checklist/checklist-item/checklist-item.module';
 import { ChecklistModule } from './presenters/checklist/checklist/checklist.module';
 import { EventModule } from './presenters/event/event.module';
-import { EventService } from './application/event/service/event.service';
-import { GetDailyWorkOrdersData } from './application/work-order/useCases/get-daily-work-orders-data';
-import { RegisterEvent } from './application/event/use-cases/register-event';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     DatabaseModule,
     AuthModule,
     AbilityModule,
