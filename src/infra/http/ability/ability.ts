@@ -7,6 +7,7 @@ export enum Action {
   Update = 'update',
   Delete = 'delete',
   View_Report = 'view report',
+  Export = 'export',
 }
 
 export interface Rule {
