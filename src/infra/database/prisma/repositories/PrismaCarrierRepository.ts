@@ -4,6 +4,9 @@ import { PrismaCarrierMapper } from '../mappers/PrismaCarrierMapper';
 import { Injectable } from '@nestjs/common';
 import { CompanyInstance } from 'src/core/company/company-instance';
 import { CarrierRepository } from 'src/core/domain/repositories/carrier-repository';
+import { CarrierFilters } from 'src/shared/types/filters.interface';
+import { Prisma } from '@prisma/client';
+import { ICarrierWithCount } from 'src/presenters/carrier/viewModels/CarrierViewModel';
 
 @Injectable()
 export class PrismaCarrierRepository implements CarrierRepository {
@@ -41,7 +44,30 @@ export class PrismaCarrierRepository implements CarrierRepository {
     });
   }
 
-  async findMany(companyInstance: CompanyInstance, page: number, perPage: number): Promise<Carrier[] | null> {
+  async findMany(companyInstance: CompanyInstance, page: number, perPage: number, filters: CarrierFilters): Promise<ICarrierWithCount> {
+    const {
+      isActive,
+      startDate,
+      endDate
+    } = filters || {};
+
+    const where: Prisma.CarrierWhereInput = {
+      companyId: companyInstance.getCompanyId(),
+      AND: [
+        isActive ? { isActive } : undefined,
+        startDate && endDate
+          ? {
+            createdAt: {
+              gte: startDate,
+              lte: endDate,
+            },
+          }
+          : undefined,
+      ].filter(Boolean) as Prisma.CarrierWhereInput[],
+    };
+
+    const totalCount = await this.prisma.carrier.count({ where });
+
     const carriers = await this.prisma.carrier.findMany({
       where: {
         companyId: companyInstance.getCompanyId(),
@@ -50,7 +76,10 @@ export class PrismaCarrierRepository implements CarrierRepository {
       skip: (page - 1) * perPage,
     });
 
-    return carriers.map(PrismaCarrierMapper.toDomain);
+    return {
+      totalCount,
+      carriers: carriers.map((carrier) => PrismaCarrierMapper.toDomain(carrier)),
+    }
   }
 
   async findOne(carrierName: string): Promise<Carrier | null> {

@@ -8,7 +8,7 @@ export const jwtKeys = {
 }
 
 export const sessionKeys = {
-  secret: process.env.SESSION_SECRET ?? ''
+  secret: process.env.SESSION_SECRET ?? 'DEFAULT_SESSION_SECRET',
 }
 
 export const cookiesKeys = {

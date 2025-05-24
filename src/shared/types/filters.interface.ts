@@ -25,6 +25,11 @@ export interface FleetFilters {
   startDate?: Date;
   endDate?: Date;
 }
+export interface CarrierFilters {
+  isActive?: boolean;
+  startDate?: Date;
+  endDate?: Date;
+}
 
 export interface IServiceFilters {
   serviceCategory?: string;

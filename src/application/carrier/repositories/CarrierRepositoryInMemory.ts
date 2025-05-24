@@ -1,6 +1,8 @@
 import { CompanyInstance } from 'src/core/company/company-instance';
 import { Carrier } from '../../../core/domain/entities/carrier';
 import { CarrierRepository } from 'src/core/domain/repositories/carrier-repository';
+import { CarrierFilters } from 'src/shared/types/filters.interface';
+import { ICarrierWithCount } from 'src/presenters/carrier/viewModels/CarrierViewModel';
 
 export class CarrierRepositoryInMemory implements CarrierRepository {
   public carriers: Carrier[] = [];
@@ -29,8 +31,11 @@ export class CarrierRepositoryInMemory implements CarrierRepository {
     if (carrierIndex >= 0) this.carriers[carrierIndex] = carrier;
   }
 
-  async findMany(companyInstance: CompanyInstance, page: number, perPage: number): Promise<Carrier[] | null> {
-    return this.carriers.slice((page - 1) * perPage, page * perPage);
+  async findMany(companyInstance: CompanyInstance, page: number, perPage: number, filters: CarrierFilters): Promise<ICarrierWithCount> {
+    return {
+      carriers: this.carriers.slice((page - 1) * perPage, page * perPage),
+      totalCount: this.carriers.length,
+    }
   }
 
   async findOne(carrierName: string): Promise<Carrier | null> {

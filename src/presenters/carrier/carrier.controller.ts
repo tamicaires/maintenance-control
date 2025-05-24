@@ -78,16 +78,22 @@ export class CarrierController {
   async getManyCarriers(
     @Query('page') page: string,
     @Query('perPage') perPage: string,
+    @Query('isActive') isActive: boolean,
+    @Query('startDate') startDate: string,
+    @Query('endDate') endDate: string,
     @Cookies(CookiesEnum.CompanyId) companyId: string
   ) {
     const companyInstance = CompanyInstance.create(companyId);
-    const carriers = await this.getManyCarriersUseCase.execute({
-      companyInstance,
+    const queries = {
       page,
       perPage,
-    });
+      isActive,
+      startDate,
+      endDate,
+    }
 
-    return carriers?.map(CarrierViewModel.toHttp);
+    const carriers = await this.getManyCarriersUseCase.execute(companyInstance, queries);
+
+    return CarrierViewModel.toHttpWithCount(carriers);
   }
 }
- 

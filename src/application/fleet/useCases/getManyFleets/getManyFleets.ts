@@ -3,6 +3,7 @@ import { FleetRepository } from '../../../../core/domain/repositories/fleet-repo
 import { IUseCase } from 'src/shared/protocols/use-case';
 import { CompanyInstance } from 'src/core/company/company-instance';
 import { FleetFilters } from 'src/shared/types/filters.interface';
+import { IFleetWithCount } from 'src/presenters/fleet/viewModel/FleetViewModel';
 
 interface IRequest {
   page?: string;
@@ -13,7 +14,7 @@ interface IRequest {
 }
 
 @Injectable()
-export class GetManyFleets implements IUseCase<IRequest, any> {
+export class GetManyFleets implements IUseCase<IRequest, IFleetWithCount> {
   constructor(private fleetRepository: FleetRepository) { }
 
   async execute(companyInstance: CompanyInstance, data: IRequest) {
