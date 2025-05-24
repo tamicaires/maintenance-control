@@ -8,6 +8,10 @@ export class CreateMembershipBody {
   @IsNotEmptyCustom()
   userId: string;
 
+  @IsStringCustom()
+  @IsNotEmptyCustom()
+  companyId: string;
+
   @IsArray()
   @IsNotEmptyCustom()
   role: TRole[];

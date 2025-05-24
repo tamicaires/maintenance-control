@@ -21,9 +21,9 @@ export class MembershipController {
   @Post()
   async create(
     @Body() body: CreateMembershipBody,
-    @Cookies(CookiesEnum.CompanyId) companyId: string
+    // @Cookies(CookiesEnum.CompanyId) companyId: string
   ) {
-    const companyInstance = CompanyInstance.create(companyId);
+    const companyInstance = CompanyInstance.create(body.companyId);
     return await this.createMembership.execute(companyInstance, body);
   }
 
