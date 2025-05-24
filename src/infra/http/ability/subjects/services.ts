@@ -9,6 +9,10 @@ export const defineServiceAbilities = (
 ) => {
   builder.can(Action.Read, 'Service', { companyId });
 
+  if (userRoles.includes(RoleEnum.SUPER_ADMIN)) {
+    builder.can(Action.Manage, 'Service', { companyId });
+  }
+
   if (userRoles.includes(RoleEnum.ADMIN)) {
     builder.can(Action.Manage, 'Service', { companyId });
   }

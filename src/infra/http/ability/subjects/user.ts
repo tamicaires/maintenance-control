@@ -4,6 +4,9 @@ import { AbilityBuilder } from "../abilityBuilder";
 
 
 export const defineUserAbilities = (builder: AbilityBuilder, companyId: string, userRoles: TRole[]) => {
+  if(userRoles.includes(RoleEnum.SUPER_ADMIN)) {
+    builder.can(Action.Manage, 'User', { companyId });
+  }
   if(userRoles.includes(RoleEnum.ADMIN)) {
     builder.can(Action.Manage, 'User', { companyId });
   }

@@ -3,11 +3,18 @@ import { Action } from "../ability";
 import { AbilityBuilder } from "../abilityBuilder";
 
 export const defineCarrierAbilities = (
-  builder: AbilityBuilder, 
-  userId: string, 
-  companyId: string, 
+  builder: AbilityBuilder,
+  userId: string,
+  companyId: string,
   userRoles: TRole[]
 ) => {
+  if (userRoles.includes(RoleEnum.SUPER_ADMIN)) {
+    builder.can(Action.Read, 'Carrier', { companyId });
+    builder.can(Action.Create, 'Carrier', { companyId });
+    builder.can(Action.Update, 'Carrier', { companyId });
+    builder.can(Action.Delete, 'Carrier', { companyId });
+    builder.can(Action.View_Report, 'Carrier', { companyId });
+  }
   if (userRoles.includes(RoleEnum.ADMIN)) {
     builder.can(Action.Read, 'Carrier', { companyId });
     builder.can(Action.Create, 'Carrier', { companyId });
